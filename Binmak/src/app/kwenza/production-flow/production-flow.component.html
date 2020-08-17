@@ -1,0 +1,60 @@
+<div class="container">
+    <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect (click)="back()"
+    style="background-color: rgba(0, 69, 125, 1) !important; color: white;"> <i class="fa fa-arrow-left"></i> BACK</button>
+    <br>
+
+<h5 style="text-align: center;">MY ASSET NODES</h5>
+<br>
+
+<div>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+        <thead>
+            <tr>
+                <th>Asset Node Name</th>
+                <th>Asset Node Type</th>
+                <th>Added By</th>
+                <th>Added On</th>
+                <th>Asset Admin?</th>
+                <th>P. F. Charts</th>
+                <th>P. F. Readings</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let node of assetNodes" style="cursor: pointer;">
+                <td>{{node.assetNode}}</td>
+                <td>{{node.assetNodeTypeName}}</td>
+                <td>{{node.reference}}</td>
+                <td>{{node.date | date: "dd MMM yyyy HH:MM"}}</td>
+                <td>{{node.assetNodeAccessLeve}}</td>
+                <td>
+                  <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect (click)="accessCharts(node)"
+                  style="background-color: rgba(0, 69, 125, 1) !important; color: white;"> <i class="fas fa-chart-line"></i>
+                  </button>
+              </td>
+                <td>
+                    <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect (click)="accessReadings(node)"
+                    style="background-color: rgba(0, 69, 125, 1) !important; color: white;"> <i class="fas fa-angle-double-right"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="loading" style="text-align: center;">
+    <div class="preloader-wrapper big active crazy">
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

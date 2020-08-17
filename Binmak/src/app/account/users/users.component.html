@@ -1,0 +1,93 @@
+<div class="container">
+
+    <br>
+    <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect (click)="back()"
+        style="background-color: rgb(41, 40, 40) !important; color: white;"> <i class="fa fa-arrow-left"></i>
+        BACK</button>
+
+    <h4 style="font-weight: bold; text-align: center; font-weight: 400;">ADD USER</h4>
+
+    <form class="text-center" style="color: #757575;" [formGroup]="userForm" (ngSubmit)="addUser()">
+        <div class="form-row">
+
+            <div class="col">
+                <div class="md-form">
+                    <input type="text" formControlName="FirstName" id="FirstName" class="form-control" mdbInput>
+                    <label for="FirstName">First Name</label>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="md-form">
+                    <input type="text" formControlName="LastName" id="LastName" class="form-control" mdbInput>
+                    <label for="LastName">Surname</label>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="md-form">
+                    <input type="email" formControlName="EmployeeEmail" id="EmployeeEmail" class="form-control"
+                        mdbInput>
+                    <label for="EmployeeEmail">Employee Email</label>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div *ngIf="loading" class="d-flex justify-content-center">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-red-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button [disabled]="!userForm.valid" rounded="true" block="true" *ngIf="!loading" 
+            class="btn btn-outline btn-rounded my-4 waves-effect z-depth-0"
+            style="background-color:rgba(0, 108, 197, 0.822);font-weight: bold" type="submit">Add User
+        </button>
+        &nbsp;&nbsp;
+    </form>
+
+    <br>
+
+    <div>
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email Address</th>
+                    <th>Added By</th>
+                    <th>Added On</th>
+                    <th>Access Management</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users" style="cursor: pointer;">
+                    <td>{{user.name}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.reference}}</td>
+                    <td>{{user.date | date: "dd MMM yyyy HH:MM"}}</td>
+                    <td>
+                        <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect (click)="accessManagement()"
+                        style="background-color: rgba(0, 69, 125, 1) !important; color: white;"> <i class="fas fa-arrow-alt-circle-right"></i>
+                        </button>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
