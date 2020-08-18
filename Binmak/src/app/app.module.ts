@@ -31,9 +31,20 @@ import { ChartsComponent } from './kwenza/production-flow/charts/charts.componen
 import { EditLimitsComponent } from './kwenza/production-flow/edit-limits/edit-limits.component';
 import { EditReadingsComponent } from './kwenza/production-flow/edit-readings/edit-readings.component';
 import { UkwaziComponent } from './ukwazi/ukwazi.component';
+
+//Asset Management Maturity Assessor
 import { AssessmentsComponent } from './kwenza/MaturityAssessments/assessments/assessments.component';
 import { AssessmentLandingComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-landing.component';
 import { AssessmentLandingTypeComponent } from './kwenza/MaturityAssessments/assessment-landing-type/assessment-landing-type.component';
+import { SystemConfigComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/system-config.component';
+import { KpiAssessmentComponent } from './kwenza/MaturityAssessments/assessment-landing/kpi-assessment/kpi-assessment.component';
+import { BpAssessmentComponent } from './kwenza/MaturityAssessments/assessment-landing/bp-assessment/bp-assessment.component';
+import { AssessmentConfigComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/assessment-config.component';
+import { KpaAssessmentComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/kpa-assessment/kpa-assessment.component';
+import { ExecAssessmentLandingComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-landing.component';
+import { ViewKpaResultsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/view-kpa-results/view-kpa-results.component';
+import { ExecAssessmentConfigComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/exec-assessment-config.component';
+
 //import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
@@ -57,9 +68,19 @@ import { AssessmentLandingTypeComponent } from './kwenza/MaturityAssessments/ass
     EditLimitsComponent,
     EditReadingsComponent,
     UkwaziComponent,
+
+    //Asset Management Maturity Assessor
     AssessmentsComponent,
     AssessmentLandingComponent,
-    AssessmentLandingTypeComponent
+    AssessmentLandingTypeComponent,
+    SystemConfigComponent,
+    KpiAssessmentComponent,
+    AssessmentConfigComponent,
+    BpAssessmentComponent,
+    ExecAssessmentLandingComponent,
+    KpaAssessmentComponent,
+    ViewKpaResultsComponent,
+    ExecAssessmentConfigComponent
   ],
   imports: [
     BrowserModule,
