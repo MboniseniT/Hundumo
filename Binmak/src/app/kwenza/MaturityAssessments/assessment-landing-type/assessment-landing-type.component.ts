@@ -19,10 +19,10 @@ export class AssessmentLandingTypeComponent implements OnInit {
   }
 
   Assessment(){
-   
+
   }
 
   back(){
-    this.router.navigate(['/binmak']);
+    this.router.navigate(['/binmak/kwenza']);
   }
 }

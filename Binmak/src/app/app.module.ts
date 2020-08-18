@@ -31,9 +31,9 @@ import { ChartsComponent } from './kwenza/production-flow/charts/charts.componen
 import { EditLimitsComponent } from './kwenza/production-flow/edit-limits/edit-limits.component';
 import { EditReadingsComponent } from './kwenza/production-flow/edit-readings/edit-readings.component';
 import { UkwaziComponent } from './ukwazi/ukwazi.component';
-import { AssessmentsComponent } from './ukwazi/assessments/assessments.component';
-import { AssessmentLandingComponent } from './ukwazi/assessment-landing/assessment-landing.component';
-import { AssessmentLandingTypeComponent } from './ukwazi/assessment-landing-type/assessment-landing-type.component';
+import { AssessmentsComponent } from './kwenza/MaturityAssessments/assessments/assessments.component';
+import { AssessmentLandingComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-landing.component';
+import { AssessmentLandingTypeComponent } from './kwenza/MaturityAssessments/assessment-landing-type/assessment-landing-type.component';
 //import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
@@ -80,7 +80,7 @@ import { AssessmentLandingTypeComponent } from './ukwazi/assessment-landing-type
     CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA
   ],
-  providers: [MDBModalService, AuthGuard,DatePipe, 
+  providers: [MDBModalService, AuthGuard,DatePipe,
     AuthenticationService,
     { provide: MDB_DATE_OPTIONS, useValue: { showTodayBtn: false } },
     MainServiceService,
