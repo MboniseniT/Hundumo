@@ -12,10 +12,10 @@ export class MainServiceService {
 
   constructor(private http: HttpClient) { }
 
-    url = 'http://binmakdev.dedicated.co.za:81/api/';
-    urlBase = 'http://binmakdev.dedicated.co.za:81/';
-    //url = 'https://localhost:44318/api/';
-    //urlBase = 'https://localhost:44318/';
+    //url = 'http://binmakdev.dedicated.co.za:81/api/';
+    //urlBase = 'http://binmakdev.dedicated.co.za:81/';
+    url = 'https://localhost:44318/api/';
+    urlBase = 'https://localhost:44318/';
     //url = 'http://binmak.dedicated.co.za:84/api/';
     //url = 'http://binmakdev.dedicated.co.za:81/api/';
     //url = 'http://binmaktest.dedicated.co.za:81/api/';
@@ -84,7 +84,7 @@ export class MainServiceService {
   SaveAssetAssetUser(model){
     return this.http.post<any[]>(this.url+'assetSetup/addUserAssetNode', JSON.stringify(model), this.httpOptions);
   }
-  
+
 
   deleteAssetNodeById(model) {
     return this.http.post<any[]>(this.url + 'assetSetup/deleteAssetNode', JSON.stringify(model), this.httpOptions);
@@ -148,7 +148,7 @@ export class MainServiceService {
   DrawChart(model){
       return this.http.post<any[]>(this.urlBase+'ProductionFlow/charts', JSON.stringify(model), this.httpOptions);
   }
-  
+
   getAssets(reference){
     return this.http.get<any[]>(this.url+"assets?reference="+reference);
   }
@@ -193,7 +193,7 @@ export class MainServiceService {
   OverallProductionProcess(model: any): Observable<any> {
     return this.http.post<any[]>(this.url+"account/OverallProductionProcess", JSON.stringify(model), this.httpOptions);
   }
-  
+
   RegisterUser(model: any): Observable<any> {
     return this.http.post<any[]>(this.url+"account/register", JSON.stringify(model), this.httpOptions);
   }
@@ -215,7 +215,7 @@ export class MainServiceService {
   EditAssetMonthlyLimit(model: any): Observable<any> {
     return this.http.post<any[]>(this.urlBase+"ProductionFlow/DailyReadings/UpdateMonthlyLimit", JSON.stringify(model), this.httpOptions);
   }
-  
+
 
   RegisterAsset(model: any): Observable<any> {
     return this.http.post<any[]>(this.url+"assets", JSON.stringify(model), this.httpOptions);
@@ -223,7 +223,7 @@ export class MainServiceService {
 
 
 
- // Error handling 
+ // Error handling
  handleError(error) {
   let errorMessage = '';
 
@@ -234,7 +234,7 @@ export class MainServiceService {
     // Get server-side error
     errorMessage = `Error Code: ${error.status}\nMessage: ${error.error}`;
   }
-  
+
   window.alert(errorMessage);
   return throwError(errorMessage);
 }

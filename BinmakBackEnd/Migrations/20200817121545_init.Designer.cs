@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BinmakBackEnd.Migrations
 {
     [DbContext(typeof(BinmakDbContext))]
-    [Migration("20200807053117_init")]
+    [Migration("20200817121545_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
