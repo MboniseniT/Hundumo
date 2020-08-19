@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BinmakBackEnd.Areas.Assessments.Entities
 {
-    public class Kpa
+    public class Assessments
     {
         [System.ComponentModel.DataAnnotations.Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

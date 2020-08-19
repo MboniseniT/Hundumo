@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BinmakBackEnd.Areas.Assessments.Entities
 {
-    public class Frmwrk
+    public class Variants
     {
         public int ID { get; set; }
         public string name { get; set; }

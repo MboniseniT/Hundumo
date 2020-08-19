@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace BinmakBackEnd.Areas.Assessments.Entities
 {
-    public class Variant
+    public class Levels
     {
         public int ID { get; set; }
         public string name { get; set; }
+        public Nullable<int> user_id { get; set; }
     }
 }

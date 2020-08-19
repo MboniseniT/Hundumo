@@ -44,6 +44,7 @@ import { KpaAssessmentComponent } from './kwenza/MaturityAssessments/assessment-
 import { ExecAssessmentLandingComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-landing.component';
 import { ViewKpaResultsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/view-kpa-results/view-kpa-results.component';
 import { ExecAssessmentConfigComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/exec-assessment-config.component';
+import { ManageKpasComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-kpas/manage-kpas.component';
 
 //import { ChartModule } from 'angular-highcharts';
 
@@ -80,7 +81,8 @@ import { ExecAssessmentConfigComponent } from './kwenza/MaturityAssessments/asse
     ExecAssessmentLandingComponent,
     KpaAssessmentComponent,
     ViewKpaResultsComponent,
-    ExecAssessmentConfigComponent
+    ExecAssessmentConfigComponent,
+    ManageKpasComponent
   ],
   imports: [
     BrowserModule,

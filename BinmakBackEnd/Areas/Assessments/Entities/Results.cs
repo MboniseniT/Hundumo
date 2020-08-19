@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BinmakBackEnd.Areas.Assessments.Entities
 {
-    public class Result
+    public class Results
     {
         public int ID { get; set; }
         public int characteristic_id { get; set; }
