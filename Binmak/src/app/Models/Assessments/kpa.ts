@@ -1,5 +1,5 @@
 export class KPA{
-  ID:number;
+  ID:string;
   name:string;
   description: string;
   user_id: null;
