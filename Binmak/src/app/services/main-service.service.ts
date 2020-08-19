@@ -14,8 +14,8 @@ export class MainServiceService {
 
     //url = 'http://binmakdev.dedicated.co.za:81/api/';
     //urlBase = 'http://binmakdev.dedicated.co.za:81/';
-    url = 'https://localhost:44318/api/';
-    urlBase = 'https://localhost:44318/';
+    url = 'http://localhost:44318/api/';
+    urlBase = 'http://localhost:44318/';
     //url = 'http://binmak.dedicated.co.za:84/api/';
     //url = 'http://binmakdev.dedicated.co.za:81/api/';
     //url = 'http://binmaktest.dedicated.co.za:81/api/';

@@ -5,7 +5,8 @@ import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 @Injectable()
 export class AuthenticationService {
 
-    url = 'https://localhost:44318/api/account';
+    //url = 'https://localhost:44318/api/account';
+    url = 'http://localhost:44318/api/account';
    //url = 'http://binmak.dedicated.co.za:84/api/account'
    //url = 'http://binmakdev.dedicated.co.za:81/api/account'
    //url = 'http://binmaktest.dedicated.co.za:81/api/account'

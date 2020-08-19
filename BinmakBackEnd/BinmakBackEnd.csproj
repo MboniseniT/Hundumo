@@ -24,10 +24,5 @@
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Assessments\Controllers\" />
-    <Folder Include="Areas\Assessments\Models\" />
-  </ItemGroup>
-
 
 </Project>

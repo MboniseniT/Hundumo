@@ -26,7 +26,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         }
 
         //Exec KPAs
-        [HttpGet("execKPAs")]
+        [HttpGet("getExecKPAs")]
         public IActionResult GetExecKPAs()
         {
             try
@@ -48,7 +48,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
-        [HttpGet("execKPAs")]
+        [HttpGet("getExecKPAByID")]
         public IActionResult GetExecKPAByID(int id)
         {
             try
@@ -70,7 +70,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
         }
 
-        [HttpPost("execKPAs")]
+        [HttpPost("addExecKPAs")]
         public IActionResult AddExecKPA([FromBody] Kpas KPA)
         {
             try
@@ -88,7 +88,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
-        [HttpDelete("execKPAs")]
+        [HttpDelete("deleteExecKPAs")]
         public IActionResult DeleteExecKPA(int id)
         {
             try
@@ -112,7 +112,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
-        [HttpPut("execKPAs")]
+        [HttpPut("editExecKPAs")]
         public IActionResult EditExecKPA(int id, [FromBody] Kpas KPA)
         {
             try

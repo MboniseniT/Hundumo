@@ -33,6 +33,9 @@ import { EditReadingsComponent } from './kwenza/production-flow/edit-readings/ed
 import { UkwaziComponent } from './ukwazi/ukwazi.component';
 
 //Asset Management Maturity Assessor
+    /*Services*/
+import { AssessmentsConfigService } from './services/Assessments/assessmentsConfig.service';
+    /*Components*/
 import { AssessmentsComponent } from './kwenza/MaturityAssessments/assessments/assessments.component';
 import { AssessmentLandingComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-landing.component';
 import { AssessmentLandingTypeComponent } from './kwenza/MaturityAssessments/assessment-landing-type/assessment-landing-type.component';
@@ -111,7 +114,11 @@ import { ManageKpasComponent } from './kwenza/MaturityAssessments/assessment-lan
         provide: HTTP_INTERCEPTORS,
         useClass: JwtInterceptor,
         multi: true
-    }, {provide: LocationStrategy, useClass: HashLocationStrategy}],
+    }, {provide: LocationStrategy, useClass: HashLocationStrategy},
+
+    //Assessments Providers
+    AssessmentsConfigService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
