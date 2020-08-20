@@ -1,8 +1,11 @@
 <div class="container">
+      <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect (click)="back()"
+  style="background-color: rgb(41, 40, 40) !important; color: white;"> <i class="fa fa-arrow-left"></i>
+  BACK</button>
   <div class="row">
     <div class="col-md-6 mx-auto">
       <div class="md-form">
-        <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()"
+            <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()"
                id="search-input"
                mdbInput>
         <label for="search-input">Search</label>
@@ -36,7 +39,7 @@
         <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
           <!-- style="width: 200px;" -->
           <button mdbBtn color="warning" size="sm" mdbWavesEffect (click)="onEdit(el)"><i class="far fa-edit"></i></button>
-          <button mdbBtn color="danger" size="sm" mdbWavesEffect (click)="onDelete(el)"><i class="far fa-trash-alt"></i></button>
+          <!-- <button mdbBtn color="danger" size="sm" mdbWavesEffect (click)="onDelete(el)"><i class="far fa-trash-alt"></i></button> -->
         </td>
       </tr>
       </tbody>

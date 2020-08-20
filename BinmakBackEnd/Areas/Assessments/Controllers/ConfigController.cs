@@ -113,14 +113,14 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         }
 
         [HttpPut("editExecKPAs")]
-        public IActionResult EditExecKPA(int id, [FromBody] Kpas KPA)
+        public IActionResult EditExecKPA([FromBody] Kpas KPA)
         {
             try
             {
-                    var lAction = _context.kpas.FirstOrDefault(a => a.ID == id);
+                    var lAction = _context.kpas.FirstOrDefault(a => a.ID == KPA.ID);
                     if (lAction == null)
                     {
-                    return NotFound("The KPA with ID = " + id + " not found to update!");
+                    return NotFound("The KPA with ID = " + KPA.ID + " not found to update!");
                     }
                     else
                     {

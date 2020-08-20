@@ -5,6 +5,8 @@ import { MdbTableDirective, MdbTablePaginationComponent } from 'ng-uikit-pro-sta
 import {HttpClient} from "@angular/common/http";
 import { EditExecKpaComponent } from './edit-exec-kpa/edit-exec-kpa.component';
 import {MDBModalRef, MDBModalService} from "ng-uikit-pro-standard";
+import { ToastService } from 'ng-uikit-pro-standard';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-kpas',
@@ -36,9 +38,13 @@ export class ManageKpasComponent implements OnInit, AfterViewInit {
   page: Number=1;
   assessID: string = "Hola Mundo";
 
+  formError:string = "";
+
   constructor(
-    private kpaServive: AssessmentsConfigService,
+    private kpaService: AssessmentsConfigService,
     private modalService: MDBModalService,
+    private toastrService: ToastService,
+    private router: Router,
     private http: HttpClient,
     private cdRef: ChangeDetectorRef
     ) { }
@@ -53,7 +59,7 @@ export class ManageKpasComponent implements OnInit, AfterViewInit {
 
   //Custom Methods
   loadDataTable(){
-    this.kpaServive.GetExecKPAs().subscribe((data: any) => {
+    this.kpaService.GetExecKPAs().subscribe((data: any) => {
       data.forEach((el: any) => {
       this.elements.push({
       id: el.id.toString(),
@@ -78,15 +84,32 @@ export class ManageKpasComponent implements OnInit, AfterViewInit {
     this.modalRef = this.modalService.show(EditExecKpaComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
+      this.kpaService.EditExecKPA(newElement).toPromise().then((data: any) => {
+        //console.log(data);
+        // success notification
+        this.toastrService.success('Update Successful!');
+        setTimeout(() => {
+          //update DataTable
+          this.elements[elementIndex] = newElement;
+        });
+      }, error => {
+        console.log('httperror: ');
+          console.log(error);
+          // error notification
+          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+          this.toastrService.error(error);
+      });
 
-      //update DataTable
-      this.elements[elementIndex] = newElement;
     });
     this.mdbTable.setDataSource(this.elements);
   }
 
-  onDelete(el){
+  onDelete(el:any){
 
+  }
+
+  back(){
+    this.router.navigate(['/binmak/exec-assessment-config']);
   }
 
   //DataTable Methods

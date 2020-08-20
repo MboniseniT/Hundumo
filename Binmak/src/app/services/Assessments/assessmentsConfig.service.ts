@@ -28,8 +28,8 @@ constructor(private http: HttpClient) { }
         return this.http.delete(this.assessmentUrl+'Assessments/Config/deleteExecKPAs/'+id);
       }
 
-      EditExecKPA(id:string,kpa){
-        return this.http.put(this.assessmentUrl+'Assessments/Config/editExecKPAs/'+id, kpa);
+      EditExecKPA(kpa){
+        return this.http.put(this.assessmentUrl+'Assessments/Config/editExecKPAs', kpa);
       }
 
 
