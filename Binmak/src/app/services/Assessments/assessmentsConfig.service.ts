@@ -5,6 +5,9 @@ import { KPA } from 'src/app/Models/Assessments/kpa';
 import { Level } from 'src/app/Models/Assessments/Level';
 import { Char } from 'src/app/Models/Assessments/char';
 import { KPALevel } from 'src/app/Models/Assessments/KPALevel';
+import { Frmwrk } from 'src/app/Models/Assessments/frmwrk';
+import { Variant } from 'src/app/Models/Assessments/variant';
+import { Version } from 'src/app/Models/Assessments/version';
 
 @Injectable({
   providedIn: 'root'
@@ -78,8 +81,23 @@ constructor(private http: HttpClient) { }
         return this.http.delete(this.assessmentUrl+'deleteChar/'+id)
       }
 
-      editChar(id:string,characteristic){
+      editChar(characteristic){
         return this.http.put(this.assessmentUrl+'editChar', characteristic)
+      }
+
+      /*Frameworks*/
+      getFrameworks(): Observable<Frmwrk[]>{
+        return this.http.get<Frmwrk[]>(this.assessmentUrl+'getFrameworks');
+      }
+
+      /*Versions*/
+      getVersions(): Observable<Version[]>{
+        return this.http.get<Version[]>(this.assessmentUrl+'getVersions');
+      }
+
+      /*Variants*/
+      getVariants(): Observable<Variant[]>{
+        return this.http.get<Variant[]>(this.assessmentUrl+'getVariants');
       }
 
 

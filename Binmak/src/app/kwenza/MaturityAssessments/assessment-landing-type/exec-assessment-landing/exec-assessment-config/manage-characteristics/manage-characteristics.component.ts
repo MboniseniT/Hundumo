@@ -151,7 +151,7 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
     this.modalRef = this.modalService.show(EditCharacteristicComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-      this.assessmentService.EditExecKPA(newElement).toPromise().then((data: any) => {
+      this.assessmentService.editChar(newElement).toPromise().then((data: any) => {
         //console.log(data);
         // success notification
         this.toastrService.success('Update Successful!');

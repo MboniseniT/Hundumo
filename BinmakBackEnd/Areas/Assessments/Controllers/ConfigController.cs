@@ -336,7 +336,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         }
 
         [HttpPut("editChar")]
-        public IActionResult EditChar([FromBody] Characteristics Char)
+        public IActionResult EditChar([FromBody] Dummy Char)
         {
             try
             {
@@ -348,12 +348,81 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 else
                 {
                     lAction.description = Char.description;
-                    lAction.frmwrk_id = Char.frmwrk_id;
+                    /*lAction.frmwrk_id = Char.frmwrk_id;
                     lAction.user_id = Char.user_id;
                     lAction.variant_id = Char.variant_id;
-                    lAction.version_id = Char.version_id;
+                    lAction.version_id = Char.version_id;*/
                     _context.SaveChanges();
                     return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        //Frameworks
+        [HttpGet("getFrameworks")]
+        public IActionResult GetFrameworks()
+        {
+            try
+            {
+                var lAction = _context.frmwrks.ToList();
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("HTTP resource is currently unavailable!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        //Versions
+        [HttpGet("getVersions")]
+        public IActionResult GetVersions()
+        {
+            try
+            {
+                var lAction = _context.versions.ToList();
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("HTTP resource is currently unavailable!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        //Variants
+        [HttpGet("getVariants")]
+        public IActionResult GetVariants()
+        {
+            try
+            {
+                var lAction = _context.variants.ToList();
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("HTTP resource is currently unavailable!");
                 }
             }
             catch (Exception ex)

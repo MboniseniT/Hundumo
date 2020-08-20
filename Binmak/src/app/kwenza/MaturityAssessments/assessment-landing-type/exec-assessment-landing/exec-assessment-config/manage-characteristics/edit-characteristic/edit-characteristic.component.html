@@ -12,6 +12,36 @@
         <label for="id">ID</label>
       </div>
       <div class="md-form">
+        <!-- <input id="frmwrk_id" type="text" class="form-control grey-text" formControlName="frmwrk_id" mdbInput>
+        <label for="frmwrk_id">Framework</label>
+        <mdb-error *ngIf="frmwrk_id.invalid && (frmwrk_id.dirty || frmwrk_id.touched)">Framework is required</mdb-error> -->
+        <mdb-select-2 label="Select Framework" [multiple]="false"
+                  [highlightFirst]="false" formControlName="frmwrk_id">
+                    <mdb-select-option style="position: absolute;" *ngFor="let frm of frmwrks" [value]="frm.id">{{ frm.name }}</mdb-select-option>
+                  </mdb-select-2>
+                  <mdb-error *ngIf="frmwrk_id.invalid && (frmwrk_id.dirty || frmwrk_id.touched)">Framework is required</mdb-error>
+      </div>
+      <div class="md-form">
+        <!-- <input id="version_id" type="text" class="form-control grey-text" formControlName="version_id" mdbInput>
+        <label for="version_id">Version</label>
+        <mdb-error *ngIf="version_id.invalid && (version_id.dirty || version_id.touched)">Version is required</mdb-error> -->
+        <mdb-select-2 label="Select Version" [multiple]="false"
+                  [highlightFirst]="false" formControlName="version_id">
+                    <mdb-select-option style="position: absolute;" *ngFor="let ver of versions" [value]="ver.id">{{ ver.name }}</mdb-select-option>
+                  </mdb-select-2>
+                  <mdb-error *ngIf="version_id.invalid && (version_id.dirty || version_id.touched)">Version is required</mdb-error>
+      </div>
+      <div class="md-form">
+        <!-- <input id="variant_id" type="text" class="form-control grey-text" formControlName="variant_id" mdbInput>
+        <label for="variant_id">variant_id</label>
+        <mdb-error *ngIf="variant_id.invalid && (variant_id.dirty || variant_id.touched)">Variant is required</mdb-error> -->
+        <mdb-select-2 label="Select Variant" [multiple]="false"
+                  [highlightFirst]="false" formControlName="variant_id">
+                    <mdb-select-option style="position: absolute;" *ngFor="let variant of variants" [value]="variant.id">{{ variant.name }}</mdb-select-option>
+                  </mdb-select-2>
+                  <mdb-error *ngIf="variant_id.invalid && (variant_id.dirty || variant_id.touched)">Variant is required</mdb-error>
+      </div>
+      <div class="md-form">
         <!-- <input id="description" type="text" class="form-control" formControlName="description" mdbInput mdbValidate
                [validateSuccess]="false"> -->
         <textarea type="text" id="description" class="md-textarea form-control" formControlName="description"
