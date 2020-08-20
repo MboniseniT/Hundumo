@@ -5,12 +5,14 @@ import { AssessmentsConfigService } from 'src/app/services/Assessments/assessmen
 import { MdbTableDirective, MdbTablePaginationComponent } from 'ng-uikit-pro-standard';
 import {HttpClient} from "@angular/common/http";
 import { EditCharacteristicComponent } from './edit-characteristic/edit-characteristic.component';
+import { SelectKpaLevelComponent } from './select-kpaLevel/select-kpaLevel.component';
 import {MDBModalRef, MDBModalService} from "ng-uikit-pro-standard";
 import { ToastService } from 'ng-uikit-pro-standard';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { KPALevel } from 'src/app/Models/Assessments/KPALevel';
 import { Char } from 'src/app/Models/Assessments/char';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-manage-characteristics',
@@ -23,7 +25,7 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
   @ViewChild('row', { static: true }) row: ElementRef;
 
   elements: Char[] = [];
-  headElements = ['ID', 'kpaname', 'Description', 'commands']; //'LastEditedBy',
+  headElements = ['ID', 'Description', 'commands']; //'LastEditedBy',
 
   modalRef: MDBModalRef;
 
@@ -76,15 +78,6 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
     this.kpaLevel = Object.assign(this.kpaLevel, this.formKPALevel.value);
     this.assessmentService.getKPALevelChars(this.kpaLevel).subscribe((data: Char[]) => {
       this.elements = data;
-        console.log(data);
-        // data.forEach((el: any) => {
-        //   this.elements.push({
-        //   id: el.id.toString(),
-        //   name: el.name,
-        //   description: el.description,
-        //   userId: el.user_id
-        //   });
-        //   });
           this.mdbTable.setDataSource(this.elements);
       }, error => {
         console.log('httperror: ');
@@ -99,7 +92,6 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
     this.assessmentService.GetExecKPAs().subscribe(
       (data:KPA[]) => {
         this.kpas = data;
-        console.log(data);
       }, error => {
         console.log('httperror: ');
         console.log(error);
@@ -109,12 +101,44 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
     this.assessmentService.getLevels().subscribe(
       (data:Level[]) => {
         this.level = data;
-        console.log(data);
       }, error => {
         console.log('httperror: ');
         console.log(error);
       }
     );
+  }
+
+  onLoad(el:any){
+    //const elementIndex = this.elements.findIndex((elem: any) => el === elem);
+    const modalOptions = {
+      data: {
+        editableRow: {kpaID: null, LevelID:null}
+      }
+    };
+    this.modalRef = this.modalService.show(SelectKpaLevelComponent, modalOptions);
+    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
+
+      //call loadDataTable(newElement)
+
+      //Call funtion to update database
+      // this.assessmentService.EditExecKPA(newElement).toPromise().then((data: any) => {
+      //   //console.log(data);
+      //   // success notification
+      //   this.toastrService.success('Update Successful!');
+      //   setTimeout(() => {
+      //     //update DataTable
+      //     //this.elements[elementIndex] = newElement;
+      //   });
+      // }, error => {
+      //   console.log('httperror: ');
+      //     console.log(error);
+      //     // error notification
+      //     //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+      //     this.toastrService.error(error);
+      // });
+
+    });
+    //this.mdbTable.setDataSource(this.elements);
   }
 
   onEdit(el: any){
