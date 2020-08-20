@@ -15,7 +15,7 @@
                       label="* Select KPA" [enableSelectAll]="false">
                   </mdb-select> -->
                   <mdb-select-2 label="Select KPA" [multiple]="false"
-                  [highlightFirst]="false" formControlName="KPA" >
+                  [highlightFirst]="false" formControlName="kpaID" >
                     <mdb-select-option *ngFor="let kpa of kpas" [value]="kpa.id">{{ kpa.name }}</mdb-select-option>
                   </mdb-select-2>
               </div>
@@ -27,7 +27,7 @@
                   label="* Select Level" [enableSelectAll]="false">
               </mdb-select> -->
               <mdb-select-2 label="Select Level" [multiple]="false"
-                  [highlightFirst]="false" formControlName="Level">
+                  [highlightFirst]="false" formControlName="LevelID">
                     <mdb-select-option *ngFor="let lev of level" [value]="lev.id">{{ lev.name }}</mdb-select-option>
                   </mdb-select-2>
           </div>
@@ -67,7 +67,7 @@
         scope="row">{{el.id}}
     </th>
     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
-        class="red-text">{{el.name}}
+        class="red-text">{{el.description}}
     </td>
     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
       {{el.description}}

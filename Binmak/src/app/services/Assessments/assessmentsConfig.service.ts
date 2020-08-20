@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { KPA } from 'src/app/Models/Assessments/kpa';
 import { Level } from 'src/app/Models/Assessments/Level';
+import { Char } from 'src/app/Models/Assessments/char';
+import { KPALevel } from 'src/app/Models/Assessments/KPALevel';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +54,36 @@ constructor(private http: HttpClient) { }
 
       putLevel(id:string,level){
         return this.http.put(this.assessmentUrl+'editLevel/'+id, level);
+      }
+
+      /*Characteristics*/
+      getAllChars(): Observable<Char[]>{
+        return this.http.get<Char[]>(this.assessmentUrl+'api/chars?frmwrk=1&version=1&variant=1&kpaID=1&levelID=1&ID=1&type=All')
+      }
+
+      getCharById(id:number): Observable<Char[]>{
+        return this.http.get<Char[]>(this.assessmentUrl+'api/chars?frmwrk=1&version=1&variant=1&kpaID=1&levelID=1&ID='+id+'&type=byid')
+      }
+
+      getKPALevelChars(kpaLevel:any): Observable<Char[]>{
+        console.log(kpaLevel);
+        return this.http.get<Char[]>(this.assessmentUrl+'api/chars?frmwrk=1&version=1&variant=1&kpaID=1&levelID=1&ID=1&type=comboid')
+      }
+
+      getRunKPALevelChars(kpaID:string, levelID:string, frmwrk:string, version:string, variant:string): Observable<Char[]>{
+        return this.http.get<Char[]>(this.assessmentUrl+'api/chars?frmwrk='+frmwrk+'&version='+version+'&variant='+variant+'&kpaID='+kpaID+'&levelID='+levelID+'&ID=1&type=allids')
+      }
+
+      postChar(characteristic){
+        return this.http.post(this.assessmentUrl+'api/chars', characteristic)
+      }
+
+      deleteChar(id:string){
+        return this.http.delete(this.assessmentUrl+'api/chars/'+id)
+      }
+
+      putChar(id:string,characteristic){
+        return this.http.put(this.assessmentUrl+'api/chars/'+id, characteristic)
       }
 
 

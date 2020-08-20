@@ -160,7 +160,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
-        [HttpGet("getLevelKPAByID")]
+        [HttpGet("getLevelByID")]
         public IActionResult GetLevelById(int id)
         {
             try
