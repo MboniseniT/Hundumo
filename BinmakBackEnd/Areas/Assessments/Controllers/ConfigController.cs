@@ -136,5 +136,116 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
+
+        //Levels
+        [HttpGet("getLevels")]
+        public IActionResult getLevels()
+        {
+            try
+            {
+                var lAction = _context.levels.ToList();
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("HTTP resource is currently unavailable!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpGet("getLevelKPAByID")]
+        public IActionResult GetLevelById(int id)
+        {
+            try
+            {
+                var lAction = _context.levels.FirstOrDefault(a => a.ID == id);
+
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("The Level with ID = " + id + " not found!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+        }
+
+        [HttpPost("addLevel")]
+        public IActionResult AddLevel([FromBody] Levels Level)
+        {
+            try
+            {
+                _context.levels.Add(Level);
+                _context.SaveChanges();
+
+                var message = Created("", Level);
+                return message;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpDelete("deleteLevel")]
+        public IActionResult DeleteLevel(int id)
+        {
+            try
+            {
+                var lAction = _context.levels.FirstOrDefault(a => a.ID == id);
+                if (lAction == null)
+                {
+                    return NotFound("The Level with ID = " + id + " not found to delete!");
+                }
+                else
+                {
+                    _context.levels.Remove(lAction);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPut("editLevel")]
+        public IActionResult EditLevel([FromBody] Levels Level)
+        {
+            try
+            {
+                var lAction = _context.levels.FirstOrDefault(a => a.ID == Level.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The Level with ID = " + Level.ID + " not found to update!");
+                }
+                else
+                {
+                    lAction.name = Level.name;
+                    _context.SaveChanges();
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
     }
 }

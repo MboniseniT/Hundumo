@@ -1,6 +1,5 @@
-export class KPA{
+export class Level{
   id:number;
   name:string;
-  description: string;
   user_id: null;
 }
