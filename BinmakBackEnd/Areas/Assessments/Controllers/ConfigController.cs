@@ -247,5 +247,120 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
+
+        //Characteristics
+        [HttpGet("getCharacteristics")]
+        public IActionResult GetAllCharacteristics()
+        {
+            try
+            {
+                var lAction = _context.characteristics.ToList();
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("HTTP resource is currently unavailable!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPost("getKPALevelChars")]
+        public IActionResult GetKPALevelChars([FromBody] KPALevel kpaLevel)
+        {
+            try
+            {
+                var lAction = _context.characteristics.Where(a => a.kpa_id == kpaLevel.kpaID && a.level_id == kpaLevel.LevelID).ToList();
+
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("The kpaLevel Characteristic with kpaID = " + kpaLevel.kpaID + " and levelID = "+ kpaLevel.LevelID +" not found!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+        }
+
+        [HttpPost("addChar")]
+        public IActionResult AddChar([FromBody] Characteristics Char)
+        {
+            try
+            {
+                _context.characteristics.Add(Char);
+                _context.SaveChanges();
+
+                var message = Created("", Char);
+                return message;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpDelete("deleteChar")]
+        public IActionResult DeleteChar(int id)
+        {
+            try
+            {
+                var lAction = _context.characteristics.FirstOrDefault(a => a.ID == id);
+                if (lAction == null)
+                {
+                    return NotFound("The characteristic with ID = " + id + " not found to delete!");
+                }
+                else
+                {
+                    _context.characteristics.Remove(lAction);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPut("editChar")]
+        public IActionResult EditChar([FromBody] Characteristics Char)
+        {
+            try
+            {
+                var lAction = _context.characteristics.FirstOrDefault(a => a.ID == Char.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The characteristic with ID = " + Char.ID + " not found to update!");
+                }
+                else
+                {
+                    lAction.description = Char.description;
+                    lAction.frmwrk_id = Char.frmwrk_id;
+                    lAction.user_id = Char.user_id;
+                    lAction.variant_id = Char.variant_id;
+                    lAction.version_id = Char.version_id;
+                    _context.SaveChanges();
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
     }
 }

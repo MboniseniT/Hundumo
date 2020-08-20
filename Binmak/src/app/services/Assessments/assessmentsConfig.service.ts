@@ -57,33 +57,29 @@ constructor(private http: HttpClient) { }
       }
 
       /*Characteristics*/
-      getAllChars(): Observable<Char[]>{
-        return this.http.get<Char[]>(this.assessmentUrl+'api/chars?frmwrk=1&version=1&variant=1&kpaID=1&levelID=1&ID=1&type=All')
+      getCharacteristics(): Observable<Char[]>{
+        return this.http.get<Char[]>(this.assessmentUrl+'getCharacteristics');
       }
 
-      getCharById(id:number): Observable<Char[]>{
-        return this.http.get<Char[]>(this.assessmentUrl+'api/chars?frmwrk=1&version=1&variant=1&kpaID=1&levelID=1&ID='+id+'&type=byid')
-      }
-
-      getKPALevelChars(kpaLevel:any): Observable<Char[]>{
+      getKPALevelChars(kpaLevel:any): Observable<any>{
         console.log(kpaLevel);
-        return this.http.get<Char[]>(this.assessmentUrl+'api/chars?frmwrk=1&version=1&variant=1&kpaID=1&levelID=1&ID=1&type=comboid')
+        return this.http.post<any>(this.assessmentUrl+'getKPALevelChars', kpaLevel);
       }
 
       getRunKPALevelChars(kpaID:string, levelID:string, frmwrk:string, version:string, variant:string): Observable<Char[]>{
         return this.http.get<Char[]>(this.assessmentUrl+'api/chars?frmwrk='+frmwrk+'&version='+version+'&variant='+variant+'&kpaID='+kpaID+'&levelID='+levelID+'&ID=1&type=allids')
       }
 
-      postChar(characteristic){
-        return this.http.post(this.assessmentUrl+'api/chars', characteristic)
+      addChar(characteristic){
+        return this.http.post(this.assessmentUrl+'addChar', characteristic)
       }
 
       deleteChar(id:string){
-        return this.http.delete(this.assessmentUrl+'api/chars/'+id)
+        return this.http.delete(this.assessmentUrl+'deleteChar/'+id)
       }
 
-      putChar(id:string,characteristic){
-        return this.http.put(this.assessmentUrl+'api/chars/'+id, characteristic)
+      editChar(id:string,characteristic){
+        return this.http.put(this.assessmentUrl+'editChar', characteristic)
       }
 
 
