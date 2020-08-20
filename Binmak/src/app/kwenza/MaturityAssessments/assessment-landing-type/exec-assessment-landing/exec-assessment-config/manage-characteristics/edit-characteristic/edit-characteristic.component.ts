@@ -17,9 +17,13 @@ export class EditCharacteristicComponent implements OnInit {
   public editableRow: { id: string, description: string, frmwrk_id:number, version_id:number, variant_id:number;};
   public saveButtonClicked: Subject<any> = new Subject();
 
-  frmwrks: Frmwrk[] = [];
-  versions: Version[] = [];
-  variants: Variant[] = [];
+  //frmwrks: Frmwrk[] = [];
+  //versions: Version[] = [];
+  //variants: Variant[] = [];
+
+  frmwrks: Array<any>;
+  versions: Array<any>;
+  variants: Array<any>;
 
   public form: FormGroup = new FormGroup({
     id: new FormControl({value: '', disabled: true}),
@@ -49,42 +53,36 @@ export class EditCharacteristicComponent implements OnInit {
   }
 
   loadDropdowns(){
-    //retrieve KPAs from Database
+    //retrieve Frameworks from Database
     this.assessmentService.getFrameworks().subscribe(
-      (data:Frmwrk[]) => {
-        this.frmwrks = data;
-        console.log(data);
-      }, error => {
-        console.log('httperror: ');
-        console.log(error);
+      resp => {
+        this.frmwrks = resp.map((t: any) => {
+          return { label: t.name, value: t.id }
+        })
       }
     );
-    //retrieve Levels from Database
+    //retrieve Version from Database
     this.assessmentService.getVersions().subscribe(
-      (data:Version[]) => {
-        this.versions = data;
-        console.log(data);
-      }, error => {
-        console.log('httperror: ');
-        console.log(error);
+      resp => {
+        this.versions = resp.map((t: any) => {
+          return { label: t.name, value: t.id }
+        })
       }
     );
 
-    //retrieve Levels from Database
+    //retrieve Variants from Database
     this.assessmentService.getVariants().subscribe(
-      (data:Variant[]) => {
-        this.variants = data;
-        console.log(data);
-      }, error => {
-        console.log('httperror: ');
-        console.log(error);
+      resp => {
+        this.variants = resp.map((t: any) => {
+          return { label: t.name, value: t.id }
+        })
       }
     );
   }
 
     get description() { return this.form.get('description'); }
-    get frmwrk_id() { return this.form.get('description'); }
-    get variant_id() { return this.form.get('description'); }
-    get version_id() { return this.form.get('description'); }
+    get frmwrk_id() { return this.form.get('frmwrk_id'); }
+    get variant_id() { return this.form.get('variant_id'); }
+    get version_id() { return this.form.get('version_id'); }
 
 }

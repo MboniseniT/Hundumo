@@ -38,6 +38,8 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
 
   url = 'Assessments/Config/getExecKPAs';
 
+  kpa: Array<any>;
+  levels: Array<any>;
 
   kpas:KPA[] =[];
   level:Level[]= [];
@@ -90,20 +92,30 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
   loadDropdowns(){
     //retrieve KPAs from Database
     this.assessmentService.GetExecKPAs().subscribe(
-      (data:KPA[]) => {
-        this.kpas = data;
-      }, error => {
-        console.log('httperror: ');
-        console.log(error);
+      // (data:KPA[]) => {
+      //   this.kpas = data;
+      // }, error => {
+      //   console.log('httperror: ');
+      //   console.log(error);
+      // }
+      resp => {
+        this.kpa = resp.map((t: any) => {
+          return { label: t.name, value: t.id }
+        })
       }
     );
     //retrieve Levels from Database
     this.assessmentService.getLevels().subscribe(
-      (data:Level[]) => {
-        this.level = data;
-      }, error => {
-        console.log('httperror: ');
-        console.log(error);
+      // (data:Level[]) => {
+      //   this.level = data;
+      // }, error => {
+      //   console.log('httperror: ');
+      //   console.log(error);
+      // }
+      resp => {
+        this.levels = resp.map((t: any) => {
+          return { label: t.name, value: t.id }
+        })
       }
     );
   }

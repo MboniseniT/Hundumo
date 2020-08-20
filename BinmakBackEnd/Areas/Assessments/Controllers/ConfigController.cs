@@ -336,7 +336,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         }
 
         [HttpPut("editChar")]
-        public IActionResult EditChar([FromBody] Dummy Char)
+        public IActionResult EditChar([FromBody] Characteristics Char)
         {
             try
             {
@@ -348,10 +348,10 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 else
                 {
                     lAction.description = Char.description;
-                    /*lAction.frmwrk_id = Char.frmwrk_id;
+                    lAction.frmwrk_id = Char.frmwrk_id;
                     lAction.user_id = Char.user_id;
                     lAction.variant_id = Char.variant_id;
-                    lAction.version_id = Char.version_id;*/
+                    lAction.version_id = Char.version_id;
                     _context.SaveChanges();
                     return Ok(lAction);
                 }
