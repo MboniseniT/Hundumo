@@ -65,7 +65,6 @@ constructor(private http: HttpClient) { }
       }
 
       getKPALevelChars(kpaLevel:any): Observable<any>{
-        console.log(kpaLevel);
         return this.http.post<any>(this.assessmentUrl+'getKPALevelChars', kpaLevel);
       }
 
@@ -74,15 +73,15 @@ constructor(private http: HttpClient) { }
       }
 
       addChar(characteristic){
-        return this.http.post(this.assessmentUrl+'addChar', characteristic)
+        return this.http.post(this.assessmentUrl+'addChar', characteristic);
       }
 
-      deleteChar(id:string){
-        return this.http.delete(this.assessmentUrl+'deleteChar/'+id)
+      deleteChar(characteristic){
+        return this.http.post(this.assessmentUrl+'deleteChar', characteristic);
       }
 
       editChar(characteristic){
-        return this.http.put(this.assessmentUrl+'editChar', characteristic)
+        return this.http.put(this.assessmentUrl+'editChar', characteristic);
       }
 
       /*Frameworks*/

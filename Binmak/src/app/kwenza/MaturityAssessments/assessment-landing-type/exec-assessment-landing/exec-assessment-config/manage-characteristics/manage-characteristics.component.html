@@ -36,9 +36,18 @@
       </form>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-      <button [disabled]="!formKPALevel.valid" type="button" class="btn btn-info btn-block" aria-label="Close" mdbWavesEffect (click)="loadDataTable()"
-      style="background-color: rgb(41, 40, 40) !important; color: white;"><i class="fas fa-download"></i>
-      LOAD DATATABLE</button>
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          <button [disabled]="!formKPALevel.valid" type="button" class="btn btn-info btn-block mb-1" aria-label="Close" mdbWavesEffect (click)="onAdd()"
+          style="background-color: rgb(41, 40, 40) !important; color: white;"><i class="fas fa-plus"></i>
+          NEW</button>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          <button [disabled]="!formKPALevel.valid" type="button" class="btn btn-info btn-block" aria-label="Close" mdbWavesEffect (click)="loadDataTable()"
+          style="background-color: rgb(41, 40, 40) !important; color: white;"><i class="fas fa-spinner"></i>
+          TABLE</button>
+        </div>
+      </div>
     </div>
   </div>
 <div class="row">
@@ -75,7 +84,7 @@
     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
       <!-- style="width: 200px;" -->
       <button mdbBtn color="warning" size="sm" mdbWavesEffect (click)="onEdit(el)"><i class="far fa-edit"></i></button>
-      <!-- <button mdbBtn color="danger" size="sm" mdbWavesEffect (click)="onDelete(el)"><i class="far fa-trash-alt"></i></button> -->
+      <button mdbBtn color="danger" size="sm" mdbWavesEffect (click)="onDelete(el)"><i class="far fa-trash-alt"></i></button>
     </td>
   </tr>
   </tbody>

@@ -311,15 +311,15 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
-        [HttpDelete("deleteChar")]
-        public IActionResult DeleteChar(int id)
+        [HttpPost("deleteChar")]
+        public IActionResult DeleteChar([FromBody] Characteristics Char)
         {
             try
             {
-                var lAction = _context.characteristics.FirstOrDefault(a => a.ID == id);
+                var lAction = _context.characteristics.FirstOrDefault(a => a.ID == Char.ID);
                 if (lAction == null)
                 {
-                    return NotFound("The characteristic with ID = " + id + " not found to delete!");
+                    return NotFound("The characteristic with ID = " + Char.ID + " not found to delete!");
                 }
                 else
                 {

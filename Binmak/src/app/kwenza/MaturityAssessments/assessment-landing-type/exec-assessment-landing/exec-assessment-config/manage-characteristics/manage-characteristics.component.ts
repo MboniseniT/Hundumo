@@ -6,6 +6,7 @@ import { MdbTableDirective, MdbTablePaginationComponent } from 'ng-uikit-pro-sta
 import {HttpClient} from "@angular/common/http";
 import { EditCharacteristicComponent } from './edit-characteristic/edit-characteristic.component';
 import { SelectKpaLevelComponent } from './select-kpaLevel/select-kpaLevel.component';
+import { AddCharacteristicComponent } from './add-characteristic/add-characteristic.component'
 import {MDBModalRef, MDBModalService} from "ng-uikit-pro-standard";
 import { ToastService } from 'ng-uikit-pro-standard';
 import { Router } from '@angular/router';
@@ -153,6 +154,36 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
     //this.mdbTable.setDataSource(this.elements);
   }
 
+  onAdd(){
+    this.kpaLevel = Object.assign(this.kpaLevel, this.formKPALevel.value);
+    const modalOptions = {
+      data: {
+        editableRow: {kpa_id: this.kpaLevel.kpaID, level_id: this.kpaLevel.LevelID, description: "", frmwrk_id: null, version_id: null, variant_id: null}
+      }
+    };
+    this.modalRef = this.modalService.show(AddCharacteristicComponent, modalOptions);
+    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
+      //Call funtion to update database
+      this.assessmentService.addChar(newElement).toPromise().then((data: any) => {
+        //console.log(data);
+        // success notification
+        this.toastrService.success('Addition Successful!');
+        setTimeout(() => {
+          //update DataTable
+          this.loadDataTable();
+        });
+      }, error => {
+        console.log('httperror: ');
+          console.log(error);
+          // error notification
+          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+          this.toastrService.error(error);
+      });
+
+    });
+    this.mdbTable.setDataSource(this.elements);
+  }
+
   onEdit(el: any){
     const elementIndex = this.elements.findIndex((elem: any) => el === elem);
     const modalOptions = {
@@ -184,7 +215,21 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
   }
 
   onDelete(el:any){
-
+    //Call funtion to update database
+    this.assessmentService.deleteChar(el).toPromise().then((data: any) => {
+      // success notification
+      this.toastrService.warning('Deleted Successfully!');
+      setTimeout(() => {
+        //update DataTable
+        this.loadDataTable();
+      });
+    }, error => {
+      console.log('httperror: ');
+        console.log(error);
+        // error notification
+        //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+        this.toastrService.error(error);
+    });
   }
 
   back(){
