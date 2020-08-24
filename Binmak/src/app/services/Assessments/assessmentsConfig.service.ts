@@ -9,6 +9,7 @@ import { Frmwrk } from 'src/app/Models/Assessments/frmwrk';
 import { Variant } from 'src/app/Models/Assessments/variant';
 import { Version } from 'src/app/Models/Assessments/version';
 import { Assessment } from 'src/app/Models/Assessments/assessment';
+import { LResult } from 'src/app/Models/Assessments/lResults';
 
 @Injectable({
   providedIn: 'root'
@@ -69,8 +70,9 @@ constructor(private http: HttpClient) { }
         return this.http.post<any>(this.assessmentUrl+'getKPALevelChars', kpaLevel);
       }
 
-      getRunKPALevelChars(kpaID:string, levelID:string, frmwrk:string, version:string, variant:string): Observable<Char[]>{
-        return this.http.get<Char[]>(this.assessmentUrl+'api/chars?frmwrk='+frmwrk+'&version='+version+'&variant='+variant+'&kpaID='+kpaID+'&levelID='+levelID+'&ID=1&type=allids')
+      getRunKPALevelChars(kpaID:string, levelID:string, Frmwrk:string, Version:string, Variant:string): Observable<Char[]>{
+        let idSet:any = {kpaId:kpaID, levelId:levelID,frmwrk:Frmwrk,version:Version, variant:Variant}
+        return this.http.post<Char[]>(this.assessmentUrl+'getRunKPALevelChars', idSet);
       }
 
       addChar(characteristic){
@@ -120,6 +122,27 @@ constructor(private http: HttpClient) { }
 
       clearAssessment(assess){
         return this.http.put(this.assessmentUrl+'clearAssessment', assess);
+      }
+
+      /*Exec-Results*/
+      getAllChars(): Observable<Char[]>{
+        return this.http.get<Char[]>(this.assessmentUrl+'api/chars?kpaID=1&levelID=1&ID=1&type=All')
+      }
+
+      getCurrentUserResults(kpaID:string, levelID:string, assessID:string, userID:number): Observable<LResult[]>{
+        return this.http.get<LResult[]>(this.assessmentUrl+'api/results?userID='+userID+'&kpaID='+kpaID+'&levelID='+levelID+'&charID=1&assessID='+assessID+'&type=comboidcurrent')
+      }
+
+      getAllUserResults(kpaID:string, levelID:string, assessID:string): Observable<LResult[]>{
+        return this.http.get<LResult[]>(this.assessmentUrl+'api/results?userID=1&kpaID='+kpaID+'&levelID='+levelID+'&charID=1&assessID='+assessID+'&type=comboidforall')
+      }
+
+      postResult(result){
+        return this.http.post(this.assessmentUrl+'api/results', result)
+      }
+
+      putResult(id:string,result){
+        return this.http.put(this.assessmentUrl+'api/results/'+id, result)
       }
 
 

@@ -14,6 +14,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { KPALevel } from 'src/app/Models/Assessments/KPALevel';
 import { Char } from 'src/app/Models/Assessments/char';
 import { from } from 'rxjs';
+import { AreYouSureComponent } from 'src/app/kwenza/MaturityAssessments/are-you-sure/are-you-sure.component';
 
 @Component({
   selector: 'app-manage-characteristics',
@@ -215,7 +216,15 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
   }
 
   onDelete(el:any){
-    //Call funtion to update database
+    const elementIndex = this.elements.findIndex((elem: any) => el === elem);
+    const modalOptions = {
+      data: {
+        editableRow: {message:"Are you sure you want to DELETE characteristic: " + el.id + "?"}
+      }
+    };
+    this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
+    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
+      //Call funtion to update database
     this.assessmentService.deleteChar(el).toPromise().then((data: any) => {
       // success notification
       this.toastrService.warning('Deleted Successfully!');
@@ -229,6 +238,8 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
         // error notification
         //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
         this.toastrService.error(error);
+    });
+
     });
   }
 

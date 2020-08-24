@@ -69,7 +69,7 @@ const routes: Routes = [
         { path: 'bp-assessment', component: BpAssessmentComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'assessment-config', component: AssessmentConfigComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'exec-assessment-landing', component: ExecAssessmentLandingComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-        { path: 'kpa-assessment', component: KpaAssessmentComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'kpa-assessment/:id', component: KpaAssessmentComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'kpa-results', component: ViewKpaResultsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'exec-assessment-config', component: ExecAssessmentConfigComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'manage-exec-kpas', component: ManageKpasComponent, pathMatch: 'full', canActivate: [AuthGuard]},

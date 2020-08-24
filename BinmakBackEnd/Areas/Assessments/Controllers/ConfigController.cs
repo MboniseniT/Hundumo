@@ -293,6 +293,28 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
         }
 
+        [HttpPost("getRunKPALevelChars")]
+        public IActionResult GetRunKPALevelChars([FromBody] RunChars idSet)
+        {
+            try
+            {
+                var lAction = _context.characteristics.Where(r => r.kpa_id == idSet.kpaID && r.level_id == idSet.levelID && r.frmwrk_id == idSet.frmwrk && r.version_id == idSet.version && r.variant_id == idSet.variant).ToList();
+
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("The Characteristics not found!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+        }
+
         [HttpPost("addChar")]
         public IActionResult AddChar([FromBody] Characteristics Char)
         {
