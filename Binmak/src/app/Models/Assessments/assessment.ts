@@ -1,12 +1,12 @@
 export class Assessment{
-  ID:string;
+  id:string;
   assess_name:string;
   assess_date:string;
-  op_name:string;
+  assetNodeId:string;
   version_id:number;
   variant_id:number;
   frmwrk_id:number;
-  user_id:number;
+  user_id:string;
   kpa1:string;
   kpa2:string;
   kpa3:string;

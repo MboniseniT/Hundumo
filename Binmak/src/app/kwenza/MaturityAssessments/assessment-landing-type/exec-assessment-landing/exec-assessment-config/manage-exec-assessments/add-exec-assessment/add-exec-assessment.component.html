@@ -44,11 +44,18 @@
     <div class="row">
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <div class="md-form">
+          <mdb-select [options]="assetNodes" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="assetNodeId"
+          label="* AssetNode" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="assetNodeId.invalid && (assetNodeId.dirty || assetNodeId.touched)">AssetNode is required</mdb-error>
+        </div>
+        <!-- <div class="md-form">
           <input id="op_name" type="text" class="form-control" formControlName="op_name" mdbInput mdbValidate
                  [validateSuccess]="false">
           <label for="op_name">* Operation Name</label>
           <mdb-error *ngIf="op_name.invalid && (op_name.dirty || op_name.touched)">Operation Name is required</mdb-error>
-        </div>
+        </div> -->
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <div class="md-form">
@@ -59,14 +66,14 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <!-- <div class="md-form">
+        <div class="md-form">
           <input id="id" type="text" class="form-control" formControlName="id" mdbInput mdbValidate
                  [validateSuccess]="false">
           <label for="id">* ID</label>
           <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error>
-        </div> -->
+        </div>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <div class="md-form">
@@ -76,7 +83,7 @@
           <mdb-error *ngIf="assess_name.invalid && (assess_name.dirty || assess_name.touched)">Assessment Name is required</mdb-error>
         </div>
       </div>
-    </div>
+    </div> -->
   </mdb-tab>
   <!--Panel 2-->
   <mdb-tab heading="KPA 1-6">
@@ -378,7 +385,7 @@
             (click)="modalRef.hide()" mdbWavesEffect>Close
     </button>
     <button [disabled]="!form.valid" type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
-             (click)="editRow()">Save!
+             (click)="onSave()">Save!
     </button>
   </div>
 </div>

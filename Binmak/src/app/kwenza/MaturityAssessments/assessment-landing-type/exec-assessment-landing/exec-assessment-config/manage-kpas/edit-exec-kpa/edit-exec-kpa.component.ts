@@ -26,7 +26,7 @@ export class EditExecKpaComponent implements OnInit {
     this.form.controls['id'].patchValue(this.editableRow.id);
       this.form.controls['name'].patchValue(this.editableRow.name);
       this.form.controls['description'].patchValue(this.editableRow.description);
-      this.form.controls['userId'].patchValue(JSON.parse(localStorage.getItem('currentUser')).firstName);
+      this.form.controls['userId'].patchValue(JSON.parse(localStorage.getItem('currentUser')).userId);
   }
 
   editRow() {

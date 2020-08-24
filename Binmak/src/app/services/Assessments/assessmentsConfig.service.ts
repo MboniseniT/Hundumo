@@ -8,6 +8,7 @@ import { KPALevel } from 'src/app/Models/Assessments/KPALevel';
 import { Frmwrk } from 'src/app/Models/Assessments/frmwrk';
 import { Variant } from 'src/app/Models/Assessments/variant';
 import { Version } from 'src/app/Models/Assessments/version';
+import { Assessment } from 'src/app/Models/Assessments/assessment';
 
 @Injectable({
   providedIn: 'root'
@@ -99,9 +100,14 @@ constructor(private http: HttpClient) { }
         return this.http.get<Variant[]>(this.assessmentUrl+'getVariants');
       }
 
+      /*Variants*/
+      getAssestNodes(): Observable<Variant[]>{
+        return this.http.get<Variant[]>(this.assessmentUrl+'getAssestNodes');
+      }
+
       /*Assessments*/
-      getAssessments(): Observable<Char[]>{
-        return this.http.get<Char[]>(this.assessmentUrl+'getAssessments');
+      getAssessments(): Observable<Assessment[]>{
+        return this.http.get<Assessment[]>(this.assessmentUrl+'getAssessments');
       }
 
       addAssessment(assess){

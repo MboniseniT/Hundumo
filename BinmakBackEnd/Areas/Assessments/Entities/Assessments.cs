@@ -13,11 +13,11 @@ namespace BinmakBackEnd.Areas.Assessments.Entities
         public int ID { get; set; }
         public string assess_name { get; set; }
         public string assess_date { get; set; }
-        public string op_name { get; set; }
+        public int assetNodeId { get; set; }
         public int version_id { get; set; }
         public int variant_id { get; set; }
         public int frmwrk_id { get; set; }
-        public Nullable<int> user_id { get; set; }
+        public string user_id { get; set; }
         public string kpa1 { get; set; }
         public string kpa2 { get; set; }
         public string kpa3 { get; set; }

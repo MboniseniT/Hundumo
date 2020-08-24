@@ -432,12 +432,37 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        //Variants
+        [HttpGet("getAssestNodes")]
+        public IActionResult GetAssetNodes()
+        {
+            try
+            {
+                //May need to use the reference to narrow down the list
+                var lAction = _context.AssetNodes.Where(a => a.AssetNodeTypeId == 1 || a.AssetNodeTypeId == 2).ToList();
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("HTTP resource is currently unavailable!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
         //Assessments
         [HttpGet("getAssessments")]
         public IActionResult GetAllAssessments()
         {
             try
             {
+                //May need to use the reference parameter to narrow down the list
                 var lAction = _context.assessments.ToList();
                 if (lAction != null)
                 {
@@ -482,11 +507,23 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         {
             try
             {
-                _context.assessments.Add(Assess);
-                _context.SaveChanges();
+                //may need to add a reference parameter similar to the one used in assetNodes
+                var lAction = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == Assess.assetNodeId);
+                if (lAction != null)
+                {
+                    //return Ok(lAction);
+                    Assess.assess_name = lAction.Name + "_" + Assess.assess_date;
+                    _context.assessments.Add(Assess);
+                    _context.SaveChanges();
 
-                var message = Created("", Assess);
-                return message;
+                    var message = Created("", Assess);
+                    return message;
+                }
+                else
+                {
+                    return NotFound("HTTP resource is currently unavailable!");
+                }
+                
             }
             catch (Exception ex)
             {
@@ -519,22 +556,19 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
-        [HttpPut("editAssessment")]
-        public IActionResult EditAssessment([FromBody] Assessment Assess)
+        [HttpPut("clearAssessment")]
+        public IActionResult ClearAssessment([FromBody] Assessment Assess)
         {
             try
             {
-                var lAction = _context.assessments.FirstOrDefault(a => a.ID == Assess.ID);
+                var lAction = _context.results.Where(a => a.assess_id == Assess.ID).ToList();
                 if (lAction == null)
                 {
-                    return NotFound("The Assessment with ID = " + Assess.ID + " not found to update!");
+                    return NotFound("The Assessment with ID = " + Assess.ID + " not found to clear!");
                 }
                 else
                 {
-                    lAction.frmwrk_id = Assess.frmwrk_id;
-                    lAction.user_id = Assess.user_id;
-                    lAction.variant_id = Assess.variant_id;
-                    lAction.version_id = Assess.version_id;
+                    _context.results.RemoveRange(lAction);
                     _context.SaveChanges();
                     return Ok(lAction);
                 }

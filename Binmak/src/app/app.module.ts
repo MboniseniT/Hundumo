@@ -55,6 +55,7 @@ import { SelectKpaLevelComponent } from './kwenza/MaturityAssessments/assessment
 import { AddCharacteristicComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/add-characteristic/add-characteristic.component';
 import { AddExecAssessmentComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/add-exec-assessment/add-exec-assessment.component';
 import { ManageExecAssessmentsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/manage-exec-assessments.component';
+import { AreYouSureComponent } from './kwenza/MaturityAssessments/are-you-sure/are-you-sure.component'
 
 //import { ChartModule } from 'angular-highcharts';
 
@@ -99,7 +100,8 @@ import { ManageExecAssessmentsComponent } from './kwenza/MaturityAssessments/ass
     SelectKpaLevelComponent,
     AddCharacteristicComponent,
     AddExecAssessmentComponent,
-    ManageExecAssessmentsComponent
+    ManageExecAssessmentsComponent,
+    AreYouSureComponent
   ],
   imports: [
     BrowserModule,

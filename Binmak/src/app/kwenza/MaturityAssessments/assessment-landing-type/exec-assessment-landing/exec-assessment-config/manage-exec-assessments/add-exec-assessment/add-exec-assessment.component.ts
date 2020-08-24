@@ -23,6 +23,9 @@ export class AddExecAssessmentComponent implements OnInit {
   frmwrks: Array<any>;
   versions: Array<any>;
   variants: Array<any>;
+  assetNodes: Array<any>;
+
+  opName:string;
 
   kpa: KPA[] = [];
   initKPA: KPA[] = [
@@ -48,9 +51,10 @@ export class AddExecAssessmentComponent implements OnInit {
   KPAtotalRecords:number;
 
   public form: FormGroup = new FormGroup({
-    op_name: new FormControl('', Validators.required),
+    assetNodeId: new FormControl('', Validators.required),
     assess_date: new FormControl('', Validators.required),
-    assess_name: new FormControl('', Validators.required),
+    assess_name: new FormControl({value: '', disabled: true}),
+    user_id: new FormControl({value: '', disabled: true}),
     frmwrk_id: new FormControl('', Validators.required),
     version_id: new FormControl('', Validators.required),
     variant_id: new FormControl('', Validators.required),
@@ -99,8 +103,10 @@ export class AddExecAssessmentComponent implements OnInit {
       this.kpa17.disable();
     }
 
-    editRow() {
+    onSave() {
+      this.form.controls['user_id'].patchValue(JSON.parse(localStorage.getItem('currentUser')).userId);
       this.editableRow = this.form.getRawValue();
+      //console.log(this.editableRow);
       this.saveButtonClicked.next(this.editableRow);
       this.modalRef.hide();
     }
@@ -150,10 +156,19 @@ export class AddExecAssessmentComponent implements OnInit {
           })
         }
       );
+
+      //retrieve AssetNodes from Database
+      this.assessmentService.getAssestNodes().subscribe(
+        resp => {
+          console.log(resp);
+          this.assetNodes = resp.map((t: any) => {
+            return { label: t.name, value: t.assetNodeId }
+          })
+        }
+      );
     }
 
-      get id() { return this.form.get('id'); }
-      get op_name() { return this.form.get('op_name'); }
+      get assetNodeId() { return this.form.get('assetNodeId'); }
       get assess_date() { return this.form.get('assess_date'); }
       get assess_name() { return this.form.get('assess_name'); }
       get frmwrk_id() { return this.form.get('frmwrk_id'); }

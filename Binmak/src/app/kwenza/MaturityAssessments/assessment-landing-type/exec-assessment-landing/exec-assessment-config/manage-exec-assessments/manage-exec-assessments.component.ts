@@ -14,6 +14,8 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { KPALevel } from 'src/app/Models/Assessments/KPALevel';
 import { Char } from 'src/app/Models/Assessments/char';
 import { from } from 'rxjs';
+import { Assessment } from 'src/app/Models/Assessments/assessment';
+import { AreYouSureComponent } from 'src/app/kwenza/MaturityAssessments/are-you-sure/are-you-sure.component';
 
 @Component({
   selector: 'app-manage-exec-assessments',
@@ -25,8 +27,8 @@ export class ManageExecAssessmentsComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row', { static: true }) row: ElementRef;
 
-  elements: Char[] = [];
-  headElements = ['ID', 'Description', 'commands']; //'LastEditedBy',
+  elements: Assessment[] = [];
+  headElements = ['ID', 'Assessment Name', 'Date', 'commands']; //'LastEditedBy',
 
   modalRef: MDBModalRef;
 
@@ -71,7 +73,7 @@ export class ManageExecAssessmentsComponent implements OnInit, AfterViewInit {
   }
 
 ngOnInit():void {
-    //this.loadDataTable();
+    this.loadDataTable();
     this.loadDropdowns();
   }
 
@@ -79,7 +81,7 @@ ngOnInit():void {
   loadDataTable(){
 
     this.kpaLevel = Object.assign(this.kpaLevel, this.formKPALevel.value);
-    this.assessmentService.getKPALevelChars(this.kpaLevel).subscribe((data: Char[]) => {
+    this.assessmentService.getAssessments().subscribe((data: Assessment[]) => {
       this.elements = data;
           this.mdbTable.setDataSource(this.elements);
       }, error => {
@@ -164,15 +166,13 @@ ngOnInit():void {
     this.modalRef = this.modalService.show(AddExecAssessmentComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
 
-      console.log(newElement);
       //Call funtion to update database
       this.assessmentService.addAssessment(newElement).toPromise().then((data: any) => {
-        //console.log(data);
         // success notification
         this.toastrService.success('Addition Successful!');
         setTimeout(() => {
           //update DataTable
-          //this.loadDataTable();
+          this.loadDataTable();
         });
       }, error => {
         console.log('httperror: ');
@@ -186,51 +186,57 @@ ngOnInit():void {
     //this.mdbTable.setDataSource(this.elements);
   }
 
-  onEdit(el: any){
+  onClear(el: any){
     const elementIndex = this.elements.findIndex((elem: any) => el === elem);
     const modalOptions = {
       data: {
-        editableRow: el
+        editableRow: {message:"Are you sure you want to CLEAR all results associated with assessment: " + el.assess_name + "?"}
       }
     };
-    this.modalRef = this.modalService.show(EditCharacteristicComponent, modalOptions);
+    this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-      this.assessmentService.editChar(newElement).toPromise().then((data: any) => {
+      this.assessmentService.clearAssessment(el).toPromise().then((data: any) => {
+        // success notification
+        this.toastrService.success('Cleared Successfully!');
+
+      }, error => {
+        console.log('httperror: ');
+          console.log(error);
+          // error notification
+          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+          this.toastrService.error(JSON.stringify(error));
+      });
+
+    });
+  }
+
+  onDelete(el:any){
+    const elementIndex = this.elements.findIndex((elem: any) => el === elem);
+    const modalOptions = {
+      data: {
+        editableRow: {message:"Are you sure you want to DELETE assessment: " + el.assess_name + "?"}
+      }
+    };
+    this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
+    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
+      //Call funtion to update database
+      this.assessmentService.deleteAssessment(el).toPromise().then((data: any) => {
         //console.log(data);
         // success notification
-        this.toastrService.success('Update Successful!');
+        this.toastrService.warning('Deleted Successfully!');
         setTimeout(() => {
           //update DataTable
-          this.elements[elementIndex] = newElement;
+          this.loadDataTable();
         });
       }, error => {
         console.log('httperror: ');
           console.log(error);
           // error notification
           //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
-          this.toastrService.error(error);
+          this.toastrService.error(JSON.stringify(error));
       });
 
-    });
-    this.mdbTable.setDataSource(this.elements);
-  }
-
-  onDelete(el:any){
-    //Call funtion to update database
-    this.assessmentService.deleteChar(el).toPromise().then((data: any) => {
-      // success notification
-      this.toastrService.warning('Deleted Successfully!');
-      setTimeout(() => {
-        //update DataTable
-        this.loadDataTable();
-      });
-    }, error => {
-      console.log('httperror: ');
-        console.log(error);
-        // error notification
-        //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
-        this.toastrService.error(error);
     });
   }
 
