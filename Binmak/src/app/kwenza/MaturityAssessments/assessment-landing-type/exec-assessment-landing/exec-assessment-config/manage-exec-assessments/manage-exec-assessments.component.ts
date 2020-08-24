@@ -172,7 +172,7 @@ ngOnInit():void {
         this.toastrService.success('Addition Successful!');
         setTimeout(() => {
           //update DataTable
-          this.loadDataTable();
+          //this.loadDataTable();
         });
       }, error => {
         console.log('httperror: ');

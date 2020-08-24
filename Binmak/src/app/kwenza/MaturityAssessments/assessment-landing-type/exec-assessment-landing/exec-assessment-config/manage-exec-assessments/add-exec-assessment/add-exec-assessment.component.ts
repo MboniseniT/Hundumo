@@ -48,7 +48,6 @@ export class AddExecAssessmentComponent implements OnInit {
   KPAtotalRecords:number;
 
   public form: FormGroup = new FormGroup({
-    id: new FormControl('', Validators.required),
     op_name: new FormControl('', Validators.required),
     assess_date: new FormControl('', Validators.required),
     assess_name: new FormControl('', Validators.required),
@@ -110,7 +109,7 @@ export class AddExecAssessmentComponent implements OnInit {
       this.assessmentService.GetExecKPAs().subscribe(
         (data:KPA[]) => {
           this.kpa = data;
-          console.log(data);
+          //console.log(data);
           this.KPAtotalRecords = data.length;
         }, error => {
           console.log('httperror: ');

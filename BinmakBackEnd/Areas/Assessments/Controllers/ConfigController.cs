@@ -433,5 +433,117 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         }
 
         //Assessments
+        [HttpGet("getAssessments")]
+        public IActionResult GetAllAssessments()
+        {
+            try
+            {
+                var lAction = _context.assessments.ToList();
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("HTTP resource is currently unavailable!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPost("getAssessmentById")]
+        public IActionResult GetAssessmentById([FromBody] Assessment Assess)
+        {
+            try
+            {
+                var lAction = _context.assessments.FirstOrDefault(a => a.ID == Assess.ID);
+
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("The Assessment with ID = " + Assess.ID + " not found!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+        }
+
+        [HttpPost("addAssessment")]
+        public IActionResult AddAssessment([FromBody] Assessment Assess)
+        {
+            try
+            {
+                _context.assessments.Add(Assess);
+                _context.SaveChanges();
+
+                var message = Created("", Assess);
+                return message;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPost("deleteAssessment")]
+        public IActionResult DeleteAssessment([FromBody] Assessment Assess)
+        {
+            try
+            {
+                var lAction = _context.assessments.FirstOrDefault(a => a.ID == Assess.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The Assessment with ID = " + Assess.ID + " not found to delete!");
+                }
+                else
+                {
+                    _context.assessments.Remove(lAction);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPut("editAssessment")]
+        public IActionResult EditAssessment([FromBody] Assessment Assess)
+        {
+            try
+            {
+                var lAction = _context.assessments.FirstOrDefault(a => a.ID == Assess.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The Assessment with ID = " + Assess.ID + " not found to update!");
+                }
+                else
+                {
+                    lAction.frmwrk_id = Assess.frmwrk_id;
+                    lAction.user_id = Assess.user_id;
+                    lAction.variant_id = Assess.variant_id;
+                    lAction.version_id = Assess.version_id;
+                    _context.SaveChanges();
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
     }
 }
