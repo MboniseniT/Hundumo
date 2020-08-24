@@ -99,5 +99,23 @@ constructor(private http: HttpClient) { }
         return this.http.get<Variant[]>(this.assessmentUrl+'getVariants');
       }
 
+      /*Assessments*/
+      getAssessments(): Observable<Char[]>{
+        return this.http.get<Char[]>(this.assessmentUrl+'getAssessments');
+      }
+
+      addAssessment(assess){
+        return this.http.post(this.assessmentUrl+'addAssessment', assess);
+      }
+
+      deleteAssessment(assess){
+        return this.http.post(this.assessmentUrl+'deleteAssessment', assess);
+      }
+
+      clearAssessment(assess){
+        return this.http.put(this.assessmentUrl+'clearAssessment', assess);
+      }
+
+
 
 }
