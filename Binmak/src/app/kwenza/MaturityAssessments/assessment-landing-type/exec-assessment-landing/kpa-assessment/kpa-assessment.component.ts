@@ -749,11 +749,11 @@ export class KpaAssessmentComponent implements OnInit {
 
   setTimeout(() => {
     let newKpaID = Number(this.kpaID) + 1;
-      //this._router.navigate(['/binmak/kpa-assessment/'+newKpaID.toString()]);
-      // setTimeout(() => {
-      //   //call refresh from AppComponent
+      this._router.navigate(['/binmak/kpa-assessment/'+newKpaID.toString()]);
+      setTimeout(() => {
+        //call refresh from AppComponent
       this.refresh("");
-      // });
+      });
   },100);
   }
 

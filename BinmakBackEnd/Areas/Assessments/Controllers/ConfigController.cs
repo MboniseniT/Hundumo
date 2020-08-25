@@ -399,7 +399,29 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 }
                 else
                 {
-                    return NotFound("The Characteristics not found!");
+                    return NotFound("The Results not found!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+        }
+
+        [HttpPost("getAllUserResults")]
+        public IActionResult GetAllUserResults([FromBody] RunResults idSet)
+        {
+            try
+            {
+                var lAction = _context.results.Where(r => r.kpa_id == idSet.kpaID && r.level_id == idSet.levelID && r.assess_id == idSet.assessID).ToList();
+
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("The Results not found!");
                 }
             }
             catch (Exception ex)

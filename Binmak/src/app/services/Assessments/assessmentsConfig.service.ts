@@ -134,8 +134,9 @@ constructor(private http: HttpClient) { }
         return this.http.post<LResult[]>(this.assessmentUrl+'getCurrentUserResults', idSet);
       }
 
-      getAllUserResults(kpaID:string, levelID:string, assessID:string): Observable<LResult[]>{
-        return this.http.get<LResult[]>(this.assessmentUrl+'api/results?userID=1&kpaID='+kpaID+'&levelID='+levelID+'&charID=1&assessID='+assessID+'&type=comboidforall')
+      getAllUserResults(kpa_id:string, level_id:string, assess_id:string): Observable<LResult[]>{
+        let idSet:any = {kpaID:kpa_id, levelID: level_id, assessID:assess_id};
+        return this.http.post<LResult[]>(this.assessmentUrl+'getAllUserResults', idSet);
       }
 
       postResult(result){
