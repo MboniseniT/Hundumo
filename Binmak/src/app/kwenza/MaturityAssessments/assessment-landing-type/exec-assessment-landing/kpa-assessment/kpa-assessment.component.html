@@ -1,95 +1,110 @@
-<div class="container">
-  <mdb-card class="z-depth-5">
-    <mdb-card-header style="background-color: #032c57 !important;">
-      <div class="row">
-        <div class="col-6">
-          <h5 style="color: white;"><a [hidden]="first" (click)="onBack()" style="color: white;"><i class="fas fa-arrow-circle-left"></i></a> {{initKPA[kpaID - 1].name}}</h5>
-          <!-- {{getKPAName(kpaID - 1)}} -->
-        </div>
-        <div class="col-6 d-flex flex-row-reverse">
-          <h5><a [hidden]="last" (click)="onNext()" style="color: white;"><i class="fas fa-arrow-circle-right"></i></a></h5>
-        </div>
-      </div>
-    </mdb-card-header>
-    <mdb-card-body>
-      <form (ngSubmit)='onAdd()' #Form="ngForm">
-        <div class="form-group col-12">
-          <div class="row pt-2 pb-2">
-            <div class="col">
-              <textarea rows="6" type="text" class="form-control" placeholder="{{initKPA[kpaID - 1].description}}" ngModel #description="ngModel"
-                readonly="true" name="description"></textarea>
+
+  <div class="row">
+  <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+    <button type="button" class="btn btn-info mb-3" aria-label="Close" mdbWavesEffect (click)="back()"
+      style="background-color: rgb(41, 40, 40) !important; color: white; width: 100px;"> <i class="fa fa-arrow-left"></i>
+      BACK</button>
+  </div>
+  </div>
+
+<div class="row">
+  <div class="container">
+      <mdb-card class="z-depth-5">
+        <mdb-card-header style="background-color: #032c57 !important;">
+          <div class="row">
+            <div class="col-6">
+              <h5 style="color: white;"><a [hidden]="first" (click)="onBack()" style="color: white;"><i class="fas fa-arrow-circle-left"></i></a> {{initKPA[kpaID - 1].name}}</h5>
+              <!-- {{getKPAName(kpaID - 1)}} -->
+            </div>
+            <div class="col-6 d-flex flex-row-reverse">
+              <h5><a [hidden]="last" (click)="onNext()" style="color: white;"><i class="fas fa-arrow-circle-right"></i></a></h5>
             </div>
           </div>
-          <mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-primary tabs-3'" [contentClass]="'card'">
-            <mdb-tab heading="Innocence" id="tab1">
-              <div class="form-group">
-                <div class="custom-control custom-checkbox" id="innocence" *ngFor="let innocence of level1; let i = index;">
-                  <label class="checkbox-inline">
-                    <input type="checkbox" name="{{innocence.id}}" [(ngModel)]="initlevel1Results[i].value">
-                    {{innocence.description}}
-                  </label>
+        </mdb-card-header>
+        <mdb-card-body>
+          <form (ngSubmit)='onAdd()' #Form="ngForm">
+            <div class="form-group col-12">
+              <div class="row pt-2 pb-2">
+                <div class="col">
+                  <textarea rows="6" type="text" class="form-control" placeholder="{{initKPA[kpaID - 1].description}}" ngModel #description="ngModel"
+                    readonly="true" name="description"></textarea>
                 </div>
               </div>
-            </mdb-tab>
-            <mdb-tab heading="Awareness" id="tab2">
-              <div class="form-group">
-                <div class="custom-control custom-checkbox" id="innocence" *ngFor="let awareness of level2; let i=index;">
-                  <label class="checkbox-inline">
-                    <input id="check{{awareness.id}}" type="checkbox" name="{{awareness.id}}" [(ngModel)]="initlevel2Results[i].value">
-                    {{awareness.description}}
-                  </label>
-                </div>
-              </div>
-            </mdb-tab>
-            <mdb-tab heading="Understanding" id="tab3">
-              <div class="form-group">
-                <div class="custom-control custom-checkbox" id="innocence" *ngFor="let understanding of level3; let i = index;">
-                  <label class="checkbox-inline">
-                    <input type="checkbox" name="{{understanding.id}}" [(ngModel)]="initlevel3Results[i].value">
-                    {{understanding.description}}
-                  </label>
-                </div>
-              </div>
-            </mdb-tab>
-            <mdb-tab heading="Competence" id="tab4">
-              <div class="form-group">
-                <div class="custom-control custom-checkbox" id="innocence" *ngFor="let competence of level4; let i=index;">
-                  <label class="checkbox-inline">
-                    <input type="checkbox" name="{{competence.id}}" [(ngModel)]="initlevel4Results[i].value">
-                    {{competence.description}}
-                  </label>
-                </div>
-              </div>
-            </mdb-tab>
-            <mdb-tab heading="Excellence" id="tab5">
-              <div class="form-group">
-                <div class="custom-control custom-checkbox" id="innocence" *ngFor="let excellence of level5; let i = index;">
-                  <label class="checkbox-inline">
-                    <input type="checkbox" name="{{excellence.id}}" [(ngModel)]="initlevel5Results[i].value">
-                    {{excellence.description}}
-                  </label>
-                </div>
-              </div>
-            </mdb-tab>
-          </mdb-tabset>
-          <hr />
-              <div class="row">
-                <div class="col-md-6">
-                  <button [disabled]="!Form.valid || level1ResultstotalRecords" style="width: 100%;" type="submit"
-                    class="btn btn-primary mb-2">Submit</button>
-                </div>
-                <div class="col-md-6">
-                  <button [disabled]="!level1ResultstotalRecords" (click)="onUpdate()" style="width: 100%;" type="button"
-                    class="btn btn-secondary mb-2">Update</button>
-                </div>
-                <!-- <div class="col-md-4">
-                  <button [disabled]="!charID || Form.valid" (click)="onDelete()" style="width: 100%;" type="button"
-                    class="btn btn-dark">Delete</button>
-                </div> -->
-              </div>
-        </div>
-      </form>
-    </mdb-card-body>
-    something
-    </mdb-card>
+              <mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-primary tabs-3'" [contentClass]="'card'">
+                <mdb-tab heading="Innocence" id="tab1">
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox" id="innocence" *ngFor="let innocence of level1; let i = index;">
+                      <label class="checkbox-inline">
+                        <mdb-checkbox name="{{innocence.id}}" [(ngModel)]="initlevel1Results[i].value">{{innocence.description}}</mdb-checkbox>
+                        <!-- <input type="checkbox" name="{{innocence.id}}" [(ngModel)]="initlevel1Results[i].value"> -->
+                        <!-- {{innocence.description}} -->
+                      </label>
+                    </div>
+                  </div>
+                </mdb-tab>
+                <mdb-tab heading="Awareness" id="tab2">
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox" id="innocence" *ngFor="let awareness of level2; let i=index;">
+                      <label class="checkbox-inline">
+                        <mdb-checkbox id="check{{awareness.id}}" name="{{awareness.id}}" [(ngModel)]="initlevel2Results[i].value">{{awareness.description}}</mdb-checkbox>
+                        <!-- <input id="check{{awareness.id}}" type="checkbox" name="{{awareness.id}}" [(ngModel)]="initlevel2Results[i].value">
+                        {{awareness.description}} -->
+                      </label>
+                    </div>
+                  </div>
+                </mdb-tab>
+                <mdb-tab heading="Understanding" id="tab3">
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox" id="innocence" *ngFor="let understanding of level3; let i = index;">
+                      <label class="checkbox-inline">
+                        <mdb-checkbox name="{{understanding.id}}" [(ngModel)]="initlevel3Results[i].value">{{understanding.description}}</mdb-checkbox>
+                        <!-- <input type="checkbox" name="{{understanding.id}}" [(ngModel)]="initlevel3Results[i].value">
+                        {{understanding.description}} -->
+                      </label>
+                    </div>
+                  </div>
+                </mdb-tab>
+                <mdb-tab heading="Competence" id="tab4">
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox" id="innocence" *ngFor="let competence of level4; let i=index;">
+                      <label class="checkbox-inline">
+                        <mdb-checkbox name="{{competence.id}}" [(ngModel)]="initlevel4Results[i].value">{{competence.description}}</mdb-checkbox>
+                        <!-- <input type="checkbox" name="{{competence.id}}" [(ngModel)]="initlevel4Results[i].value">
+                        {{competence.description}} -->
+                      </label>
+                    </div>
+                  </div>
+                </mdb-tab>
+                <mdb-tab heading="Excellence" id="tab5">
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox" id="innocence" *ngFor="let excellence of level5; let i = index;">
+                      <label class="checkbox-inline">
+                        <mdb-checkbox name="{{excellence.id}}" [(ngModel)]="initlevel5Results[i].value">{{excellence.description}}</mdb-checkbox>
+                        <!-- <input type="checkbox" name="{{excellence.id}}" [(ngModel)]="initlevel5Results[i].value">
+                        {{excellence.description}} -->
+                      </label>
+                    </div>
+                  </div>
+                </mdb-tab>
+              </mdb-tabset>
+              <hr />
+                  <div class="row">
+                    <div class="col-md-6">
+                      <button [disabled]="!Form.valid || level1ResultstotalRecords" type="submit"
+                        class="btn btn-primary btn-block mb-2" style="background-color: #032c57 !important; color: white;">Submit</button>
+                    </div>
+                    <div class="col-md-6">
+                      <button [disabled]="!level1ResultstotalRecords" (click)="onUpdate()" style="width: 100%;" type="button"
+                        class="btn btn-secondary mb-2">Update</button>
+                    </div>
+                    <!-- <div class="col-md-4">
+                      <button [disabled]="!charID || Form.valid" (click)="onDelete()" style="width: 100%;" type="button"
+                        class="btn btn-dark">Delete</button>
+                    </div> -->
+                  </div>
+            </div>
+          </form>
+        </mdb-card-body>
+        </mdb-card>
+    </div>
 </div>

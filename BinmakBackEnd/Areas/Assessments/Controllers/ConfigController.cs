@@ -385,6 +385,71 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        //Run Results
+        [HttpPost("getCurrentUserResults")]
+        public IActionResult GetCurrentUserResults([FromBody] RunResults idSet)
+        {
+            try
+            {
+                var lAction = _context.results.Where(r => r.kpa_id == idSet.kpaID && r.level_id == idSet.levelID && r.assess_id == idSet.assessID && r.user_id == idSet.userID).ToList();
+
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("The Characteristics not found!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+        }
+
+        [HttpPost("addResult")]
+        public IActionResult AddResult([FromBody] Results Result)
+        {
+            try
+            {
+                _context.results.Add(Result);
+                _context.SaveChanges();
+
+                var message = Created("", Result);
+                return message;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPut("editResult")]
+        public IActionResult editResult([FromBody] Results Result)
+        {
+            try
+            {
+                var lAction = _context.results.FirstOrDefault(a => a.ID == Result.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The Result with ID = " + Result.ID + " not found to update!");
+                }
+                else
+                {
+                    lAction.value = Result.value;
+                    _context.SaveChanges();
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
         //Frameworks
         [HttpGet("getFrameworks")]
         public IActionResult GetFrameworks()

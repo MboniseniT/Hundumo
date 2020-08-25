@@ -129,8 +129,9 @@ constructor(private http: HttpClient) { }
         return this.http.get<Char[]>(this.assessmentUrl+'api/chars?kpaID=1&levelID=1&ID=1&type=All')
       }
 
-      getCurrentUserResults(kpaID:string, levelID:string, assessID:string, userID:number): Observable<LResult[]>{
-        return this.http.get<LResult[]>(this.assessmentUrl+'api/results?userID='+userID+'&kpaID='+kpaID+'&levelID='+levelID+'&charID=1&assessID='+assessID+'&type=comboidcurrent')
+      getCurrentUserResults(kpa_id:string, level_id:string, assess_id:string, user_id:string): Observable<LResult[]>{
+        let idSet:any = {kpaID:kpa_id, levelID: level_id, assessID:assess_id, userID:user_id};
+        return this.http.post<LResult[]>(this.assessmentUrl+'getCurrentUserResults', idSet);
       }
 
       getAllUserResults(kpaID:string, levelID:string, assessID:string): Observable<LResult[]>{
@@ -138,11 +139,13 @@ constructor(private http: HttpClient) { }
       }
 
       postResult(result){
-        return this.http.post(this.assessmentUrl+'api/results', result)
+        return this.http.post(this.assessmentUrl+'addResult', result);
       }
 
       putResult(id:string,result){
-        return this.http.put(this.assessmentUrl+'api/results/'+id, result)
+        let idSet:any = {ID:id};
+        result = Object.assign(result, idSet);
+        return this.http.put(this.assessmentUrl+'editResult', result)
       }
 
 
