@@ -19,6 +19,17 @@ export class AssessmentsConfigService {
 constructor(private http: HttpClient) { }
 
 //Exec Assessments
+      /*Assessment Users*/
+      AddAssessmentUser(assessmentUser){
+        let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId, link_name: ""};
+        assessmentUser = Object.assign(assessmentUser, idSet);
+        console.log(assessmentUser);
+        return this.http.post(this.assessmentUrl+'addAssessmentUser', assessmentUser);
+      }
+      GetAssessmentUsers(): Observable<any[]>{
+        let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId};
+        return this.http.post<any[]>(this.assessmentUrl+'getAssessmentUsers', idSet);
+      }
       /*KPAs*/
       GetExecKPAs(): Observable<KPA[]>{
         return this.http.get<KPA[]>(this.assessmentUrl+'getExecKPAs');

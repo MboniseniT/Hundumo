@@ -56,6 +56,7 @@ import { AddCharacteristicComponent } from './kwenza/MaturityAssessments/assessm
 import { AddExecAssessmentComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/add-exec-assessment/add-exec-assessment.component';
 import { ManageExecAssessmentsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/manage-exec-assessments.component';
 import { AreYouSureComponent } from './kwenza/MaturityAssessments/are-you-sure/are-you-sure.component'
+import { ExecManageUsersComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/exec-manage-users/exec-manage-users.component';
 
 //import { ChartModule } from 'angular-highcharts';
 
@@ -101,7 +102,8 @@ import { AreYouSureComponent } from './kwenza/MaturityAssessments/are-you-sure/a
     AddCharacteristicComponent,
     AddExecAssessmentComponent,
     ManageExecAssessmentsComponent,
-    AreYouSureComponent
+    AreYouSureComponent,
+    ExecManageUsersComponent
   ],
   imports: [
     BrowserModule,

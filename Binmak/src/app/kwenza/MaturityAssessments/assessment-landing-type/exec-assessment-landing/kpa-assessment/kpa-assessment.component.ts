@@ -161,7 +161,7 @@ export class KpaAssessmentComponent implements OnInit {
 
   ngOnInit() {
     this.kpaID = this.route.snapshot.params['id'];
-    // localStorage.setItem("assessID", "2");
+    //localStorage.setItem("assessID", "3");
     // localStorage.setItem("userID", "29b450b6-f741-4143-8bb3-4b52ea8361e7");
     // localStorage.setItem("frmwrk", "1");
     // localStorage.setItem("version", "1");

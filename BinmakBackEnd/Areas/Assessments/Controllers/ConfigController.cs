@@ -688,5 +688,59 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
+        
+        [HttpPost("addAssessmentUser")]
+        public IActionResult AddAssessmentUser([FromBody] AssessmentUsers AssessUser)
+        {
+            try
+            {
+                var user = _context.Users.FirstOrDefault(a => a.Id == AssessUser.user_id);
+                var assessment = _context.assessments.FirstOrDefault(a => a.ID == AssessUser.assess_id);
+                if (user != null && assessment != null)
+                {
+                    AssessUser.link_name = assessment.assess_name + "-" + user.FirstName + " " + user.LastName;
+                    _context.assessmentUsers.Add(AssessUser);
+                    _context.SaveChanges();
+
+                    var message = Created("", AssessUser);
+                    return message;
+                }
+                else
+                {
+                    return NotFound("HTTP resource is currently unavailable!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPost("getAssessmentUsers")]
+        public IActionResult GetAssessmentUsers([FromBody] Reference Ref)
+        {
+            try
+            {
+                //May need to use the reference parameter to narrow down the list
+                List<AssessmentUsers> assessUsers = _context.assessmentUsers.Where(a => a.reference == Ref.reference).ToList();
+                var assessmentUsers = assessUsers.Select(result => new
+                {
+                    AssessUserId = result.ID,
+                    AssessmentId = result.assess_id,
+                    AssessmentName = _context.assessments.FirstOrDefault(id => id.ID == result.assess_id).assess_name,
+                    UserEmail = _context.Users.FirstOrDefault(id => id.Id == result.user_id).Email,
+                    UserNames = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName,
+                    Reference = _context.Users.FirstOrDefault(id => id.Id == result.reference).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.reference).LastName,
+                });
+
+                return Ok(assessmentUsers);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
     }
 }
