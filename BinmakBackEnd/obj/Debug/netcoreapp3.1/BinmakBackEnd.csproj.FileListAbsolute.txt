@@ -219,6 +219,3 @@ C:\Users\Admin\Documents\Projects\Load And Haul\Hundumo\BinmakBackEnd\bin\Debug\
 C:\Users\Admin\Documents\Projects\Load And Haul\Hundumo\BinmakBackEnd\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Admin\Documents\Projects\Load And Haul\Hundumo\BinmakBackEnd\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Admin\Documents\Projects\Load And Haul\Hundumo\BinmakBackEnd\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Users\Admin\Documents\Projects\Load And Haul\Hundumo\BinmakBackEnd\obj\Debug\netcoreapp3.1\BinmakBackEnd.csproj.CoreCompileInputs.cache
-C:\Users\Admin\Documents\Projects\Load And Haul\Hundumo\BinmakBackEnd\obj\Debug\netcoreapp3.1\BinmakBackEnd.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\Admin\Documents\Projects\Load And Haul\Hundumo\BinmakBackEnd\obj\Debug\netcoreapp3.1\BinmakBackEnd.MvcApplicationPartsAssemblyInfo.cache
