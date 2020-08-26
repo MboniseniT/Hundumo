@@ -21,7 +21,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\AssetHealth\Mappers\" />
+    <Folder Include="Areas\AssetHealth\Models\Respositories\" />
+    <Folder Include="Areas\AssetHealth\Controllers\" />
   </ItemGroup>
 
 
