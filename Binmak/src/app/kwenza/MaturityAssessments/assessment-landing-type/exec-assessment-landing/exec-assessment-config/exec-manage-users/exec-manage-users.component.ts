@@ -152,7 +152,7 @@ export class ExecManageUsersComponent implements OnInit, AfterViewInit {
         this.toastrService.success('Addition Successful!');
         setTimeout(() => {
           //update DataTable
-          //this.loadDataTable();
+          this.loadDataTable();
         });
       }, error => {
         console.log('httperror: ');
@@ -163,36 +163,6 @@ export class ExecManageUsersComponent implements OnInit, AfterViewInit {
       });
 
 
-    this.mdbTable.setDataSource(this.elements);
-  }
-
-  onEdit(el: any){
-    const elementIndex = this.elements.findIndex((elem: any) => el === elem);
-    const modalOptions = {
-      data: {
-        editableRow: el
-      }
-    };
-    this.modalRef = this.modalService.show(EditCharacteristicComponent, modalOptions);
-    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
-      //Call funtion to update database
-      this.assessmentService.editChar(newElement).toPromise().then((data: any) => {
-        //console.log(data);
-        // success notification
-        this.toastrService.success('Update Successful!');
-        setTimeout(() => {
-          //update DataTable
-          this.elements[elementIndex] = newElement;
-        });
-      }, error => {
-        console.log('httperror: ');
-          console.log(error);
-          // error notification
-          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
-          this.toastrService.error(error);
-      });
-
-    });
     this.mdbTable.setDataSource(this.elements);
   }
 
@@ -200,13 +170,13 @@ export class ExecManageUsersComponent implements OnInit, AfterViewInit {
     const elementIndex = this.elements.findIndex((elem: any) => el === elem);
     const modalOptions = {
       data: {
-        editableRow: {message:"Are you sure you want to DELETE characteristic: " + el.id + "?"}
+        editableRow: {message:"Are you sure you want to DELETE the link between " + el.assessmentName + " & "+ el.userNames +"?"}
       }
     };
     this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-    this.assessmentService.deleteChar(el).toPromise().then((data: any) => {
+    this.assessmentService.DeleteAssessmentUser(el).toPromise().then((data: any) => {
       // success notification
       this.toastrService.warning('Deleted Successfully!');
       setTimeout(() => {

@@ -742,5 +742,29 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
+
+        [HttpPost("deleteAssessmentUser")]
+        public IActionResult DeleteAssessmentUser([FromBody] TableAssessUser AssessUser)
+        {
+            try
+            {
+                var lAction = _context.assessmentUsers.FirstOrDefault(a => a.ID == AssessUser.assessUserId);
+                if (lAction == null)
+                {
+                    return NotFound("The assessUser with ID = " + AssessUser.assessUserId + " not found to delete!");
+                }
+                else
+                {
+                    _context.assessmentUsers.Remove(lAction);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
     }
 }

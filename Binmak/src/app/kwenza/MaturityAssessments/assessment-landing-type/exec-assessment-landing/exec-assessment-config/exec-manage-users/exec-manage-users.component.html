@@ -42,56 +42,57 @@
     <label for="search-input">Search</label>
   </div>
 </div>
-<table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
-  <thead class="sticky-top">
-  <tr>
-    <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements"
-        [sortBy]="headElements[i]"
-        scope="col">{{head | titlecase}}
-      <mdb-icon fas icon="sort"></mdb-icon>
-    </th>
-  </tr>
-  </thead>
-  <tbody #row>
-  <tr mdbTableCol
-      *ngFor="let el of elements; let i = index">
-    <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
-        scope="row">{{el.assessUserId}}
-    </th>
-    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
-        class="red-text">{{el.assessmentId}}
+<div class="table-responsive">
+  <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
+    <thead class="sticky-top">
+    <tr>
+      <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements"
+          [sortBy]="headElements[i]"
+          scope="col">{{head | titlecase}}
+        <mdb-icon fas icon="sort"></mdb-icon>
+      </th>
+    </tr>
+    </thead>
+    <tbody #row>
+    <tr mdbTableCol
+        *ngFor="let el of elements; let i = index">
+      <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
+          scope="row">{{el.assessUserId}}
+      </th>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
+          class="red-text">{{el.assessmentId}}
+      </td>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
+        class="red-text">{{el.assessmentName}}
     </td>
     <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
-      class="red-text">{{el.assessmentName}}
+      class="red-text">{{el.userNames}}
   </td>
   <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
-    class="red-text">{{el.userNames}}
-</td>
-<td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
-  class="red-text">{{el.userEmail}}
-</td>
-<td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
-  class="red-text">{{el.reference}}
-</td>
-    <!-- <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-      {{el.userId}}
-    </td> -->
-    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-      <!-- style="width: 200px;" -->
-      <button mdbBtn color="warning" size="sm" mdbWavesEffect (click)="onEdit(el)"><i class="far fa-edit"></i></button>
-      <button mdbBtn color="danger" size="sm" mdbWavesEffect (click)="onDelete(el)"><i class="far fa-trash-alt"></i></button>
-    </td>
-  </tr>
-  </tbody>
-  <tfoot class="grey lighten-5 w-100">
+    class="red-text">{{el.userEmail}}
+  </td>
+  <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
+    class="red-text">{{el.reference}}
+  </td>
+      <!-- <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
+        {{el.userId}}
+      </td> -->
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+        <!-- style="width: 200px;" -->
+        <button mdbBtn color="danger" size="sm" mdbWavesEffect (click)="onDelete(el)"><i class="far fa-trash-alt"></i></button>
+      </td>
+    </tr>
+    </tbody>
+    <tfoot class="grey lighten-5 w-100">
 
-  <tr>
-    <td colspan="4">
-      <mdb-table-pagination [tableEl]="tableEl" paginationAlign=""
-                            [searchDataSource]="elements"></mdb-table-pagination>
-    </td>
-  </tr>
-  </tfoot>
-</table>
+    <tr>
+      <td colspan="4">
+        <mdb-table-pagination [tableEl]="tableEl" paginationAlign=""
+                              [searchDataSource]="elements"></mdb-table-pagination>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+</div>
 </div>
 </div>

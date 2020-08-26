@@ -30,6 +30,10 @@ constructor(private http: HttpClient) { }
         let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId};
         return this.http.post<any[]>(this.assessmentUrl+'getAssessmentUsers', idSet);
       }
+
+      DeleteAssessmentUser(assessmentUser){
+        return this.http.post(this.assessmentUrl+'deleteAssessmentUser', assessmentUser);
+      }
       /*KPAs*/
       GetExecKPAs(): Observable<KPA[]>{
         return this.http.get<KPA[]>(this.assessmentUrl+'getExecKPAs');
