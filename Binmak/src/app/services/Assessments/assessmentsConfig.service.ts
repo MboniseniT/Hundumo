@@ -103,13 +103,16 @@ constructor(private http: HttpClient) { }
       }
 
       /*Variants*/
-      getAssestNodes(): Observable<Variant[]>{
-        return this.http.get<Variant[]>(this.assessmentUrl+'getAssestNodes');
+      getAssestNodes(): Observable<any[]>{
+        let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId}
+        //, JSON.parse(localStorage.getItem('currentUser')).userId
+        return this.http.post<any[]>(this.assessmentUrl+'getAssestNodes', idSet);
       }
 
       /*Assessments*/
       getAssessments(): Observable<Assessment[]>{
-        return this.http.get<Assessment[]>(this.assessmentUrl+'getAssessments');
+        let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId}
+        return this.http.post<Assessment[]>(this.assessmentUrl+'getAssessments', idSet);
       }
 
       addAssessment(assess){

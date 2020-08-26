@@ -541,14 +541,14 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
-        //Variants
-        [HttpGet("getAssestNodes")]
-        public IActionResult GetAssetNodes()
+        //Asset Nodes
+        [HttpPost("getAssestNodes")]
+        public IActionResult GetAssetNodes([FromBody] Reference Ref)
         {
             try
             {
                 //May need to use the reference to narrow down the list
-                var lAction = _context.AssetNodes.Where(a => a.AssetNodeTypeId == 1 || a.AssetNodeTypeId == 2).ToList();
+                var lAction = _context.AssetNodes.Where(a => (a.Reference == Ref.reference) && (a.AssetNodeTypeId == 1 || a.AssetNodeTypeId == 2)).ToList(); //a.AssetNodeTypeId == 1 || a.AssetNodeTypeId == 2 && 
                 if (lAction != null)
                 {
                     return Ok(lAction);
@@ -566,13 +566,13 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         }
 
         //Assessments
-        [HttpGet("getAssessments")]
-        public IActionResult GetAllAssessments()
+        [HttpPost("getAssessments")]
+        public IActionResult GetAllAssessments([FromBody] Reference Ref)
         {
             try
             {
                 //May need to use the reference parameter to narrow down the list
-                var lAction = _context.assessments.ToList();
+                var lAction = _context.assessments.Where(a => a.user_id == Ref.reference).ToList();
                 if (lAction != null)
                 {
                     return Ok(lAction);
