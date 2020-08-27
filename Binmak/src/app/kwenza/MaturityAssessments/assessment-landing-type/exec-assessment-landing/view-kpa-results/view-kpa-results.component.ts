@@ -27,8 +27,8 @@ exporting(Highcharts);
 })
 export class ViewKpaResultsComponent implements OnInit {
 
-  assessID:string = localStorage.getItem("assessID");
-  userID:string = localStorage.getItem("userID");
+  assessID:string = JSON.parse(localStorage.getItem("currentAssessment")).id;
+  userID:string = JSON.parse(localStorage.getItem("currentUser")).userId;
   kpa: KPA[] = [];
   initKPA: KPA[] = [
     {"id":0,"name":"KPA1","description": "","user_id": null},

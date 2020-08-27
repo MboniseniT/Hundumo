@@ -21,8 +21,11 @@ import { AppComponent } from 'src/app/app.component';
 export class KpaAssessmentComponent implements OnInit {
 
   @ViewChild('Form') addCharForm: NgForm;
-  assessID:string = localStorage.getItem("assessID");
-  userID:string = localStorage.getItem("userID");
+  assessID:string = JSON.parse(localStorage.getItem("currentAssessment")).id;
+  userID:string = JSON.parse(localStorage.getItem("currentUser")).userId;
+  Frmwrk:string = JSON.parse(localStorage.getItem("currentAssessment")).frmwrk_id;
+  Version:string = JSON.parse(localStorage.getItem("currentAssessment")).version_id;
+  Variant:string = JSON.parse(localStorage.getItem("currentAssessment")).variant_id;
   kpa: KPA[] = [];
   initKPA: KPA[] = [
     {"id":0,"name":"KPA1","description": "","user_id": null},
@@ -233,7 +236,7 @@ export class KpaAssessmentComponent implements OnInit {
 
   getCharacteristics(){
     // Get Characteristic descriptions
-    this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[0].id.toString(), localStorage.getItem("frmwrk"), localStorage.getItem("version"), localStorage.getItem("variant")).subscribe(
+    this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[0].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level1 = data;
         //console.log(data);
@@ -243,7 +246,7 @@ export class KpaAssessmentComponent implements OnInit {
         console.log(error);
       }
     );
-    this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[1].id.toString(), localStorage.getItem("frmwrk"), localStorage.getItem("version"), localStorage.getItem("variant")).subscribe(
+    this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[1].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level2 = data;
         //console.log(data);
@@ -253,7 +256,7 @@ export class KpaAssessmentComponent implements OnInit {
         console.log(error);
       }
     );
-    this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[2].id.toString(), localStorage.getItem("frmwrk"), localStorage.getItem("version"), localStorage.getItem("variant")).subscribe(
+    this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[2].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level3 = data;
         //console.log(data);
@@ -263,7 +266,7 @@ export class KpaAssessmentComponent implements OnInit {
         console.log(error);
       }
     );
-    this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[3].id.toString(), localStorage.getItem("frmwrk"), localStorage.getItem("version"), localStorage.getItem("variant")).subscribe(
+    this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[3].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level4 = data;
         //console.log(data);
@@ -273,7 +276,7 @@ export class KpaAssessmentComponent implements OnInit {
         console.log(error);
       }
     );
-    this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[4].id.toString(), localStorage.getItem("frmwrk"), localStorage.getItem("version"), localStorage.getItem("variant")).subscribe(
+    this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[4].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level5 = data;
         //console.log(data);
@@ -495,8 +498,8 @@ export class KpaAssessmentComponent implements OnInit {
     this.results = this.addCharForm.value;
     let i: number;
     let ID: string;
-    let assess_id: string = localStorage.getItem("assessID");
-    let user_id: string = localStorage.getItem("userID");
+    let assess_id: string = JSON.parse(localStorage.getItem("currentAssessment")).id;
+    let user_id: string = JSON.parse(localStorage.getItem("currentUser")).userId;
     let exists:boolean = false;
     //console.log(this.level1ResultstotalRecords);
     if(this.level1ResultstotalRecords > 0){
@@ -762,8 +765,8 @@ export class KpaAssessmentComponent implements OnInit {
     let i: number;
     let ID: string;
     let resultID:string;
-    let assess_id: string = localStorage.getItem("assessID");
-    let user_id: string = localStorage.getItem("userID");
+    let assess_id: string = JSON.parse(localStorage.getItem("currentAssessment")).id;
+    let user_id: string = JSON.parse(localStorage.getItem("currentUser")).userId;
     let exists:boolean = false;
     //console.log(this.level1ResultstotalRecords);
     if(this.level1ResultstotalRecords === 0){

@@ -590,11 +590,11 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         }
 
         [HttpPost("getAssessmentById")]
-        public IActionResult GetAssessmentById([FromBody] Assessment Assess)
+        public IActionResult GetAssessmentById([FromBody] Reference Assess)
         {
             try
             {
-                var lAction = _context.assessments.FirstOrDefault(a => a.ID == Assess.ID);
+                var lAction = _context.assessments.FirstOrDefault(a => a.ID == int.Parse(Assess.reference));
 
                 if (lAction != null)
                 {
@@ -602,7 +602,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 }
                 else
                 {
-                    return NotFound("The Assessment with ID = " + Assess.ID + " not found!");
+                    return NotFound("The Assessment with ID = " + Assess.reference + " not found!");
                 }
             }
             catch (Exception ex)
@@ -724,6 +724,33 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             {
                 //May need to use the reference parameter to narrow down the list
                 List<AssessmentUsers> assessUsers = _context.assessmentUsers.Where(a => a.reference == Ref.reference).ToList();
+                var assessmentUsers = assessUsers.Select(result => new
+                {
+                    AssessUserId = result.ID,
+                    AssessmentId = result.assess_id,
+                    AssessmentName = _context.assessments.FirstOrDefault(id => id.ID == result.assess_id).assess_name,
+                    UserEmail = _context.Users.FirstOrDefault(id => id.Id == result.user_id).Email,
+                    UserNames = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName,
+                    Reference = _context.Users.FirstOrDefault(id => id.Id == result.reference).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.reference).LastName,
+                });
+
+                return Ok(assessmentUsers);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPost("getAssessmentUsersForSelection")]
+        public IActionResult GetAssessmentUsersForSelection([FromBody] Reference userID)
+        {
+            try
+            {
+                var user = _context.Users.FirstOrDefault(u => u.Id == userID.reference);
+                //May need to use the reference parameter to narrow down the list
+                List<AssessmentUsers> assessUsers = _context.assessmentUsers.Where(a => a.reference == user.Reference).ToList();
                 var assessmentUsers = assessUsers.Select(result => new
                 {
                     AssessUserId = result.ID,

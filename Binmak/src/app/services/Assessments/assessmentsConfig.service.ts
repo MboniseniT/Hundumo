@@ -31,6 +31,16 @@ constructor(private http: HttpClient) { }
         return this.http.post<any[]>(this.assessmentUrl+'getAssessmentUsers', idSet);
       }
 
+      GetAssessmentUsersForSelection(): Observable<any[]>{
+        let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId};
+        return this.http.post<any[]>(this.assessmentUrl+'getAssessmentUsersForSelection', idSet);
+      }
+
+      GetAssessmentById(id:string): Observable<Assessment[]>{
+        let idSet = {reference:id};
+        return this.http.post<Assessment[]>(this.assessmentUrl+'getAssessmentById', idSet);
+      }
+
       DeleteAssessmentUser(assessmentUser){
         return this.http.post(this.assessmentUrl+'deleteAssessmentUser', assessmentUser);
       }
