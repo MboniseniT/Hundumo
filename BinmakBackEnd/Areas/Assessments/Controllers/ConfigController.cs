@@ -642,6 +642,30 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         }
 
         [HttpPost("deleteAssessment")]
+
+        [HttpPut("editAssessment")]
+        public IActionResult EditAssessment([FromBody] Assessment Assess)
+        {
+            try
+            {
+                var lAction = _context.assessments.FirstOrDefault(a => a.ID == Assess.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The Assessment with ID = " + Assess.ID + " not found to update!");
+                }
+                else
+                {
+                    lAction.isSaved = Assess.isSaved;
+                    _context.SaveChanges();
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
         public IActionResult DeleteAssessment([FromBody] Assessment Assess)
         {
             try

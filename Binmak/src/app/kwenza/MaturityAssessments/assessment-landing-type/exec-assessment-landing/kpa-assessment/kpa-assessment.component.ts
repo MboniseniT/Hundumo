@@ -12,6 +12,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Char } from 'src/app/Models/Assessments/char';
 import { AppComponent } from 'src/app/app.component';
+import { MDBModalService, ToastService, MDBModalRef } from 'ng-uikit-pro-standard';
+import { AreYouSureComponent } from '../../../are-you-sure/are-you-sure.component';
 
 @Component({
   selector: 'app-kpa-assessment',
@@ -149,6 +151,11 @@ export class KpaAssessmentComponent implements OnInit {
   first:boolean;
   last:boolean;
 
+  modalRef: MDBModalRef;
+
+  isSaved:number;
+  assessName:string = "";
+
   // listen out for incoming message
   @Input() charID: string;
   @Input() kpaID: number;
@@ -157,18 +164,18 @@ export class KpaAssessmentComponent implements OnInit {
   private AppComponentReset: AppComponent;
   constructor(
               private route: ActivatedRoute,
+              private modalService: MDBModalService,
+              private toastrService: ToastService,
               private assessmentService: AssessmentsConfigService,
               public _router: Router,
               public _location: Location
   ) { }
 
   ngOnInit() {
+    this.isSaved = Number(JSON.parse(localStorage.getItem('currentAssessment')).isSaved);
+    this.assessName = JSON.parse(localStorage.getItem('currentAssessment')).assess_name;
+    this.SavedProtect();
     this.kpaID = this.route.snapshot.params['id'];
-    //localStorage.setItem("assessID", "3");
-    // localStorage.setItem("userID", "29b450b6-f741-4143-8bb3-4b52ea8361e7");
-    // localStorage.setItem("frmwrk", "1");
-    // localStorage.setItem("version", "1");
-    // localStorage.setItem("variant", "1");
     this.getKPAs();
     this.getLevels();
 
@@ -1064,6 +1071,75 @@ export class KpaAssessmentComponent implements OnInit {
     this._router.navigate(['/binmak/exec-assessment-landing']);
   }
 
+  GetAssessmentName(){
+    if(this.assessName){
+      return this.assessName;
+    }else{
+      return "";
+    }
+
+  }
+
+  Visible(){
+    if(this.assessName){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  onClear(el: any){
+    const modalOptions = {
+      data: {
+        editableRow: {message:"Are you sure you want to CLEAR all results associated with assessment: " + el.assess_name + "?"}
+      }
+    };
+    this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
+    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
+      //Call funtion to update database
+      this.assessmentService.clearAssessment(el).toPromise().then((data: any) => {
+        // success notification
+        this.toastrService.success('Cleared Successfully!');
+
+      }, error => {
+        console.log('httperror: ');
+          console.log(error);
+          // error notification
+          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+          this.toastrService.error(JSON.stringify(error));
+      });
+
+    });
+  }
+
+  onSave(el: any){
+    const modalOptions = {
+      data: {
+        editableRow: {message:"Are you sure you want to SAVE your results for assessment: " + el.assess_name + "? You will not be able to edit the assessment anymore."}
+      }
+    };
+    this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
+    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
+      //Call funtion to update database
+      this.assessmentService.SaveAssessment(el).toPromise().then((data: any) => {
+        // success notification
+        this.toastrService.success('Saved Successfully!');
+
+      }, error => {
+        console.log('httperror: ');
+          console.log(error);
+          // error notification
+          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+          this.toastrService.error(JSON.stringify(error));
+      });
+
+    });
+  }
+
+  GetAssessment(){
+    return JSON.parse(localStorage.getItem("currentAssessment"));
+  }
+
   getKPAName(id:number):string{
     if(id === 0){
       return localStorage.getItem("kpa1");
@@ -1099,6 +1175,13 @@ export class KpaAssessmentComponent implements OnInit {
       return localStorage.getItem("kpa16");
     }else if(id === 16){
       return localStorage.getItem("kpa17");
+    }
+  }
+
+  SavedProtect(){
+    if (this.isSaved == 1) {
+      console.log('here');
+      this._router.navigate(['/binmak/exec-assessment-landing']);
     }
   }
 

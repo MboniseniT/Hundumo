@@ -95,7 +95,7 @@
                     </div>
                     <div class="col-md-6">
                       <button [disabled]="!level1ResultstotalRecords" (click)="onUpdate()" style="width: 100%;" type="button"
-                        class="btn btn-secondary mb-2">Update</button>
+                        class="btn btn-secondary btn-block mb-2" style="background-color: #303031 !important; color: white;">Update</button>
                     </div>
                     <!-- <div class="col-md-4">
                       <button [disabled]="!charID || Form.valid" (click)="onDelete()" style="width: 100%;" type="button"
@@ -108,3 +108,35 @@
         </mdb-card>
     </div>
 </div>
+<footer class="fixed-bottom">
+  <div id="footer1" style="height:25px;" class="container-fluid">
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+              <p>
+
+              </p>
+          </div>
+      </div>
+  </div>
+  <div id="footer2" style="height: 25px; background: #032c57;
+  opacity: 0.50;" class="shadow-lg">
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+            <div class="row">
+              <div class="col-xs-4 col-sm-4 col-md-4">
+                <p [hidden]="!Visible()" style="color: white;">Running Assessment: {{GetAssessmentName()}}</p>
+              </div>
+              <div class="col-xs-4 col-sm-4 col-md-4">
+                <p style="color:white; padding-left:20px;"> &copy 2020 Powered by Binmak <a routerLink="/" target="_blank"></a></p>
+              </div>
+              <div class="col-xs-4 col-sm-4 col-md-4">
+                <span [hidden]="!Visible()" (click)="onClear(GetAssessment())" class="badge badge-pill badge-dark mr-4">Clear Results</span>
+                <span [hidden]="!Visible()" (click)="onSave(GetAssessment())" class="badge badge-pill badge-dark">Save Results</span>
+              </div>
+            </div>
+
+
+          </div>
+      </div>
+  </div>
+</footer>

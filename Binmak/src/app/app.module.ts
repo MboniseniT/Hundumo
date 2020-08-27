@@ -35,6 +35,8 @@ import { UkwaziComponent } from './ukwazi/ukwazi.component';
 //Asset Management Maturity Assessor
     /*Services*/
 import { AssessmentsConfigService } from './services/Assessments/assessmentsConfig.service';
+    /*Guards*/
+    import { isSavedGuard } from './guards/isSaved.guard';
     /*Components*/
 import { AssessmentsComponent } from './kwenza/MaturityAssessments/assessments/assessments.component';
 import { AssessmentLandingComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-landing.component';
@@ -135,7 +137,8 @@ import { ExecManageUsersComponent } from './kwenza/MaturityAssessments/assessmen
     }, {provide: LocationStrategy, useClass: HashLocationStrategy},
 
     //Assessments Providers
-    AssessmentsConfigService
+    AssessmentsConfigService,
+    isSavedGuard
   ],
   bootstrap: [AppComponent]
 })

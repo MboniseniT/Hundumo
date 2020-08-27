@@ -7,6 +7,8 @@ import { Result } from 'src/app/Models/Assessments/results';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { AssessmentsConfigService } from 'src/app/services/Assessments/assessmentsConfig.service';
+import { MDBModalService, ToastService, MDBModalRef } from 'ng-uikit-pro-standard';
+import { AreYouSureComponent } from '../../../are-you-sure/are-you-sure.component';
 
 declare var require: any;
 let Boost = require('highcharts/modules/boost');
@@ -178,6 +180,12 @@ export class ViewKpaResultsComponent implements OnInit {
   kpaID:number = 1;
   levelID:number = 1;
 
+  modalRef: MDBModalRef;
+
+  isSaved:number;
+  assessName:string = "";
+
+
   ctgrs:any = [];
   bpdata:any = [];
   kpidata:any = [];
@@ -340,11 +348,15 @@ export class ViewKpaResultsComponent implements OnInit {
 
   constructor(
               private assessmentService: AssessmentsConfigService,
+              private modalService: MDBModalService,
+              private toastrService: ToastService,
               public _router: Router,
               public _location: Location
   ) { }
 
   ngOnInit() {
+    this.isSaved = Number(JSON.parse(localStorage.getItem('currentAssessment')).isSaved);
+    this.assessName = JSON.parse(localStorage.getItem('currentAssessment')).assess_name;
     this.loadChart();
     //retrieve KPAs from Database
     this.assessmentService.GetExecKPAs().subscribe(
@@ -925,6 +937,75 @@ export class ViewKpaResultsComponent implements OnInit {
 
   back(){
     this._router.navigate(['/binmak/exec-assessment-landing']);
+  }
+
+  GetAssessmentName(){
+    if(this.assessName){
+      return this.assessName;
+    }else{
+      return "";
+    }
+
+  }
+
+  Visible(){
+    if(this.assessName){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  onClear(el: any){
+    const modalOptions = {
+      data: {
+        editableRow: {message:"Are you sure you want to CLEAR all results associated with assessment: " + el.assess_name + "?"}
+      }
+    };
+    this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
+    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
+      //Call funtion to update database
+      this.assessmentService.clearAssessment(el).toPromise().then((data: any) => {
+        // success notification
+        this.toastrService.success('Cleared Successfully!');
+
+      }, error => {
+        console.log('httperror: ');
+          console.log(error);
+          // error notification
+          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+          this.toastrService.error(JSON.stringify(error));
+      });
+
+    });
+  }
+
+  onSave(el: any){
+    const modalOptions = {
+      data: {
+        editableRow: {message:"Are you sure you want to SAVE your results for assessment: " + el.assess_name + "? You will not be able to edit the assessment anymore."}
+      }
+    };
+    this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
+    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
+      //Call funtion to update database
+      this.assessmentService.SaveAssessment(el).toPromise().then((data: any) => {
+        // success notification
+        this.toastrService.success('Saved Successfully!');
+
+      }, error => {
+        console.log('httperror: ');
+          console.log(error);
+          // error notification
+          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+          this.toastrService.error(JSON.stringify(error));
+      });
+
+    });
+  }
+
+  GetAssessment(){
+    return JSON.parse(localStorage.getItem("currentAssessment"));
   }
 
 }

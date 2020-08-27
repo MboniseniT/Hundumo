@@ -152,6 +152,11 @@ constructor(private http: HttpClient) { }
         return this.http.put(this.assessmentUrl+'clearAssessment', assess);
       }
 
+      SaveAssessment(assessment){
+        assessment.isSaved = "1";
+        return this.http.put(this.assessmentUrl+'editAssessment', assessment)
+      }
+
       /*Exec-Results*/
       getAllChars(): Observable<Char[]>{
         return this.http.get<Char[]>(this.assessmentUrl+'api/chars?kpaID=1&levelID=1&ID=1&type=All')

@@ -57,6 +57,8 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
     LevelID: new FormControl('', [Validators.required, Validators.minLength(1)])
   });
 
+  isAdmin:boolean;
+
   constructor(
     private assessmentService: AssessmentsConfigService,
     private modalService: MDBModalService,
@@ -72,6 +74,8 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit():void {
+    this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
+    this.AdminProtect();
     //this.loadDataTable();
     this.loadDropdowns();
   }
@@ -277,6 +281,13 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     });
+    }
+
+    AdminProtect(){
+      if (!this.isAdmin) {
+        console.log('here');
+        this.router.navigate(['/binmak/exec-assessment-landing']);
+      }
     }
 
 }

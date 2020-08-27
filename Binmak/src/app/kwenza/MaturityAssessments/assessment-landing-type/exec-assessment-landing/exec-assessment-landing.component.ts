@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentsConfigService } from 'src/app/services/Assessments/assessmentsConfig.service';
 import { Assessment } from 'src/app/Models/Assessments/assessment';
+import { MDBModalService, ToastService, MDBModalRef } from 'ng-uikit-pro-standard';
+import { AreYouSureComponent } from '../../are-you-sure/are-you-sure.component';
 
 @Component({
   selector: 'app-exec-assessment-landing',
@@ -14,11 +16,20 @@ export class ExecAssessmentLandingComponent implements OnInit {
   surname: string;
   userAssessments: any[];
   totalRecords:number;
+  isSaved:number;
+  assessName:string = "";
+  isAdmin:boolean;
 
   assessment: Assessment[];
   assessTotalRecords:number;
 
+  modalRef: MDBModalRef;
+
   constructor(
+    private modalService: MDBModalService,
+    private toastrService: ToastService,
+
+    private cdRef: ChangeDetectorRef,
     private assessmentService: AssessmentsConfigService,
     private router: Router) { }
 
@@ -26,6 +37,9 @@ export class ExecAssessmentLandingComponent implements OnInit {
     this.loadUserAssessments();
     this.name = JSON.parse(localStorage.getItem('currentUser')).firstName;
     this.surname = JSON.parse(localStorage.getItem('currentUser')).lastName;
+    this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
+    this.isSaved = Number(JSON.parse(localStorage.getItem('currentAssessment')).isSaved);
+    this.assessName = JSON.parse(localStorage.getItem('currentAssessment')).assess_name;
   }
 
   back(){
@@ -57,29 +71,9 @@ export class ExecAssessmentLandingComponent implements OnInit {
         //console.log(data);
         this.assessTotalRecords = data.length;
         localStorage.setItem("currentAssessment", JSON.stringify(this.assessment));
-        console.log(localStorage.getItem("currentAssessment"));
-        // localStorage.setItem("assessName", this.assessment["assess_name"]);
-        // localStorage.setItem("version", this.assessment["version_id"]);
-        // localStorage.setItem("variant", this.assessment["variant_id"]);
-        // localStorage.setItem("frmwrk", this.assessment["frmwrk_id"]);
-        // localStorage.setItem("kpa1", this.assessment["kpa1"]);
-        // localStorage.setItem("kpa2", this.assessment["kpa2"]);
-        // localStorage.setItem("kpa3", this.assessment["kpa3"]);
-        // localStorage.setItem("kpa4", this.assessment["kpa4"]);
-        // localStorage.setItem("kpa5", this.assessment["kpa5"]);
-        // localStorage.setItem("kpa6", this.assessment["kpa6"]);
-        // localStorage.setItem("kpa7", this.assessment["kpa7"]);
-        // localStorage.setItem("kpa8", this.assessment["kpa8"]);
-        // localStorage.setItem("kpa9", this.assessment["kpa9"]);
-        // localStorage.setItem("kpa10", this.assessment["kpa10"]);
-        // localStorage.setItem("kpa11", this.assessment["kpa11"]);
-        // localStorage.setItem("kpa12", this.assessment["kpa12"]);
-        // localStorage.setItem("kpa13", this.assessment["kpa13"]);
-        // localStorage.setItem("kpa14", this.assessment["kpa14"]);
-        // localStorage.setItem("kpa15", this.assessment["kpa15"]);
-        // localStorage.setItem("kpa16", this.assessment["kpa16"]);
-        // localStorage.setItem("kpa17", this.assessment["kpa17"]);
-        //console.log(localStorage.getItem("assessName"));
+        //console.log(localStorage.getItem("currentAssessment"));
+        this.isSaved = Number(JSON.parse(localStorage.getItem('currentAssessment')).isSaved);
+        this.assessName = JSON.parse(localStorage.getItem('currentAssessment')).assess_name;
       }, error => {
         console.log('httperror: ');
         console.log(error);
@@ -88,28 +82,76 @@ export class ExecAssessmentLandingComponent implements OnInit {
   }
 
   GetAssessmentName(){
-    return JSON.parse(localStorage.getItem("currentAssessment")).assess_name;
+    if(this.assessName){
+      return this.assessName;
+    }else{
+      return "";
+    }
+
   }
 
-  onClear(){
-    console.log("clearing...");
-    // this.assessmentService.clearAssessmentIndividualUserResults(localStorage.getItem("userID"), localStorage.getItem("assessID")).toPromise().then((data: any) => {
-    //   console.log(data);
-    //   // success notification
-    //   alertify.success('Cleared Successfully!');
-    //   setTimeout(() => {
-    //     //call refresh from AppComponent
-    //     this.AppComponentReset.refresh("");
-    //   });
-    // }, error => {
-    //   console.log('httperror: ');
-    //     // error notification
-    //     alertify.error('httperror: '+JSON.stringify(error.status + ". " +error.statusText));
-    // });
+  GetAssessment(){
+    return JSON.parse(localStorage.getItem("currentAssessment"));
+  }
+
+  onClear(el: any){
+    const modalOptions = {
+      data: {
+        editableRow: {message:"Are you sure you want to CLEAR all results associated with assessment: " + el.assess_name + "?"}
+      }
+    };
+    this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
+    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
+      //Call funtion to update database
+      this.assessmentService.clearAssessment(el).toPromise().then((data: any) => {
+        // success notification
+        this.toastrService.success('Cleared Successfully!');
+
+      }, error => {
+        console.log('httperror: ');
+          console.log(error);
+          // error notification
+          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+          this.toastrService.error(JSON.stringify(error));
+      });
+
+    });
+  }
+
+  onSave(el: any){
+    const modalOptions = {
+      data: {
+        editableRow: {message:"Are you sure you want to SAVE your results for assessment: " + el.assess_name + "? You will not be able to edit the assessment anymore."}
+      }
+    };
+    this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
+    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
+      //Call funtion to update database
+      this.assessmentService.SaveAssessment(el).toPromise().then((data: any) => {
+        // success notification
+        this.toastrService.success('Saved Successfully!');
+
+      }, error => {
+        console.log('httperror: ');
+          console.log(error);
+          // error notification
+          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+          this.toastrService.error(JSON.stringify(error));
+      });
+
+    });
+  }
+
+  getSavedState(){
+    if(this.isSaved == 1){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   Visible(){
-    if(JSON.parse(localStorage.getItem("currentAssessment")).assess_name){
+    if(this.assessName){
       return true;
     }else{
       return false;
