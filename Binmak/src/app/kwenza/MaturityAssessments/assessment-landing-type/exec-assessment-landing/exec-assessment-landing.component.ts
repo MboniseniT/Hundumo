@@ -46,7 +46,7 @@ export class ExecAssessmentLandingComponent implements OnInit {
   }
 
   selectAssessment(assessID:string){
-    localStorage.removeItem("assessID");
+    localStorage.removeItem("currentAssessment");
     setTimeout(() => {
       //localStorage.setItem("assessID",assessID);
       //console.log(localStorage.getItem("assessID"));
@@ -85,6 +85,35 @@ export class ExecAssessmentLandingComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  GetAssessmentName(){
+    return JSON.parse(localStorage.getItem("currentAssessment")).assess_name;
+  }
+
+  onClear(){
+    console.log("clearing...");
+    // this.assessmentService.clearAssessmentIndividualUserResults(localStorage.getItem("userID"), localStorage.getItem("assessID")).toPromise().then((data: any) => {
+    //   console.log(data);
+    //   // success notification
+    //   alertify.success('Cleared Successfully!');
+    //   setTimeout(() => {
+    //     //call refresh from AppComponent
+    //     this.AppComponentReset.refresh("");
+    //   });
+    // }, error => {
+    //   console.log('httperror: ');
+    //     // error notification
+    //     alertify.error('httperror: '+JSON.stringify(error.status + ". " +error.statusText));
+    // });
+  }
+
+  Visible(){
+    if(JSON.parse(localStorage.getItem("currentAssessment")).assess_name){
+      return true;
+    }else{
+      return false;
+    }
   }
 
 }
