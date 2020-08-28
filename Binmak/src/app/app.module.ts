@@ -35,6 +35,8 @@ import { UkwaziComponent } from './ukwazi/ukwazi.component';
 //Asset Management Maturity Assessor
     /*Services*/
 import { AssessmentsConfigService } from './services/Assessments/assessmentsConfig.service';
+    /*Guards*/
+    import { isSavedGuard } from './guards/isSaved.guard';
     /*Components*/
 import { AssessmentsComponent } from './kwenza/MaturityAssessments/assessments/assessments.component';
 import { AssessmentLandingComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-landing.component';
@@ -50,6 +52,14 @@ import { ExecAssessmentConfigComponent } from './kwenza/MaturityAssessments/asse
 import { ManageKpasComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-kpas/manage-kpas.component';
 import { EditExecKpaComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-kpas/edit-exec-kpa/edit-exec-kpa.component';
 import { ManageCharacteristicsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/manage-characteristics.component';
+import { EditCharacteristicComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/edit-characteristic/edit-characteristic.component';
+import { SelectKpaLevelComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/select-kpaLevel/select-kpaLevel.component';
+import { AddCharacteristicComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/add-characteristic/add-characteristic.component';
+import { AddExecAssessmentComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/add-exec-assessment/add-exec-assessment.component';
+import { ManageExecAssessmentsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/manage-exec-assessments.component';
+import { AreYouSureComponent } from './kwenza/MaturityAssessments/are-you-sure/are-you-sure.component'
+import { ExecManageUsersComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/exec-manage-users/exec-manage-users.component';
+
 //import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
@@ -88,7 +98,14 @@ import { ManageCharacteristicsComponent } from './kwenza/MaturityAssessments/ass
     ExecAssessmentConfigComponent,
     ManageKpasComponent,
     EditExecKpaComponent,
-    ManageCharacteristicsComponent
+    ManageCharacteristicsComponent,
+    EditCharacteristicComponent,
+    SelectKpaLevelComponent,
+    AddCharacteristicComponent,
+    AddExecAssessmentComponent,
+    ManageExecAssessmentsComponent,
+    AreYouSureComponent,
+    ExecManageUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -120,7 +137,8 @@ import { ManageCharacteristicsComponent } from './kwenza/MaturityAssessments/ass
     }, {provide: LocationStrategy, useClass: HashLocationStrategy},
 
     //Assessments Providers
-    AssessmentsConfigService
+    AssessmentsConfigService,
+    isSavedGuard
   ],
   bootstrap: [AppComponent]
 })

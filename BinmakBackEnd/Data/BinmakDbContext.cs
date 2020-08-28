@@ -33,7 +33,8 @@ namespace BinmakAPI.Data
         public DbSet<BinmakBackEnd.Areas.ProductionFlow.Entities.FunctionUnitChildren> FunctionUnitChildrens { get; set; }
 
         //Assessments
-        public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Assessments> assessments { get; set; }
+        public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Assessment> assessments { get; set; }
+        public DbSet<BinmakBackEnd.Areas.Assessments.Entities.AssessmentUsers> assessmentUsers { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Characteristics> characteristics { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Frmwrks> frmwrks { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Kpas> kpas { get; set; }

@@ -1,0 +1,27 @@
+export class Assessment{
+  id:string;
+  assess_name:string;
+  assess_date:string;
+  assetNodeId:string;
+  version_id:number;
+  variant_id:number;
+  frmwrk_id:number;
+  user_id:string;
+  kpa1:string;
+  kpa2:string;
+  kpa3:string;
+  kpa4:string;
+  kpa5:string;
+  kpa6:string;
+  kpa7:string;
+  kpa8:string;
+  kpa9:string;
+  kpa10:string;
+  kpa11:string;
+  kpa12:string;
+  kpa13:string;
+  kpa14:string;
+  kpa15:string;
+  kpa16:string;
+  kpa17:string;
+}

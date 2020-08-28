@@ -40,6 +40,8 @@ export class ManageKpasComponent implements OnInit, AfterViewInit {
 
   formError:string = "";
 
+  isAdmin:boolean;
+
   constructor(
     private kpaService: AssessmentsConfigService,
     private modalService: MDBModalService,
@@ -54,6 +56,8 @@ export class ManageKpasComponent implements OnInit, AfterViewInit {
     }
 
   ngOnInit():void {
+    this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
+    this.AdminProtect();
     this.loadDataTable();
   }
 
@@ -142,5 +146,12 @@ export class ManageKpasComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.calculateFirstItemIndex();
     this.mdbTablePagination.calculateLastItemIndex();
     });
+    }
+
+    AdminProtect(){
+      if (!this.isAdmin) {
+        console.log('here');
+        this.router.navigate(['/binmak/exec-assessment-landing']);
+      }
     }
 }

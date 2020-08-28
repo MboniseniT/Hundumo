@@ -1,0 +1,34 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+    <h4 class="modal-title w-100" id="myModalLabel">Select KPA Level Filter</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="md-form">
+        <mdb-select-2 label="Select KPA" [multiple]="false"
+                  [highlightFirst]="false" formControlName="kpaID">
+                    <mdb-select-option style="position: absolute;" *ngFor="let kpa of kpas" [value]="kpa.id">{{ kpa.name }}</mdb-select-option>
+                  </mdb-select-2>
+        <mdb-error *ngIf="kpaID.invalid && (kpaID.dirty || kpaID.touched)">KPA is required</mdb-error>
+      </div>
+      <div class="md-form">
+        <mdb-select-2 label="Select Level" [multiple]="false"
+                  [highlightFirst]="false" formControlName="levelID">
+                    <mdb-select-option *ngFor="let lev of level" [value]="lev.id">{{ lev.name }}</mdb-select-option>
+                  </mdb-select-2>
+        <mdb-error *ngIf="levelID.invalid && (levelID.dirty || levelID.touched)">Level is required</mdb-error>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+            (click)="modalRef.hide()" mdbWavesEffect>Close
+    </button>
+    <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+            [disabled]="form.invalid" (click)="editRow()">Submit!
+    </button>
+  </div>
+</div>

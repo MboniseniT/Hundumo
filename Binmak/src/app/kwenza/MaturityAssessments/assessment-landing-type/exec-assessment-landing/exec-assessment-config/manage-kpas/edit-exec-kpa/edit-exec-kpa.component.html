@@ -7,10 +7,10 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="form">
-      <div class="md-form">
+      <!-- <div class="md-form">
         <input id="id" type="text" class="form-control grey-text" formControlName="id" mdbInput>
         <label for="id">ID</label>
-      </div>
+      </div> -->
       <div class="md-form">
         <input id="name" type="text" class="form-control" formControlName="name" mdbInput mdbValidate
                [validateSuccess]="false">
@@ -25,16 +25,16 @@
         <label for="description">description</label>
         <mdb-error *ngIf="description.invalid && (description.dirty || description.touched)">Input is required</mdb-error>
       </div>
-      <div class="md-form">
+      <!-- <div class="md-form">
         <input id="userId" type="text" class="form-control" formControlName="userId" mdbInput mdbValidate
                [validateSuccess]="false">
         <label for="userId">userId</label>
         <mdb-error *ngIf="userId.invalid && (userId.dirty || userId.touched)">Input is required</mdb-error>
-      </div>
+      </div> -->
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+    <button type="button" mdbBtn color="light" class="waves-light" aria-label="Close"
             (click)="modalRef.hide()" mdbWavesEffect>Close
     </button>
     <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
