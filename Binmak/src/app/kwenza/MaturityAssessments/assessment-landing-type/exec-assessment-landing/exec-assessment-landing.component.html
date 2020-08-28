@@ -2,7 +2,9 @@
     style="background-image: linear-gradient(100deg, rgba(0, 69, 125, 1), rgba(24, 59, 87, 0.822)  ); padding-top: 25px">
     <div class="full-bg-img">
         <div class="container white-text wow fadeInUp">
-            <br>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <br>
             <br>
             <h5 style="font-weight:250; color: white; font-weight: bold;" class="tk-museo-sans">Welcome To Exec Assessments,
                 {{name}}</h5>
@@ -14,6 +16,35 @@
             </div>
 
             <br>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+                <div class="row">
+                  <div class="col">
+                    <h5 [hidden]="!userAssessments.length" style="font-weight:250; color: white; font-weight: bold; text-align: center;" class="tk-museo-sans">Choose An Assessment</h5>
+                    <!-- [hidden]="isAdmin" -->
+                    <br>
+                  </div>
+                  <div class="row" style="justify-content: center;">
+                    <button (click)="selectAssessment(userAssessment.assessmentId, userAssessment.assessmentIsSaved)" *ngFor="let userAssessment of userAssessments" type="button" class="btn btn-info mr-2 mb-2" aria-label="Close" mdbWavesEffect
+                    style="background-color: #032c57 !important; color: white; font-size: 10px; width: 150px;">
+                    <diV class="row" style="justify-content: center;">
+                      <div class="col">
+                        <i class="fas fa-graduation-cap fa-2x fa-fw"></i>
+                      </div>
+                    </diV>
+                    <div class="row" style="justify-content: center;">
+                      <div class="col">
+                        {{userAssessment.assessmentName}}
+                      </div>
+                    </div>
+                    </button>
+                  </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
     </div>
 </div>
@@ -30,10 +61,11 @@
     <div style="padding:20px">
         <br>
 <br>
-        <div class="row">
+        <div class="row" style="justify-content: center;">
             <!-- <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div> -->
 
-            <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/kpa-results">
+            <div [hidden]="!Visible()" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/kpa-results">
+              <!-- [hidden]="isAdmin" -->
               <div style="text-align: center;">
                   <i class="fas fa-poll fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
                   <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">View Results
@@ -41,7 +73,8 @@
               </div>
           </div>
 
-          <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/kpa-assessment">
+          <div [hidden]="getSavedState() || !Visible()" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/kpa-assessment/1">
+            <!-- || isAdmin -->
             <div style="text-align: center;">
                 <i class="fas fa-chalkboard-teacher fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
                 <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Run KPA Assessment
@@ -49,7 +82,7 @@
             </div>
         </div>
 
-          <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/exec-assessment-config">
+          <div [hidden]="!isAdmin" class="col-lg-4 col-md-5 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/exec-assessment-config">
             <div style="text-align: center;">
                 <i class="fas fa-cogs fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
                 <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Assessment Config
@@ -63,3 +96,36 @@
     </div>
 
 </div>
+<footer [hidden]="!Visible()" class="fixed-bottom">
+  <!-- [hidden]="isAdmin" -->
+  <div id="footer1" style="height:25px;" class="container-fluid">
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+              <p>
+
+              </p>
+          </div>
+      </div>
+  </div>
+  <div id="footer2" style="height: 25px; background: #032c57;
+  opacity: 0.50;" class="shadow-lg">
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+            <div class="row">
+              <div class="col-xs-4 col-sm-4 col-md-4">
+                <p [hidden]="!Visible()" style="color: white;">Running Assessment: {{GetAssessmentName()}}</p>
+              </div>
+              <div class="col-xs-4 col-sm-4 col-md-4">
+                <p style="color:white; padding-left:20px;"> &copy 2020 Powered by Binmak <a routerLink="/" target="_blank"></a></p>
+              </div>
+              <div class="col-xs-4 col-sm-4 col-md-4">
+                <span [hidden]="!Visible()" (click)="onClear(GetAssessment())" class="badge badge-pill badge-dark mr-4">Clear Results</span>
+                <span [hidden]="!Visible()" (click)="onSave(GetAssessment())" class="badge badge-pill badge-dark">Save Results</span>
+              </div>
+            </div>
+
+
+          </div>
+      </div>
+  </div>
+</footer>
