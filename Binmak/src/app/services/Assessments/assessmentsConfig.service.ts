@@ -153,8 +153,8 @@ constructor(private http: HttpClient) { }
       }
 
       SaveAssessment(assessment){
-        assessment.isSaved = "1";
-        return this.http.put(this.assessmentUrl+'editAssessment', assessment)
+        let idSet:any = {assessID:assessment.id, userID:JSON.parse(localStorage.getItem('currentUser')).userId}
+        return this.http.put(this.assessmentUrl+'saveAssessment', idSet)
       }
 
       /*Exec-Results*/

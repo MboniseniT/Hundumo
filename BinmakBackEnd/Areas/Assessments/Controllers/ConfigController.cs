@@ -643,19 +643,19 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         [HttpPost("deleteAssessment")]
 
-        [HttpPut("editAssessment")]
-        public IActionResult EditAssessment([FromBody] Assessment Assess)
+        [HttpPut("saveAssessment")]
+        public IActionResult SaveAssessment([FromBody] SaveAssessIdSet idSet)
         {
             try
             {
-                var lAction = _context.assessments.FirstOrDefault(a => a.ID == Assess.ID);
+                var lAction = _context.assessmentUsers.FirstOrDefault(a => a.assess_id == idSet.assessID && a.user_id == idSet.userID);
                 if (lAction == null)
                 {
-                    return NotFound("The Assessment with ID = " + Assess.ID + " not found to update!");
+                    return NotFound("Only the user assigned to this Assessment can Save it!");
                 }
                 else
                 {
-                    lAction.isSaved = Assess.isSaved;
+                    lAction.isSaved = 1;
                     _context.SaveChanges();
                     return Ok(lAction);
                 }
@@ -752,6 +752,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 {
                     AssessUserId = result.ID,
                     AssessmentId = result.assess_id,
+                    AssessmentIsSaved = result.isSaved,
                     AssessmentName = _context.assessments.FirstOrDefault(id => id.ID == result.assess_id).assess_name,
                     UserEmail = _context.Users.FirstOrDefault(id => id.Id == result.user_id).Email,
                     UserNames = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName,

@@ -12,5 +12,6 @@ namespace BinmakBackEnd.Areas.Assessments.Entities
         public int assess_id { get; set; }
         public string reference { get; set; }
         public string link_name { get; set; }
+        public Nullable<int> isSaved { get; set; }
     }
 }

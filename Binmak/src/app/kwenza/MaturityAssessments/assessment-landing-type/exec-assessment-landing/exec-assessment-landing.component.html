@@ -26,7 +26,7 @@
                     <br>
                   </div>
                   <div class="row" style="justify-content: center;">
-                    <button (click)="selectAssessment(userAssessment.assessmentId)" *ngFor="let userAssessment of userAssessments" type="button" class="btn btn-info mr-2 mb-2" aria-label="Close" mdbWavesEffect
+                    <button (click)="selectAssessment(userAssessment.assessmentId, userAssessment.assessmentIsSaved)" *ngFor="let userAssessment of userAssessments" type="button" class="btn btn-info mr-2 mb-2" aria-label="Close" mdbWavesEffect
                     style="background-color: #032c57 !important; color: white; font-size: 10px; width: 150px;">
                     <diV class="row" style="justify-content: center;">
                       <div class="col">
