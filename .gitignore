@@ -338,3 +338,11 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+BinmakBackEnd/obj/project.nuget.cache
+BinmakBackEnd/.vs/BinmakBackEnd/v16/.suo
+BinmakBackEnd/obj/BinmakBackEnd.csproj.nuget.dgspec.json
+BinmakBackEnd/obj/BinmakBackEnd.csproj.nuget.g.props
+BinmakBackEnd/obj/project.assets.json
+BinmakBackEnd/obj/project.nuget.cache
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.assets.cache
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.csprojAssemblyReference.cache
