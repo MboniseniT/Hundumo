@@ -350,3 +350,7 @@ BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.exe
 BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.csprojAssemblyReference.cache
 BinmakBackEnd/.vs/BinmakBackEnd/DesignTimeBuild/.dtbcache.v2
 BinmakBackEnd/.vs/BinmakBackEnd/v16/.suo
+BinmakBackEnd/obj
+BinmakBackEnd/.vs
+BinmakBackEnd/bin
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.csproj.FileListAbsolute.txt

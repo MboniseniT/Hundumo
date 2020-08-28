@@ -52,6 +52,8 @@ import { ExecAssessmentConfigComponent } from './kwenza/MaturityAssessments/asse
 import { ManageKpasComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-kpas/manage-kpas.component';
 import { EditExecKpaComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-kpas/edit-exec-kpa/edit-exec-kpa.component';
 import { ManageCharacteristicsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/manage-characteristics.component';
+import { MdTableComponent } from './asset-health/shared/md-table/md-table.component';
+import { MdFormComponent } from './asset-health/shared/md-form/md-form.component';
 import { EditCharacteristicComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/edit-characteristic/edit-characteristic.component';
 import { SelectKpaLevelComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/select-kpaLevel/select-kpaLevel.component';
 import { AddCharacteristicComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/add-characteristic/add-characteristic.component';
@@ -99,6 +101,8 @@ import { ExecManageUsersComponent } from './kwenza/MaturityAssessments/assessmen
     ManageKpasComponent,
     EditExecKpaComponent,
     ManageCharacteristicsComponent,
+    MdTableComponent,
+    MdFormComponent,
     EditCharacteristicComponent,
     SelectKpaLevelComponent,
     AddCharacteristicComponent,

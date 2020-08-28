@@ -289,7 +289,7 @@ namespace BinmakBackEnd.Controllers
             }
         }
 
-        public static List<DateTime> getAllDates(int year, int month)
+        static List<DateTime> getAllDates(int year, int month)
         {
             var ret = new List<DateTime>();
             for (int i = 1; i <= DateTime.DaysInMonth(year, month); i++)
@@ -299,7 +299,7 @@ namespace BinmakBackEnd.Controllers
             return ret;
         }
 
-        public List<FunctionUnitChildren> saveAssetFunctionUnitsChildren(ProductionFlowAsset asset)
+        List<FunctionUnitChildren> saveAssetFunctionUnitsChildren(ProductionFlowAsset asset)
         {
             List<FunctionUnitChildren> fucTemp = new List<FunctionUnitChildren>();
             List<FunctionUnitChildren> orderdFucs = new List<FunctionUnitChildren>();
@@ -372,7 +372,7 @@ namespace BinmakBackEnd.Controllers
             return fucTemp2;
         }
 
-        public List<FunctionUnit> saveAssetFunctionUnits(ProductionFlowAsset asset)
+        List<FunctionUnit> saveAssetFunctionUnits(ProductionFlowAsset asset)
         {
 
             List<FunctionUnit> functionUnits = _context.FunctionUnits.Where(id => id.AssetId == 0).ToList();
@@ -393,7 +393,7 @@ namespace BinmakBackEnd.Controllers
             return fucTemp;
         }
 
-        public ProductionFlowAsset CreateAsset(ProductionFlowAsset model)
+        ProductionFlowAsset CreateAsset(ProductionFlowAsset model)
         {
             ProductionFlowAsset asset = new ProductionFlowAsset();
             asset.ClientAssetNameId = model.ClientAssetNameId;
@@ -557,11 +557,11 @@ namespace BinmakBackEnd.Controllers
                     model.CountryId = parentOrganization.CountryId;
                     model.Code = organization.Code;
                     model.OrganizationId = organization.OrganizationId;
-                    
+
                 }
                 else
                 {
-                    
+
                     model.OrganizationId = organization.OrganizationId;
                     model.Address = organization.Address;
                     model.Address2 = organization.Address2;
@@ -668,13 +668,13 @@ namespace BinmakBackEnd.Controllers
             }
 
             List<Tree1> data = new List<Tree1>();
-            Tree1 rootTree= null;
+            Tree1 rootTree = null;
 
             List<OrganizationVM> organizations = new OrganizationService(_context).GetOrganizationVMs(reference);
 
             foreach (var org in organizations.Where(a => a.Height == 1))
             {
-                rootTree  = new Tree1();
+                rootTree = new Tree1();
                 rootTree.Name = string.Format("{0}-{1}", org.Code, org.Name);
                 rootTree.Children = new List<Tree1>();
                 rootTree.NodeId = org.OrganizationId;
@@ -685,22 +685,22 @@ namespace BinmakBackEnd.Controllers
                 data.Add(rootTree);
 
                 var allChildrens = organizations.Where(a => a.RootOrganizationId == org.OrganizationId).OrderBy(p => p.Height).OrderBy(p => p.ParentOrganizationId).ToList();
-                
+
                 if (allChildrens.Count > 0)
                 {
                     var maxHeight = allChildrens.Max(a => a.Height);
-                    
+
                     Tree1 currntParent = rootTree;
                     List<Tree1> parents = new List<Tree1>();
 
                     for (int i = 2; i <= maxHeight; i++)
-                    {                         
+                    {
                         Tree1 treeBranch = null;
                         Tree1 currentParent = null;
 
                         var t = allChildrens.OrderBy(h => h.Height).ToList();
 
-                        var parentIds = t.Where(a=> a.Height == i).Select(a => a.ParentOrganizationId).Distinct().ToList();
+                        var parentIds = t.Where(a => a.Height == i).Select(a => a.ParentOrganizationId).Distinct().ToList();
 
                         foreach (var id in parentIds)
                         {
@@ -726,18 +726,18 @@ namespace BinmakBackEnd.Controllers
                                 else
                                     rootTree.Children.Add(treeBranch);
                             }
-                            if(currentParent != null)
+                            if (currentParent != null)
                             {
                                 rootTree = currentParent;
                             }
                             else
-                            rootTree = treeBranch;
+                                rootTree = treeBranch;
                         }
 
                     }
 
                 }
-                            
+
             }
 
             return Ok(data);
@@ -760,12 +760,12 @@ namespace BinmakBackEnd.Controllers
                 var assetNodesVM = assetNodesSrted.Select(result => new
                 {
                     AssetNodeId = result.AssetNodeId,
-                    AssetNodeType = _context.AssetNodeTypes.FirstOrDefault(id=>id.AssetNodeTypeId == result.AssetNodeTypeId).AssetNodeTypeName,
+                    AssetNodeType = _context.AssetNodeTypes.FirstOrDefault(id => id.AssetNodeTypeId == result.AssetNodeTypeId).AssetNodeTypeName,
                     CountryId = result.CountryId,
                     Name = result.Name,
                     Code = result.Code,
                     ParentId = result.ParentAssetNodeId,
-                    Parent = _context.AssetNodes.FirstOrDefault(id=> id.AssetNodeId == result.ParentAssetNodeId ).Name,
+                    Parent = _context.AssetNodes.FirstOrDefault(id => id.AssetNodeId == result.ParentAssetNodeId).Name,
                     Root = _context.AssetNodes.FirstOrDefault(id => id.AssetNodeId == result.RootAssetNodeId).Name,
                     Address = result.Address,
                     Address2 = result.Address2,
@@ -783,7 +783,7 @@ namespace BinmakBackEnd.Controllers
             {
                 return BadRequest("Something bad happened, " + Ex.Message);
             }
-        
+
         }
 
         [HttpPost("deleteAssetNode")]
@@ -934,9 +934,9 @@ namespace BinmakBackEnd.Controllers
                     AssetNodeId = result.AssetNodeId,
                     AssetNodeTypeId = result.AssetNodeTypeId,
                     AssetNodeAccessLeve = result.IsAssetAdmin,
-                    AssetNodeTypeName = _context.AssetNodeTypes.FirstOrDefault(id=>id.AssetNodeTypeId==result.AssetNodeTypeId).AssetNodeTypeName,
-                    AssetNode = _context.AssetNodes.FirstOrDefault(id=>id.AssetNodeId == result.AssetNodeId).Name,
-                    UserEmail = _context.Users.FirstOrDefault(id=>id.Id == result.UserId).Email,
+                    AssetNodeTypeName = _context.AssetNodeTypes.FirstOrDefault(id => id.AssetNodeTypeId == result.AssetNodeTypeId).AssetNodeTypeName,
+                    AssetNode = _context.AssetNodes.FirstOrDefault(id => id.AssetNodeId == result.AssetNodeId).Name,
+                    UserEmail = _context.Users.FirstOrDefault(id => id.Id == result.UserId).Email,
                     UserNames = _context.Users.FirstOrDefault(id => id.Id == result.UserId).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.UserId).LastName,
                     Date = result.DateStamp,
                     Reference = _context.Users.FirstOrDefault(id => id.Id == result.Reference).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.Reference).LastName,
@@ -986,7 +986,7 @@ namespace BinmakBackEnd.Controllers
                     List<Tree1> parents = new List<Tree1>();
 
                     for (int i = 2; i <= maxHeight; i++)
-                    {                     
+                    {
                         Tree1 treeBranch = null;
                         Tree1 currentParent = null;
 
