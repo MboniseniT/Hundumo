@@ -35,6 +35,5 @@ namespace BinmakBackEnd.Areas.Assessments.Entities
         public string kpa15 { get; set; }
         public string kpa16 { get; set; }
         public string kpa17 { get; set; }
-        public Nullable<int> isSaved { get; set; }
     }
 }

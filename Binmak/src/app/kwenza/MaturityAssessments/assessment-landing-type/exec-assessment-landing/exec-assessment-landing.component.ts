@@ -39,7 +39,6 @@ export class ExecAssessmentLandingComponent implements OnInit {
     this.surname = JSON.parse(localStorage.getItem('currentUser')).lastName;
     this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
     this.loadUserAssessments();
-    console.log(this.isAdmin);
     if(localStorage.getItem('currentAssessment')){
       this.isSaved = Number(JSON.parse(localStorage.getItem('currentAssessment')).isSaved);
     this.assessName = JSON.parse(localStorage.getItem('currentAssessment')).assess_name;
@@ -56,7 +55,7 @@ export class ExecAssessmentLandingComponent implements OnInit {
       this.assessmentService.GetAssessmentUsers().subscribe(
         (data:any[]) => {
           this.userAssessments = data;
-          console.log(data);
+          //console.log(data);
           this.totalRecords = data.length;
         }, error => {
           console.log('httperror: ');
@@ -64,7 +63,6 @@ export class ExecAssessmentLandingComponent implements OnInit {
         }
       );
     }else{
-      console.log(this.isAdmin);
       this.assessmentService.GetAssessmentUsersForSelection().subscribe(
         (data:any[]) => {
           this.userAssessments = data;
@@ -78,12 +76,14 @@ export class ExecAssessmentLandingComponent implements OnInit {
     }
   }
 
-  selectAssessment(assessID:string){
+  selectAssessment(assessID:string, isSavedState:number){
     localStorage.removeItem("currentAssessment");
     this.assessmentService.GetAssessmentById(assessID).subscribe(
       (data:Assessment[]) => {
         this.assessment = data;
-        //console.log(data);
+        this.assessment = Object.assign(this.assessment, {isSaved:isSavedState});
+        //this.assessment[0].isSaved = isSavedState;
+        //console.log(this.assessment);
         this.assessTotalRecords = data.length;
         localStorage.setItem("currentAssessment", JSON.stringify(this.assessment));
         //console.log(localStorage.getItem("currentAssessment"));
@@ -145,13 +145,13 @@ export class ExecAssessmentLandingComponent implements OnInit {
       this.assessmentService.SaveAssessment(el).toPromise().then((data: any) => {
         // success notification
         this.toastrService.success('Saved Successfully!');
-
+        this.loadUserAssessments();
       }, error => {
         console.log('httperror: ');
           console.log(error);
           // error notification
           //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
-          this.toastrService.error(JSON.stringify(error));
+          this.toastrService.error(JSON.stringify(error.error));
       });
 
     });
