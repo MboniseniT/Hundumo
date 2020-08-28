@@ -110,7 +110,6 @@ namespace BinmakBackEnd
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hundumo API V1");
             });
 
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -50,6 +50,8 @@ import { ExecAssessmentConfigComponent } from './kwenza/MaturityAssessments/asse
 import { ManageKpasComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-kpas/manage-kpas.component';
 import { EditExecKpaComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-kpas/edit-exec-kpa/edit-exec-kpa.component';
 import { ManageCharacteristicsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/manage-characteristics.component';
+import { MdTableComponent } from './asset-health/shared/md-table/md-table.component';
+import { MdFormComponent } from './asset-health/shared/md-form/md-form.component';
 //import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
@@ -88,7 +90,9 @@ import { ManageCharacteristicsComponent } from './kwenza/MaturityAssessments/ass
     ExecAssessmentConfigComponent,
     ManageKpasComponent,
     EditExecKpaComponent,
-    ManageCharacteristicsComponent
+    ManageCharacteristicsComponent,
+    MdTableComponent,
+    MdFormComponent
   ],
   imports: [
     BrowserModule,
