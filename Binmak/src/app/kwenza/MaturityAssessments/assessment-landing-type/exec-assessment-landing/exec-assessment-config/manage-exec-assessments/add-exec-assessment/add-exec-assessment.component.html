@@ -1,0 +1,391 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+    <h4 class="modal-title w-100" id="myModalLabel">Add Assessment</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+
+      <!-- Nav Tabs -->
+<mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-primary tabs-3'" [contentClass]="'card'">
+  <!--Panel 1-->
+  <mdb-tab heading="Basic Infor">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <mdb-select  [options]="frmwrks" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="frmwrk_id"
+          label="* Framework" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="frmwrk_id.invalid && (frmwrk_id.dirty || frmwrk_id.touched)">Framework is required</mdb-error>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <mdb-select [options]="versions" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="version_id"
+          label="* Version" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="version_id.invalid && (version_id.dirty || version_id.touched)">Version is required</mdb-error>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <mdb-select [options]="variants" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="variant_id"
+          label="* Variant" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="variant_id.invalid && (variant_id.dirty || variant_id.touched)">Variant is required</mdb-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <mdb-select [options]="assetNodes" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="assetNodeId"
+          label="* AssetNode" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="assetNodeId.invalid && (assetNodeId.dirty || assetNodeId.touched)">AssetNode is required</mdb-error>
+        </div>
+        <!-- <div class="md-form">
+          <input id="op_name" type="text" class="form-control" formControlName="op_name" mdbInput mdbValidate
+                 [validateSuccess]="false">
+          <label for="op_name">* Operation Name</label>
+          <mdb-error *ngIf="op_name.invalid && (op_name.dirty || op_name.touched)">Operation Name is required</mdb-error>
+        </div> -->
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <input id="assess_date" type="date" class="form-control" formControlName="assess_date" mdbInput mdbValidate
+                 [validateSuccess]="false">
+          <label for="assess_date">* Date</label>
+          <mdb-error *ngIf="assess_date.invalid && (assess_date.dirty || assess_date.touched)">Date is required</mdb-error>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <input id="id" type="text" class="form-control" formControlName="id" mdbInput mdbValidate
+                 [validateSuccess]="false">
+          <label for="id">* ID</label>
+          <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <input id="assess_name" type="text" class="form-control" formControlName="assess_name" mdbInput mdbValidate
+                 [validateSuccess]="false">
+          <label for="assess_name">* Assessment Name</label>
+          <mdb-error *ngIf="assess_name.invalid && (assess_name.dirty || assess_name.touched)">Assessment Name is required</mdb-error>
+        </div>
+      </div>
+    </div> -->
+  </mdb-tab>
+  <!--Panel 2-->
+  <mdb-tab heading="KPA 1-6">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox #check1 (click)="toggleRadio1(initKPA[0].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa1" type="text" class="form-control" formControlName="kpa1" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa1" style="font-size: 10px;">{{initKPA[0].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox #check2 (click)="toggleRadio2(initKPA[1].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa2" type="text" class="form-control" formControlName="kpa2" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa2" style="font-size: 10px;">{{initKPA[1].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio3(initKPA[2].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa3" type="text" class="form-control" formControlName="kpa3" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa3" style="font-size: 10px;">{{initKPA[2].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio4(initKPA[3].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa4" type="text" class="form-control" formControlName="kpa4" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa4" style="font-size: 10px;">{{initKPA[3].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio5(initKPA[4].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa5" type="text" class="form-control" formControlName="kpa5" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa5" style="font-size: 10px;">{{initKPA[4].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio6(initKPA[5].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa6" type="text" class="form-control" formControlName="kpa6" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa6" style="font-size: 10px;">{{initKPA[5].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+    </div>
+  </mdb-tab>
+  <!--Panel 3-->
+  <mdb-tab heading="KPA 7-12">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio7(initKPA[6].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa7" type="text" class="form-control" formControlName="kpa7" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa7" style="font-size: 10px;">{{initKPA[6].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio8(initKPA[7].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa8" type="text" class="form-control" formControlName="kpa8" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa8" style="font-size: 10px;">{{initKPA[7].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio9(initKPA[8].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa9" type="text" class="form-control" formControlName="kpa9" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa9" style="font-size: 10px;">{{initKPA[8].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio10(initKPA[9].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa10" type="text" class="form-control" formControlName="kpa10" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa10" style="font-size: 10px;">{{initKPA[9].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio11(initKPA[10].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa11" type="text" class="form-control" formControlName="kpa11" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa11" style="font-size: 10px;">{{initKPA[10].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio12(initKPA[11].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa12" type="text" class="form-control" formControlName="kpa12" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa12" style="font-size: 10px;">{{initKPA[11].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+    </div>
+  </mdb-tab>
+  <!--Panel 4-->
+  <mdb-tab heading="KPA 13-17">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio13(initKPA[12].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa13" type="text" class="form-control" formControlName="kpa13" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa13" style="font-size: 10px;">{{initKPA[12].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio14(initKPA[13].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa14" type="text" class="form-control" formControlName="kpa14" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa14" style="font-size: 10px;">{{initKPA[13].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio15(initKPA[14].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa15" type="text" class="form-control" formControlName="kpa15" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa15" style="font-size: 10px;">{{initKPA[14].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio16(initKPA[15].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa16" type="text" class="form-control" formControlName="kpa16" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa16" style="font-size: 10px;">{{initKPA[15].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="md-form input-group mt-0 mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text md-addon">
+              <mdb-checkbox (click)="toggleRadio17(initKPA[16].name)"></mdb-checkbox>
+              <!-- <label class="form-check-label ml-5" for="kpa1"></label> -->
+            </div>
+          </div>
+          <input id="kpa17" type="text" class="form-control" formControlName="kpa17" mdbInput mdbValidate
+                 [validateSuccess]="false">
+                 <label class="form-check-label ml-5" for="kpa17" style="font-size: 10px;">{{initKPA[16].name}}</label>
+          <!-- <mdb-error *ngIf="id.invalid && (id.dirty || id.touched)">ID is required</mdb-error> -->
+          <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+      </div>
+    </div>
+  </mdb-tab>
+</mdb-tabset>
+
+      <!-- <div class="md-form">
+        <textarea type="text" id="description" class="md-textarea form-control" formControlName="description"
+                mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+        <label for="description">* description</label>
+        <mdb-error *ngIf="description.invalid && (description.dirty || description.touched)">Input is required</mdb-error>
+      </div> -->
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" mdbBtn color="light" class="waves-light" aria-label="Close"
+            (click)="modalRef.hide()" mdbWavesEffect>Close
+    </button>
+    <button [disabled]="!form.valid" type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+             (click)="onSave()">Save!
+    </button>
+  </div>
+</div>

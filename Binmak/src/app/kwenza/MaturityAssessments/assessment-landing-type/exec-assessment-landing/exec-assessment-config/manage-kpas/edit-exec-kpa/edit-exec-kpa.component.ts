@@ -17,7 +17,7 @@ export class EditExecKpaComponent implements OnInit {
     id: new FormControl({value: '', disabled: true}),
     name: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
-    userId: new FormControl('', Validators.required)
+    userId: new FormControl('')
   });
 
   constructor(public modalRef: MDBModalRef) { }
@@ -26,7 +26,7 @@ export class EditExecKpaComponent implements OnInit {
     this.form.controls['id'].patchValue(this.editableRow.id);
       this.form.controls['name'].patchValue(this.editableRow.name);
       this.form.controls['description'].patchValue(this.editableRow.description);
-      this.form.controls['userId'].patchValue(this.editableRow.userId);
+      this.form.controls['userId'].patchValue(JSON.parse(localStorage.getItem('currentUser')).userId);
   }
 
   editRow() {

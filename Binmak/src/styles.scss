@@ -17,6 +17,12 @@
     color: rgba(0, 69, 125, 1) !important;
 }
 
+.cdk-global-overlay-wrapper {
+  z-index: 1000;
+}
+
+.cdk-overlay-container { z-index:2000; }
+
 //html, body {
  //   max-width: 100%;
  //   overflow-x: hidden;
