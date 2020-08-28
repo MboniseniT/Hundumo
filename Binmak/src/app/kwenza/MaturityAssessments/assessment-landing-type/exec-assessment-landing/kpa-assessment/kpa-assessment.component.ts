@@ -175,6 +175,7 @@ export class KpaAssessmentComponent implements OnInit {
     this.isSaved = Number(JSON.parse(localStorage.getItem('currentAssessment')).isSaved);
     this.assessName = JSON.parse(localStorage.getItem('currentAssessment')).assess_name;
     this.SavedProtect();
+    this.NotAssignedProtect();
     this.kpaID = this.route.snapshot.params['id'];
     this.getKPAs();
     this.getLevels();
@@ -1085,6 +1086,12 @@ export class KpaAssessmentComponent implements OnInit {
       return true;
     }else{
       return false;
+    }
+  }
+
+  NotAssignedProtect(){
+    if(!this.Visible()){
+      this._router.navigate(['/binmak/exec-assessment-landing']);
     }
   }
 

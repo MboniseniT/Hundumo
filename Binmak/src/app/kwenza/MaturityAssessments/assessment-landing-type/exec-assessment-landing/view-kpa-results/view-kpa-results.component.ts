@@ -357,6 +357,7 @@ export class ViewKpaResultsComponent implements OnInit {
   ngOnInit() {
     this.isSaved = Number(JSON.parse(localStorage.getItem('currentAssessment')).isSaved);
     this.assessName = JSON.parse(localStorage.getItem('currentAssessment')).assess_name;
+    this.NotAssignedProtect();
     this.loadChart();
     //retrieve KPAs from Database
     this.assessmentService.GetExecKPAs().subscribe(
@@ -1002,6 +1003,12 @@ export class ViewKpaResultsComponent implements OnInit {
       });
 
     });
+  }
+
+  NotAssignedProtect(){
+    if(!this.Visible()){
+      this._router.navigate(['/binmak/exec-assessment-landing']);
+    }
   }
 
   GetAssessment(){

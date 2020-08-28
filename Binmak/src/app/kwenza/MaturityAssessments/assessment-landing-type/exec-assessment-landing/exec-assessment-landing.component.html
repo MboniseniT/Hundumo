@@ -21,7 +21,8 @@
 
                 <div class="row">
                   <div class="col">
-                    <h5 style="font-weight:250; color: white; font-weight: bold; text-align: center;" class="tk-museo-sans">Choose An Assessment</h5>
+                    <h5 [hidden]="!userAssessments.length" style="font-weight:250; color: white; font-weight: bold; text-align: center;" class="tk-museo-sans">Choose An Assessment</h5>
+                    <!-- [hidden]="isAdmin" -->
                     <br>
                   </div>
                   <div class="row" style="justify-content: center;">
@@ -63,7 +64,8 @@
         <div class="row" style="justify-content: center;">
             <!-- <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div> -->
 
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/kpa-results">
+            <div [hidden]="!Visible()" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/kpa-results">
+              <!-- [hidden]="isAdmin" -->
               <div style="text-align: center;">
                   <i class="fas fa-poll fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
                   <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">View Results
@@ -71,7 +73,8 @@
               </div>
           </div>
 
-          <div [hidden]="getSavedState()" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/kpa-assessment/1">
+          <div [hidden]="getSavedState() || !Visible()" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/kpa-assessment/1">
+            <!-- || isAdmin -->
             <div style="text-align: center;">
                 <i class="fas fa-chalkboard-teacher fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
                 <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Run KPA Assessment
@@ -93,7 +96,8 @@
     </div>
 
 </div>
-<footer class="fixed-bottom">
+<footer [hidden]="!Visible()" class="fixed-bottom">
+  <!-- [hidden]="isAdmin" -->
   <div id="footer1" style="height:25px;" class="container-fluid">
       <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 text-center">

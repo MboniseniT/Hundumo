@@ -14,7 +14,7 @@ export class ExecAssessmentLandingComponent implements OnInit {
 
   name: string;
   surname: string;
-  userAssessments: any[];
+  userAssessments: any[] = [];
   totalRecords:number;
   isSaved:number;
   assessName:string = "";
@@ -34,12 +34,16 @@ export class ExecAssessmentLandingComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.loadUserAssessments();
+
     this.name = JSON.parse(localStorage.getItem('currentUser')).firstName;
     this.surname = JSON.parse(localStorage.getItem('currentUser')).lastName;
     this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
-    this.isSaved = Number(JSON.parse(localStorage.getItem('currentAssessment')).isSaved);
+    this.loadUserAssessments();
+    console.log(this.isAdmin);
+    if(localStorage.getItem('currentAssessment')){
+      this.isSaved = Number(JSON.parse(localStorage.getItem('currentAssessment')).isSaved);
     this.assessName = JSON.parse(localStorage.getItem('currentAssessment')).assess_name;
+    }
   }
 
   back(){
@@ -47,24 +51,35 @@ export class ExecAssessmentLandingComponent implements OnInit {
   }
 
   loadUserAssessments(){
-    this.assessmentService.GetAssessmentUsersForSelection().subscribe(
-      (data:any[]) => {
-        this.userAssessments = data;
-        //console.log(data);
-        this.totalRecords = data.length;
-      }, error => {
-        console.log('httperror: ');
-        console.log(error);
-      }
-    );
+    if(this.isAdmin){
+
+      this.assessmentService.GetAssessmentUsers().subscribe(
+        (data:any[]) => {
+          this.userAssessments = data;
+          console.log(data);
+          this.totalRecords = data.length;
+        }, error => {
+          console.log('httperror: ');
+          console.log(error);
+        }
+      );
+    }else{
+      console.log(this.isAdmin);
+      this.assessmentService.GetAssessmentUsersForSelection().subscribe(
+        (data:any[]) => {
+          this.userAssessments = data;
+          //console.log(data);
+          this.totalRecords = data.length;
+        }, error => {
+          console.log('httperror: ');
+          console.log(error);
+        }
+      );
+    }
   }
 
   selectAssessment(assessID:string){
     localStorage.removeItem("currentAssessment");
-    setTimeout(() => {
-      //localStorage.setItem("assessID",assessID);
-      //console.log(localStorage.getItem("assessID"));
-    });
     this.assessmentService.GetAssessmentById(assessID).subscribe(
       (data:Assessment[]) => {
         this.assessment = data;
