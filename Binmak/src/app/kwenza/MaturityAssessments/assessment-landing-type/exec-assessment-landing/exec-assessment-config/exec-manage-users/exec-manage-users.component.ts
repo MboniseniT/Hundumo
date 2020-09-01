@@ -237,7 +237,7 @@ export class ExecManageUsersComponent implements OnInit, AfterViewInit {
     AdminProtect(){
       if (!this.isAdmin) {
         console.log('here');
-        this.router.navigate(['/binmak/exec-assessment-landing']);
+        this.router.navigate(['/binmak/assessment-types']);
       }
     }
 

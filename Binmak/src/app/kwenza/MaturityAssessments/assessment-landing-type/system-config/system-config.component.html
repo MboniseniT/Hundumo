@@ -30,18 +30,32 @@
     <div style="padding:20px">
         <br>
 <br>
-        <div class="row">
+        <div class="row" style="justify-content: center;">
             <!-- <div class="col-lg-2 col-md-2">
             </div> -->
+            <div [hidden]="!isAdmin" class="col-lg-2 col-md-2 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/exec-assessment-config">
+              <div style="text-align: center;">
+                  <i class="fas fa-cogs fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
+                  <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Exec Assessment Config
+                  </h6>
+              </div>
+          </div>
 
-          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/assessment-system-config">
+          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/manage-exec-assessments">
+            <div style="text-align: center;">
+                <i class="fas fa-graduation-cap fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><i class="fas fa-cogs" style="color: rgba(0, 69, 125, 1);"></i><br><br>
+                <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Manage Assessments</h6>
+            </div>
+        </div>
+
+          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/assessment-system-config">
             <div style="text-align: center;">
                 <i class="fab fa-blogger fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
                 <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Framework</h6>
             </div>
         </div>
 
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/assessment-system-config">
+        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/assessment-system-config">
             <div style="text-align: center;">
                 <i class="fab fa-buysellads fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
                 <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Version
@@ -49,7 +63,7 @@
             </div>
         </div>
 
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/assessment-system-config">
+        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/assessment-system-config">
             <div style="text-align: center;">
                 <i class="fab fa-chromecast fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
                 <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Varient</h6>

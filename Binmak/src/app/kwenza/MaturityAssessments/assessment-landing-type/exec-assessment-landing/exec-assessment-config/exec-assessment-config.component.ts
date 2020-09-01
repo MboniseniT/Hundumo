@@ -22,13 +22,13 @@ export class ExecAssessmentConfigComponent implements OnInit {
   }
 
   back(){
-    this.router.navigate(['/binmak/exec-assessment-landing']);
+    this.router.navigate(['/binmak/assessment-system-config']);
   }
 
   AdminProtect(){
     if (!this.isAdmin) {
       console.log('here');
-      this.router.navigate(['/binmak/exec-assessment-landing']);
+      this.router.navigate(['/binmak/assessment-types']);
     }
   }
 
