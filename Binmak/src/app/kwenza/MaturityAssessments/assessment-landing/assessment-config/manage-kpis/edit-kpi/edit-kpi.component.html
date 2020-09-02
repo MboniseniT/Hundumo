@@ -1,3 +1,163 @@
-<p>
-  edit-kpi works!
-</p>
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+    <h4 class="modal-title w-100" id="myModalLabel">Edit KPI: {{editableRow.id}}</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+
+      <!-- Nav Tabs -->
+<mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-primary tabs-3'" [contentClass]="'card'">
+  <!--Panel 1-->
+  <mdb-tab heading="Basic Infor">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <mdb-select  [options]="frmwrks" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="frmwrk_id"
+          label="* Framework" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="frmwrk_id.invalid && (frmwrk_id.dirty || frmwrk_id.touched)">Framework is required</mdb-error>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <mdb-select [options]="versions" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="version_id"
+          label="* Version" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="version_id.invalid && (version_id.dirty || version_id.touched)">Version is required</mdb-error>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <mdb-select [options]="variants" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="variant_id"
+          label="* Variant" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="variant_id.invalid && (variant_id.dirty || variant_id.touched)">Variant is required</mdb-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <mdb-select [options]="kpas" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="kpa_id"
+          label="* Select Parent KPA" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="kpa_id.invalid && (kpa_id.dirty || kpa_id.touched)">KPA is required</mdb-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <input id="name" type="text" class="form-control" formControlName="name" mdbInput mdbValidate
+                 [validateSuccess]="false">
+          <label for="name">* KPI Name</label>
+          <mdb-error *ngIf="name.invalid && (name.dirty || name.touched)">KPI Name is required</mdb-error>
+        </div>
+      </div>
+    </div>
+  </mdb-tab>
+  <!--Panel 2-->
+  <mdb-tab heading="Desc & Guide">
+    <div class="row">
+      <div class="col">
+        <div class="md-form">
+          <textarea type="text" id="description" class="md-textarea form-control" formControlName="description"
+                  mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+          <label for="description">* description</label>
+          <mdb-error *ngIf="description.invalid && (description.dirty || description.touched)">Description is required</mdb-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="md-form">
+          <textarea type="text" id="guideline" class="md-textarea form-control" formControlName="guideline"
+                  mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+          <label for="guideline">guideline</label>
+          <mdb-error *ngIf="guideline.invalid && (guideline.dirty || guideline.touched)">Guideline is required</mdb-error>
+        </div>
+      </div>
+    </div>
+  </mdb-tab>
+  <!--Panel 3-->
+  <mdb-tab heading="Level Guides 1-3">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <input id="innocence" type="text" class="form-control" formControlName="innocence" mdbInput mdbValidate
+                 [validateSuccess]="false">
+          <label for="innocence">* Innocence</label>
+          <mdb-error *ngIf="innocence.invalid && (innocence.dirty || innocence.touched)">Innocence guide is required</mdb-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <input id="awareness" type="text" class="form-control" formControlName="awareness" mdbInput mdbValidate
+                 [validateSuccess]="false">
+          <label for="awareness">* Awareness</label>
+          <mdb-error *ngIf="awareness.invalid && (awareness.dirty || awareness.touched)">Awareness guide is required</mdb-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <input id="understanding" type="text" class="form-control" formControlName="understanding" mdbInput mdbValidate
+                 [validateSuccess]="false">
+          <label for="understanding">* Understanding</label>
+          <mdb-error *ngIf="understanding.invalid && (understanding.dirty || understanding.touched)">Understanding guide is required</mdb-error>
+        </div>
+      </div>
+    </div>
+  </mdb-tab>
+  <!--Panel 4-->
+  <mdb-tab heading="Level Guides 4-5">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <input id="competence" type="text" class="form-control" formControlName="competence" mdbInput mdbValidate
+                 [validateSuccess]="false">
+          <label for="competence">* Competence</label>
+          <mdb-error *ngIf="competence.invalid && (competence.dirty || competence.touched)">Competence guide is required</mdb-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <input id="excellence" type="text" class="form-control" formControlName="excellence" mdbInput mdbValidate
+                 [validateSuccess]="false">
+          <label for="excellence">* Excellence</label>
+          <mdb-error *ngIf="excellence.invalid && (excellence.dirty || excellence.touched)">Excellence guide is required</mdb-error>
+        </div>
+      </div>
+    </div>
+  </mdb-tab>
+</mdb-tabset>
+
+      <!-- <div class="md-form">
+        <textarea type="text" id="description" class="md-textarea form-control" formControlName="description"
+                mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+        <label for="description">* description</label>
+        <mdb-error *ngIf="description.invalid && (description.dirty || description.touched)">Input is required</mdb-error>
+      </div> -->
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" mdbBtn color="light" class="waves-light" aria-label="Close"
+            (click)="modalRef.hide()" mdbWavesEffect>Close
+    </button>
+    <button [disabled]="!form.valid" type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+             (click)="editRow()">Save!
+    </button>
+  </div>
+</div>

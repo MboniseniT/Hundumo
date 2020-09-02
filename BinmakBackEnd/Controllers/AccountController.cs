@@ -212,7 +212,8 @@ namespace BinmakAPI.Controllers
                             Address2 = applicationUser.Address2,
                             City = applicationUser.City,
                             Zip = applicationUser.Zip,
-                            IsAdmin = true
+                            IsAdmin = true,
+                            IsBinmak = false
                         };
 
                         var userResult = await _userManager.CreateAsync(user, applicationUser.Password);
@@ -327,7 +328,8 @@ namespace BinmakAPI.Controllers
                             username = user.UserName,
                             firstName = user.FirstName,
                             lastName = user.LastName,
-                            isAdmin = user.IsAdmin
+                            isAdmin = user.IsAdmin,
+                            isBinmak = user.IsBinmak
                         };
 
                         return Created("", results);

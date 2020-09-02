@@ -176,6 +176,41 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
+        [HttpPut("editKPIs")]
+        public IActionResult EditKPIs([FromBody] Kpis KPI)
+        {
+            try
+            {
+                var lAction = _context.kpis.FirstOrDefault(a => a.ID == KPI.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The KPI with ID = " + KPI.ID + " not found to update!");
+                }
+                else
+                {
+                    lAction.frmwrk_id = KPI.frmwrk_id;
+                    lAction.version_id = KPI.version_id;
+                    lAction.variant_id = KPI.variant_id;
+                    lAction.kpa_id = KPI.kpa_id;
+                    lAction.name = KPI.name;
+                    lAction.description = KPI.description;
+                    lAction.guideline = KPI.guideline;
+                    lAction.innocence = KPI.innocence;
+                    lAction.awareness = KPI.awareness;
+                    lAction.understanding = KPI.understanding;
+                    lAction.competence = KPI.competence;
+                    lAction.excellence = KPI.excellence;
+                    lAction.user_id = KPI.user_id;
+                    _context.SaveChanges();
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
 
 
         //Levels

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { AddExecAssessmentComponent } from '../../../assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/add-exec-assessment/add-exec-assessment.component';
 import { AddKpiComponent } from '../../../assessment-landing/assessment-config/manage-kpis/add-kpi/add-kpi.component';
 import { KPI } from 'src/app/Models/Assessments/kpi';
+import { EditKpiComponent } from './edit-kpi/edit-kpi.component';
 
 @Component({
   selector: 'app-manage-kpis',
@@ -22,7 +23,7 @@ export class ManageKpisComponent implements OnInit, AfterViewInit {
   @ViewChild('row', { static: true }) row: ElementRef;
 
   elements: any = [];
-  headElements = ['ID', 'kpaname', 'Description', 'Guideline', 'Innocence', 'Awareness', 'Understanding', 'Competence', 'Excellence', 'commands']; //'LastEditedBy',
+  headElements = ['ID', 'Name', 'Description', 'Guideline', 'Innocence', 'Awareness', 'Understanding', 'Competence', 'Excellence', 'commands']; //'LastEditedBy',
 
   modalRef: MDBModalRef;
 
@@ -95,10 +96,10 @@ export class ManageKpisComponent implements OnInit, AfterViewInit {
         editableRow: el
       }
     };
-    this.modalRef = this.modalService.show(EditExecKpaComponent, modalOptions);
+    this.modalRef = this.modalService.show(EditKpiComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-      this.kpaService.EditExecKPA(newElement).toPromise().then((data: any) => {
+      this.assessmentService.EditKPI(newElement).toPromise().then((data: any) => {
         //console.log(data);
         // success notification
         this.toastrService.success('Update Successful!');

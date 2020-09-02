@@ -73,6 +73,9 @@ constructor(private http: HttpClient) { }
       AddKPI(kpi){
         return this.http.post(this.assessmentUrl+'addKPIs', kpi);
       }
+      EditKPI(kpi){
+        return this.http.put(this.assessmentUrl+'editKPIs', kpi);
+      }
 
       /*Levels*/
       getLevels(): Observable<Level[]>{
