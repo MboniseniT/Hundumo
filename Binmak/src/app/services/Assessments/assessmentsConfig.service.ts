@@ -10,6 +10,7 @@ import { Variant } from 'src/app/Models/Assessments/variant';
 import { Version } from 'src/app/Models/Assessments/version';
 import { Assessment } from 'src/app/Models/Assessments/assessment';
 import { LResult } from 'src/app/Models/Assessments/lResults';
+import { KPI } from 'src/app/Models/Assessments/kpi';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +64,14 @@ constructor(private http: HttpClient) { }
 
       EditExecKPA(kpa){
         return this.http.put(this.assessmentUrl+'editExecKPAs', kpa);
+      }
+
+      /*KPIs*/
+      GetKPIs(): Observable<KPI[]>{
+        return this.http.get<KPI[]>(this.assessmentUrl+'getKPIs');
+      }
+      AddKPI(kpi){
+        return this.http.post(this.assessmentUrl+'addKPIs', kpi);
       }
 
       /*Levels*/

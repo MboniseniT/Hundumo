@@ -59,6 +59,9 @@ import { AddExecAssessmentComponent } from './kwenza/MaturityAssessments/assessm
 import { ManageExecAssessmentsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/manage-exec-assessments.component';
 import { AreYouSureComponent } from './kwenza/MaturityAssessments/are-you-sure/are-you-sure.component'
 import { ExecManageUsersComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/exec-manage-users/exec-manage-users.component';
+import { ManageKpisComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-kpis/manage-kpis.component';
+import { AddKpiComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-kpis/add-kpi/add-kpi.component';
+import { EditKpiComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-kpis/edit-kpi/edit-kpi.component';
 
 //import { ChartModule } from 'angular-highcharts';
 
@@ -105,7 +108,10 @@ import { ExecManageUsersComponent } from './kwenza/MaturityAssessments/assessmen
     AddExecAssessmentComponent,
     ManageExecAssessmentsComponent,
     AreYouSureComponent,
-    ExecManageUsersComponent
+    ExecManageUsersComponent,
+    ManageKpisComponent,
+    AddKpiComponent,
+    EditKpiComponent
   ],
   imports: [
     BrowserModule,

@@ -10,16 +10,26 @@ export class AssessmentConfigComponent implements OnInit {
 
   name: string;
   surname: string;
+  isAdmin:boolean;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.name = JSON.parse(localStorage.getItem('currentUser')).firstName;
     this.surname = JSON.parse(localStorage.getItem('currentUser')).lastName;
+    this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
+    this.AdminProtect();
   }
 
   back(){
-    this.router.navigate(['/binmak/assessment-landing']);
+    this.router.navigate(['/binmak/assessment-system-config']);
+  }
+
+  AdminProtect(){
+    if (!this.isAdmin) {
+      console.log('here');
+      this.router.navigate(['/binmak/assessment-types']);
+    }
   }
 
 }

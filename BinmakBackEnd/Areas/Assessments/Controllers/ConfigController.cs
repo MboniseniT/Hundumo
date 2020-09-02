@@ -25,7 +25,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             _context = context;
         }
 
-        //Exec KPAs
+        //KPAs
         [HttpGet("getExecKPAs")]
         public IActionResult GetExecKPAs()
         {
@@ -136,6 +136,47 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
+
+        //KPIs
+        [HttpGet("getKPIs")]
+        public IActionResult GetKPIs()
+        {
+            try
+            {
+                var lAction = _context.kpis.ToList();
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("HTTP resource is currently unavailable!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+        [HttpPost("addKPIs")]
+        public IActionResult AddKPIs([FromBody] Kpis KPI)
+        {
+            try
+            {
+                _context.kpis.Add(KPI);
+                _context.SaveChanges();
+
+                var message = Created("", KPI);
+                return message;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
 
         //Levels
         [HttpGet("getLevels")]

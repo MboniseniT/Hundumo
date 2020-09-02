@@ -38,6 +38,7 @@ import { ManageCharacteristicsComponent } from './kwenza/MaturityAssessments/ass
 import { ManageExecAssessmentsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/manage-exec-assessments.component';
 import { ExecManageUsersComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/exec-manage-users/exec-manage-users.component';
 import { isSavedGuard } from './guards/isSaved.guard';
+import { ManageKpisComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-kpis/manage-kpis.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'binmak', pathMatch: 'full'},
@@ -77,7 +78,8 @@ const routes: Routes = [
         { path: 'manage-exec-kpas', component: ManageKpasComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'manage-exec-characteristics', component: ManageCharacteristicsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'manage-exec-assessments', component: ManageExecAssessmentsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-        { path: 'manage-exec-users', component: ExecManageUsersComponent, pathMatch: 'full', canActivate: [AuthGuard]}
+        { path: 'manage-exec-users', component: ExecManageUsersComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'manage-kpis', component: ManageKpisComponent, pathMatch: 'full', canActivate: [AuthGuard]}
       ]
     },
     {path:'**', redirectTo: 'binmak', pathMatch: 'full', canActivate: [AuthGuard]}

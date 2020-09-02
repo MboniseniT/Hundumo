@@ -6,7 +6,7 @@ import { MdbTableDirective, MdbTablePaginationComponent } from 'ng-uikit-pro-sta
 import {HttpClient} from "@angular/common/http";
 import { EditCharacteristicComponent } from '../manage-characteristics/edit-characteristic/edit-characteristic.component';
 import { SelectKpaLevelComponent } from '../manage-characteristics/select-kpaLevel/select-kpaLevel.component';
-import { AddExecAssessmentComponent } from '../manage-exec-assessments/add-exec-assessment/add-exec-assessment.component'
+import { AddExecAssessmentComponent } from '../manage-exec-assessments/add-exec-assessment/add-exec-assessment.component';
 import {MDBModalRef, MDBModalService} from "ng-uikit-pro-standard";
 import { ToastService } from 'ng-uikit-pro-standard';
 import { Router } from '@angular/router';
