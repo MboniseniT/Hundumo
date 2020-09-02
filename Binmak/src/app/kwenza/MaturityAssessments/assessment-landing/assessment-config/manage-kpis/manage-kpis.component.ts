@@ -11,6 +11,7 @@ import { AddExecAssessmentComponent } from '../../../assessment-landing-type/exe
 import { AddKpiComponent } from '../../../assessment-landing/assessment-config/manage-kpis/add-kpi/add-kpi.component';
 import { KPI } from 'src/app/Models/Assessments/kpi';
 import { EditKpiComponent } from './edit-kpi/edit-kpi.component';
+import { AreYouSureComponent } from '../../../are-you-sure/are-you-sure.component';
 
 @Component({
   selector: 'app-manage-kpis',
@@ -120,7 +121,31 @@ export class ManageKpisComponent implements OnInit, AfterViewInit {
   }
 
   onDelete(el:any){
+    const elementIndex = this.elements.findIndex((elem: any) => el === elem);
+    const modalOptions = {
+      data: {
+        editableRow: {message:"Are you sure you want to DELETE KPA " + el.id + ": "+ el.name + "?"}
+      }
+    };
+    this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
+    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
+      //Call funtion to update database
+    this.assessmentService.DeleteKPI(el).toPromise().then((data: any) => {
+      // success notification
+      this.toastrService.warning('Deleted Successfully!');
+      setTimeout(() => {
+        //update DataTable
+        this.loadDataTable();
+      });
+    }, error => {
+      console.log('httperror: ');
+        console.log(error);
+        // error notification
+        //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+        this.toastrService.error(error);
+    });
 
+    });
   }
 
   back(){
@@ -173,7 +198,7 @@ export class ManageKpisComponent implements OnInit, AfterViewInit {
         this.toastrService.success('Addition Successful!');
         setTimeout(() => {
           //update DataTable
-          //this.loadDataTable();
+          this.loadDataTable();
         });
       }, error => {
         console.log('httperror: ');

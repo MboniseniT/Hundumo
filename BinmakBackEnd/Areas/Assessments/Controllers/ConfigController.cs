@@ -176,6 +176,31 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
+
+        [HttpPost("deleteKPI")]
+        public IActionResult DeleteKPI([FromBody] Kpis KPI)
+        {
+            try
+            {
+                var lAction = _context.kpis.FirstOrDefault(a => a.ID == KPI.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The KPI with ID = " + KPI.ID + " not found to delete!");
+                }
+                else
+                {
+                    _context.kpis.Remove(lAction);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
         [HttpPut("editKPIs")]
         public IActionResult EditKPIs([FromBody] Kpis KPI)
         {
@@ -789,7 +814,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
         
-        [HttpPost("addAssessmentUser")]
+        [HttpPost("addExecAssessmentUser")]
         public IActionResult AddAssessmentUser([FromBody] AssessmentUsers AssessUser)
         {
             try
@@ -799,6 +824,8 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 if (user != null && assessment != null)
                 {
                     AssessUser.link_name = assessment.assess_name + "-" + user.FirstName + " " + user.LastName;
+                    AssessUser.type = 1;
+                    AssessUser.isSaved = 0;
                     _context.assessmentUsers.Add(AssessUser);
                     _context.SaveChanges();
 
@@ -817,13 +844,13 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
-        [HttpPost("getAssessmentUsers")]
-        public IActionResult GetAssessmentUsers([FromBody] Reference Ref)
+        [HttpPost("getExecAssessmentUsers")]
+        public IActionResult GetExecAssessmentUsers([FromBody] Reference Ref)
         {
             try
             {
                 //May need to use the reference parameter to narrow down the list
-                List<AssessmentUsers> assessUsers = _context.assessmentUsers.Where(a => a.reference == Ref.reference).ToList();
+                List<AssessmentUsers> assessUsers = _context.assessmentUsers.Where(a => a.reference == Ref.reference && a.type == 1).ToList();
                 var assessmentUsers = assessUsers.Select(result => new
                 {
                     AssessUserId = result.ID,
@@ -844,18 +871,19 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
-        [HttpPost("getAssessmentUsersForSelection")]
-        public IActionResult GetAssessmentUsersForSelection([FromBody] Reference userID)
+        [HttpPost("getExecAssessmentUsersForSelection")]
+        public IActionResult GetExecAssessmentUsersForSelection([FromBody] Reference userID)
         {
             try
             {
                 var user = _context.Users.FirstOrDefault(u => u.Id == userID.reference);
                 //May need to use the reference parameter to narrow down the list
-                List<AssessmentUsers> assessUsers = _context.assessmentUsers.Where(a => a.reference == user.Reference).ToList();
+                List<AssessmentUsers> assessUsers = _context.assessmentUsers.Where(a => a.reference == user.Reference && a.user_id == userID.reference && a.type == 1).ToList();
                 var assessmentUsers = assessUsers.Select(result => new
                 {
                     AssessUserId = result.ID,
                     AssessmentId = result.assess_id,
+                    AssessmentIsSaved = result.isSaved,
                     AssessmentName = _context.assessments.FirstOrDefault(id => id.ID == result.assess_id).assess_name,
                     UserEmail = _context.Users.FirstOrDefault(id => id.Id == result.user_id).Email,
                     UserNames = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName,

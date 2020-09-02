@@ -21,20 +21,20 @@ constructor(private http: HttpClient) { }
 
 //Exec Assessments
       /*Assessment Users*/
-      AddAssessmentUser(assessmentUser){
+      AddExecAssessmentUser(assessmentUser){
         let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId, link_name: ""};
         assessmentUser = Object.assign(assessmentUser, idSet);
         console.log(assessmentUser);
-        return this.http.post(this.assessmentUrl+'addAssessmentUser', assessmentUser);
+        return this.http.post(this.assessmentUrl+'addExecAssessmentUser', assessmentUser);
       }
-      GetAssessmentUsers(): Observable<any[]>{
+      GetExecAssessmentUsers(): Observable<any[]>{
         let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId};
-        return this.http.post<any[]>(this.assessmentUrl+'getAssessmentUsers', idSet);
+        return this.http.post<any[]>(this.assessmentUrl+'getExecAssessmentUsers', idSet);
       }
 
-      GetAssessmentUsersForSelection(): Observable<any[]>{
+      GetExecAssessmentUsersForSelection(): Observable<any[]>{
         let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId};
-        return this.http.post<any[]>(this.assessmentUrl+'getAssessmentUsersForSelection', idSet);
+        return this.http.post<any[]>(this.assessmentUrl+'getExecAssessmentUsersForSelection', idSet);
       }
 
       GetAssessmentById(id:string): Observable<Assessment[]>{
@@ -72,6 +72,9 @@ constructor(private http: HttpClient) { }
       }
       AddKPI(kpi){
         return this.http.post(this.assessmentUrl+'addKPIs', kpi);
+      }
+      DeleteKPI(kpi){
+        return this.http.post(this.assessmentUrl+'deleteKPI', kpi);
       }
       EditKPI(kpi){
         return this.http.put(this.assessmentUrl+'editKPIs', kpi);

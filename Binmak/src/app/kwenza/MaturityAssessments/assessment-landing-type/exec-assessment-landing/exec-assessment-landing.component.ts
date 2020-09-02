@@ -52,7 +52,7 @@ export class ExecAssessmentLandingComponent implements OnInit {
   loadUserAssessments(){
     if(this.isAdmin){
 
-      this.assessmentService.GetAssessmentUsers().subscribe(
+      this.assessmentService.GetExecAssessmentUsers().subscribe(
         (data:any[]) => {
           this.userAssessments = data;
           //console.log(data);
@@ -63,7 +63,7 @@ export class ExecAssessmentLandingComponent implements OnInit {
         }
       );
     }else{
-      this.assessmentService.GetAssessmentUsersForSelection().subscribe(
+      this.assessmentService.GetExecAssessmentUsersForSelection().subscribe(
         (data:any[]) => {
           this.userAssessments = data;
           //console.log(data);
