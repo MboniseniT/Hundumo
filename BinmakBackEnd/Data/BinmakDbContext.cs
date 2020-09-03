@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using BinmakBackEnd.Entities;
-
+using BinmakBackEnd.Areas.AssetCriticality.Entities;
 namespace BinmakAPI.Data
 {
     public class BinmakDbContext : IdentityDbContext<ApplicationUser>
@@ -42,6 +42,17 @@ namespace BinmakAPI.Data
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Results> results { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Variants> variants { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Versions> versions { get; set; }
+
+        //Asset Criticality
+        public DbSet<LikelihoodDescription> LikelihoodDescriptions { get; set; }
+        public DbSet<RiskAssessorLogin> RiskAssessorLogin { get; set; }
+        public DbSet<RiskAcceptanceThreshold> RiskAcceptanceThreshold { get; set; }
+        public DbSet<AssessmentReference> AssessmentReference { get; set; }
+        public DbSet<ActualAssessment> ActualAssessment { get; set; }
+        public DbSet<RiskDeterminationMatrix> RiskDeterminationMatrix { get; set; }
+        public DbSet<CriteriaRiskMatrix> CriteriaRiskMatrix { get; set; }
+        public DbSet<ConsequenceCategory> ConsequenceCategory { get; set; }
+
     }
 
 }

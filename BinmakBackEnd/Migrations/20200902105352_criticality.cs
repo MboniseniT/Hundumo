@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BinmakBackEnd.Migrations
 {
-    public partial class init : Migration
+    public partial class criticality : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,6 +23,38 @@ namespace BinmakBackEnd.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Actions", x => x.ActionId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ActualAssessment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EquipmentId = table.Column<string>(nullable: true),
+                    CapitalExpenditure = table.Column<string>(nullable: true),
+                    ProjectSchedule = table.Column<string>(nullable: true),
+                    OperatingCost = table.Column<string>(nullable: true),
+                    ProductionVolume = table.Column<string>(nullable: true),
+                    Revenue = table.Column<string>(nullable: true),
+                    Safety = table.Column<string>(nullable: true),
+                    Health = table.Column<string>(nullable: true),
+                    Environment = table.Column<string>(nullable: true),
+                    Community = table.Column<string>(nullable: true),
+                    Compliance = table.Column<string>(nullable: true),
+                    Reputation = table.Column<string>(nullable: true),
+                    Risk = table.Column<string>(nullable: true),
+                    Quality = table.Column<string>(nullable: true),
+                    Budget = table.Column<string>(nullable: true),
+                    Legal = table.Column<string>(nullable: true),
+                    FailureFrequency = table.Column<string>(nullable: true),
+                    DominantFrequency = table.Column<string>(nullable: true),
+                    ThresholdRiskBand = table.Column<string>(nullable: true),
+                    RiskRanking = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ActualAssessment", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,6 +107,77 @@ namespace BinmakBackEnd.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssessmentReference",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ConsequenceCategory = table.Column<string>(nullable: true),
+                    Minor = table.Column<string>(nullable: true),
+                    Medium = table.Column<string>(nullable: true),
+                    Serious = table.Column<string>(nullable: true),
+                    Major = table.Column<string>(nullable: true),
+                    Catastrophic = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssessmentReference", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "assessments",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    assess_name = table.Column<string>(nullable: true),
+                    assess_date = table.Column<string>(nullable: true),
+                    assetNodeId = table.Column<int>(nullable: false),
+                    version_id = table.Column<int>(nullable: false),
+                    variant_id = table.Column<int>(nullable: false),
+                    frmwrk_id = table.Column<int>(nullable: false),
+                    user_id = table.Column<string>(nullable: true),
+                    kpa1 = table.Column<string>(nullable: true),
+                    kpa2 = table.Column<string>(nullable: true),
+                    kpa3 = table.Column<string>(nullable: true),
+                    kpa4 = table.Column<string>(nullable: true),
+                    kpa5 = table.Column<string>(nullable: true),
+                    kpa6 = table.Column<string>(nullable: true),
+                    kpa7 = table.Column<string>(nullable: true),
+                    kpa8 = table.Column<string>(nullable: true),
+                    kpa9 = table.Column<string>(nullable: true),
+                    kpa10 = table.Column<string>(nullable: true),
+                    kpa11 = table.Column<string>(nullable: true),
+                    kpa12 = table.Column<string>(nullable: true),
+                    kpa13 = table.Column<string>(nullable: true),
+                    kpa14 = table.Column<string>(nullable: true),
+                    kpa15 = table.Column<string>(nullable: true),
+                    kpa16 = table.Column<string>(nullable: true),
+                    kpa17 = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_assessments", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "assessmentUsers",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    user_id = table.Column<string>(nullable: true),
+                    assess_id = table.Column<int>(nullable: false),
+                    reference = table.Column<string>(nullable: true),
+                    link_name = table.Column<string>(nullable: true),
+                    isSaved = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_assessmentUsers", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -139,6 +242,25 @@ namespace BinmakBackEnd.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "characteristics",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    kpa_id = table.Column<int>(nullable: false),
+                    level_id = table.Column<int>(nullable: false),
+                    user_id = table.Column<string>(nullable: true),
+                    frmwrk_id = table.Column<int>(nullable: false),
+                    version_id = table.Column<int>(nullable: false),
+                    variant_id = table.Column<int>(nullable: false),
+                    description = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_characteristics", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ClientAssetNames",
                 columns: table => new
                 {
@@ -170,6 +292,19 @@ namespace BinmakBackEnd.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ConsequenceCategory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConsequenceCategory", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Countries",
                 columns: table => new
                 {
@@ -181,6 +316,20 @@ namespace BinmakBackEnd.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.CountryId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CriteriaRiskMatrix",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ConsequenceImpact = table.Column<string>(nullable: true),
+                    LikelihoodRanking = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CriteriaRiskMatrix", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -240,6 +389,19 @@ namespace BinmakBackEnd.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "frmwrks",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_frmwrks", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FunctionUnitChildrens",
                 columns: table => new
                 {
@@ -284,6 +446,51 @@ namespace BinmakBackEnd.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FunctionUnits", x => x.FunctionUnitId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "kpas",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(nullable: true),
+                    description = table.Column<string>(nullable: true),
+                    user_id = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_kpas", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "levels",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(nullable: true),
+                    user_id = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_levels", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LikelihoodDescriptions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Likelihood = table.Column<string>(nullable: true),
+                    LikelihoodDescriptions = table.Column<string>(nullable: true),
+                    Frequency = table.Column<string>(nullable: true),
+                    SubstanceExposure = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LikelihoodDescriptions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -548,6 +755,71 @@ namespace BinmakBackEnd.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "results",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    characteristic_id = table.Column<int>(nullable: false),
+                    assess_id = table.Column<int>(nullable: false),
+                    user_id = table.Column<string>(nullable: true),
+                    kpa_id = table.Column<int>(nullable: true),
+                    level_id = table.Column<int>(nullable: true),
+                    value = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_results", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RiskAcceptanceThreshold",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ThresholdRiskBand = table.Column<string>(nullable: true),
+                    RiskAcceptanceThresholds = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RiskAcceptanceThreshold", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RiskAssessorLogin",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    Fullname = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RiskAssessorLogin", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RiskDeterminationMatrix",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FailureFrequency = table.Column<string>(nullable: true),
+                    Minor = table.Column<string>(nullable: true),
+                    Medium = table.Column<string>(nullable: true),
+                    Serious = table.Column<string>(nullable: true),
+                    Major = table.Column<string>(nullable: true),
+                    Catastrophic = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RiskDeterminationMatrix", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Templates",
                 columns: table => new
                 {
@@ -558,6 +830,32 @@ namespace BinmakBackEnd.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Templates", x => x.TemplateId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "variants",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_variants", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "versions",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_versions", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -712,6 +1010,9 @@ namespace BinmakBackEnd.Migrations
                 name: "Actions");
 
             migrationBuilder.DropTable(
+                name: "ActualAssessment");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -727,6 +1028,15 @@ namespace BinmakBackEnd.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AssessmentReference");
+
+            migrationBuilder.DropTable(
+                name: "assessments");
+
+            migrationBuilder.DropTable(
+                name: "assessmentUsers");
+
+            migrationBuilder.DropTable(
                 name: "AssetNodes");
 
             migrationBuilder.DropTable(
@@ -736,13 +1046,22 @@ namespace BinmakBackEnd.Migrations
                 name: "AssetUsers");
 
             migrationBuilder.DropTable(
+                name: "characteristics");
+
+            migrationBuilder.DropTable(
                 name: "ClientAssetNames");
 
             migrationBuilder.DropTable(
                 name: "Companies");
 
             migrationBuilder.DropTable(
+                name: "ConsequenceCategory");
+
+            migrationBuilder.DropTable(
                 name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "CriteriaRiskMatrix");
 
             migrationBuilder.DropTable(
                 name: "DailyTasks");
@@ -751,10 +1070,22 @@ namespace BinmakBackEnd.Migrations
                 name: "Equipments");
 
             migrationBuilder.DropTable(
+                name: "frmwrks");
+
+            migrationBuilder.DropTable(
                 name: "FunctionUnitChildrens");
 
             migrationBuilder.DropTable(
                 name: "FunctionUnits");
+
+            migrationBuilder.DropTable(
+                name: "kpas");
+
+            migrationBuilder.DropTable(
+                name: "levels");
+
+            migrationBuilder.DropTable(
+                name: "LikelihoodDescriptions");
 
             migrationBuilder.DropTable(
                 name: "Organizations");
@@ -772,7 +1103,25 @@ namespace BinmakBackEnd.Migrations
                 name: "Readings");
 
             migrationBuilder.DropTable(
+                name: "results");
+
+            migrationBuilder.DropTable(
+                name: "RiskAcceptanceThreshold");
+
+            migrationBuilder.DropTable(
+                name: "RiskAssessorLogin");
+
+            migrationBuilder.DropTable(
+                name: "RiskDeterminationMatrix");
+
+            migrationBuilder.DropTable(
                 name: "Templates");
+
+            migrationBuilder.DropTable(
+                name: "variants");
+
+            migrationBuilder.DropTable(
+                name: "versions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
