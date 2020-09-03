@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Innocent\\source\\repos\\Hundumo\\BinmakBackEnd\\BinmakBackEnd.csproj": {}
+    "C:\\Users\\Admin\\Documents\\Projects\\Load And Haul\\Hundumo\\BinmakBackEnd\\BinmakBackEnd.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Innocent\\source\\repos\\Hundumo\\BinmakBackEnd\\BinmakBackEnd.csproj": {
+    "C:\\Users\\Admin\\Documents\\Projects\\Load And Haul\\Hundumo\\BinmakBackEnd\\BinmakBackEnd.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Innocent\\source\\repos\\Hundumo\\BinmakBackEnd\\BinmakBackEnd.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Documents\\Projects\\Load And Haul\\Hundumo\\BinmakBackEnd\\BinmakBackEnd.csproj",
         "projectName": "BinmakBackEnd",
-        "projectPath": "C:\\Users\\Innocent\\source\\repos\\Hundumo\\BinmakBackEnd\\BinmakBackEnd.csproj",
-        "packagesPath": "C:\\Users\\Innocent\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Innocent\\source\\repos\\Hundumo\\BinmakBackEnd\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Documents\\Projects\\Load And Haul\\Hundumo\\BinmakBackEnd\\BinmakBackEnd.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Documents\\Projects\\Load And Haul\\Hundumo\\BinmakBackEnd\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Innocent\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -78,13 +81,17 @@
               "target": "Package",
               "version": "[3.1.6, )"
             },
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
-              "target": "Package",
-              "version": "[3.1.4, )"
-            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.3, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[3.4.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.5.1, )"
             },
             "System.Xml.XmlSerializer": {
               "target": "Package",
@@ -109,7 +116,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

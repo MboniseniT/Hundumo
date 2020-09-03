@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BinmakAPI.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace BinmakBackEnd
 {
@@ -44,6 +45,11 @@ namespace BinmakBackEnd
             }).
             AddEntityFrameworkStores<BinmakDbContext>().
             AddDefaultTokenProviders();
+            services.AddSwaggerGen(settings =>
+            {
+                settings.SwaggerDoc("v1", new OpenApiInfo { Title = "Hundumo API", Version = "v1" });
+                settings.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+            });
 
             services.AddAuthentication().
                 AddJwtBearer(cfg => {
@@ -98,7 +104,11 @@ namespace BinmakBackEnd
             app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hundumo API V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {

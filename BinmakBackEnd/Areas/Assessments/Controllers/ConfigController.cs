@@ -31,15 +31,15 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         {
             try
             {
-                    var lAction = _context.kpas.ToList();
-                    if (lAction != null)
-                    {
-                        return Ok(lAction);
+                var lAction = _context.kpas.ToList();
+                if (lAction != null)
+                {
+                    return Ok(lAction);
                 }
-                    else
-                    {
+                else
+                {
                     return NotFound("HTTP resource is currently unavailable!");
-                    }
+                }
             }
             catch (Exception ex)
             {
@@ -53,16 +53,16 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         {
             try
             {
-                    var lAction = _context.kpas.FirstOrDefault(a => a.ID == id);
+                var lAction = _context.kpas.FirstOrDefault(a => a.ID == id);
 
-                    if (lAction != null)
-                    {
-                        return Ok(lAction);
+                if (lAction != null)
+                {
+                    return Ok(lAction);
                 }
-                    else
-                    {
+                else
+                {
                     return NotFound("The KPA with ID = " + id + " not found!");
-                    }
+                }
             }
             catch (Exception ex)
             {
@@ -75,11 +75,11 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         {
             try
             {
-                    _context.kpas.Add(KPA);
-                    _context.SaveChanges();
+                _context.kpas.Add(KPA);
+                _context.SaveChanges();
 
-                    var message = Created("",KPA);
-                    return message;
+                var message = Created("", KPA);
+                return message;
             }
             catch (Exception ex)
             {
@@ -93,13 +93,13 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         {
             try
             {
-                    var lAction = _context.kpas.FirstOrDefault(a => a.ID == id);
-                    if (lAction == null)
-                    {
+                var lAction = _context.kpas.FirstOrDefault(a => a.ID == id);
+                if (lAction == null)
+                {
                     return NotFound("The KPA with ID = " + id + " not found to delete!");
-                    }
-                    else
-                    {
+                }
+                else
+                {
                     _context.kpas.Remove(lAction);
                     _context.SaveChanges();
                     return Ok();
@@ -117,13 +117,13 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         {
             try
             {
-                    var lAction = _context.kpas.FirstOrDefault(a => a.ID == KPA.ID);
-                    if (lAction == null)
-                    {
+                var lAction = _context.kpas.FirstOrDefault(a => a.ID == KPA.ID);
+                if (lAction == null)
+                {
                     return NotFound("The KPA with ID = " + KPA.ID + " not found to update!");
-                    }
-                    else
-                    {
+                }
+                else
+                {
                     lAction.name = KPA.name;
                     lAction.description = KPA.description;
                     _context.SaveChanges();

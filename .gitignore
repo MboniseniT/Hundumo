@@ -338,3 +338,29 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+BinmakBackEnd/obj/project.nuget.cache
+BinmakBackEnd/.vs/BinmakBackEnd/v16/.suo
+BinmakBackEnd/obj/BinmakBackEnd.csproj.nuget.dgspec.json
+BinmakBackEnd/obj/BinmakBackEnd.csproj.nuget.g.props
+BinmakBackEnd/obj/project.assets.json
+BinmakBackEnd/obj/project.nuget.cache
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.assets.cache
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.csprojAssemblyReference.cache
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.exe
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.csprojAssemblyReference.cache
+BinmakBackEnd/.vs/BinmakBackEnd/DesignTimeBuild/.dtbcache.v2
+BinmakBackEnd/.vs/BinmakBackEnd/v16/.suo
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.assets.cache
+BinmakBackEnd/.vs/BinmakBackEnd/DesignTimeBuild/.dtbcache.v2
+BinmakBackEnd/.vs/BinmakBackEnd/v16/.suo
+BinmakBackEnd/obj/BinmakBackEnd.csproj.nuget.dgspec.json
+BinmakBackEnd/obj/BinmakBackEnd.csproj.nuget.g.props
+BinmakBackEnd/obj/project.assets.json
+BinmakBackEnd/obj/project.nuget.cache
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.assets.cache
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.csprojAssemblyReference.cache
+BinmakBackEnd/.vs/BinmakBackEnd/DesignTimeBuild/.dtbcache.v2
+BinmakBackEnd/obj
+BinmakBackEnd/.vs
+BinmakBackEnd/bin
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.csproj.FileListAbsolute.txt

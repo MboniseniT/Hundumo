@@ -20,14 +20,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\AssetCriticality\Models\" />
-    <Folder Include="Areas\AssetCriticality\Services\" />
+    <Folder Include="Areas\AssetHealth\Mappers\" />
+    <Folder Include="Areas\AssetHealth\Controllers\" />
   </ItemGroup>
 
 
