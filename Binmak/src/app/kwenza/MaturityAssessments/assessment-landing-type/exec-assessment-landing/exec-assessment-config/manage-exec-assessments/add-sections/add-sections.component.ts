@@ -22,6 +22,7 @@ export class AddSectionsComponent implements OnInit {
   frmwrks: Array<any>;
   versions: Array<any>;
   variants: Array<any>;
+  assetNodes: Array<any>;
 
   public form: FormGroup = new FormGroup({
     assess_id: new FormControl(''),
@@ -40,7 +41,6 @@ export class AddSectionsComponent implements OnInit {
   ngOnInit() {
     this.loadDropdowns();
     this.form.controls['assess_id'].patchValue(this.editableRow.id);
-    console.log
     // this.form.controls['sect_1'].patchValue(this.editableRow.frmwrk_id);
     //   this.form.controls['version_id'].patchValue(this.editableRow.version_id);
     //   this.form.controls['variant_id'].patchValue(this.editableRow.variant_id);
@@ -76,6 +76,16 @@ export class AddSectionsComponent implements OnInit {
       resp => {
         this.variants = resp.map((t: any) => {
           return { label: t.name, value: t.id }
+        })
+      }
+    );
+
+    //retrieve AssetNodes from Database
+    this.assessmentService.getSectionNodes(this.editableRow.assetNodeId).subscribe(
+      resp => {
+        //console.log(resp);
+        this.assetNodes = resp.map((t: any) => {
+          return { label: t.name, value: t.assetNodeId }
         })
       }
     );

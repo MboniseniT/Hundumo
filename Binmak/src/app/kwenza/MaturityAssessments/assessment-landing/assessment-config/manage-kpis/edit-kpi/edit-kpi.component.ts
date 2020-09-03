@@ -5,6 +5,7 @@ import {Subject} from "rxjs";
 import { KPI } from 'src/app/Models/Assessments/kpi';
 import { AssessmentsConfigService } from 'src/app/services/Assessments/assessmentsConfig.service';
 import { KPA } from 'src/app/Models/Assessments/kpa';
+import { TableKPI } from 'src/app/Models/Assessments/TableKPI';
 
 @Component({
   selector: 'app-edit-kpi',
@@ -57,6 +58,7 @@ export class EditKpiComponent implements OnInit {
     this.form.controls['competence'].patchValue(this.editableRow.competence);
     this.form.controls['excellence'].patchValue(this.editableRow.excellence);
     this.form.controls['userId'].patchValue(JSON.parse(localStorage.getItem('currentUser')).userId);
+
   }
 
   loadDropdowns(){

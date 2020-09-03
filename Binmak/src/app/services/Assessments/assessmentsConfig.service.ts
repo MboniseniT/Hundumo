@@ -11,6 +11,7 @@ import { Version } from 'src/app/Models/Assessments/version';
 import { Assessment } from 'src/app/Models/Assessments/assessment';
 import { LResult } from 'src/app/Models/Assessments/lResults';
 import { KPI } from 'src/app/Models/Assessments/kpi';
+import { TableKPI } from 'src/app/Models/Assessments/TableKPI';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,11 @@ constructor(private http: HttpClient) { }
         return this.http.post<Assessment[]>(this.assessmentUrl+'getAssessments', idSet);
       }
 
+      GetSections(assessID): Observable<any[]>{
+        let idSet = {reference:assessID};
+        return this.http.post<any[]>(this.assessmentUrl+'getSections', idSet);
+      }
+
       addAssessment(assess){
         return this.http.post(this.assessmentUrl+'addAssessment', assess);
       }
@@ -33,7 +39,7 @@ constructor(private http: HttpClient) { }
       AddSections(section){
         let idSet = {user_id:JSON.parse(localStorage.getItem('currentUser')).userId};
         section = Object.assign(section, idSet);
-        console.log(section);
+        //console.log(section);
         return this.http.post(this.assessmentUrl+'addSections', section);
       }
 
@@ -182,11 +188,17 @@ constructor(private http: HttpClient) { }
         return this.http.get<Variant[]>(this.assessmentUrl+'getVariants');
       }
 
-      /*Variants*/
+      /*AssetNodes*/
       getAssestNodes(): Observable<any[]>{
         let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId}
         //, JSON.parse(localStorage.getItem('currentUser')).userId
         return this.http.post<any[]>(this.assessmentUrl+'getAssestNodes', idSet);
+      }
+
+      getSectionNodes(PANId): Observable<any[]>{
+        let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId, ParentAssetNodeId:PANId}
+        //, JSON.parse(localStorage.getItem('currentUser')).userId
+        return this.http.post<any[]>(this.assessmentUrl+'getSectionNodes', idSet);
       }
 
       /*Exec-Results*/

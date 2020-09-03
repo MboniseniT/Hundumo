@@ -10,49 +10,55 @@
       <div class="row">
         <div class="col-6">
           <div class="md-form">
-            <input id="sect_1" type="text" class="form-control" formControlName="sect_1" mdbInput mdbValidate
-                   [validateSuccess]="false">
-            <label for="sect_1">Section 1</label>
+            <mdb-select [options]="assetNodes" [filterEnabled]="true" [multiple]="false"
+            [highlightFirst]="false" formControlName="sect_1"
+            label="* Section 1" [enableSelectAll]="false">
+            </mdb-select>
             <mdb-error *ngIf="sect_1.invalid && (sect_1.dirty || sect_1.touched)">You need to at least provide a name for section 1</mdb-error>
           </div>
         </div>
         <div class="col-6">
           <div class="md-form">
-            <input id="sect_2" type="text" class="form-control" formControlName="sect_2" mdbInput mdbValidate
-                   [validateSuccess]="false">
-            <label for="sect_2">Section 2</label>
+            <mdb-select [options]="assetNodes" [filterEnabled]="true" [multiple]="false"
+            [highlightFirst]="false" formControlName="sect_2"
+            label="Section 2" [enableSelectAll]="false">
+            </mdb-select>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-6">
           <div class="md-form">
-            <input id="sect_3" type="text" class="form-control" formControlName="sect_3" mdbInput mdbValidate
-                   [validateSuccess]="false">
-            <label for="sect_3">Section 3</label>
+            <mdb-select [options]="assetNodes" [filterEnabled]="true" [multiple]="false"
+            [highlightFirst]="false" formControlName="sect_3"
+            label="Section 3" [enableSelectAll]="false">
+            </mdb-select>
           </div>
         </div>
         <div class="col-6">
           <div class="md-form">
-            <input id="sect_4" type="text" class="form-control" formControlName="sect_4" mdbInput mdbValidate
-                   [validateSuccess]="false">
-            <label for="sect_4">Section 4</label>
+            <mdb-select [options]="assetNodes" [filterEnabled]="true" [multiple]="false"
+            [highlightFirst]="false" formControlName="sect_4"
+            label="Section 4" [enableSelectAll]="false">
+            </mdb-select>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-6">
           <div class="md-form">
-            <input id="sect_5" type="text" class="form-control" formControlName="sect_5" mdbInput mdbValidate
-                   [validateSuccess]="false">
-            <label for="sect_5">Section 5</label>
+            <mdb-select [options]="assetNodes" [filterEnabled]="true" [multiple]="false"
+            [highlightFirst]="false" formControlName="sect_5"
+            label="Section 5" [enableSelectAll]="false">
+            </mdb-select>
           </div>
         </div>
         <div class="col-6">
           <div class="md-form">
-            <input id="sect_6" type="text" class="form-control" formControlName="sect_6" mdbInput mdbValidate
-                   [validateSuccess]="false">
-            <label for="sect_6">Section 6</label>
+            <mdb-select [options]="assetNodes" [filterEnabled]="true" [multiple]="false"
+            [highlightFirst]="false" formControlName="sect_6"
+            label="Section 6" [enableSelectAll]="false">
+            </mdb-select>
           </div>
         </div>
       </div>

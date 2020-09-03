@@ -143,15 +143,27 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         {
             try
             {
-                var lAction = _context.kpis.ToList();
-                if (lAction != null)
+                var tableKpis = _context.kpis.ToList();
+                /*List<Kpis> KPIs = _context.kpis.ToList();
+                var tableKpis = KPIs.Select(result => new
                 {
-                    return Ok(lAction);
-                }
-                else
-                {
-                    return NotFound("HTTP resource is currently unavailable!");
-                }
+                    KpiID = result.ID,
+                    KpiFrmwrk = result.frmwrk_id,
+                    KpiVersion = result.version_id,
+                    KpiVariant = result.variant_id,
+                    KpiKpaID = result.kpa_id,
+                    KpiKpa = _context.kpas.FirstOrDefault(a => a.ID == result.kpa_id).name,
+                    KpiName = result.name,
+                    KpiDescription = result.description,
+                    KpiGuideline = result.guideline,
+                    KpiInnocence = result.innocence,
+                    KpiAwareness = result.awareness,
+                    KpiUnderstanding = result.understanding,
+                    KpiCompetence = result.competence,
+                    KpiExcellence = result.excellence,
+                    LastEdittedBy = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName
+                });*/
+                return Ok(tableKpis);
             }
             catch (Exception ex)
             {
@@ -159,6 +171,41 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
+
+        [HttpPost("getKPI")]
+        public IActionResult GetKPI([FromBody] Kpis KPI)
+        {
+            try
+            {
+                List<Kpis> KPIs = _context.kpis.ToList();
+                var tableKpis = KPIs.Select(result => new
+                {
+                    KpiID = result.ID,
+                    KpiFrmwrk = result.frmwrk_id,
+                    KpiVersion = result.version_id,
+                    KpiVariant = result.variant_id,
+                    KpiKpaID = result.kpa_id,
+                    KpiKpa = _context.kpas.FirstOrDefault(a => a.ID == result.kpa_id).name,
+                    KpiName = result.name,
+                    KpiDescription = result.description,
+                    KpiGuideline = result.guideline,
+                    KpiInnocence = result.innocence,
+                    KpiAwareness = result.awareness,
+                    KpiUnderstanding = result.understanding,
+                    KpiCompetence = result.competence,
+                    KpiExcellence = result.excellence,
+                    LastEdittedBy = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName,
+                });
+
+                return Ok(tableKpis);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
         [HttpPost("addKPIs")]
         public IActionResult AddKPIs([FromBody] Kpis KPI)
         {
@@ -666,6 +713,29 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        [HttpPost("getSectionNodes")]
+        public IActionResult GetSectionNodes([FromBody] SectionNodesIdSet SNIdSet)
+        {
+            try
+            {
+                //May need to use the reference to narrow down the list
+                var lAction = _context.AssetNodes.Where(a => (a.Reference == SNIdSet.reference) && (a.AssetNodeTypeId == 1 || a.AssetNodeTypeId == 2) && (a.ParentAssetNodeId == SNIdSet.ParentAssetNodeId)).ToList(); //a.AssetNodeTypeId == 1 || a.AssetNodeTypeId == 2 && 
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("HTTP resource is currently unavailable!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
         //Assessments
         [HttpPost("getAssessments")]
         public IActionResult GetAllAssessments([FromBody] Reference Ref)
@@ -978,6 +1048,28 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 return BadRequest("Something bad happened. " + ex.Message);
             }
 
+        }
+
+        [HttpPost("getSections")]
+        public IActionResult GetSections([FromBody] Reference Assess)
+        {
+            try
+            {
+                var lAction = _context.assessmentSections.FirstOrDefault(a => a.assess_id == int.Parse(Assess.reference));
+
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return NotFound("The AssessmentSection with ID = " + Assess.reference + " not found!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
         }
 
         [HttpPost("addSections")]

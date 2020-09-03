@@ -9,12 +9,12 @@ namespace BinmakBackEnd.Areas.Assessments.Entities
     {
         public int ID { get; set; }
         public int assess_id { get; set; }
-        public string sect_1 { get; set; }
-        public string sect_2 { get; set; }
-        public string sect_3 { get; set; }
-        public string sect_4 { get; set; }
-        public string sect_5 { get; set; }
-        public string sect_6 { get; set; }
+        public int sect_1 { get; set; }
+        public int sect_2 { get; set; }
+        public int sect_3 { get; set; }
+        public int sect_4 { get; set; }
+        public int sect_5 { get; set; }
+        public int sect_6 { get; set; }
         public string user_id { get; set; }
     }
 }

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { AddExecAssessmentComponent } from '../../../assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/add-exec-assessment/add-exec-assessment.component';
 import { AddKpiComponent } from '../../../assessment-landing/assessment-config/manage-kpis/add-kpi/add-kpi.component';
 import { KPI } from 'src/app/Models/Assessments/kpi';
+import { TableKPI } from 'src/app/Models/Assessments/TableKPI';
 import { EditKpiComponent } from './edit-kpi/edit-kpi.component';
 import { AreYouSureComponent } from '../../../are-you-sure/are-you-sure.component';
 
@@ -23,7 +24,7 @@ export class ManageKpisComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row', { static: true }) row: ElementRef;
 
-  elements: any = [];
+  elements: KPI[] = [];
   headElements = ['ID', 'Name', 'Description', 'Guideline', 'Innocence', 'Awareness', 'Understanding', 'Competence', 'Excellence', 'commands']; //'LastEditedBy',
 
   modalRef: MDBModalRef;
@@ -81,6 +82,7 @@ export class ManageKpisComponent implements OnInit, AfterViewInit {
    loadDataTable(){
     this.kpaService.GetKPIs().subscribe((data: KPI[]) => {
       this.elements = data;
+      console.log(this.elements);
       this.mdbTable.setDataSource(this.elements);
       }, error => {
         console.log('httperror: ');
@@ -106,7 +108,7 @@ export class ManageKpisComponent implements OnInit, AfterViewInit {
         this.toastrService.success('Update Successful!');
         setTimeout(() => {
           //update DataTable
-          this.elements[elementIndex] = newElement;
+          this.loadDataTable();
         });
       }, error => {
         console.log('httperror: ');
@@ -117,7 +119,6 @@ export class ManageKpisComponent implements OnInit, AfterViewInit {
       });
 
     });
-    this.mdbTable.setDataSource(this.elements);
   }
 
   onDelete(el:any){
