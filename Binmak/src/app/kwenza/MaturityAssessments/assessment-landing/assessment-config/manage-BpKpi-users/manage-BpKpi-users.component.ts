@@ -4,9 +4,9 @@ import { Level } from 'src/app/Models/Assessments/Level';
 import { AssessmentsConfigService } from 'src/app/services/Assessments/assessmentsConfig.service';
 import { MdbTableDirective, MdbTablePaginationComponent } from 'ng-uikit-pro-standard';
 import {HttpClient} from "@angular/common/http";
-import { EditCharacteristicComponent } from '../manage-characteristics/edit-characteristic/edit-characteristic.component';
-import { SelectKpaLevelComponent } from '../manage-characteristics/select-kpaLevel/select-kpaLevel.component';
-import { AddExecAssessmentComponent } from '../manage-exec-assessments/add-exec-assessment/add-exec-assessment.component';
+import { EditCharacteristicComponent } from '../../../assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/edit-characteristic/edit-characteristic.component';
+import { SelectKpaLevelComponent } from '../../../assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/select-kpaLevel/select-kpaLevel.component';
+import { AddCharacteristicComponent } from '../../../assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/add-characteristic/add-characteristic.component';
 import {MDBModalRef, MDBModalService} from "ng-uikit-pro-standard";
 import { ToastService } from 'ng-uikit-pro-standard';
 import { Router } from '@angular/router';
@@ -14,22 +14,21 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { KPALevel } from 'src/app/Models/Assessments/KPALevel';
 import { Char } from 'src/app/Models/Assessments/char';
 import { from } from 'rxjs';
-import { Assessment } from 'src/app/Models/Assessments/assessment';
 import { AreYouSureComponent } from 'src/app/kwenza/MaturityAssessments/are-you-sure/are-you-sure.component';
-import { AddSectionsComponent } from './add-sections/add-sections.component';
+import { MainServiceService } from 'src/app/services/main-service.service';
 
 @Component({
-  selector: 'app-manage-exec-assessments',
-  templateUrl: './manage-exec-assessments.component.html',
-  styleUrls: ['./manage-exec-assessments.component.scss']
+  selector: 'app-manage-BpKpi-users',
+  templateUrl: './manage-BpKpi-users.component.html',
+  styleUrls: ['./manage-BpKpi-users.component.scss']
 })
-export class ManageExecAssessmentsComponent implements OnInit, AfterViewInit {
+export class ManageBpKpiUsersComponent implements OnInit, AfterViewInit  {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row', { static: true }) row: ElementRef;
 
-  elements: Assessment[] = [];
-  headElements = ['ID', 'Assessment Name', 'Date', 'commands']; //'LastEditedBy',
+  elements: any[] = [];
+  headElements = ['ID', 'Assessment Id', 'Assessment Name', 'Username', 'User Email', 'Link By', 'Commands']; //'LastEditedBy',
 
   modalRef: MDBModalRef;
 
@@ -42,27 +41,28 @@ export class ManageExecAssessmentsComponent implements OnInit, AfterViewInit {
 
   url = 'Assessments/Config/getExecKPAs';
 
-  kpa: Array<any>;
-  levels: Array<any>;
+  users: Array<any>;
+  assessments: Array<any>;
 
   kpas:KPA[] =[];
   level:Level[]= [];
-  kpaLevel:any = {};
+  assessmentUser:any = {};
   totalRecords: Number; //might need to change type to string
   page: Number=1;
   assessID: string = "Hola Mundo";
 
   formError:string = "";
 
-  formKPALevel = new FormGroup({
-    kpaID: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    LevelID: new FormControl('', [Validators.required, Validators.minLength(1)])
+  formAssessmentUser = new FormGroup({
+    user_id: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    assess_id: new FormControl('', [Validators.required, Validators.minLength(1)])
   });
 
   isAdmin:boolean;
 
   constructor(
     private assessmentService: AssessmentsConfigService,
+    private service: MainServiceService,
     private modalService: MDBModalService,
     private toastrService: ToastService,
     private formBuilder: FormBuilder,
@@ -75,8 +75,8 @@ export class ManageExecAssessmentsComponent implements OnInit, AfterViewInit {
     this.mdbTablePagination.searchText = this.searchText;
   }
 
-ngOnInit():void {
-  this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
+  ngOnInit():void {
+    this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
     this.AdminProtect();
     this.loadDataTable();
     this.loadDropdowns();
@@ -84,10 +84,9 @@ ngOnInit():void {
 
   //Custom Methods
   loadDataTable(){
-
-    this.kpaLevel = Object.assign(this.kpaLevel, this.formKPALevel.value);
-    this.assessmentService.getAssessments().subscribe((data: Assessment[]) => {
+    this.assessmentService.GetAssessmentUsers().subscribe((data: any[]) => {
       this.elements = data;
+      console.log(data);
           this.mdbTable.setDataSource(this.elements);
       }, error => {
         console.log('httperror: ');
@@ -98,31 +97,17 @@ ngOnInit():void {
   }
 
   loadDropdowns(){
-    //retrieve KPAs from Database
-    this.assessmentService.GetExecKPAs().subscribe(
-      // (data:KPA[]) => {
-      //   this.kpas = data;
-      // }, error => {
-      //   console.log('httperror: ');
-      //   console.log(error);
-      // }
-      resp => {
-        this.kpa = resp.map((t: any) => {
-          return { label: t.name, value: t.id }
-        })
-      }
-    );
+    this.service.getUsers(JSON.parse(localStorage.getItem('currentUser')).userId)
+  .subscribe(resp => {
+      this.users = resp.map((t: any) => {
+        return { label: t.name + '-' + t.lastName, value: t.id }
+  })
+});
     //retrieve Levels from Database
-    this.assessmentService.getLevels().subscribe(
-      // (data:Level[]) => {
-      //   this.level = data;
-      // }, error => {
-      //   console.log('httperror: ');
-      //   console.log(error);
-      // }
+    this.assessmentService.getAssessments().subscribe(
       resp => {
-        this.levels = resp.map((t: any) => {
-          return { label: t.name, value: t.id }
+        this.assessments = resp.map((t: any) => {
+          return { label: t.assess_name, value: t.id }
         })
       }
     );
@@ -162,17 +147,11 @@ ngOnInit():void {
   }
 
   onAdd(){
-    this.kpaLevel = Object.assign(this.kpaLevel, this.formKPALevel.value);
-    const modalOptions = {
-      // data: {
-      //   editableRow: {kpa_id: this.kpaLevel.kpaID, level_id: this.kpaLevel.LevelID, description: "", frmwrk_id: null, version_id: null, variant_id: null}
-      // }
-    };
-    this.modalRef = this.modalService.show(AddExecAssessmentComponent, modalOptions);
-    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
+    this.assessmentUser = Object.assign(this.assessmentUser, this.formAssessmentUser.value);
 
       //Call funtion to update database
-      this.assessmentService.addAssessment(newElement).toPromise().then((data: any) => {
+      this.assessmentService.AddAssessmentUser(this.assessmentUser).toPromise().then((data: any) => {
+        //console.log(data);
         // success notification
         this.toastrService.success('Addition Successful!');
         setTimeout(() => {
@@ -187,96 +166,40 @@ ngOnInit():void {
           this.toastrService.error(error);
       });
 
-    });
-    //this.mdbTable.setDataSource(this.elements);
-  }
 
-  onSections(el){
-    //const elementIndex = this.elements.findIndex((elem: any) => el === elem);
-    const modalOptions = {
-      data: {
-        editableRow: el
-      }
-    };
-    this.modalRef = this.modalService.show(AddSectionsComponent, modalOptions);
-    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
-      //Call funtion to update database
-      this.assessmentService.AddSections(newElement).toPromise().then((data: any) => {
-        //console.log(data);
-        // success notification
-        this.toastrService.success('Add Sections Successful!');
-        setTimeout(() => {
-          //update DataTable
-          //this.elements[elementIndex] = newElement;
-        });
-      }, error => {
-        console.log('httperror: ');
-          console.log(error);
-          // error notification
-          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
-          this.toastrService.error(error);
-      });
-
-    });
     this.mdbTable.setDataSource(this.elements);
-  }
-
-  onClear(el: any){
-    const elementIndex = this.elements.findIndex((elem: any) => el === elem);
-    const modalOptions = {
-      data: {
-        editableRow: {message:"Are you sure you want to CLEAR all results associated with assessment: " + el.assess_name + "?"}
-      }
-    };
-    this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
-    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
-      //Call funtion to update database
-      this.assessmentService.clearAssessment(el).toPromise().then((data: any) => {
-        // success notification
-        this.toastrService.success('Cleared Successfully!');
-
-      }, error => {
-        console.log('httperror: ');
-          console.log(error);
-          // error notification
-          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
-          this.toastrService.error(JSON.stringify(error));
-      });
-
-    });
   }
 
   onDelete(el:any){
     const elementIndex = this.elements.findIndex((elem: any) => el === elem);
     const modalOptions = {
       data: {
-        editableRow: {message:"Are you sure you want to DELETE assessment: " + el.assess_name + "?"}
+        editableRow: {message:"Are you sure you want to DELETE the link between " + el.assessmentName + " & "+ el.userNames +"?"}
       }
     };
     this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-      this.assessmentService.deleteAssessment(el).toPromise().then((data: any) => {
-        //console.log(data);
-        // success notification
-        this.toastrService.warning('Deleted Successfully!');
-        setTimeout(() => {
-          //update DataTable
-          this.loadDataTable();
-        });
-      }, error => {
-        console.log('httperror: ');
-          console.log(error);
-          // error notification
-          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
-          this.toastrService.error(JSON.stringify(error));
+    this.assessmentService.DeleteAssessmentUser(el).toPromise().then((data: any) => {
+      // success notification
+      this.toastrService.warning('Deleted Successfully!');
+      setTimeout(() => {
+        //update DataTable
+        this.loadDataTable();
       });
+    }, error => {
+      console.log('httperror: ');
+        console.log(error);
+        // error notification
+        //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+        this.toastrService.error(error);
+    });
 
     });
   }
 
   back(){
-    this.router.navigate(['/binmak/assessment-system-config']);
+    this.router.navigate(['/binmak/exec-assessment-config']);
   }
 
   //DataTable Methods

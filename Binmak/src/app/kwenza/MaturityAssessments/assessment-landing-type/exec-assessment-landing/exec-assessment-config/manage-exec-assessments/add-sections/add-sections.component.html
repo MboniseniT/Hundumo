@@ -1,0 +1,69 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+    <h4 class="modal-title w-100" id="myModalLabel">Add Sections to {{editableRow.assess_name}}</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-6">
+          <div class="md-form">
+            <input id="sect_1" type="text" class="form-control" formControlName="sect_1" mdbInput mdbValidate
+                   [validateSuccess]="false">
+            <label for="sect_1">Section 1</label>
+            <mdb-error *ngIf="sect_1.invalid && (sect_1.dirty || sect_1.touched)">You need to at least provide a name for section 1</mdb-error>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="md-form">
+            <input id="sect_2" type="text" class="form-control" formControlName="sect_2" mdbInput mdbValidate
+                   [validateSuccess]="false">
+            <label for="sect_2">Section 2</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="md-form">
+            <input id="sect_3" type="text" class="form-control" formControlName="sect_3" mdbInput mdbValidate
+                   [validateSuccess]="false">
+            <label for="sect_3">Section 3</label>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="md-form">
+            <input id="sect_4" type="text" class="form-control" formControlName="sect_4" mdbInput mdbValidate
+                   [validateSuccess]="false">
+            <label for="sect_4">Section 4</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="md-form">
+            <input id="sect_5" type="text" class="form-control" formControlName="sect_5" mdbInput mdbValidate
+                   [validateSuccess]="false">
+            <label for="sect_5">Section 5</label>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="md-form">
+            <input id="sect_6" type="text" class="form-control" formControlName="sect_6" mdbInput mdbValidate
+                   [validateSuccess]="false">
+            <label for="sect_6">Section 6</label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" mdbBtn color="light" class="waves-light" aria-label="Close"
+            (click)="modalRef.hide()" mdbWavesEffect>Close
+    </button>
+    <button [disabled]="!form.valid" type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+             (click)="editRow()">Save!
+    </button>
+  </div>
+</div>

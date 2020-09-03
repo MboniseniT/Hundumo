@@ -35,6 +35,7 @@ namespace BinmakAPI.Data
         //Assessments
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Assessment> assessments { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.AssessmentUsers> assessmentUsers { get; set; }
+        public DbSet<BinmakBackEnd.Areas.Assessments.Entities.AssessmentSections> assessmentSections { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Characteristics> characteristics { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Frmwrks> frmwrks { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Kpas> kpas { get; set; }

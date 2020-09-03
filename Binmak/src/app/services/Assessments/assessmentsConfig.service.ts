@@ -20,6 +20,36 @@ export class AssessmentsConfigService {
 constructor(private http: HttpClient) { }
 
 //Exec Assessments
+      /*Assessments*/
+      getAssessments(): Observable<Assessment[]>{
+        let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId}
+        return this.http.post<Assessment[]>(this.assessmentUrl+'getAssessments', idSet);
+      }
+
+      addAssessment(assess){
+        return this.http.post(this.assessmentUrl+'addAssessment', assess);
+      }
+
+      AddSections(section){
+        let idSet = {user_id:JSON.parse(localStorage.getItem('currentUser')).userId};
+        section = Object.assign(section, idSet);
+        console.log(section);
+        return this.http.post(this.assessmentUrl+'addSections', section);
+      }
+
+      deleteAssessment(assess){
+        return this.http.post(this.assessmentUrl+'deleteAssessment', assess);
+      }
+
+      clearAssessment(assess){
+        return this.http.put(this.assessmentUrl+'clearAssessment', assess);
+      }
+
+      SaveAssessment(assessment){
+        let idSet:any = {assessID:assessment.id, userID:JSON.parse(localStorage.getItem('currentUser')).userId}
+        return this.http.put(this.assessmentUrl+'saveAssessment', idSet)
+      }
+
       /*Assessment Users*/
       AddExecAssessmentUser(assessmentUser){
         let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId, link_name: ""};
@@ -27,9 +57,19 @@ constructor(private http: HttpClient) { }
         console.log(assessmentUser);
         return this.http.post(this.assessmentUrl+'addExecAssessmentUser', assessmentUser);
       }
+      AddAssessmentUser(assessmentUser){
+        let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId, link_name: ""};
+        assessmentUser = Object.assign(assessmentUser, idSet);
+        console.log(assessmentUser);
+        return this.http.post(this.assessmentUrl+'addAssessmentUser', assessmentUser);
+      }
       GetExecAssessmentUsers(): Observable<any[]>{
         let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId};
         return this.http.post<any[]>(this.assessmentUrl+'getExecAssessmentUsers', idSet);
+      }
+      GetAssessmentUsers(): Observable<any[]>{
+        let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId};
+        return this.http.post<any[]>(this.assessmentUrl+'getAssessmentUsers', idSet);
       }
 
       GetExecAssessmentUsersForSelection(): Observable<any[]>{
@@ -147,29 +187,6 @@ constructor(private http: HttpClient) { }
         let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId}
         //, JSON.parse(localStorage.getItem('currentUser')).userId
         return this.http.post<any[]>(this.assessmentUrl+'getAssestNodes', idSet);
-      }
-
-      /*Assessments*/
-      getAssessments(): Observable<Assessment[]>{
-        let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId}
-        return this.http.post<Assessment[]>(this.assessmentUrl+'getAssessments', idSet);
-      }
-
-      addAssessment(assess){
-        return this.http.post(this.assessmentUrl+'addAssessment', assess);
-      }
-
-      deleteAssessment(assess){
-        return this.http.post(this.assessmentUrl+'deleteAssessment', assess);
-      }
-
-      clearAssessment(assess){
-        return this.http.put(this.assessmentUrl+'clearAssessment', assess);
-      }
-
-      SaveAssessment(assessment){
-        let idSet:any = {assessID:assessment.id, userID:JSON.parse(localStorage.getItem('currentUser')).userId}
-        return this.http.put(this.assessmentUrl+'saveAssessment', idSet)
       }
 
       /*Exec-Results*/
