@@ -64,7 +64,7 @@
         <div class="row" style="justify-content: center;">
             <!-- <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div> -->
 
-            <div [hidden]="!Visible()" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu">
+            <div [hidden]="!Visible() || !hasSections" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu">
               <!-- [hidden]="isAdmin" -->
               <div style="text-align: center;">
                   <i class="fas fa-poll fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
@@ -73,7 +73,7 @@
               </div>
           </div>
 
-            <div [hidden]="getSavedState() || !Visible()" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/bp-assessment">
+            <div [hidden]="getSavedState() || !Visible() || !hasSections" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/bp-assessment">
               <div style="text-align: center;">
                   <i class="far fa-thumbs-up fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
                   <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Run BP Assessment
@@ -81,7 +81,7 @@
               </div>
           </div>
 
-          <div [hidden]="getSavedState() || !Visible()" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/kpi-assessment">
+          <div [hidden]="getSavedState() || !Visible() || !hasSections" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/kpi-assessment">
             <div style="text-align: center;">
                 <i class="fas fa-tachometer-alt fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
                 <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Run KPI Assessment

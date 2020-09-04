@@ -992,6 +992,34 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        [HttpPost("getAssessmentUsersForSelection")]
+        public IActionResult GetAssessmentUsersForSelection([FromBody] Reference userID)
+        {
+            try
+            {
+                var user = _context.Users.FirstOrDefault(u => u.Id == userID.reference);
+                //May need to use the reference parameter to narrow down the list
+                List<AssessmentUsers> assessUsers = _context.assessmentUsers.Where(a => a.reference == user.Reference && a.user_id == userID.reference && a.type == 2).ToList();
+                var assessmentUsers = assessUsers.Select(result => new
+                {
+                    AssessUserId = result.ID,
+                    AssessmentId = result.assess_id,
+                    AssessmentIsSaved = result.isSaved,
+                    AssessmentName = _context.assessments.FirstOrDefault(id => id.ID == result.assess_id).assess_name,
+                    UserEmail = _context.Users.FirstOrDefault(id => id.Id == result.user_id).Email,
+                    UserNames = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName,
+                    Reference = _context.Users.FirstOrDefault(id => id.Id == result.reference).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.reference).LastName,
+                });
+
+                return Ok(assessmentUsers);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
         [HttpPost("deleteAssessmentUser")]
         public IActionResult DeleteAssessmentUser([FromBody] TableAssessUser AssessUser)
         {
@@ -1021,18 +1049,29 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         {
             try
             {
-                var lAction = _context.assessmentSections.FirstOrDefault(a => a.assess_id == int.Parse(Assess.reference));
-
-
-
-                if (lAction != null)
+                //var assessSects = _context.assessmentSections.FirstOrDefault(a => a.assess_id == int.Parse(Assess.reference));
+                List<AssessmentSections> assessSects = _context.assessmentSections.Where(a => a.assess_id == int.Parse(Assess.reference)).ToList();
+                var assessmentSects = assessSects.Select(result => new
                 {
-                    return Ok(lAction);
+                    SectionsId = result.ID,
+                    section1 = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_1).Name,
+                    section2 = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_2).Name,
+                    section3 = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_3).Name,
+                    section4 = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_4).Name,
+                    section5 = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_5).Name,
+                    section6 = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_6).Name,
+                });
+
+                return Ok(assessmentSects);
+
+                /*if (assessSects != null)
+                {
+                    return Ok(assessSects);
                 }
                 else
                 {
                     return NotFound("The AssessmentSection with ID = " + Assess.reference + " not found!");
-                }
+                }*/
             }
             catch (Exception ex)
             {

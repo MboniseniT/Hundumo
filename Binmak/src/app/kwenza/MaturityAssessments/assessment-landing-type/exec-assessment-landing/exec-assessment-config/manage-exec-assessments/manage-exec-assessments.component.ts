@@ -192,10 +192,14 @@ ngOnInit():void {
     this.assessmentService.GetSections(el.id).subscribe(
       (data:any[]) => {
         assessmentSection = data;
+        if(assessmentSection.length > 0){
           this.toastrService.warning('Sections for this Assessment exist! You can neither edit nor add new sections anymore. Thank you.');
+        }else{
+          this.addSections(el);
+        }
+
       }, error => {
         console.log(error);
-        this.addSections(el);
       }
     );
   }

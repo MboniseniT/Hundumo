@@ -19,6 +19,7 @@ export class AssessmentLandingComponent implements OnInit {
   isSaved:number;
   assessName:string = "";
   isAdmin:boolean;
+  hasSections:boolean;
 
   assessment: Assessment[];
   assessmentSections: Array<any>;
@@ -40,6 +41,7 @@ export class AssessmentLandingComponent implements OnInit {
     if(localStorage.getItem('currentAssessment')){
       this.isSaved = Number(JSON.parse(localStorage.getItem('currentAssessment')).isSaved);
     this.assessName = JSON.parse(localStorage.getItem('currentAssessment')).assess_name;
+    this.setHasSections();
     }
   }
 
@@ -65,7 +67,7 @@ export class AssessmentLandingComponent implements OnInit {
         }
       );
     }else{
-      this.assessmentService.GetExecAssessmentUsersForSelection().subscribe(
+      this.assessmentService.GetAssessmentUsersForSelection().subscribe(
         (data:any[]) => {
           this.userAssessments = data;
           //console.log(data);
@@ -100,13 +102,35 @@ export class AssessmentLandingComponent implements OnInit {
     this.assessmentService.GetSections(assessID).subscribe(
       (data:any[]) => {
         this.assessmentSections = data;
-        console.log(this.assessmentSections)
+        this.assessment = Object.assign(this.assessment, this.assessmentSections);
+        localStorage.setItem("currentAssessment", JSON.stringify(this.assessment));
+
+        setTimeout(() => {
+          this.setHasSections();
+        });
+
+        // if(JSON.parse(localStorage.getItem("currentAssessment"))[0]){
+        //   console.log("has value");
+        // }else{
+        //   console.log("has no value");
+        // }
+        //console.log(this.assessment);
       }, error => {
         console.log(error);
       }
     );
   }
 
+  setHasSections(){
+    if(JSON.parse(localStorage.getItem("currentAssessment"))[0]){
+      this.hasSections = true;
+      //console.log(this.hasSections);
+    }else{
+      this.hasSections = false;
+      this.toastrService.warning('Assessment, '+ this.assessName +' has no sections assigned to it! Please contact your system administrator for assistance.');
+      //console.log(this.hasSections);
+    }
+  }
   GetAssessmentName(){
     if(this.assessName){
       return this.assessName;
