@@ -1097,6 +1097,27 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        //Consensus Results
+        [HttpPost("addkpiResults")]
+        public IActionResult AddKpiResults([FromBody] KpiResults Result)
+        {
+            try
+            {
+                _context.kpiResults.Add(Result);
+                _context.SaveChanges();
+
+                var message = Created("", Result);
+                return message;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+
+        //Helper Methods
         string ConvertSection(Nullable<int> AssetNodeId)
         {
             if(AssetNodeId != null)

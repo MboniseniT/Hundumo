@@ -16,6 +16,7 @@ import { AppComponent } from 'src/app/app.component';
 import { AreYouSureComponent } from '../../are-you-sure/are-you-sure.component';
 import { KPI } from 'src/app/Models/Assessments/kpi';
 import { Sections } from 'src/app/Models/Assessments/sections';
+import { KpiResult } from 'src/app/Models/Assessments/kpiResult';
 
 @Component({
   selector: 'app-kpi-assessment',
@@ -162,13 +163,16 @@ export class KpiAssessmentComponent implements OnInit {
   @Input() charID: string;
   @Input() kpaID: number;
   @Input() levelID: number;
-  public assessmentID: string;
+
 
   page:number = 0;
   isSaved:number;
   assessName:string = "";
+  assessmentID: string;
   hasSections:boolean;
   sectCount:number;
+  result:any;
+  formRawValue:any;
 
   levels:Array<any>;
 
@@ -183,8 +187,6 @@ export class KpiAssessmentComponent implements OnInit {
     competence: new FormControl({value: '', disabled: true}),
     excellence: new FormControl({value: '', disabled: true}),
     all: new FormControl(''),
-    assess_id: new FormControl({value: '', disabled: true}),
-    kpi_id: new FormControl({value: '', disabled: true}),
     sect_1: new FormControl({value:'',disabled:false}, Validators.required),
     sect_2: new FormControl('', Validators.required),
     sect_3: new FormControl('', Validators.required),
@@ -208,6 +210,7 @@ export class KpiAssessmentComponent implements OnInit {
     if(localStorage.getItem('currentAssessment')){
       this.isSaved = Number(JSON.parse(localStorage.getItem('currentAssessment')).isSaved);
     this.assessName = JSON.parse(localStorage.getItem('currentAssessment')).assess_name;
+    this.assessmentID = JSON.parse(localStorage.getItem('currentAssessment')).id;
     this.setHasSections();
     this.SavedProtect();
     this.NotAssignedProtect();
@@ -281,7 +284,7 @@ export class KpiAssessmentComponent implements OnInit {
     this.assessmentService.GetKPIs().subscribe(
       (data:KPI[]) => {
         this.kpi = data;
-        console.log(data);
+        //console.log(data);
         this.KPItotalRecords = data.length;
       }, error => {
         console.log('httperror: ');
@@ -533,6 +536,48 @@ export class KpiAssessmentComponent implements OnInit {
     }
   }
 
+  GetDescription(){
+    if(this.kpi.length > 0){
+      return this.kpi[this.page].description;
+    }
+  }
+
+  GetGuideline(){
+    if(this.kpi.length > 0){
+      return this.kpi[this.page].guideline;
+    }
+  }
+
+  GetInnocence(){
+    if(this.kpi.length > 0){
+      return this.kpi[this.page].innocence;
+    }
+  }
+
+  GetAwareness(){
+    if(this.kpi.length > 0){
+      return this.kpi[this.page].awareness;
+    }
+  }
+
+  GetUnderstanding(){
+    if(this.kpi.length > 0){
+      return this.kpi[this.page].understanding;
+    }
+  }
+
+  GetCompetence(){
+    if(this.kpi.length > 0){
+      return this.kpi[this.page].competence;
+    }
+  }
+
+  GetExcellence(){
+    if(this.kpi.length > 0){
+      return this.kpi[this.page].excellence;
+    }
+  }
+
   GetKpaId():number{
     if(this.kpi.length > 0){
       return this.kpi[this.page].kpa_id;
@@ -587,7 +632,51 @@ export class KpiAssessmentComponent implements OnInit {
 
   //funtion Methods
   onAdd(){
-    console.log('submitting...');
+    this.formRawValue = this.form.getRawValue();
+    if(this.formRawValue.all){
+      this.result = {
+        kpi_id: this.kpi[this.page].id,
+        assess_id: this.assessmentID,
+        sect_1: this.formRawValue.all,
+        sect_2: this.formRawValue.all,
+        sect_3: this.formRawValue.all,
+        sect_4: this.formRawValue.all,
+        sect_5: this.formRawValue.all,
+        sect_6: this.formRawValue.all,
+      }
+    }else{
+      this.result = {
+        kpi_id: this.kpi[this.page].id,
+        assess_id: this.assessmentID,
+        sect_1: this.formRawValue.sect_1,
+        sect_2: this.formRawValue.sect_2,
+        sect_3: this.formRawValue.sect_3,
+        sect_4: this.formRawValue.sect_4,
+        sect_5: this.formRawValue.sect_5,
+        sect_6: this.formRawValue.sect_6,
+      }
+    }
+
+    //console.log(this.result);
+    this.SubmitResult(this.result);
+  }
+
+  SubmitResult(result){
+    //Call funtion to update database
+    this.assessmentService.AddKpiResults(result).toPromise().then((data: any) => {
+      //console.log(data);
+      // success notification
+      this.toastrService.success('Successful!');
+      setTimeout(() => {
+        //update DataTable
+      });
+    }, error => {
+      console.log('httperror: ');
+        console.log(error);
+        // error notification
+        //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+        this.toastrService.error(error);
+    });
   }
 
   onUpdate(){

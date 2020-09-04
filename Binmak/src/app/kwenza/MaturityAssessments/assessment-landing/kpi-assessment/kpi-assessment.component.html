@@ -35,7 +35,7 @@
               <form [formGroup]="form">
 
                 <div class="row">
-                  <div class="col">
+                  <div class="col" mdbTooltip="{{GetDescription()}}" placement="top">
                     <div >
                       <label for="description">description</label>
                       <textarea type="text" id="description" class="md-textarea form-control mb-4" formControlName="description"
@@ -45,7 +45,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col">
+                  <div class="col" mdbTooltip="{{GetGuideline()}}" placement="top">
                     <div >
                       <label for="guideline">guideline</label>
                       <textarea type="text" id="guideline" class="md-textarea form-control mb-4" formControlName="guideline"
@@ -60,7 +60,7 @@
 
                 <div class="row" style="justify-content: center;">
                   <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                    <div>
+                    <div mdbTooltip="{{GetInnocence()}}" placement="top">
                       <label for="innocence">innocence</label>
                       <textarea style="border-color: #f13405;" type="text" id="innocence" class="md-textarea form-control mb-4" formControlName="innocence"
                               mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
@@ -68,7 +68,7 @@
                     </div>
                   </div>
                   <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                    <div >
+                    <div mdbTooltip="{{GetAwareness()}}" placement="top">
                       <label for="awareness">awareness</label>
                       <textarea style="border-color: #fd8a07;" type="text" id="awareness" class="md-textarea form-control mb-4" formControlName="awareness"
                               mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
@@ -76,7 +76,7 @@
                     </div>
                   </div>
                   <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                    <div >
+                    <div mdbTooltip="{{GetUnderstanding()}}" placement="top">
                       <label for="understanding">understanding</label>
                       <textarea style="border-color: #f9fd06;" type="text" id="understanding" class="md-textarea form-control mb-4" formControlName="understanding"
                               mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
@@ -84,7 +84,7 @@
                     </div>
                   </div>
                   <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                    <div >
+                    <div mdbTooltip="{{GetCompetence()}}" placement="top">
                       <label for="competence">competence</label>
                       <textarea style="border-color: #03880e;" type="text" id="competence" class="md-textarea form-control mb-4" formControlName="competence"
                               mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
@@ -92,7 +92,7 @@
                     </div>
                   </div>
                   <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                    <div >
+                    <div mdbTooltip="{{GetExcellence()}}" placement="top">
                       <label for="excellence">excellence</label>
                       <textarea style="border-color: #034388;" type="text" id="excellence" class="md-textarea form-control mb-4" formControlName="excellence"
                               mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
@@ -106,7 +106,7 @@
                   </h6>
                 </div>
                 <div class="row">
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                  <div [hidden]="sect_1.dirty || sect_2.dirty || sect_3.dirty || sect_4.dirty || sect_5.dirty || sect_6.dirty" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="md-form">
                       <mdb-select  [options]="levels" [filterEnabled]="true" [multiple]="false"
                       [highlightFirst]="false" formControlName="all"

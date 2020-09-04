@@ -66,7 +66,7 @@ constructor(private http: HttpClient) { }
       AddAssessmentUser(assessmentUser){
         let idSet = {reference:JSON.parse(localStorage.getItem('currentUser')).userId, link_name: ""};
         assessmentUser = Object.assign(assessmentUser, idSet);
-        console.log(assessmentUser);
+        //console.log(assessmentUser);
         return this.http.post(this.assessmentUrl+'addAssessmentUser', assessmentUser);
       }
       GetExecAssessmentUsers(): Observable<any[]>{
@@ -229,6 +229,14 @@ constructor(private http: HttpClient) { }
         let idSet:any = {ID:id};
         result = Object.assign(result, idSet);
         return this.http.put(this.assessmentUrl+'editResult', result)
+      }
+
+      //KPI Results
+      AddKpiResults(result){
+        let idSet = {user_id:JSON.parse(localStorage.getItem('currentUser')).userId};
+        result = Object.assign(result, idSet);
+        //console.log(result);
+        return this.http.post(this.assessmentUrl+'addkpiResults', result);
       }
 
 
