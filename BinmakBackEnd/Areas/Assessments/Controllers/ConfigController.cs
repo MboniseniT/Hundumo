@@ -172,40 +172,6 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
-        [HttpPost("getKPI")]
-        public IActionResult GetKPI([FromBody] Kpis KPI)
-        {
-            try
-            {
-                List<Kpis> KPIs = _context.kpis.ToList();
-                var tableKpis = KPIs.Select(result => new
-                {
-                    KpiID = result.ID,
-                    KpiFrmwrk = result.frmwrk_id,
-                    KpiVersion = result.version_id,
-                    KpiVariant = result.variant_id,
-                    KpiKpaID = result.kpa_id,
-                    KpiKpa = _context.kpas.FirstOrDefault(a => a.ID == result.kpa_id).name,
-                    KpiName = result.name,
-                    KpiDescription = result.description,
-                    KpiGuideline = result.guideline,
-                    KpiInnocence = result.innocence,
-                    KpiAwareness = result.awareness,
-                    KpiUnderstanding = result.understanding,
-                    KpiCompetence = result.competence,
-                    KpiExcellence = result.excellence,
-                    LastEdittedBy = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName,
-                });
-
-                return Ok(tableKpis);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Something bad happened. " + ex.Message);
-            }
-
-        }
-
         [HttpPost("addKPIs")]
         public IActionResult AddKPIs([FromBody] Kpis KPI)
         {
@@ -1056,6 +1022,8 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             try
             {
                 var lAction = _context.assessmentSections.FirstOrDefault(a => a.assess_id == int.Parse(Assess.reference));
+
+
 
                 if (lAction != null)
                 {
