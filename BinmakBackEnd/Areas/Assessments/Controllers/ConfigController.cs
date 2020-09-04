@@ -1054,12 +1054,12 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 var assessmentSects = assessSects.Select(result => new
                 {
                     SectionsId = result.ID,
-                    section1 = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_1).Name,
-                    section2 = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_2).Name,
-                    section3 = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_3).Name,
-                    section4 = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_4).Name,
-                    section5 = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_5).Name,
-                    section6 = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_6).Name,
+                    section1 = ConvertSection(result.sect_1),
+                    section2 = ConvertSection(result.sect_2),
+                    section3 = ConvertSection(result.sect_3),
+                    section4 = ConvertSection(result.sect_4),
+                    section5 = ConvertSection(result.sect_5),
+                    section6 = ConvertSection(result.sect_6),
                 });
 
                 return Ok(assessmentSects);
@@ -1095,6 +1095,18 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 return BadRequest("Something bad happened. " + ex.Message);
             }
 
+        }
+
+        string ConvertSection(Nullable<int> AssetNodeId)
+        {
+            if(AssetNodeId != null)
+            {
+                return _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == AssetNodeId).Name;
+            }
+            else
+            {
+                return "";
+            }
         }
     }
 }

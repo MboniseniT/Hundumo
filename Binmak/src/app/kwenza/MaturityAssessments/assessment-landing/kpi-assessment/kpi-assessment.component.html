@@ -1,3 +1,226 @@
-<p>
-  kpi-assessment works!
-</p>
+
+  <div class="row">
+    <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+      <button type="button" class="btn btn-info mb-3" aria-label="Close" mdbWavesEffect (click)="back()"
+        style="background-color: rgb(41, 40, 40) !important; color: white; width: 100px;"> <i class="fa fa-arrow-left"></i>
+        BACK</button>
+    </div>
+    </div>
+
+  <div class="row">
+    <div class="container">
+        <mdb-card class="z-depth-5">
+          <mdb-card-header style="background-color: #032c57 !important;">
+            <div class="row">
+              <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
+                <h5 style="color: white;"><a [hidden]="first" (click)="onBack()" style="color: white;"><i class="fas fa-arrow-circle-left"></i></a></h5>
+                <!-- {{getKPAName(kpaID - 1)}} -->
+              </div>
+              <div class="col-lg-10 col-md-10 col-sm-6 col-xs-6">
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <h5 style="color: white;">KPA: {{ConvertKPA(GetKpaId())}}</h5>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
+                    <h5 style="color: white;">KPI: {{GetKpiName()}}</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3 d-flex flex-row-reverse">
+                <h5><a [hidden]="last" (click)="onNext()" style="color: white;"><i class="fas fa-arrow-circle-right"></i></a></h5>
+              </div>
+            </div>
+          </mdb-card-header>
+          <mdb-card-body>
+              <form [formGroup]="form">
+
+                <div class="row">
+                  <div class="col">
+                    <div >
+                      <label for="description">description</label>
+                      <textarea type="text" id="description" class="md-textarea form-control mb-4" formControlName="description"
+                              mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div >
+                      <label for="guideline">guideline</label>
+                      <textarea type="text" id="guideline" class="md-textarea form-control mb-4" formControlName="guideline"
+                              mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" style="justify-content: center;">
+                  <h6><mdb-badge style="background-color: #032c57 !important;">Done with calculations? These should help you select an answer.</mdb-badge>
+                  </h6>
+                </div>
+
+                <div class="row" style="justify-content: center;">
+                  <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <div>
+                      <label for="innocence">innocence</label>
+                      <textarea style="border-color: #f13405;" type="text" id="innocence" class="md-textarea form-control mb-4" formControlName="innocence"
+                              mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <div >
+                      <label for="awareness">awareness</label>
+                      <textarea style="border-color: #fd8a07;" type="text" id="awareness" class="md-textarea form-control mb-4" formControlName="awareness"
+                              mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <div >
+                      <label for="understanding">understanding</label>
+                      <textarea style="border-color: #f9fd06;" type="text" id="understanding" class="md-textarea form-control mb-4" formControlName="understanding"
+                              mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <div >
+                      <label for="competence">competence</label>
+                      <textarea style="border-color: #03880e;" type="text" id="competence" class="md-textarea form-control mb-4" formControlName="competence"
+                              mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <div >
+                      <label for="excellence">excellence</label>
+                      <textarea style="border-color: #034388;" type="text" id="excellence" class="md-textarea form-control mb-4" formControlName="excellence"
+                              mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+
+                    </div>
+                  </div>
+                </div>
+                <hr />
+                <div class="row" style="justify-content: center;">
+                  <h6><mdb-badge style="background-color: #032c57 !important;">Please select an answer for each section.</mdb-badge>
+                  </h6>
+                </div>
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="md-form">
+                      <mdb-select  [options]="levels" [filterEnabled]="true" [multiple]="false"
+                      [highlightFirst]="false" formControlName="all"
+                      label="All" [enableSelectAll]="false">
+                      </mdb-select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" [hidden]="all.dirty">
+                  <div [hidden]="sect_1.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="md-form">
+                      <mdb-select [options]="levels" [filterEnabled]="true" [multiple]="false"
+                      [highlightFirst]="false" formControlName="sect_1"
+                      label="{{GetSections().section1}}" [enableSelectAll]="false">
+                      </mdb-select>
+                      <mdb-error *ngIf="sect_1.invalid && (sect_1.dirty || sect_1.touched)">This answer is required</mdb-error>
+                    </div>
+                  </div>
+                  <div [hidden]="sect_2.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="md-form">
+                      <mdb-select [options]="levels" [filterEnabled]="true" [multiple]="false"
+                      [highlightFirst]="false" formControlName="sect_2"
+                      label="{{GetSections().section2}}" [enableSelectAll]="false">
+                      </mdb-select>
+                      <mdb-error *ngIf="sect_2.invalid && (sect_2.dirty || sect_2.touched)">This answer is required</mdb-error>
+                    </div>
+                  </div>
+                  <div [hidden]="sect_3.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="md-form">
+                      <mdb-select [options]="levels" [filterEnabled]="true" [multiple]="false"
+                      [highlightFirst]="false" formControlName="sect_3"
+                      label="{{GetSections().section3}}" [enableSelectAll]="false">
+                      </mdb-select>
+                      <mdb-error *ngIf="sect_3.invalid && (sect_3.dirty || sect_3.touched)">This answer is required</mdb-error>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" [hidden]="all.dirty">
+                  <div [hidden]="sect_4.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="md-form">
+                      <mdb-select [options]="levels" [filterEnabled]="true" [multiple]="false"
+                      [highlightFirst]="false" formControlName="sect_4"
+                      label="{{GetSections().section4}}" [enableSelectAll]="false">
+                      </mdb-select>
+                      <mdb-error *ngIf="sect_4.invalid && (sect_4.dirty || sect_4.touched)">This answer is required</mdb-error>
+                    </div>
+                  </div>
+                  <div [hidden]="sect_5.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="md-form">
+                      <mdb-select [options]="levels" [filterEnabled]="true" [multiple]="false"
+                      [highlightFirst]="false" formControlName="sect_5"
+                      label="{{GetSections().section5}}" [enableSelectAll]="false">
+                      </mdb-select>
+                      <mdb-error *ngIf="sect_5.invalid && (sect_5.dirty || sect_5.touched)">This answer is required</mdb-error>
+                    </div>
+                  </div>
+                  <div [hidden]="sect_6.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="md-form">
+                      <mdb-select [options]="levels" [filterEnabled]="true" [multiple]="false"
+                      [highlightFirst]="false" formControlName="sect_6"
+                      label="{{GetSections().section6}}" [enableSelectAll]="false">
+                      </mdb-select>
+                      <mdb-error *ngIf="sect_6.invalid && (sect_6.dirty || sect_6.touched)">This answer is required</mdb-error>
+                    </div>
+                  </div>
+                </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <button (click)="onAdd()" [disabled]="!form.valid && !all.dirty" type="submit"
+                          class="btn btn-primary btn-block mb-2" style="background-color: #032c57 !important; color: white;">Submit</button>
+                      </div>
+                      <div class="col-md-6">
+                        <button [disabled]="!form.valid && ! all.dirty" (click)="onUpdate()" style="width: 100%;" type="button"
+                          class="btn btn-secondary btn-block mb-2" style="background-color: #303031 !important; color: white;">Update</button>
+                      </div>
+                      <!-- <div class="col-md-4">
+                        <button [disabled]="!charID || Form.valid" (click)="onDelete()" style="width: 100%;" type="button"
+                          class="btn btn-dark">Delete</button>
+                      </div> -->
+                    </div>
+              </form>
+          </mdb-card-body>
+          </mdb-card>
+      </div>
+  </div>
+  <footer class="fixed-bottom">
+    <div id="footer1" style="height:25px;" class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                <p>
+
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="footer2" style="height: 25px; background: #032c57;
+    opacity: 0.50;" class="shadow-lg">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+              <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                  <p [hidden]="!Visible()" style="color: white;">Running Assessment: {{GetAssessmentName()}}</p>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                  <p style="color:white; padding-left:20px;"> &copy 2020 Powered by Binmak <a routerLink="/" target="_blank"></a></p>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                  <span [hidden]="!Visible()" (click)="onClear(GetAssessment())" class="badge badge-pill badge-dark mr-4">Clear Results</span>
+                  <span [hidden]="!Visible()" (click)="onSave(GetAssessment())" class="badge badge-pill badge-dark">Save Results</span>
+                </div>
+              </div>
+
+
+            </div>
+        </div>
+    </div>
+  </footer>
