@@ -1,5 +1,6 @@
 export class KpiResult{
   id:number;
+  kpa_id:number;
   kpi_id:number;
   assess_id:string;
   sect_1:string;

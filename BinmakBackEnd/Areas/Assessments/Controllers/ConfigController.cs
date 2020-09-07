@@ -172,6 +172,21 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        [HttpPost("getFilteredKPIs")]
+        public IActionResult GetKpis([FromBody] Assessment assess)
+        {
+            try
+            {
+                var KPIs = GetFilteredKPIs(assess);
+                return Ok(KPIs);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
         [HttpPost("addKPIs")]
         public IActionResult AddKPIs([FromBody] Kpis KPI)
         {
@@ -1189,8 +1204,241 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        [HttpPost("getKpiProgress")]
+        /*public IActionResult GetKpiProgress([FromBody] Assessment assess)
+        {
+            try
+            {
+                var lAction = _context.kpiResults.FirstOrDefault(a => a.kpi_id == IdSet.kpi_id && a.assess_id == IdSet.assess_id);
+
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+        }*/
+
 
         //Helper Methods
+
+        List<Kpis> GetFilteredKPIs(Assessment assess)
+        {
+            var tableKpis = _context.kpis.Where(a => (a.frmwrk_id == assess.frmwrk_id && a.version_id == assess.version_id && a.variant_id == assess.variant_id) && 
+            (a.kpa_id == DeactivateKPA1(assess.kpa1) || 
+            a.kpa_id == DeactivateKPA2(assess.kpa2) || 
+            a.kpa_id == DeactivateKPA3(assess.kpa3) ||
+            a.kpa_id == DeactivateKPA4(assess.kpa4) ||
+            a.kpa_id == DeactivateKPA5(assess.kpa5) ||
+            a.kpa_id == DeactivateKPA6(assess.kpa6) ||
+            a.kpa_id == DeactivateKPA7(assess.kpa7) ||
+            a.kpa_id == DeactivateKPA8(assess.kpa8) ||
+            a.kpa_id == DeactivateKPA9(assess.kpa9) ||
+            a.kpa_id == DeactivateKPA10(assess.kpa10) ||
+            a.kpa_id == DeactivateKPA11(assess.kpa11) ||
+            a.kpa_id == DeactivateKPA12(assess.kpa12) ||
+            a.kpa_id == DeactivateKPA13(assess.kpa13) ||
+            a.kpa_id == DeactivateKPA14(assess.kpa14) ||
+            a.kpa_id == DeactivateKPA15(assess.kpa15) ||
+            a.kpa_id == DeactivateKPA16(assess.kpa16) ||
+            a.kpa_id == DeactivateKPA17(assess.kpa17)
+            )).ToList();
+            return tableKpis;
+        }
+
+        int DeactivateKPA1(string kpa1)
+        {
+            if(kpa1 != "")
+            {
+                return 1;
+            }
+            else {
+                return 0; 
+            }
+        }
+        int DeactivateKPA2(string kpa2)
+        {
+            if (kpa2 != "")
+            {
+                return 2;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA3(string kpa3)
+        {
+            if (kpa3 != "")
+            {
+                return 3;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA4(string kpa4)
+        {
+            if (kpa4 != "")
+            {
+                return 4;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA5(string kpa5)
+        {
+            if (kpa5 != "")
+            {
+                return 5;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA6(string kpa6)
+        {
+            if (kpa6 != "")
+            {
+                return 6;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA7(string kpa7)
+        {
+            if (kpa7 != "")
+            {
+                return 7;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA8(string kpa8)
+        {
+            if (kpa8 != "")
+            {
+                return 8;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA9(string kpa9)
+        {
+            if (kpa9 != "")
+            {
+                return 9;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA10(string kpa10)
+        {
+            if (kpa10 != "")
+            {
+                return 10;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA11(string kpa11)
+        {
+            if (kpa11 != "")
+            {
+                return 11;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA12(string kpa12)
+        {
+            if (kpa12 != "")
+            {
+                return 12;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA13(string kpa13)
+        {
+            if (kpa13 != "")
+            {
+                return 13;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA14(string kpa14)
+        {
+            if (kpa14 != "")
+            {
+                return 14;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA15(string kpa15)
+        {
+            if (kpa15 != "")
+            {
+                return 15;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA16(string kpa16)
+        {
+            if (kpa16 != "")
+            {
+                return 16;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        int DeactivateKPA17(string kpa17)
+        {
+            if (kpa17 != "")
+            {
+                return 17;
+            }
+            else
+            {
+                return 0;
+            }
+        }
         string ConvertSection(Nullable<int> AssetNodeId)
         {
             if(AssetNodeId != null)
@@ -1202,5 +1450,6 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 return "";
             }
         }
+
     }
 }

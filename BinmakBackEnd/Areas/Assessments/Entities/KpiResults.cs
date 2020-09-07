@@ -8,6 +8,7 @@ namespace BinmakBackEnd.Areas.Assessments.Entities
     public class KpiResults
     {
         public int ID { get; set; }
+        public int kpa_id { get; set; }
         public int kpi_id { get; set; }
         public int assess_id { get; set; }
         public int sect_1 { get; set; }

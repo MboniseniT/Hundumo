@@ -174,6 +174,7 @@ export class KpiAssessmentComponent implements OnInit {
   result:any;
   kpiResult:KpiResult;
   formRawValue:any;
+  progress:any;
 
   levels:Array<any>;
 
@@ -221,6 +222,7 @@ export class KpiAssessmentComponent implements OnInit {
     this.getKPIs();
     this.getLevels();
     this.SectCount();
+    this.GetProgress();
     this.kpaLevel = {
       "kpa_id": this.kpaID,
       "level_id": this.levelID
@@ -551,6 +553,7 @@ export class KpiAssessmentComponent implements OnInit {
     this.formRawValue = this.form.getRawValue();
     if(this.formRawValue.all){
       this.result = {
+        kpa_id: this.kpi[this.page].kpa_id,
         kpi_id: this.kpi[this.page].id,
         assess_id: this.assessmentID,
         sect_1: this.formRawValue.all,
@@ -562,6 +565,7 @@ export class KpiAssessmentComponent implements OnInit {
       }
     }else{
       this.result = {
+        kpa_id: this.kpi[this.page].kpa_id,
         kpi_id: this.kpi[this.page].id,
         assess_id: this.assessmentID,
         sect_1: this.formRawValue.sect_1,
@@ -587,9 +591,7 @@ export class KpiAssessmentComponent implements OnInit {
       // success notification
       this.toastrService.success('Successful!');
       this.onNext();
-      setTimeout(() => {
-        //update DataTable
-      });
+
     }, error => {
       console.log('httperror: ');
         console.log(error);
@@ -623,6 +625,7 @@ export class KpiAssessmentComponent implements OnInit {
     if(this.formRawValue.all){
       this.result = {
         id: this.kpiResult.id,
+        kpa_id: this.kpi[this.page].kpa_id,
         kpi_id: this.kpi[this.page].id,
         assess_id: this.assessmentID,
         sect_1: this.formRawValue.all,
@@ -635,6 +638,7 @@ export class KpiAssessmentComponent implements OnInit {
     }else{
       this.result = {
         id: this.kpiResult.id,
+        kpa_id: this.kpi[this.page].kpa_id,
         kpi_id: this.kpi[this.page].id,
         assess_id: this.assessmentID,
         sect_1: this.formRawValue.sect_1,
@@ -656,7 +660,7 @@ let newPage:number;
       //Do nothing...
     }else{
       newPage = Number(this.page) + 1;
-      if(this.form.valid && this.kpiResult){
+      if((this.form.valid || this.all.dirty) && this.kpiResult){
         //console.log('form is valid & kpiResult is not null. Go to next page.');
         this.assessmentService.GetkpiResultById(this.GetKpiId(newPage),Number(this.assessmentID)).subscribe(
           (data:KpiResult) => {
@@ -796,6 +800,19 @@ let newPage:number;
 
   GetAssessment(){
     return JSON.parse(localStorage.getItem("currentAssessment"));
+  }
+
+  GetProgress(){
+    //retrieve Progress values Results from Database
+    this.assessmentService.GetKpiProgress(this.GetAssessment()).subscribe(
+      (data:any) => {
+        this.progress = data;
+        console.log(data);
+      }, error => {
+        console.log('httperror: ');
+        console.log(error);
+      }
+    );
   }
 
 

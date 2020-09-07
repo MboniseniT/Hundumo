@@ -250,6 +250,10 @@ constructor(private http: HttpClient) { }
         return this.http.post<KpiResult>(this.assessmentUrl+'getkpiResultById', idSet);
       }
 
+      GetKpiProgress(assessment): Observable<any>{
+        return this.http.post<any>(this.assessmentUrl+'getFilteredKPIs', assessment);
+      }
+
       UpdateKpiResults(result){
         let idSet = {user_id:JSON.parse(localStorage.getItem('currentUser')).userId};
         result = Object.assign(result, idSet);
