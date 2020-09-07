@@ -172,6 +172,7 @@ export class KpiAssessmentComponent implements OnInit {
   hasSections:boolean;
   sectCount:number;
   result:any;
+  kpiResult:KpiResult;
   formRawValue:any;
 
   levels:Array<any>;
@@ -215,7 +216,7 @@ export class KpiAssessmentComponent implements OnInit {
     this.SavedProtect();
     this.NotAssignedProtect();
     }
-    this.kpaID = this.route.snapshot.params['id'];
+    this.page = Number(this.route.snapshot.params['id']);
     this.getKPAs();
     this.getKPIs();
     this.getLevels();
@@ -280,7 +281,7 @@ export class KpiAssessmentComponent implements OnInit {
   }
 
   getKPIs(){
-    //retrieve KPAs from Database
+    //retrieve KPIs from Database
     this.assessmentService.GetKPIs().subscribe(
       (data:KPI[]) => {
         this.kpi = data;
@@ -361,154 +362,7 @@ export class KpiAssessmentComponent implements OnInit {
     }
   }
 
-  getResults(){
-
-  }
-
-  rslt1(){
-    let i:number;
-      let j:number;
-      let charID:number;
-      for(i=0; i < this.level1.length; i++){
-        charID = this.level1[i].id
-        //console.log('here');
-        for(j=0; j < this.level1Results.length; j++){
-          //console.log('now here');
-          for(var key in this.level1Results[j]){
-            //console.log('then here');
-            if(key == "characteristic_id"){
-              //console.log('key is characteristic');
-              if(this.level1Results[j].characteristic_id == charID){
-                //console.log('characteristic matches ' + charID);
-                this.runlevel1Results.push(this.level1Results[j]);
-                //console.log(this.runlevel1Results);
-              }
-            }
-          }
-        }
-      }
-      setTimeout(() => {
-        this.initlevel1Results = this.runlevel1Results;
-      }, 1000);
-  }
-
-  rslt2(){
-    let i:number;
-      let j:number;
-      let charID:number;
-      for(i=0; i < this.level2.length; i++){
-        charID = this.level2[i].id
-        //console.log('here');
-        for(j=0; j < this.level2Results.length; j++){
-          //console.log('now here');
-          for(var key in this.level2Results[j]){
-            //console.log('then here');
-            if(key == "characteristic_id"){
-              //console.log('key is characteristic');
-              if(this.level2Results[j].characteristic_id == charID){
-                //console.log('characteristic matches ' + charID);
-                this.runlevel2Results.push(this.level2Results[j]);
-                //console.log(this.runlevel2Results);
-              }
-            }
-          }
-        }
-      }
-      setTimeout(() => {
-        this.initlevel2Results = this.runlevel2Results;
-      }, 1000);
-  }
-
-  rslt3(){
-    let i:number;
-      let j:number;
-      let charID:number;
-      for(i=0; i < this.level3.length; i++){
-        charID = this.level3[i].id
-        //console.log('here');
-        for(j=0; j < this.level3Results.length; j++){
-          //console.log('now here');
-          for(var key in this.level3Results[j]){
-            //console.log('then here');
-            if(key == "characteristic_id"){
-              //console.log('key is characteristic');
-              if(this.level3Results[j].characteristic_id == charID){
-                //console.log('characteristic matches ' + charID);
-                this.runlevel3Results.push(this.level3Results[j]);
-                //console.log(this.runlevel3Results);
-              }
-            }
-          }
-        }
-      }
-      setTimeout(() => {
-        this.initlevel3Results = this.runlevel3Results;
-      }, 1000);
-  }
-
-  rslt4(){
-    let i:number;
-      let j:number;
-      let charID:number;
-      for(i=0; i < this.level4.length; i++){
-        charID = this.level4[i].id
-        //console.log('here');
-        for(j=0; j < this.level4Results.length; j++){
-          //console.log('now here');
-          for(var key in this.level4Results[j]){
-            //console.log('then here');
-            if(key == "characteristic_id"){
-              //console.log('key is characteristic');
-              if(this.level4Results[j].characteristic_id == charID){
-                //console.log('characteristic matches ' + charID);
-                this.runlevel4Results.push(this.level4Results[j]);
-                //console.log(this.runlevel4Results);
-              }
-            }
-          }
-        }
-      }
-      setTimeout(() => {
-        this.initlevel4Results = this.runlevel4Results;
-      }, 1000);
-  }
-
-  rslt5(){
-    let i:number;
-      let j:number;
-      let charID:number;
-      for(i=0; i < this.level5.length; i++){
-        charID = this.level5[i].id
-        //console.log('here');
-        for(j=0; j < this.level5Results.length; j++){
-          //console.log('now here');
-          for(var key in this.level5Results[j]){
-            //console.log('then here');
-            if(key == "characteristic_id"){
-              //console.log('key is characteristic');
-              if(this.level5Results[j].characteristic_id == charID){
-                //console.log('characteristic matches ' + charID);
-                this.runlevel5Results.push(this.level5Results[j]);
-                //console.log(this.runlevel5Results);
-              }
-            }
-          }
-        }
-      }
-      setTimeout(() => {
-        this.initlevel5Results = this.runlevel5Results;
-      }, 1000);
-  }
-
   setViewParams(){
-    if(this.level1ResultstotalRecords){
-      this.rslt1();
-      this.rslt2();
-      this.rslt3();
-      this.rslt4();
-      this.rslt5();
-    }
-
     if(this.KPAtotalRecords){
       this.initKPA = this.kpa;
       this.iniKPI = this.kpi;
@@ -519,7 +373,19 @@ export class KpiAssessmentComponent implements OnInit {
       this.form.controls['understanding'].patchValue(this.kpi[this.page].understanding);
       this.form.controls['competence'].patchValue(this.kpi[this.page].competence);
       this.form.controls['excellence'].patchValue(this.kpi[this.page].excellence);
+      this.SetResults();
     }
+  }
+
+  SetResults(){
+    setTimeout(() => {
+      this.form.controls['sect_1'].patchValue(this.GetSection1Result());
+      this.form.controls['sect_2'].patchValue(this.GetSection2Result());
+      this.form.controls['sect_3'].patchValue(this.GetSection3Result());
+      this.form.controls['sect_4'].patchValue(this.GetSection4Result());
+      this.form.controls['sect_5'].patchValue(this.GetSection5Result());
+      this.form.controls['sect_6'].patchValue(this.GetSection6Result());
+    });
   }
 
   GetSections():Sections{
@@ -533,6 +399,56 @@ export class KpiAssessmentComponent implements OnInit {
         section5: JSON.parse(localStorage.getItem('currentAssessment'))[0].section5,
         section6: JSON.parse(localStorage.getItem('currentAssessment'))[0].section6
       }
+    }
+  }
+
+  getResults(){
+    //retrieve KPI Results from Database
+    this.assessmentService.GetkpiResultById(this.GetKpiId(this.page),Number(this.assessmentID)).subscribe(
+      (data:KpiResult) => {
+        this.kpiResult = data;
+        //console.log(data);
+      }, error => {
+        console.log('httperror: ');
+        console.log(error);
+      }
+    );
+  }
+
+  GetSection1Result(){
+    if(this.kpiResult){
+      return this.kpiResult.sect_1;
+    }
+  }
+  GetSection2Result(){
+    if(this.kpiResult){
+      return this.kpiResult.sect_2;
+    }
+  }
+  GetSection3Result(){
+    if(this.kpiResult){
+      return this.kpiResult.sect_3;
+    }
+  }
+  GetSection4Result(){
+    if(this.kpiResult){
+      return this.kpiResult.sect_4;
+    }
+  }
+  GetSection5Result(){
+    if(this.kpiResult){
+      return this.kpiResult.sect_5;
+    }
+  }
+  GetSection6Result(){
+    if(this.kpiResult){
+      return this.kpiResult.sect_6;
+    }
+  }
+
+  GetKpiId(page){
+    if(this.kpi.length > 0){
+      return this.kpi[page].id;
     }
   }
 
@@ -659,14 +575,18 @@ export class KpiAssessmentComponent implements OnInit {
 
     //console.log(this.result);
     this.SubmitResult(this.result);
+
   }
 
   SubmitResult(result){
     //Call funtion to update database
     this.assessmentService.AddKpiResults(result).toPromise().then((data: any) => {
-      //console.log(data);
+      this.kpiResult = data;
+      //console.log(this.kpiResult);
+
       // success notification
       this.toastrService.success('Successful!');
+      this.onNext();
       setTimeout(() => {
         //update DataTable
       });
@@ -679,308 +599,120 @@ export class KpiAssessmentComponent implements OnInit {
     });
   }
 
+  UpdateResult(result){
+    //Call funtion to update database
+    this.assessmentService.UpdateKpiResults(result).toPromise().then((data: any) => {
+      //console.log(data);
+      // success notification
+      this.toastrService.success('Successful!');
+      setTimeout(() => {
+        //update View
+        //this.SetResults();
+      });
+    }, error => {
+      console.log('httperror: ');
+        console.log(error);
+        // error notification
+        //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+        this.toastrService.error(error);
+    });
+  }
+
   onUpdate(){
-    this.results = this.addCharForm.value;
-    let i: number;
-    let ID: string;
-    let resultID:string;
-    let assess_id: string = JSON.parse(localStorage.getItem("currentAssessment")).id;
-    let user_id: string = JSON.parse(localStorage.getItem("currentUser")).userId;
-    let exists:boolean = false;
-    //console.log(this.level1ResultstotalRecords);
-    if(this.level1ResultstotalRecords === 0){
-      //console.log('do nothing!');
+    this.formRawValue = this.form.getRawValue();
+    if(this.formRawValue.all){
+      this.result = {
+        id: this.kpiResult.id,
+        kpi_id: this.kpi[this.page].id,
+        assess_id: this.assessmentID,
+        sect_1: this.formRawValue.all,
+        sect_2: this.formRawValue.all,
+        sect_3: this.formRawValue.all,
+        sect_4: this.formRawValue.all,
+        sect_5: this.formRawValue.all,
+        sect_6: this.formRawValue.all,
+      }
     }else{
-      //console.log('Result does exist! Editting...');
-      for(i=0;i<this.level1totalRecords;i++){
-        // Set Characteristic ID
-        ID = this.level1[i].id.toString();
-        resultID = this.level1Results[i].id.toString();
-        //console.log(ID);
-        // Process Result
-      for(var key in this.results){
-        if(key == ID){
-          // Convert result to binary
-          if(this.results[key] != false ){
-            this.results[key] = 1;
-          }else
-          {
-            this.results[key] = 0;
-          }
-          //console.log(this.results[key]);
-          // Feed result into JSON
-          this.iResult = {
-            "characteristic_id": Number(ID),
-            "assess_id": assess_id,
-            "user_id":user_id,
-            "kpa_id":this.kpaID,
-            "level_id":this.level[0].id,
-            "value":this.results[key]
-          };
-          //console.log(this.iResult);
-          //Post result to API
-            this.assessmentService.putResult(resultID.toString(),this.iResult).toPromise().then((data: any) => {
-              //console.log(data);
-              // success notification
-              // alertify.success('Addition Successful!');
-            }, error => {
-              console.log('httperror: ');
-                console.log(error);
-                // error notification
-                // alertify.error('httperror: '+error);
-            });
-
-          // Check if result exists before submitting
-          //retrieve result from Database
-          //console.log(ID);
-
-        }
-      }
-      }
-    }
-    if(this.level2ResultstotalRecords === 0){
-      //console.log('result exists!');
-    }else{
-      //console.log('Result does not exist!');
-      for(i=0;i<this.level2totalRecords;i++){
-        // Set Characteristic ID
-        ID = this.level2[i].id.toString();
-        resultID = this.level2Results[i].id.toString();
-        //console.log(ID);
-        // Process Result
-      for(var key in this.results){
-        if(key == ID){
-          // Convert result to binary
-          if(this.results[key] != false ){
-            this.results[key] = 1;
-          }else
-          {
-            this.results[key] = 0;
-          }
-          //console.log(this.results[key]);
-          // Feed result into JSON
-          this.iResult = {
-            "characteristic_id": Number(ID),
-            "assess_id": assess_id,
-            "user_id":user_id,
-            "kpa_id":this.kpaID,
-            "level_id":this.level[1].id,
-            "value":this.results[key]
-          };
-          //console.log(this.iResult);
-          //Post result to API
-          this.assessmentService.putResult(resultID.toString(),this.iResult).toPromise().then((data: any) => {
-              //console.log(data);
-              // success notification
-              // alertify.success('Addition Successful!');
-            }, error => {
-              console.log('httperror: ');
-                console.log(error);
-                // error notification
-                // alertify.error('httperror: '+error);
-            });
-
-          // Check if result exists before submitting
-          //retrieve result from Database
-          //console.log(ID);
-
-        }
-      }
-      }
-    }
-    if(this.level3ResultstotalRecords === 0){
-      //console.log('result exists!');
-    }else{
-      //console.log('Result does not exist!');
-      for(i=0;i<this.level3totalRecords;i++){
-        // Set Characteristic ID
-        ID = this.level3[i].id.toString();
-        resultID = this.level3Results[i].id.toString();
-        //console.log(ID);
-        // Process Result
-      for(var key in this.results){
-        if(key == ID){
-          // Convert result to binary
-          if(this.results[key] != false ){
-            this.results[key] = 1;
-          }else
-          {
-            this.results[key] = 0;
-          }
-          //console.log(this.results[key]);
-          // Feed result into JSON
-          this.iResult = {
-            "characteristic_id": Number(ID),
-            "assess_id": assess_id,
-            "user_id":user_id,
-            "kpa_id":this.kpaID,
-            "level_id":this.level[2].id,
-            "value":this.results[key]
-          };
-          //console.log(this.iResult);
-          //Post result to API
-          this.assessmentService.putResult(resultID.toString(),this.iResult).toPromise().then((data: any) => {
-              //console.log(data);
-              // success notification
-              // alertify.success('Addition Successful!');
-            }, error => {
-              console.log('httperror: ');
-                console.log(error);
-                // error notification
-                // alertify.error('httperror: '+error);
-            });
-
-          // Check if result exists before submitting
-          //retrieve result from Database
-          //console.log(ID);
-
-        }
-      }
+      this.result = {
+        id: this.kpiResult.id,
+        kpi_id: this.kpi[this.page].id,
+        assess_id: this.assessmentID,
+        sect_1: this.formRawValue.sect_1,
+        sect_2: this.formRawValue.sect_2,
+        sect_3: this.formRawValue.sect_3,
+        sect_4: this.formRawValue.sect_4,
+        sect_5: this.formRawValue.sect_5,
+        sect_6: this.formRawValue.sect_6,
       }
     }
 
-    if(this.level4ResultstotalRecords === 0){
-      //console.log('result exists!');
-    }else{
-      //console.log('Result does not exist!');
-      for(i=0;i<this.level4totalRecords;i++){
-        // Set Characteristic ID
-        ID = this.level4[i].id.toString();
-        resultID = this.level4Results[i].id.toString();
-        //console.log(ID);
-        // Process Result
-      for(var key in this.results){
-        if(key == ID){
-          // Convert result to binary
-          if(this.results[key] != false ){
-            this.results[key] = 1;
-          }else
-          {
-            this.results[key] = 0;
-          }
-          //console.log(this.results[key]);
-          // Feed result into JSON
-          this.iResult = {
-            "characteristic_id": Number(ID),
-            "assess_id": assess_id,
-            "user_id":user_id,
-            "kpa_id":this.kpaID,
-            "level_id":this.level[3].id,
-            "value":this.results[key]
-          };
-          //console.log(this.iResult);
-          //Post result to API
-          this.assessmentService.putResult(resultID.toString(),this.iResult).toPromise().then((data: any) => {
-              //console.log(data);
-              // success notification
-              // alertify.success('Addition Successful!');
-            }, error => {
-              console.log('httperror: ');
-                console.log(error);
-                // error notification
-                // alertify.error('httperror: '+error);
-            });
-
-          // Check if result exists before submitting
-          //retrieve result from Database
-          //console.log(ID);
-
-        }
-      }
-      }
-    }
-
-    if(this.level5ResultstotalRecords === 0){
-      //console.log('result exists!');
-    }else{
-      //console.log('Result does not exist!');
-      for(i=0;i<this.level5totalRecords;i++){
-        // Set Characteristic ID
-        ID = this.level5[i].id.toString();
-        resultID = this.level5Results[i].id.toString();
-        //console.log(ID);
-        // Process Result
-      for(var key in this.results){
-        if(key == ID){
-          // Convert result to binary
-          if(this.results[key] != false ){
-            this.results[key] = 1;
-          }else
-          {
-            this.results[key] = 0;
-          }
-          //console.log(this.results[key]);
-          // Feed result into JSON
-          this.iResult = {
-            "characteristic_id": Number(ID),
-            "assess_id": assess_id,
-            "user_id":user_id,
-            "kpa_id":this.kpaID,
-            "level_id":this.level[4].id,
-            "value":this.results[key]
-          };
-          //console.log(this.iResult);
-          //Post result to API
-          this.assessmentService.putResult(resultID.toString(),this.iResult).toPromise().then((data: any) => {
-              //console.log(data);
-              // success notification
-              // alertify.success('Addition Successful!');
-            }, error => {
-              console.log('httperror: ');
-                console.log(error);
-                // error notification
-                // alertify.error('httperror: '+error);
-            });
-
-          // Check if result exists before submitting
-          //retrieve result from Database
-          //console.log(ID);
-
-        }
-      }
-      }
-    }
-
-  setTimeout(() => {
-      //call refresh from AppComponent
-      this.refresh("");
-  },100);
+    //console.log(this.result);
+    this.UpdateResult(this.result);
   }
 
   onNext(){
-    let newKpaID:number ;
-
-    if(Number(this.kpaID) === this.KPAtotalRecords){
-      newKpaID = Number(this.kpaID);
+let newPage:number;
+    if(this.page === this.kpi.length){
+      //Do nothing...
     }else{
-      if(this.level1ResultstotalRecords){
-        newKpaID = Number(this.kpaID) + 1;
-      this._router.navigate(['/binmak/kpa-assessment/'+newKpaID.toString()]);
-      setTimeout(() => {
-      //call refresh from AppComponent
-      this.refresh("");
-    });
+      newPage = Number(this.page) + 1;
+      if(this.form.valid && this.kpiResult){
+        //console.log('form is valid & kpiResult is not null. Go to next page.');
+        this.assessmentService.GetkpiResultById(this.GetKpiId(newPage),Number(this.assessmentID)).subscribe(
+          (data:KpiResult) => {
+            this.kpiResult = data;
+            //console.log(this.kpiResult);
+            this.page = newPage;
+            this.setViewParams();
+            this._router.navigate(['/binmak/kpi-assessment/'+newPage.toString()]);
+            setTimeout(() => {
+              this.refresh("/");
+            });
+            //console.log(data);
+          }, error => {
+            console.log('httperror: ');
+            console.log(error);
+          }
+        );
+      }else{
+        //console.log('form may be not valid or kpiResult maybe null. Do not proceed to next page.');
       }
     }
   }
 
   onBack(){
-    let newKpaID:number;
-
-    if(Number(this.kpaID) === 1){
-      newKpaID = Number(this.kpaID);
+    let newPage:number;
+    if(this.page === 0){
+      //Do nothing...
     }else{
-      newKpaID = Number(this.kpaID) - 1;
-      this._router.navigate(['/binmak/kpa-assessment/'+newKpaID.toString()]);
+      newPage = this.page - 1;
+        this.assessmentService.GetkpiResultById(this.GetKpiId(newPage),Number(this.assessmentID)).subscribe(
+          (data:KpiResult) => {
+            this.kpiResult = data;
+            //console.log(this.kpiResult);
+            this.page = newPage;
+            this.setViewParams();
+            this._router.navigate(['/binmak/kpi-assessment/'+newPage.toString()]);
+            setTimeout(() => {
+              this.refresh("/");
+            });
+            //console.log(data);
+          }, error => {
+            console.log('httperror: ');
+            console.log(error);
+          }
+        );
+
       setTimeout(() => {
       //call refresh from AppComponent
-      this.refresh("");
+      //this.refresh("");
+      this.setViewParams();
     });
     }
   }
 
   back(){
-    this._router.navigate(['/binmak/exec-assessment-landing']);
+    this._router.navigate(['/binmak/assessment-landing']);
   }
 
   GetAssessmentName(){
@@ -1003,6 +735,14 @@ export class KpiAssessmentComponent implements OnInit {
   NotAssignedProtect(){
     if(!this.Visible()){
       this._router.navigate(['/binmak/exec-assessment-landing']);
+    }
+  }
+
+  allHide(){
+    if(this.sect_1.dirty || this.sect_2.dirty || this.sect_3.dirty || this.sect_4.dirty || this.sect_5.dirty || this.sect_6.dirty){
+      return true;
+    }else{
+      return false;
     }
   }
 

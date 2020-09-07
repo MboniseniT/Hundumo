@@ -12,6 +12,7 @@ import { Assessment } from 'src/app/Models/Assessments/assessment';
 import { LResult } from 'src/app/Models/Assessments/lResults';
 import { KPI } from 'src/app/Models/Assessments/kpi';
 import { TableKPI } from 'src/app/Models/Assessments/TableKPI';
+import { KpiResult } from 'src/app/Models/Assessments/kpiResult';
 
 @Injectable({
   providedIn: 'root'
@@ -239,6 +240,22 @@ constructor(private http: HttpClient) { }
         return this.http.post(this.assessmentUrl+'addkpiResults', result);
       }
 
+      GetkpiResults(assessID:number): Observable<KpiResult[]>{
+        let idSet:any = {assess_id:assessID};
+        return this.http.post<KpiResult[]>(this.assessmentUrl+'getkpiResults', idSet);
+      }
+
+      GetkpiResultById(kpiID:number, assessID:number): Observable<KpiResult>{
+        let idSet:any = {kpi_id:kpiID, assess_id:assessID};
+        return this.http.post<KpiResult>(this.assessmentUrl+'getkpiResultById', idSet);
+      }
+
+      UpdateKpiResults(result){
+        let idSet = {user_id:JSON.parse(localStorage.getItem('currentUser')).userId};
+        result = Object.assign(result, idSet);
+        //console.log(result);
+        return this.http.put(this.assessmentUrl+'updateKpiResults', result);
+      }
 
 
 }

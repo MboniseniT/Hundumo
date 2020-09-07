@@ -106,7 +106,7 @@
                   </h6>
                 </div>
                 <div class="row">
-                  <div [hidden]="sect_1.dirty || sect_2.dirty || sect_3.dirty || sect_4.dirty || sect_5.dirty || sect_6.dirty" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                  <div [hidden]="allHide()" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="md-form">
                       <mdb-select  [options]="levels" [filterEnabled]="true" [multiple]="false"
                       [highlightFirst]="false" formControlName="all"
@@ -122,7 +122,7 @@
                       [highlightFirst]="false" formControlName="sect_1"
                       label="{{GetSections().section1}}" [enableSelectAll]="false">
                       </mdb-select>
-                      <mdb-error *ngIf="sect_1.invalid && (sect_1.dirty || sect_1.touched)">This answer is required</mdb-error>
+                      <!-- <mdb-error *ngIf="sect_1.invalid && (sect_1.dirty || sect_1.touched)">This answer is required</mdb-error> -->
                     </div>
                   </div>
                   <div [hidden]="sect_2.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -131,7 +131,7 @@
                       [highlightFirst]="false" formControlName="sect_2"
                       label="{{GetSections().section2}}" [enableSelectAll]="false">
                       </mdb-select>
-                      <mdb-error *ngIf="sect_2.invalid && (sect_2.dirty || sect_2.touched)">This answer is required</mdb-error>
+                      <!-- <mdb-error *ngIf="sect_2.invalid && (sect_2.dirty || sect_2.touched)">This answer is required</mdb-error> -->
                     </div>
                   </div>
                   <div [hidden]="sect_3.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -140,7 +140,7 @@
                       [highlightFirst]="false" formControlName="sect_3"
                       label="{{GetSections().section3}}" [enableSelectAll]="false">
                       </mdb-select>
-                      <mdb-error *ngIf="sect_3.invalid && (sect_3.dirty || sect_3.touched)">This answer is required</mdb-error>
+                      <!-- <mdb-error *ngIf="sect_3.invalid && (sect_3.dirty || sect_3.touched)">This answer is required</mdb-error> -->
                     </div>
                   </div>
                 </div>
@@ -151,7 +151,7 @@
                       [highlightFirst]="false" formControlName="sect_4"
                       label="{{GetSections().section4}}" [enableSelectAll]="false">
                       </mdb-select>
-                      <mdb-error *ngIf="sect_4.invalid && (sect_4.dirty || sect_4.touched)">This answer is required</mdb-error>
+                      <!-- <mdb-error *ngIf="sect_4.invalid && (sect_4.dirty || sect_4.touched)">This answer is required</mdb-error> -->
                     </div>
                   </div>
                   <div [hidden]="sect_5.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -160,7 +160,7 @@
                       [highlightFirst]="false" formControlName="sect_5"
                       label="{{GetSections().section5}}" [enableSelectAll]="false">
                       </mdb-select>
-                      <mdb-error *ngIf="sect_5.invalid && (sect_5.dirty || sect_5.touched)">This answer is required</mdb-error>
+                      <!-- <mdb-error *ngIf="sect_5.invalid && (sect_5.dirty || sect_5.touched)">This answer is required</mdb-error> -->
                     </div>
                   </div>
                   <div [hidden]="sect_6.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -169,17 +169,17 @@
                       [highlightFirst]="false" formControlName="sect_6"
                       label="{{GetSections().section6}}" [enableSelectAll]="false">
                       </mdb-select>
-                      <mdb-error *ngIf="sect_6.invalid && (sect_6.dirty || sect_6.touched)">This answer is required</mdb-error>
+                      <!-- <mdb-error *ngIf="sect_6.invalid && (sect_6.dirty || sect_6.touched)">This answer is required</mdb-error> -->
                     </div>
                   </div>
                 </div>
                     <div class="row">
                       <div class="col-md-6">
-                        <button (click)="onAdd()" [disabled]="!form.valid && !all.dirty" type="submit"
+                        <button (click)="onAdd()" [disabled]="(!form.valid && !all.dirty) || kpiResult" type="submit"
                           class="btn btn-primary btn-block mb-2" style="background-color: #032c57 !important; color: white;">Submit</button>
                       </div>
                       <div class="col-md-6">
-                        <button [disabled]="!form.valid && ! all.dirty" (click)="onUpdate()" style="width: 100%;" type="button"
+                        <button [disabled]="(!form.valid && !all.dirty) || !kpiResult" (click)="onUpdate()" style="width: 100%;" type="button"
                           class="btn btn-secondary btn-block mb-2" style="background-color: #303031 !important; color: white;">Update</button>
                       </div>
                       <!-- <div class="col-md-4">

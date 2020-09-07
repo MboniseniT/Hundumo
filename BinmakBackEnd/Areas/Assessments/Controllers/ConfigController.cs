@@ -1116,6 +1116,79 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        [HttpPost("getkpiResults")]
+        public IActionResult GetkpiResults([FromBody] KpiResultIdSet IdSet)
+        {
+            try
+            {
+                var lAction = _context.kpiResults.Where(a => a.assess_id == IdSet.assess_id).ToList();
+
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+        }
+
+        [HttpPost("getkpiResultById")]
+        public IActionResult GetkpiResultById([FromBody] KpiResultIdSet IdSet)
+        {
+            try
+            {
+                var lAction = _context.kpiResults.FirstOrDefault(a => a.kpi_id == IdSet.kpi_id && a.assess_id == IdSet.assess_id);
+
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+        }
+
+        [HttpPut("updateKpiResults")]
+        public IActionResult UpdateKpiResults([FromBody] KpiResults Result)
+        {
+            try
+            {
+                var lAction = _context.kpiResults.FirstOrDefault(a => a.ID == Result.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The Result with ID = " + Result.ID + " not found to update!");
+                }
+                else
+                {
+                    lAction.sect_1 = Result.sect_1;
+                    lAction.sect_2 = Result.sect_2;
+                    lAction.sect_3 = Result.sect_3;
+                    lAction.sect_4 = Result.sect_4;
+                    lAction.sect_5 = Result.sect_5;
+                    lAction.sect_6 = Result.sect_6;
+                    _context.SaveChanges();
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
 
         //Helper Methods
         string ConvertSection(Nullable<int> AssetNodeId)

@@ -8,4 +8,5 @@ export class KpiResult{
   sect_4:string;
   sect_5:string;
   sect_6:string;
+  user_id:string;
 }

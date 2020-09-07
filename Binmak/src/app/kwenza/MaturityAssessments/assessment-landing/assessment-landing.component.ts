@@ -4,6 +4,7 @@ import { AssessmentsConfigService } from 'src/app/services/Assessments/assessmen
 import { MDBModalService, ToastService, MDBModalRef } from 'ng-uikit-pro-standard';
 import { AreYouSureComponent } from '../are-you-sure/are-you-sure.component';
 import { Assessment } from 'src/app/Models/Assessments/assessment';
+import { KpiResult } from 'src/app/Models/Assessments/kpiResult';
 
 @Component({
   selector: 'app-assessment-landing',
@@ -20,6 +21,8 @@ export class AssessmentLandingComponent implements OnInit {
   assessName:string = "";
   isAdmin:boolean;
   hasSections:boolean;
+  kpiResult:KpiResult[] = [];
+  assessmentID:number;
 
   assessment: Assessment[];
   assessmentSections: Array<any>;
@@ -41,7 +44,9 @@ export class AssessmentLandingComponent implements OnInit {
     if(localStorage.getItem('currentAssessment')){
       this.isSaved = Number(JSON.parse(localStorage.getItem('currentAssessment')).isSaved);
     this.assessName = JSON.parse(localStorage.getItem('currentAssessment')).assess_name;
+    this.assessmentID = JSON.parse(localStorage.getItem('currentAssessment')).id;
     this.setHasSections();
+    this.getKpiResults();
     }
   }
 
@@ -206,6 +211,23 @@ export class AssessmentLandingComponent implements OnInit {
     }else{
       return false;
     }
+  }
+
+  getKpiResults(){
+    //retrieve KPI Results from Database
+    this.assessmentService.GetkpiResults(Number(this.assessmentID)).subscribe(
+      (data:KpiResult[]) => {
+        this.kpiResult = data;
+        //console.log(data);
+      }, error => {
+        console.log('httperror: ');
+        console.log(error);
+      }
+    );
+  }
+
+  getPage():string{
+    return this.kpiResult.length.toString();
   }
 
 }
