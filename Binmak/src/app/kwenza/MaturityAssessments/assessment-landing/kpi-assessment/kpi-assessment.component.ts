@@ -284,7 +284,7 @@ export class KpiAssessmentComponent implements OnInit {
 
   getKPIs(){
     //retrieve KPIs from Database
-    this.assessmentService.GetKPIs().subscribe(
+    this.assessmentService.GetFilteredKPIs(this.GetAssessment()).subscribe(
       (data:KPI[]) => {
         this.kpi = data;
         //console.log(data);
@@ -512,36 +512,38 @@ export class KpiAssessmentComponent implements OnInit {
     if(id === 0){
       return this.initKPA[0].name;
     }else if(id === 1){
-      return this.initKPA[1].name;
+      return this.initKPA[0].name;
     }else if(id === 2){
-      return this.initKPA[2].name;
+      return this.initKPA[1].name;
     }else if(id === 3){
-      return this.initKPA[3].name;
+      return this.initKPA[2].name;
     }else if(id === 4){
-      return this.initKPA[4].name;
+      return this.initKPA[3].name;
     }else if(id === 5){
-      return this.initKPA[5].name;
+      return this.initKPA[4].name;
     }else if(id === 6){
-      return this.initKPA[6].name;
+      return this.initKPA[5].name;
     }else if(id === 7){
-      return this.initKPA[7].name;
+      return this.initKPA[6].name;
     }else if(id === 8){
-      return this.initKPA[8].name;
+      return this.initKPA[7].name;
     }else if(id === 9){
-      return this.initKPA[9].name;
+      return this.initKPA[8].name;
     }else if(id === 10){
-      return this.initKPA[10].name;
+      return this.initKPA[9].name;
     }else if(id === 11){
-      return this.initKPA[11].name;
+      return this.initKPA[10].name;
     }else if(id === 12){
-      return this.initKPA[12].name;
+      return this.initKPA[11].name;
     }else if(id === 13){
-      return this.initKPA[13].name;
+      return this.initKPA[12].name;
     }else if(id === 14){
-      return this.initKPA[14].name;
+      return this.initKPA[13].name;
     }else if(id === 15){
-      return this.initKPA[15].name;
+      return this.initKPA[14].name;
     }else if(id === 16){
+      return this.initKPA[15].name;
+    }else if(id === 17){
       return this.initKPA[16].name;
     }else{
       return "";
@@ -552,16 +554,78 @@ export class KpiAssessmentComponent implements OnInit {
   onAdd(){
     this.formRawValue = this.form.getRawValue();
     if(this.formRawValue.all){
-      this.result = {
-        kpa_id: this.kpi[this.page].kpa_id,
-        kpi_id: this.kpi[this.page].id,
-        assess_id: this.assessmentID,
-        sect_1: this.formRawValue.all,
-        sect_2: this.formRawValue.all,
-        sect_3: this.formRawValue.all,
-        sect_4: this.formRawValue.all,
-        sect_5: this.formRawValue.all,
-        sect_6: this.formRawValue.all,
+      if(this.sectCount == 6){
+        this.result = {
+          kpa_id: this.kpi[this.page].kpa_id,
+          kpi_id: this.kpi[this.page].id,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.all,
+          sect_4: this.formRawValue.all,
+          sect_5: this.formRawValue.all,
+          sect_6: this.formRawValue.all,
+        }
+      }else if(this.sectCount == 5){
+        this.result = {
+          kpa_id: this.kpi[this.page].kpa_id,
+          kpi_id: this.kpi[this.page].id,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.all,
+          sect_4: this.formRawValue.all,
+          sect_5: this.formRawValue.all,
+          sect_6: this.formRawValue.sect_6,
+        }
+      }else if(this.sectCount == 4){
+        this.result = {
+          kpa_id: this.kpi[this.page].kpa_id,
+          kpi_id: this.kpi[this.page].id,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.all,
+          sect_4: this.formRawValue.all,
+          sect_5: this.formRawValue.sect_5,
+          sect_6: this.formRawValue.sect_6,
+        }
+      }else if(this.sectCount == 3){
+        this.result = {
+          kpa_id: this.kpi[this.page].kpa_id,
+          kpi_id: this.kpi[this.page].id,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.all,
+          sect_4: this.formRawValue.sect_4,
+          sect_5: this.formRawValue.sect_5,
+          sect_6: this.formRawValue.sect_6,
+        }
+      }else if(this.sectCount == 2){
+        this.result = {
+          kpa_id: this.kpi[this.page].kpa_id,
+          kpi_id: this.kpi[this.page].id,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.sect_3,
+          sect_4: this.formRawValue.sect_4,
+          sect_5: this.formRawValue.sect_5,
+          sect_6: this.formRawValue.sect_6,
+        }
+      }else if(this.sectCount == 1){
+        this.result = {
+          kpa_id: this.kpi[this.page].kpa_id,
+          kpi_id: this.kpi[this.page].id,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.sect_2,
+          sect_3: this.formRawValue.sect_3,
+          sect_4: this.formRawValue.sect_4,
+          sect_5: this.formRawValue.sect_5,
+          sect_6: this.formRawValue.sect_6,
+        }
       }
     }else{
       this.result = {
@@ -813,6 +877,106 @@ let newPage:number;
         console.log(error);
       }
     );
+  }
+
+  GetAssessProgress(){
+    if(this.progress){
+      return this.progress[0].assessProgress;
+    }
+  }
+
+  GetKpa1Progress(){
+    if(this.progress){
+      return this.progress[0].kpa1Progress;
+    }
+  }
+  GetKpa2Progress(){
+    if(this.progress){
+      return this.progress[0].kpa2Progress;
+    }
+  }
+  GetKpa3Progress(){
+    if(this.progress){
+      return this.progress[0].kpa3Progress;
+    }
+  }
+  GetKpa4Progress(){
+    if(this.progress){
+      return this.progress[0].kpa4Progress;
+    }
+  }
+  GetKpa5Progress(){
+    if(this.progress){
+      return this.progress[0].kpa5Progress;
+    }
+  }
+  GetKpa6Progress(){
+    if(this.progress){
+      return this.progress[0].kpa6Progress;
+    }
+  }
+  GetKpa7Progress(){
+    if(this.progress){
+      return this.progress[0].kpa7Progress;
+    }
+  }
+  GetKpa8Progress(){
+    if(this.progress){
+      return this.progress[0].kpa8Progress;
+    }
+  }
+
+  GetKpa9Progress(){
+    if(this.progress){
+      return this.progress[0].kpa9Progress;
+    }
+  }
+
+  GetKpa10Progress(){
+    if(this.progress){
+      return this.progress[0].kpa10Progress;
+    }
+  }
+  GetKpa11Progress(){
+    if(this.progress){
+      return this.progress[0].kpa11Progress;
+    }
+  }
+  GetKpa12Progress(){
+    if(this.progress){
+      return this.progress[0].kpa12Progress;
+    }
+  }
+  GetKpa13Progress(){
+    if(this.progress){
+      return this.progress[0].kpa13Progress;
+    }
+  }
+  GetKpa14Progress(){
+    if(this.progress){
+      return this.progress[0].kpa14Progress;
+    }
+  }
+  GetKpa15Progress(){
+    if(this.progress){
+      return this.progress[0].kpa15Progress;
+    }
+  }
+  GetKpa16Progress(){
+    if(this.progress){
+      return this.progress[0].kpa16Progress;
+    }
+  }
+  GetKpa17Progress(){
+    if(this.progress){
+      return this.progress[0].kpa17Progress;
+    }
+  }
+
+  GetKpiTotalScore(){
+    if(this.progress){
+      return Math.round(Number(this.progress[0].totalScore));
+    }
   }
 
 

@@ -1205,26 +1205,45 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         }
 
         [HttpPost("getKpiProgress")]
-        /*public IActionResult GetKpiProgress([FromBody] Assessment assess)
+        public IActionResult GetKpiProgress([FromBody] Assessment assess)
         {
             try
             {
-                var lAction = _context.kpiResults.FirstOrDefault(a => a.kpi_id == IdSet.kpi_id && a.assess_id == IdSet.assess_id);
+                List<Assessment> assessment = _context.assessments.Where(a => a.ID == assess.ID).ToList();
+                var allKPIResults = _context.kpiResults.Where(a => a.assess_id == assess.ID).ToList();
+                var allKPIs = GetFilteredKPIs(assess);
+                var progress = assessment.Select(result => new
+                {
+                    AssessProgress = (allKPIResults.Count * 100) / allKPIs.Count,
+                    kpa1Progress = GetKPIsResultsForKPA(assess, 1),
+                    kpa2Progress = GetKPIsResultsForKPA(assess, 2),
+                    kpa3Progress = GetKPIsResultsForKPA(assess, 3),
+                    kpa4Progress = GetKPIsResultsForKPA(assess, 4),
+                    kpa5Progress = GetKPIsResultsForKPA(assess, 5),
+                    kpa6Progress = GetKPIsResultsForKPA(assess, 6),
+                    kpa7Progress = GetKPIsResultsForKPA(assess, 7),
+                    kpa8Progress = GetKPIsResultsForKPA(assess, 8),
+                    kpa9Progress = GetKPIsResultsForKPA(assess, 9),
+                    kpa10Progress = GetKPIsResultsForKPA(assess, 10),
+                    kpa11Progress = GetKPIsResultsForKPA(assess, 11),
+                    kpa12Progress = GetKPIsResultsForKPA(assess, 12),
+                    kpa13Progress = GetKPIsResultsForKPA(assess, 13),
+                    kpa14Progress = GetKPIsResultsForKPA(assess, 14),
+                    kpa15Progress = GetKPIsResultsForKPA(assess, 15),
+                    kpa16Progress = GetKPIsResultsForKPA(assess, 16),
+                    kpa17Progress = GetKPIsResultsForKPA(assess, 17),
+                    TotalScore = GetKPITotalScore(assess)
+                });
 
-                if (lAction != null)
-                {
-                    return Ok(lAction);
-                }
-                else
-                {
-                    return Ok(lAction);
-                }
+                
+                    return Ok(progress);
+                
             }
             catch (Exception ex)
             {
                 return BadRequest("Something bad happened. " + ex.Message);
             }
-        }*/
+        }
 
 
         //Helper Methods
@@ -1251,6 +1270,122 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             a.kpa_id == DeactivateKPA17(assess.kpa17)
             )).ToList();
             return tableKpis;
+        }
+        List<Kpis> GetKPIsForKPA(Assessment assess, int kpa)
+        {
+            var tableKpis = _context.kpis.Where(a => (a.frmwrk_id == assess.frmwrk_id && a.version_id == assess.version_id && a.variant_id == assess.variant_id) && (a.kpa_id == kpa)).ToList();
+            return tableKpis;
+        }
+
+        float GetKPIsResultsForKPA(Assessment assess, int kpa)
+        {
+            float total = 0;
+            List<KpiResults> kpiResults = _context.kpiResults.Where(a => (a.kpa_id == kpa) && (a.assess_id == assess.ID)).ToList();
+            var kpiResult = kpiResults.Select(result => new
+            {
+                kpiId = result.ID,
+                kpiRes = (ConvertKPIResult(result.sect_1) + ConvertKPIResult(result.sect_2) + ConvertKPIResult(result.sect_3) + ConvertKPIResult(result.sect_4) + ConvertKPIResult(result.sect_5) + ConvertKPIResult(result.sect_6)) / SectCount(assess.ID)
+            });
+
+            foreach(var result in kpiResult)
+            {
+                total = total + result.kpiRes;
+            }
+            if(GetKPIsForKPA(assess, kpa).Count > 0)
+            {
+                total = (total) / GetKPIsForKPA(assess, kpa).Count;
+            }
+            else
+            {
+                total = 0;
+            }
+            
+            return total;
+        }
+
+        float GetKPITotalScore(Assessment assess)
+        {
+            float total = 0;
+            List<KpiResults> kpiResults = _context.kpiResults.Where(a => (a.assess_id == assess.ID)).ToList();
+            var kpiResult = kpiResults.Select(result => new
+            {
+                kpiId = result.ID,
+                kpiRes = (ConvertKPIResult(result.sect_1) + ConvertKPIResult(result.sect_2) + ConvertKPIResult(result.sect_3) + ConvertKPIResult(result.sect_4) + ConvertKPIResult(result.sect_5) + ConvertKPIResult(result.sect_6)) / SectCount(assess.ID)
+            });
+
+            foreach (var result in kpiResult)
+            {
+                total = total + result.kpiRes;
+            }
+            if (GetFilteredKPIs(assess).Count > 0)
+            {
+                total = (total) / GetFilteredKPIs(assess).Count;
+            }
+            else
+            {
+                total = 0;
+            }
+
+            return total;
+        }
+
+        int SectCount(int assessID)
+        {
+            var sections = _context.assessmentSections.FirstOrDefault(a => a.assess_id == assessID);
+            int sectCount = 6;
+            if(sections.sect_6 == null)
+            {
+                sectCount = sectCount - 1;
+            }
+
+            if(sections.sect_5 == null)
+            {
+                sectCount = sectCount - 1;
+            }
+
+            if (sections.sect_4 == null)
+            {
+                sectCount = sectCount - 1;
+            }
+
+            if (sections.sect_3 == null)
+            {
+                sectCount = sectCount - 1;
+            }
+
+            if (sections.sect_2 == null)
+            {
+                sectCount = sectCount - 1;
+            }
+
+            return sectCount;
+        }
+
+        int ConvertKPIResult(int sect)
+        {
+            int value = 0;
+            if(sect == 1)
+            {
+                value = 0;
+            }
+            else if(sect == 2)
+            {
+                value = 25;
+            }
+            else if(sect == 3)
+            {
+                value = 50;
+            }
+            else if(sect == 4)
+            {
+                value = 75;
+            }
+            else if(sect == 5)
+            {
+                value = 100;
+            }
+
+            return value;
         }
 
         int DeactivateKPA1(string kpa1)

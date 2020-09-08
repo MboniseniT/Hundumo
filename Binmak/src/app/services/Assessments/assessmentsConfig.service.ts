@@ -122,6 +122,9 @@ constructor(private http: HttpClient) { }
       GetKPIs(): Observable<KPI[]>{
         return this.http.get<KPI[]>(this.assessmentUrl+'getKPIs');
       }
+      GetFilteredKPIs(assessment): Observable<KPI[]>{
+        return this.http.post<KPI[]>(this.assessmentUrl+'getFilteredKPIs',assessment);
+      }
       AddKPI(kpi){
         return this.http.post(this.assessmentUrl+'addKPIs', kpi);
       }
@@ -251,7 +254,7 @@ constructor(private http: HttpClient) { }
       }
 
       GetKpiProgress(assessment): Observable<any>{
-        return this.http.post<any>(this.assessmentUrl+'getFilteredKPIs', assessment);
+        return this.http.post<any>(this.assessmentUrl+'getKpiProgress', assessment);
       }
 
       UpdateKpiResults(result){

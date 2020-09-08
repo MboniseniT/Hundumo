@@ -202,71 +202,71 @@
             </mdb-card-header>
             <mdb-card-body>
               <div class="row">
-                <div class="col">
+                <div class="col" mdbTooltip="Progress: {{GetAssessProgress()}}%" placement="top">
                   <label><mdb-badge style="background-color: #032c57 !important;">How far have you gone?</mdb-badge></label>
-                  <mdb-progress style="height: 20px !important; background-color: #032c57 !important;" value="25" min="0" max="100" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></mdb-progress>
+                  <mdb-progress style="height: 20px !important; background-color: #032c57 !important;" value="{{GetAssessProgress()}}" min="0" max="100" aria-valuemin="0" aria-valuemax="100"></mdb-progress>
                   <hr/>
                 </div>
               </div>
               <label><mdb-badge style="background-color: #032c57 !important;">How well are you doing for each KPA?</mdb-badge></label>
               <div class="row" style="font-size: smaller;">
-                <div class="col-12">
-                  <p>{{ConvertKPA(0)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa1Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(1)}}: {{GetKpa1Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(1)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa2Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(2)}}: {{GetKpa2Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(2)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa3Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(3)}}: {{GetKpa3Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(3)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa4Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(4)}}: {{GetKpa4Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(4)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa5Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(5)}}: {{GetKpa5Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(5)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa6Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(6)}}: {{GetKpa6Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(6)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa7Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(7)}}: {{GetKpa7Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(7)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa8Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(8)}}: {{GetKpa8Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(8)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa9Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(9)}}: {{GetKpa9Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(9)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa10Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(10)}}: {{GetKpa10Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(10)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa11Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(11)}}: {{GetKpa11Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(11)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa12Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(12)}}: {{GetKpa12Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(12)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa13Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(13)}}: {{GetKpa13Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(13)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa14Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(14)}}: {{GetKpa14Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(14)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa15Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(15)}}: {{GetKpa15Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(15)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa16Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(16)}}: {{GetKpa16Progress()}}%</p>
                 </div>
-                <div class="col-12">
-                  <p>{{ConvertKPA(16)}}: 25%</p>
+                <div class="col-12" mdbTooltip="Current Score: {{GetKpa17Progress()}}%" placement="top">
+                  <p>{{ConvertKPA(17)}}: {{GetKpa17Progress()}}%</p>
                 </div>
               </div>
               <hr/>
               <div class="row">
-                <div class="col">
+                <div class="col" mdbTooltip="Current Total Score: {{GetKpiTotalScore()}}%" placement="top">
                   <label><mdb-badge style="background-color: #032c57 !important;">What's your total score so far?</mdb-badge></label>
-                  <mdb-progress style="height: 20px !important; background-color: #032c57 !important;" value="25" min="0" max="100" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></mdb-progress>
+                  <mdb-progress style="height: 20px !important; background-color: #032c57 !important;" value="{{GetKpiTotalScore()}}" min="0" max="100" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></mdb-progress>
                   <hr/>
                 </div>
               </div>
