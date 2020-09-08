@@ -262,7 +262,7 @@ export class KpiAssessmentComponent implements OnInit {
   //refresh
   refresh(page: string): void{
     this._router.navigateByUrl("/"+page, {skipLocationChange:true}).then(() => {
-      console.log(decodeURI(this._location.path()));
+      //console.log(decodeURI(this._location.path()));
       this._router.navigate([decodeURI(this._location.path())]);
     });
   }
@@ -313,7 +313,7 @@ export class KpiAssessmentComponent implements OnInit {
 
       this.sectCount = this.sectCount - 1;
       this.sect_6.disable();
-      console.log(this.sectCount);
+      //console.log(this.sectCount);
     }else{
       this.sect_6.enable();
     }
@@ -450,7 +450,9 @@ export class KpiAssessmentComponent implements OnInit {
 
   GetKpiId(page){
     if(this.kpi.length > 0){
-      return this.kpi[page].id;
+      if(this.kpi[page]){
+        return this.kpi[page].id;
+      }
     }
   }
 
@@ -496,9 +498,11 @@ export class KpiAssessmentComponent implements OnInit {
     }
   }
 
-  GetKpaId():number{
+  GetKpaId(p:number):number{
     if(this.kpi.length > 0){
-      return this.kpi[this.page].kpa_id;
+      if(this.kpi[p]){
+        return this.kpi[p].kpa_id;
+      }
     }
   }
 
@@ -510,41 +514,59 @@ export class KpiAssessmentComponent implements OnInit {
 
   ConvertKPA(id:number):string{
     if(id === 0){
-      return this.initKPA[0].name;
+      //return this.initKPA[0].name;
+      return this.GetAssessment().kpa1;
     }else if(id === 1){
-      return this.initKPA[0].name;
+      //return this.initKPA[0].name;
+      return this.GetAssessment().kpa1;
     }else if(id === 2){
-      return this.initKPA[1].name;
+      //return this.initKPA[1].name;
+      return this.GetAssessment().kpa2;
     }else if(id === 3){
-      return this.initKPA[2].name;
+      //return this.initKPA[2].name;
+      return this.GetAssessment().kpa3;
     }else if(id === 4){
-      return this.initKPA[3].name;
+      //return this.initKPA[3].name;
+      return this.GetAssessment().kpa4;
     }else if(id === 5){
-      return this.initKPA[4].name;
+      //return this.initKPA[4].name;
+      return this.GetAssessment().kpa5;
     }else if(id === 6){
-      return this.initKPA[5].name;
+      //return this.initKPA[5].name;
+      return this.GetAssessment().kpa6;
     }else if(id === 7){
-      return this.initKPA[6].name;
+      //return this.initKPA[6].name;
+      return this.GetAssessment().kpa7;
     }else if(id === 8){
-      return this.initKPA[7].name;
+      //return this.initKPA[7].name;
+      return this.GetAssessment().kpa8;
     }else if(id === 9){
-      return this.initKPA[8].name;
+      //return this.initKPA[8].name;
+      return this.GetAssessment().kpa9;
     }else if(id === 10){
-      return this.initKPA[9].name;
+      //return this.initKPA[9].name;
+      return this.GetAssessment().kpa10;
     }else if(id === 11){
-      return this.initKPA[10].name;
+      //return this.initKPA[10].name;
+      return this.GetAssessment().kpa11;
     }else if(id === 12){
-      return this.initKPA[11].name;
+      //return this.initKPA[11].name;
+      return this.GetAssessment().kpa12;
     }else if(id === 13){
-      return this.initKPA[12].name;
+      //return this.initKPA[12].name;
+      return this.GetAssessment().kpa13;
     }else if(id === 14){
-      return this.initKPA[13].name;
+      //return this.initKPA[13].name;
+      return this.GetAssessment().kpa14;
     }else if(id === 15){
-      return this.initKPA[14].name;
+      //return this.initKPA[14].name;
+      return this.GetAssessment().kpa15;
     }else if(id === 16){
-      return this.initKPA[15].name;
+      //return this.initKPA[15].name;
+      return this.GetAssessment().kpa16;
     }else if(id === 17){
-      return this.initKPA[16].name;
+      //return this.initKPA[16].name;
+      return this.GetAssessment().kpa17;
     }else{
       return "";
     }
@@ -871,7 +893,7 @@ let newPage:number;
     this.assessmentService.GetKpiProgress(this.GetAssessment()).subscribe(
       (data:any) => {
         this.progress = data;
-        console.log(data);
+        //console.log(data);
       }, error => {
         console.log('httperror: ');
         console.log(error);
@@ -925,13 +947,11 @@ let newPage:number;
       return this.progress[0].kpa8Progress;
     }
   }
-
   GetKpa9Progress(){
     if(this.progress){
       return this.progress[0].kpa9Progress;
     }
   }
-
   GetKpa10Progress(){
     if(this.progress){
       return this.progress[0].kpa10Progress;
@@ -976,6 +996,184 @@ let newPage:number;
   GetKpiTotalScore(){
     if(this.progress){
       return Math.round(Number(this.progress[0].totalScore));
+    }
+  }
+
+  SkipToKPA(kpa:number){
+    let newPage:number;
+    let result;
+    //console.log('skipping to '+kpa);
+    //console.log(this.SearchForSkipLocation(kpa));
+
+    newPage = this.SearchForSkipLocation(kpa);
+        //console.log('form is valid & kpiResult is not null. Go to next page.');
+        this.assessmentService.GetkpiResultById(this.GetKpiId(newPage),Number(this.assessmentID)).subscribe(
+          (data:KpiResult) => {
+            result = data;
+            //console.log(result);
+            if(result){
+            this.page = newPage;
+            this.kpiResult = result;
+            this.setViewParams();
+            this._router.navigate(['/binmak/kpi-assessment/'+newPage.toString()]);
+            setTimeout(() => {
+              this.refresh("/");
+            });
+            }else{
+              this.toastrService.warning('You can only skip to a section that you have already covered!');
+            }
+
+            //console.log(data);
+          }, error => {
+            console.log('httperror: ');
+            console.log(error);
+          }
+        );
+
+  }
+
+  DeactivateKPA1(){
+    if(this.GetAssessment().kpa1 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA2(){
+    //console.log(this.GetAssessment().kpa2);
+    if(this.GetAssessment().kpa2 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA3(){
+    //console.log(this.GetAssessment().kpa3);
+    if(this.GetAssessment().kpa3 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA4(){
+    //console.log(this.GetAssessment().kpa4);
+    if(this.GetAssessment().kpa4 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA5(){
+    //console.log(this.GetAssessment().kpa5);
+    if(this.GetAssessment().kpa5 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA6(){
+    //console.log(this.GetAssessment().kpa6);
+    if(this.GetAssessment().kpa6 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA7(){
+    //console.log(this.GetAssessment().kpa7);
+    if(this.GetAssessment().kpa7 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA8(){
+    //console.log(this.GetAssessment().kpa8);
+    if(this.GetAssessment().kpa8 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA9(){
+    //console.log(this.GetAssessment().kpa9);
+    if(this.GetAssessment().kpa9 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA10(){
+    //console.log(this.GetAssessment().kpa10);
+    if(this.GetAssessment().kpa10 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA11(){
+    //console.log(this.GetAssessment().kpa11);
+    if(this.GetAssessment().kpa11 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA12(){
+    //console.log(this.GetAssessment().kpa12);
+    if(this.GetAssessment().kpa12 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA13(){
+    //console.log(this.GetAssessment().kpa13);
+    if(this.GetAssessment().kpa13 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA14(){
+    //console.log(this.GetAssessment().kpa14);
+    if(this.GetAssessment().kpa14 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA15(){
+    //console.log(this.GetAssessment().kpa15);
+    if(this.GetAssessment().kpa15 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA16(){
+    //console.log(this.GetAssessment().kpa16);
+    if(this.GetAssessment().kpa16 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  DeactivateKPA17(){
+    //console.log(this.GetAssessment().kpa17);
+    if(this.GetAssessment().kpa17 == ""){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  SearchForSkipLocation(kpa){
+    let p:number;
+    for(p = 0; p < this.kpi.length; p++){
+      if(Number(this.kpi[p].kpa_id) === kpa){
+        return p;
+      }
     }
   }
 

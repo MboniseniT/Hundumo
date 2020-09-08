@@ -21,7 +21,7 @@
                 <div class="col-lg-10 col-md-10 col-sm-6 col-xs-6">
                   <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                      <h5 style="color: white;">KPA: {{ConvertKPA(GetKpaId())}}</h5>
+                      <h5 style="color: white;">KPA: {{ConvertKPA(GetKpaId(page))}}</h5>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
                       <h5 style="color: white;">KPI: {{GetKpiName()}}</h5>
@@ -210,56 +210,56 @@
               </div>
               <label><mdb-badge style="background-color: #032c57 !important;">How well are you doing for each KPA?</mdb-badge></label>
               <div class="row" style="font-size: smaller;">
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa1Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(1)}}: {{GetKpa1Progress()}}%</p>
+                <div [hidden]="DeactivateKPA1()" class="col-12" mdbTooltip="Current Score: {{GetKpa1Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(1)">{{ConvertKPA(1)}}</a>: {{GetKpa1Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa2Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(2)}}: {{GetKpa2Progress()}}%</p>
+                <div [hidden]="DeactivateKPA2()" class="col-12" mdbTooltip="Current Score: {{GetKpa2Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(2)">{{ConvertKPA(2)}}</a>: {{GetKpa2Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa3Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(3)}}: {{GetKpa3Progress()}}%</p>
+                <div [hidden]="DeactivateKPA3()" class="col-12" mdbTooltip="Current Score: {{GetKpa3Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(3)">{{ConvertKPA(3)}}</a>: {{GetKpa3Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa4Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(4)}}: {{GetKpa4Progress()}}%</p>
+                <div [hidden]="DeactivateKPA4()" class="col-12" mdbTooltip="Current Score: {{GetKpa4Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(4)">{{ConvertKPA(4)}}</a>: {{GetKpa4Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa5Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(5)}}: {{GetKpa5Progress()}}%</p>
+                <div [hidden]="DeactivateKPA5()" class="col-12" mdbTooltip="Current Score: {{GetKpa5Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(5)">{{ConvertKPA(5)}}</a>: {{GetKpa5Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa6Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(6)}}: {{GetKpa6Progress()}}%</p>
+                <div [hidden]="DeactivateKPA6()" class="col-12" mdbTooltip="Current Score: {{GetKpa6Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(6)">{{ConvertKPA(6)}}</a>: {{GetKpa6Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa7Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(7)}}: {{GetKpa7Progress()}}%</p>
+                <div [hidden]="DeactivateKPA7()" class="col-12" mdbTooltip="Current Score: {{GetKpa7Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(7)">{{ConvertKPA(7)}}</a>: {{GetKpa7Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa8Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(8)}}: {{GetKpa8Progress()}}%</p>
+                <div [hidden]="DeactivateKPA8()" class="col-12" mdbTooltip="Current Score: {{GetKpa8Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(8)">{{ConvertKPA(8)}}</a>: {{GetKpa8Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa9Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(9)}}: {{GetKpa9Progress()}}%</p>
+                <div [hidden]="DeactivateKPA9()" class="col-12" mdbTooltip="Current Score: {{GetKpa9Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(9)">{{ConvertKPA(9)}}</a>: {{GetKpa9Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa10Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(10)}}: {{GetKpa10Progress()}}%</p>
+                <div [hidden]="DeactivateKPA10()" class="col-12" mdbTooltip="Current Score: {{GetKpa10Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(10)">{{ConvertKPA(10)}}</a>: {{GetKpa10Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa11Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(11)}}: {{GetKpa11Progress()}}%</p>
+                <div [hidden]="DeactivateKPA11()" class="col-12" mdbTooltip="Current Score: {{GetKpa11Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(11)">{{ConvertKPA(11)}}</a>: {{GetKpa11Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa12Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(12)}}: {{GetKpa12Progress()}}%</p>
+                <div [hidden]="DeactivateKPA12()" class="col-12" mdbTooltip="Current Score: {{GetKpa12Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(12)">{{ConvertKPA(12)}}</a>: {{GetKpa12Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa13Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(13)}}: {{GetKpa13Progress()}}%</p>
+                <div [hidden]="DeactivateKPA13()" class="col-12" mdbTooltip="Current Score: {{GetKpa13Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(13)">{{ConvertKPA(13)}}</a>: {{GetKpa13Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa14Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(14)}}: {{GetKpa14Progress()}}%</p>
+                <div [hidden]="DeactivateKPA14()" class="col-12" mdbTooltip="Current Score: {{GetKpa14Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(14)">{{ConvertKPA(14)}}</a>: {{GetKpa14Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa15Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(15)}}: {{GetKpa15Progress()}}%</p>
+                <div [hidden]="DeactivateKPA15()" class="col-12" mdbTooltip="Current Score: {{GetKpa15Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(15)">{{ConvertKPA(15)}}</a>: {{GetKpa15Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa16Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(16)}}: {{GetKpa16Progress()}}%</p>
+                <div [hidden]="DeactivateKPA16()" class="col-12" mdbTooltip="Current Score: {{GetKpa16Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(16)">{{ConvertKPA(16)}}</a>: {{GetKpa16Progress()}}%</p>
                 </div>
-                <div class="col-12" mdbTooltip="Current Score: {{GetKpa17Progress()}}%" placement="top">
-                  <p>{{ConvertKPA(17)}}: {{GetKpa17Progress()}}%</p>
+                <div [hidden]="DeactivateKPA17()" class="col-12" mdbTooltip="Current Score: {{GetKpa17Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(17)">{{ConvertKPA(17)}}</a>: {{GetKpa17Progress()}}%</p>
                 </div>
               </div>
               <hr/>
