@@ -64,6 +64,7 @@ import { AddKpiComponent } from './kwenza/MaturityAssessments/assessment-landing
 import { EditKpiComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-kpis/edit-kpi/edit-kpi.component';
 import { ManageBpKpiUsersComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-BpKpi-users/manage-BpKpi-users.component';
 import { AddSectionsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/add-sections/add-sections.component';
+import { ViewConsensusResultsComponent } from './kwenza/MaturityAssessments/assessment-landing/view-consensus-results/view-consensus-results.component';
 
 //import { ChartModule } from 'angular-highcharts';
 
@@ -115,7 +116,8 @@ import { AddSectionsComponent } from './kwenza/MaturityAssessments/assessment-la
     AddKpiComponent,
     EditKpiComponent,
     ManageBpKpiUsersComponent,
-    AddSectionsComponent
+    AddSectionsComponent,
+    ViewConsensusResultsComponent
   ],
   imports: [
     BrowserModule,

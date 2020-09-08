@@ -903,93 +903,93 @@ let newPage:number;
 
   GetAssessProgress(){
     if(this.progress){
-      return this.progress[0].assessProgress;
+      return Math.round(Number(this.progress[0].assessProgress));
     }
   }
 
   GetKpa1Progress(){
     if(this.progress){
-      return this.progress[0].kpa1Progress;
+      return Math.round(Number(this.progress[0].kpa1Progress));
     }
   }
   GetKpa2Progress(){
     if(this.progress){
-      return this.progress[0].kpa2Progress;
+      return Math.round(Number(this.progress[0].kpa2Progress));
     }
   }
   GetKpa3Progress(){
     if(this.progress){
-      return this.progress[0].kpa3Progress;
+      return Math.round(Number(this.progress[0].kpa3Progress));
     }
   }
   GetKpa4Progress(){
     if(this.progress){
-      return this.progress[0].kpa4Progress;
+      return Math.round(Number(this.progress[0].kpa4Progress));
     }
   }
   GetKpa5Progress(){
     if(this.progress){
-      return this.progress[0].kpa5Progress;
+      return Math.round(Number(this.progress[0].kpa5Progress));
     }
   }
   GetKpa6Progress(){
     if(this.progress){
-      return this.progress[0].kpa6Progress;
+      return Math.round(Number(this.progress[0].kpa6Progress));
     }
   }
   GetKpa7Progress(){
     if(this.progress){
-      return this.progress[0].kpa7Progress;
+      return Math.round(Number(this.progress[0].kpa7Progress));
     }
   }
   GetKpa8Progress(){
     if(this.progress){
-      return this.progress[0].kpa8Progress;
+      return Math.round(Number(this.progress[0].kpa8Progress));
     }
   }
   GetKpa9Progress(){
     if(this.progress){
-      return this.progress[0].kpa9Progress;
+      return Math.round(Number(this.progress[0].kpa9Progress));
     }
   }
   GetKpa10Progress(){
     if(this.progress){
-      return this.progress[0].kpa10Progress;
+      return Math.round(Number(this.progress[0].kpa10Progress));
     }
   }
   GetKpa11Progress(){
     if(this.progress){
-      return this.progress[0].kpa11Progress;
+      return Math.round(Number(this.progress[0].kpa11Progress));
     }
   }
   GetKpa12Progress(){
     if(this.progress){
-      return this.progress[0].kpa12Progress;
+      return Math.round(Number(this.progress[0].kpa12Progress));
     }
   }
   GetKpa13Progress(){
     if(this.progress){
-      return this.progress[0].kpa13Progress;
+      return Math.round(Number(this.progress[0].kpa13Progress));
     }
   }
   GetKpa14Progress(){
     if(this.progress){
-      return this.progress[0].kpa14Progress;
+      return Math.round(Number(this.progress[0].kpa14Progress));
     }
   }
   GetKpa15Progress(){
     if(this.progress){
-      return this.progress[0].kpa15Progress;
+      return Math.round(Number(this.progress[0].kpa15Progress));
     }
   }
   GetKpa16Progress(){
     if(this.progress){
-      return this.progress[0].kpa16Progress;
+      return Math.round(Number(this.progress[0].kpa16Progress));
     }
   }
   GetKpa17Progress(){
     if(this.progress){
-      return this.progress[0].kpa17Progress;
+      return Math.round(Number(this.progress[0].kpa17Progress));
     }
   }
 
@@ -1182,7 +1182,7 @@ let newPage:number;
   SavedProtect(){
     if (this.isSaved == 1) {
       console.log('here');
-      this._router.navigate(['/binmak/exec-assessment-landing']);
+      this._router.navigate(['/binmak/assessment-landing']);
     }
   }
 
