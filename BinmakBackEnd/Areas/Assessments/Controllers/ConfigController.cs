@@ -352,6 +352,41 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        //BP Questions
+        [HttpGet("getBpQuestions")]
+        public IActionResult GetBpQuestions()
+        {
+            try
+            {
+                //var tableKpis = _context.kpis.ToList();
+                List<BpQuestions> Questions = _context.bpQuestions.ToList();
+                var tableBpQuestions = GetTableBPQuestions(Questions);
+                return Ok(tableBpQuestions);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+        [HttpPost("addBPQuestion")]
+        public IActionResult AddBPQuestion([FromBody] BpQuestions Question)
+        {
+            try
+            {
+                _context.bpQuestions.Add(Question);
+                _context.SaveChanges();
+
+                var message = Created("", Question);
+                return message;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
 
         //Levels
         [HttpGet("getLevels")]
@@ -1347,6 +1382,25 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 LastEdittedBy = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName
             });
             return tableBPs;
+        }
+        IEnumerable<object> GetTableBPQuestions(List<BpQuestions> Questions)
+        {
+            
+            var tableBPQuestions = Questions.Select(result => new
+            {
+                qstnID = result.ID,
+                qstnKpaID = _context.bps.FirstOrDefault(a => a.ID == result.bp_id).kpa_id,
+                qstnKpaName = _context.kpas.FirstOrDefault(a => a.ID == (_context.bps.FirstOrDefault(a => a.ID == result.bp_id).kpa_id)).name,
+                qstnBpID = result.bp_id,
+                qstnBpName = _context.bps.FirstOrDefault(a => a.ID == result.bp_id).name,
+                qstnFrmwrkID = result.frmwrk_id,
+                qstnVersionID = result.version_id,
+                qstnVariantID = result.variant_id,
+                qstnQuestion = result.question,
+                qstnDescription = result.description,
+                lastEdittedBy = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName
+            });
+            return tableBPQuestions;
         }
 
         List<Kpis> GetFilteredKPIs(Assessment assess)

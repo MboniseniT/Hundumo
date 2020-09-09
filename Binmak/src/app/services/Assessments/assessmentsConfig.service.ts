@@ -15,6 +15,7 @@ import { TableKPI } from 'src/app/Models/Assessments/TableKPI';
 import { KpiResult } from 'src/app/Models/Assessments/kpiResult';
 import { BP } from 'src/app/Models/Assessments/bp';
 import { BpTable } from 'src/app/Models/Assessments/bpTable';
+import { BpQuestionTable } from 'src/app/Models/Assessments/bpQuestionTable';
 
 @Injectable({
   providedIn: 'root'
@@ -151,6 +152,14 @@ constructor(private http: HttpClient) { }
 
       DeleteBP(bp){
         return this.http.post(this.assessmentUrl+'deleteBP', bp);
+      }
+
+      /*BP Questions*/
+      GetBpQuestions(): Observable<BpQuestionTable[]>{
+        return this.http.get<BpQuestionTable[]>(this.assessmentUrl+'getBpQuestions');
+      }
+      AddBPQuestion(bpQuestion){
+        return this.http.post(this.assessmentUrl+'addBPQuestion', bpQuestion);
       }
 
       /*Levels*/

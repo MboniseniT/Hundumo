@@ -3,27 +3,31 @@ import { KPA } from 'src/app/Models/Assessments/kpa';
 import { AssessmentsConfigService } from 'src/app/services/Assessments/assessmentsConfig.service';
 import { MdbTableDirective, MdbTablePaginationComponent } from 'ng-uikit-pro-standard';
 import {HttpClient} from "@angular/common/http";
+import { EditExecKpaComponent } from '../../../assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-kpas/edit-exec-kpa/edit-exec-kpa.component';
 import {MDBModalRef, MDBModalService} from "ng-uikit-pro-standard";
 import { ToastService } from 'ng-uikit-pro-standard';
 import { Router } from '@angular/router';
+import { AddExecAssessmentComponent } from '../../../assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/add-exec-assessment/add-exec-assessment.component';
+import { AddKpiComponent } from '../../../assessment-landing/assessment-config/manage-kpis/add-kpi/add-kpi.component';
+import { KPI } from 'src/app/Models/Assessments/kpi';
+import { TableKPI } from 'src/app/Models/Assessments/TableKPI';
+import { EditKpiComponent } from '../manage-kpis/edit-kpi/edit-kpi.component';
 import { AreYouSureComponent } from '../../../are-you-sure/are-you-sure.component';
-import { AddBpComponent } from './add-bp/add-bp.component';
-import { BP } from 'src/app/Models/Assessments/bp';
-import { BpTable } from 'src/app/Models/Assessments/bpTable';
-import { EditBpComponent } from './edit-bp/edit-bp.component';
+import { AddBpQuestionComponent } from './add-bp-question/add-bp-question.component';
+import { BpQuestionTable } from 'src/app/Models/Assessments/bpQuestionTable';
 
 @Component({
-  selector: 'app-manage-bp',
-  templateUrl: './manage-bp.component.html',
-  styleUrls: ['./manage-bp.component.scss']
+  selector: 'app-manage-bp-questions',
+  templateUrl: './manage-bp-questions.component.html',
+  styleUrls: ['./manage-bp-questions.component.scss']
 })
-export class ManageBpComponent implements OnInit, AfterViewInit {
+export class ManageBpQuestionsComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row', { static: true }) row: ElementRef;
 
-  elements: BpTable[] = [];
-  headElements = ['ID', 'Name', 'Description', 'KPA', 'LastEditedBy', 'commands'];
+  elements: BpQuestionTable[] = [];
+  headElements = ['ID', 'Question', 'Description', 'Bp', 'Kpa','LastEditedBy', 'commands']; //'LastEditedBy',
 
   modalRef: MDBModalRef;
 
@@ -78,7 +82,7 @@ export class ManageBpComponent implements OnInit, AfterViewInit {
 
    //Custom Methods
    loadDataTable(){
-    this.kpaService.GetBPs().subscribe((data: BpTable[]) => {
+    this.kpaService.GetBpQuestions().subscribe((data: BpQuestionTable[]) => {
       this.elements = data;
       //console.log(this.elements);
       this.mdbTable.setDataSource(this.elements);
@@ -97,11 +101,11 @@ export class ManageBpComponent implements OnInit, AfterViewInit {
         editableRow: el
       }
     };
-    this.modalRef = this.modalService.show(EditBpComponent, modalOptions);
+    this.modalRef = this.modalService.show(EditKpiComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-      this.assessmentService.EditBP(newElement).toPromise().then((data: any) => {
-        //console.log(newElement);
+      this.assessmentService.EditKPI(newElement).toPromise().then((data: any) => {
+        //console.log(data);
         // success notification
         this.toastrService.success('Update Successful!');
         setTimeout(() => {
@@ -123,13 +127,13 @@ export class ManageBpComponent implements OnInit, AfterViewInit {
     const elementIndex = this.elements.findIndex((elem: any) => el === elem);
     const modalOptions = {
       data: {
-        editableRow: {message:"Are you sure you want to DELETE BP " + el.bpID + ": "+ el.bpName + "?"}
+        editableRow: {message:"Are you sure you want to DELETE KPA " + el.id + ": "+ el.name + "?"}
       }
     };
     this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-    this.assessmentService.DeleteBP(el).toPromise().then((data: any) => {
+    this.assessmentService.DeleteKPI(el).toPromise().then((data: any) => {
       // success notification
       this.toastrService.warning('Deleted Successfully!');
       setTimeout(() => {
@@ -148,7 +152,7 @@ export class ManageBpComponent implements OnInit, AfterViewInit {
   }
 
   back(){
-    this.router.navigate(['/binmak/assessment-config']);
+    this.router.navigate(['/binmak/assessment-system-config']);
   }
 
   //DataTable Methods
@@ -189,15 +193,15 @@ export class ManageBpComponent implements OnInit, AfterViewInit {
       //   editableRow: {kpa_id: this.kpaLevel.kpaID, level_id: this.kpaLevel.LevelID, description: "", frmwrk_id: null, version_id: null, variant_id: null}
       // }
     };
-    this.modalRef = this.modalService.show(AddBpComponent, modalOptions);
+    this.modalRef = this.modalService.show(AddBpQuestionComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-      this.assessmentService.AddBp(newElement).toPromise().then((data: any) => {
+      this.assessmentService.AddBPQuestion(newElement).toPromise().then((data: any) => {
         // success notification
         this.toastrService.success('Addition Successful!');
         setTimeout(() => {
           //update DataTable
-          this.loadDataTable();
+          //this.loadDataTable();
         });
       }, error => {
         console.log('httperror: ');
@@ -210,4 +214,5 @@ export class ManageBpComponent implements OnInit, AfterViewInit {
     });
     //this.mdbTable.setDataSource(this.elements);
   }
+
 }
