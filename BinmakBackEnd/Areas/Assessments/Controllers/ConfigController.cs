@@ -266,6 +266,30 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         }
 
         //BPs
+        [HttpGet("getBPs")]
+        public IActionResult GetBPs()
+        {
+            try
+            {
+                //var tableKpis = _context.kpis.ToList();
+                List<Bps> BPs = _context.bps.ToList();
+                var tableBPs = BPs.Select(result => new
+                {
+                    BpID = result.ID,
+                    BpKpaID = result.kpa_id,
+                    BpKpa = _context.kpas.FirstOrDefault(a => a.ID == result.kpa_id).name,
+                    BpName = result.name,
+                    BpDescription = result.description,
+                    LastEdittedBy = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName
+                });
+                return Ok(tableBPs);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
         [HttpPost("addBp")]
         public IActionResult AddBp([FromBody] Bps BP)
         {

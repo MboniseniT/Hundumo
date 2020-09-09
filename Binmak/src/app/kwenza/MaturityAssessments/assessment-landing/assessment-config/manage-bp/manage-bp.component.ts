@@ -10,6 +10,8 @@ import { KPI } from 'src/app/Models/Assessments/kpi';
 import { EditKpiComponent } from '../manage-kpis/edit-kpi/edit-kpi.component';
 import { AreYouSureComponent } from '../../../are-you-sure/are-you-sure.component';
 import { AddBpComponent } from './add-bp/add-bp.component';
+import { BP } from 'src/app/Models/Assessments/bp';
+import { BpTable } from 'src/app/Models/Assessments/bpTable';
 
 @Component({
   selector: 'app-manage-bp',
@@ -21,8 +23,8 @@ export class ManageBpComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row', { static: true }) row: ElementRef;
 
-  elements: KPI[] = [];
-  headElements = ['ID', 'Name', 'Description', 'Guideline', 'Innocence', 'Awareness', 'Understanding', 'Competence', 'Excellence', 'commands']; //'LastEditedBy',
+  elements: BpTable[] = [];
+  headElements = ['ID', 'Name', 'Description', 'KPA', 'LastEditedBy', 'commands'];
 
   modalRef: MDBModalRef;
 
@@ -77,7 +79,7 @@ export class ManageBpComponent implements OnInit, AfterViewInit {
 
    //Custom Methods
    loadDataTable(){
-    this.kpaService.GetKPIs().subscribe((data: KPI[]) => {
+    this.kpaService.GetBPs().subscribe((data: BpTable[]) => {
       this.elements = data;
       //console.log(this.elements);
       this.mdbTable.setDataSource(this.elements);

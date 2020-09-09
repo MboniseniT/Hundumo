@@ -13,6 +13,8 @@ import { LResult } from 'src/app/Models/Assessments/lResults';
 import { KPI } from 'src/app/Models/Assessments/kpi';
 import { TableKPI } from 'src/app/Models/Assessments/TableKPI';
 import { KpiResult } from 'src/app/Models/Assessments/kpiResult';
+import { BP } from 'src/app/Models/Assessments/bp';
+import { BpTable } from 'src/app/Models/Assessments/bpTable';
 
 @Injectable({
   providedIn: 'root'
@@ -136,6 +138,9 @@ constructor(private http: HttpClient) { }
       }
 
       /*BPs*/
+      GetBPs(): Observable<BpTable[]>{
+        return this.http.get<BpTable[]>(this.assessmentUrl+'getBPs');
+      }
       AddBp(bp){
         return this.http.post(this.assessmentUrl+'addBp', bp);
       }

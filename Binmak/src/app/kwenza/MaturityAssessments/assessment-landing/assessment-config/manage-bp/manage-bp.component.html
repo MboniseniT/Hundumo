@@ -43,31 +43,19 @@
           <tr mdbTableCol
               *ngFor="let el of elements; let i = index">
             <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
-                scope="row">{{el.id}}
+                scope="row">{{el.bpID}}
             </th>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
-                class="red-text">{{el.name}}
+                class="red-text">{{el.bpName}}
             </td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-              {{el.description}}
+              {{el.bpDescription}}
             </td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-              {{el.guideline}}
+              {{el.bpKpa}}
             </td>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-              {{el.innocence}}
-            </td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-              {{el.awareness}}
-            </td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-              {{el.understanding}}
-            </td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-              {{el.competence}}
-            </td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-              {{el.excellence}}
+              {{el.lastEdittedBy}}
             </td>
             <!-- <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
               {{el.userId}}
