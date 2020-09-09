@@ -145,6 +145,14 @@ constructor(private http: HttpClient) { }
         return this.http.post(this.assessmentUrl+'addBp', bp);
       }
 
+      EditBP(bp){
+        return this.http.put(this.assessmentUrl+'editBPs', bp);
+      }
+
+      DeleteBP(bp){
+        return this.http.post(this.assessmentUrl+'deleteBP', bp);
+      }
+
       /*Levels*/
       getLevels(): Observable<Level[]>{
         return this.http.get<Level[]>(this.assessmentUrl+'getLevels');

@@ -6,12 +6,11 @@ import {HttpClient} from "@angular/common/http";
 import {MDBModalRef, MDBModalService} from "ng-uikit-pro-standard";
 import { ToastService } from 'ng-uikit-pro-standard';
 import { Router } from '@angular/router';
-import { KPI } from 'src/app/Models/Assessments/kpi';
-import { EditKpiComponent } from '../manage-kpis/edit-kpi/edit-kpi.component';
 import { AreYouSureComponent } from '../../../are-you-sure/are-you-sure.component';
 import { AddBpComponent } from './add-bp/add-bp.component';
 import { BP } from 'src/app/Models/Assessments/bp';
 import { BpTable } from 'src/app/Models/Assessments/bpTable';
+import { EditBpComponent } from './edit-bp/edit-bp.component';
 
 @Component({
   selector: 'app-manage-bp',
@@ -98,11 +97,11 @@ export class ManageBpComponent implements OnInit, AfterViewInit {
         editableRow: el
       }
     };
-    this.modalRef = this.modalService.show(EditKpiComponent, modalOptions);
+    this.modalRef = this.modalService.show(EditBpComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-      this.assessmentService.EditKPI(newElement).toPromise().then((data: any) => {
-        //console.log(data);
+      this.assessmentService.EditBP(newElement).toPromise().then((data: any) => {
+        //console.log(newElement);
         // success notification
         this.toastrService.success('Update Successful!');
         setTimeout(() => {
@@ -124,13 +123,13 @@ export class ManageBpComponent implements OnInit, AfterViewInit {
     const elementIndex = this.elements.findIndex((elem: any) => el === elem);
     const modalOptions = {
       data: {
-        editableRow: {message:"Are you sure you want to DELETE KPA " + el.id + ": "+ el.name + "?"}
+        editableRow: {message:"Are you sure you want to DELETE BP " + el.bpID + ": "+ el.bpName + "?"}
       }
     };
     this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-    this.assessmentService.DeleteKPI(el).toPromise().then((data: any) => {
+    this.assessmentService.DeleteBP(el).toPromise().then((data: any) => {
       // success notification
       this.toastrService.warning('Deleted Successfully!');
       setTimeout(() => {

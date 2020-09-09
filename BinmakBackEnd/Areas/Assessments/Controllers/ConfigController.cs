@@ -31,15 +31,15 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         {
             try
             {
-                    var lAction = _context.kpas.ToList();
-                    if (lAction != null)
-                    {
-                        return Ok(lAction);
+                var lAction = _context.kpas.ToList();
+                if (lAction != null)
+                {
+                    return Ok(lAction);
                 }
-                    else
-                    {
+                else
+                {
                     return NotFound("HTTP resource is currently unavailable!");
-                    }
+                }
             }
             catch (Exception ex)
             {
@@ -53,16 +53,16 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         {
             try
             {
-                    var lAction = _context.kpas.FirstOrDefault(a => a.ID == id);
+                var lAction = _context.kpas.FirstOrDefault(a => a.ID == id);
 
-                    if (lAction != null)
-                    {
-                        return Ok(lAction);
+                if (lAction != null)
+                {
+                    return Ok(lAction);
                 }
-                    else
-                    {
+                else
+                {
                     return NotFound("The KPA with ID = " + id + " not found!");
-                    }
+                }
             }
             catch (Exception ex)
             {
@@ -75,11 +75,11 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         {
             try
             {
-                    _context.kpas.Add(KPA);
-                    _context.SaveChanges();
+                _context.kpas.Add(KPA);
+                _context.SaveChanges();
 
-                    var message = Created("",KPA);
-                    return message;
+                var message = Created("", KPA);
+                return message;
             }
             catch (Exception ex)
             {
@@ -93,13 +93,13 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         {
             try
             {
-                    var lAction = _context.kpas.FirstOrDefault(a => a.ID == id);
-                    if (lAction == null)
-                    {
+                var lAction = _context.kpas.FirstOrDefault(a => a.ID == id);
+                if (lAction == null)
+                {
                     return NotFound("The KPA with ID = " + id + " not found to delete!");
-                    }
-                    else
-                    {
+                }
+                else
+                {
                     _context.kpas.Remove(lAction);
                     _context.SaveChanges();
                     return Ok();
@@ -117,13 +117,13 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         {
             try
             {
-                    var lAction = _context.kpas.FirstOrDefault(a => a.ID == KPA.ID);
-                    if (lAction == null)
-                    {
+                var lAction = _context.kpas.FirstOrDefault(a => a.ID == KPA.ID);
+                if (lAction == null)
+                {
                     return NotFound("The KPA with ID = " + KPA.ID + " not found to update!");
-                    }
-                    else
-                    {
+                }
+                else
+                {
                     lAction.name = KPA.name;
                     lAction.description = KPA.description;
                     _context.SaveChanges();
@@ -273,15 +273,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             {
                 //var tableKpis = _context.kpis.ToList();
                 List<Bps> BPs = _context.bps.ToList();
-                var tableBPs = BPs.Select(result => new
-                {
-                    BpID = result.ID,
-                    BpKpaID = result.kpa_id,
-                    BpKpa = _context.kpas.FirstOrDefault(a => a.ID == result.kpa_id).name,
-                    BpName = result.name,
-                    BpDescription = result.description,
-                    LastEdittedBy = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName
-                });
+                var tableBPs = GetTableBPs(BPs);
                 return Ok(tableBPs);
             }
             catch (Exception ex)
@@ -290,6 +282,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
+
         [HttpPost("addBp")]
         public IActionResult AddBp([FromBody] Bps BP)
         {
@@ -300,6 +293,57 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
                 var message = Created("", BP);
                 return message;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPut("editBPs")]
+        public IActionResult EditBP([FromBody] Bps BP)
+        {
+            try
+            {
+                var lAction = _context.bps.FirstOrDefault(a => a.ID == BP.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The BP with ID = " + BP.ID + " not found to update!");
+                }
+                else
+                {
+                    lAction.kpa_id = BP.kpa_id;
+                    lAction.name = BP.name;
+                    lAction.description = BP.description;
+                    lAction.user_id = BP.user_id;
+                    _context.SaveChanges();
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPost("deleteBP")]
+        public IActionResult DeleteBP([FromBody] TableBPs BP)
+        {
+            try
+            {
+                var lAction = _context.bps.FirstOrDefault(a => a.ID == BP.BpID);
+                if (lAction == null)
+                {
+                    return NotFound("The BP with ID = " + BP.BpID + " not found to delete!");
+                }
+                else
+                {
+                    _context.bps.Remove(lAction);
+                    _context.SaveChanges();
+                    return Ok();
+                }
             }
             catch (Exception ex)
             {
@@ -456,7 +500,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 }
                 else
                 {
-                    return NotFound("The kpaLevel Characteristic with kpaID = " + kpaLevel.kpaID + " and levelID = "+ kpaLevel.LevelID +" not found!");
+                    return NotFound("The kpaLevel Characteristic with kpaID = " + kpaLevel.kpaID + " and levelID = " + kpaLevel.LevelID + " not found!");
                 }
             }
             catch (Exception ex)
@@ -827,7 +871,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 {
                     return NotFound("HTTP resource is currently unavailable!");
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -907,7 +951,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
-        
+
         [HttpPost("addExecAssessmentUser")]
         public IActionResult AddExecAssessmentUser([FromBody] AssessmentUsers AssessUser)
         {
@@ -1278,9 +1322,9 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                     TotalScore = GetKPITotalScore(assess)
                 });
 
-                
-                    return Ok(progress);
-                
+
+                return Ok(progress);
+
             }
             catch (Exception ex)
             {
@@ -1290,6 +1334,20 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
 
         //Helper Methods
+
+         IEnumerable<object> GetTableBPs(List<Bps> BPs)
+        {
+            var tableBPs = BPs.Select(result => new
+            {
+                BpID = result.ID,
+                BpKpaID = result.kpa_id,
+                BpKpa = _context.kpas.FirstOrDefault(a => a.ID == result.kpa_id).name,
+                BpName = result.name,
+                BpDescription = result.description,
+                LastEdittedBy = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName
+            });
+            return tableBPs;
+        }
 
         List<Kpis> GetFilteredKPIs(Assessment assess)
         {
