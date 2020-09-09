@@ -1,0 +1,51 @@
+<div class="modal-content">
+  <div class="modal-header" style="background-color: #032c57 !important;">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true" style="color: white;">×</span>
+    </button>
+    <h4 style="color: white;" class="modal-title w-100" id="myModalLabel">Add BP</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="md-form">
+            <mdb-select [options]="kpas" [filterEnabled]="true" [multiple]="false"
+            [highlightFirst]="false" formControlName="kpa_id"
+            label="* Select Parent KPA" [enableSelectAll]="false">
+            </mdb-select>
+            <mdb-error *ngIf="kpa_id.invalid && (kpa_id.dirty || kpa_id.touched)">KPA is required</mdb-error>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="md-form">
+            <input id="name" type="text" class="form-control" formControlName="name" mdbInput mdbValidate
+                   [validateSuccess]="false">
+            <label for="name">* BP Name</label>
+            <mdb-error *ngIf="name.invalid && (name.dirty || name.touched)">KPI Name is required</mdb-error>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="md-form">
+            <textarea type="text" id="description" class="md-textarea form-control" formControlName="description"
+                    mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+            <label for="description">description</label>
+            <!-- <mdb-error *ngIf="description.invalid && (description.dirty || description.touched)">Description is required</mdb-error> -->
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" mdbBtn color="light" class="waves-light" aria-label="Close"
+            (click)="modalRef.hide()" mdbWavesEffect>Close
+    </button>
+    <button [disabled]="!form.valid" type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+             (click)="onSave()" style="background-color: #032c57 !important;">Save
+    </button>
+  </div>
+</div>

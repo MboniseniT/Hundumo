@@ -41,6 +41,7 @@ import { isSavedGuard } from './guards/isSaved.guard';
 import { ManageKpisComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-kpis/manage-kpis.component';
 import { ManageBpKpiUsersComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-BpKpi-users/manage-BpKpi-users.component'
 import { ViewConsensusResultsComponent } from './kwenza/MaturityAssessments/assessment-landing/view-consensus-results/view-consensus-results.component';
+import { ManageBpComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-bp/manage-bp.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'binmak', pathMatch: 'full'},
@@ -83,7 +84,8 @@ const routes: Routes = [
         { path: 'manage-exec-users', component: ExecManageUsersComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'manage-kpis', component: ManageKpisComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'manage-BpKpi-users', component: ManageBpKpiUsersComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-        { path: 'consensus-results', component: ViewConsensusResultsComponent, pathMatch: 'full', canActivate: [AuthGuard]}
+        { path: 'consensus-results', component: ViewConsensusResultsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'manage-bps', component: ManageBpComponent, pathMatch: 'full', canActivate: [AuthGuard]}
       ]
     },
     {path:'**', redirectTo: 'binmak', pathMatch: 'full', canActivate: [AuthGuard]}

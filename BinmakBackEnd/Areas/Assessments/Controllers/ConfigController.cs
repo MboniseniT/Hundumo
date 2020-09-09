@@ -265,6 +265,25 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        //BPs
+        [HttpPost("addBp")]
+        public IActionResult AddBp([FromBody] Bps BP)
+        {
+            try
+            {
+                _context.bps.Add(BP);
+                _context.SaveChanges();
+
+                var message = Created("", BP);
+                return message;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
 
         //Levels
         [HttpGet("getLevels")]

@@ -135,6 +135,11 @@ constructor(private http: HttpClient) { }
         return this.http.put(this.assessmentUrl+'editKPIs', kpi);
       }
 
+      /*BPs*/
+      AddBp(bp){
+        return this.http.post(this.assessmentUrl+'addBp', bp);
+      }
+
       /*Levels*/
       getLevels(): Observable<Level[]>{
         return this.http.get<Level[]>(this.assessmentUrl+'getLevels');
