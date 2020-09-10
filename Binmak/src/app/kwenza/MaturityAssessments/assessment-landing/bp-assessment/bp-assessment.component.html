@@ -1,3 +1,265 @@
-<p>
-  bp-assessment works!
-</p>
+
+  <div class="row">
+    <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+      <button type="button" class="btn btn-info mb-3" aria-label="Close" mdbWavesEffect (click)="back()"
+        style="background-color: rgb(41, 40, 40) !important; color: white; width: 100px;"> <i class="fa fa-arrow-left"></i>
+        BACK</button>
+    </div>
+    </div>
+
+  <div class="row">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+          <mdb-card class="z-depth-5">
+            <mdb-card-header style="background-color: #032c57 !important;">
+              <div class="row">
+                <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
+                  <h5 style="color: white;"><a [hidden]="first" (click)="onBack()" style="color: white;"><i class="fas fa-arrow-circle-left"></i></a></h5>
+                  <!-- {{getKPAName(kpaID - 1)}} -->
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-6 col-xs-6">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                      <h5 style="color: white;">KPA {{kpaPage + 1}}: {{ConvertKPA(GetKpaId(kpaPage))}}</h5>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
+                      <h5 style="color: white;">BP {{bpPage + 1}}: {{GetBpName()}}</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3 d-flex flex-row-reverse">
+                  <h5><a [hidden]="last" (click)="onNext()" style="color: white;"><i class="fas fa-arrow-circle-right"></i></a></h5>
+                </div>
+              </div>
+            </mdb-card-header>
+            <mdb-card-body>
+                <form [formGroup]="form">
+
+                  <div class="row">
+                    <div [hidden]="!GetDescription()" class="col" mdbTooltip="{{GetDescription()}}" placement="top">
+                      <div >
+                        <label for="description">description</label>
+                        <textarea type="text" id="description" class="md-textarea form-control mb-4" formControlName="description"
+                                mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col" mdbTooltip="{{GetQuestion()}}" placement="top">
+                      <div >
+                        <label for="question">question {{qstnPage + 1}}</label>
+                        <textarea type="text" id="question" class="md-textarea form-control mb-4" formControlName="question"
+                                mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr />
+                  <div class="row" style="justify-content: center;">
+                    <h6><mdb-badge style="background-color: #032c57 !important;">Please select an answer for each section.</mdb-badge>
+                    </h6>
+                  </div>
+                  <div class="row">
+                    <div [hidden]="allHide()" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="md-form">
+                        <mdb-select  [options]="levels" [filterEnabled]="true" [multiple]="false"
+                        [highlightFirst]="false" formControlName="all"
+                        label="All" [enableSelectAll]="false">
+                        </mdb-select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" [hidden]="all.dirty">
+                    <div [hidden]="sect_1.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="md-form">
+                        <mdb-select [options]="levels" [filterEnabled]="true" [multiple]="false"
+                        [highlightFirst]="false" formControlName="sect_1"
+                        label="{{GetSections().section1}}" [enableSelectAll]="false">
+                        </mdb-select>
+                        <!-- <mdb-error *ngIf="sect_1.invalid && (sect_1.dirty || sect_1.touched)">This answer is required</mdb-error> -->
+                      </div>
+                    </div>
+                    <div [hidden]="sect_2.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="md-form">
+                        <mdb-select [options]="levels" [filterEnabled]="true" [multiple]="false"
+                        [highlightFirst]="false" formControlName="sect_2"
+                        label="{{GetSections().section2}}" [enableSelectAll]="false">
+                        </mdb-select>
+                        <!-- <mdb-error *ngIf="sect_2.invalid && (sect_2.dirty || sect_2.touched)">This answer is required</mdb-error> -->
+                      </div>
+                    </div>
+                    <div [hidden]="sect_3.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="md-form">
+                        <mdb-select [options]="levels" [filterEnabled]="true" [multiple]="false"
+                        [highlightFirst]="false" formControlName="sect_3"
+                        label="{{GetSections().section3}}" [enableSelectAll]="false">
+                        </mdb-select>
+                        <!-- <mdb-error *ngIf="sect_3.invalid && (sect_3.dirty || sect_3.touched)">This answer is required</mdb-error> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" [hidden]="all.dirty">
+                    <div [hidden]="sect_4.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="md-form">
+                        <mdb-select [options]="levels" [filterEnabled]="true" [multiple]="false"
+                        [highlightFirst]="false" formControlName="sect_4"
+                        label="{{GetSections().section4}}" [enableSelectAll]="false">
+                        </mdb-select>
+                        <!-- <mdb-error *ngIf="sect_4.invalid && (sect_4.dirty || sect_4.touched)">This answer is required</mdb-error> -->
+                      </div>
+                    </div>
+                    <div [hidden]="sect_5.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="md-form">
+                        <mdb-select [options]="levels" [filterEnabled]="true" [multiple]="false"
+                        [highlightFirst]="false" formControlName="sect_5"
+                        label="{{GetSections().section5}}" [enableSelectAll]="false">
+                        </mdb-select>
+                        <!-- <mdb-error *ngIf="sect_5.invalid && (sect_5.dirty || sect_5.touched)">This answer is required</mdb-error> -->
+                      </div>
+                    </div>
+                    <div [hidden]="sect_6.disabled" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="md-form">
+                        <mdb-select [options]="levels" [filterEnabled]="true" [multiple]="false"
+                        [highlightFirst]="false" formControlName="sect_6"
+                        label="{{GetSections().section6}}" [enableSelectAll]="false">
+                        </mdb-select>
+                        <!-- <mdb-error *ngIf="sect_6.invalid && (sect_6.dirty || sect_6.touched)">This answer is required</mdb-error> -->
+                      </div>
+                    </div>
+                  </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <button (click)="onAdd()" [disabled]="(!form.valid && !all.dirty) || kpiResult" type="submit"
+                            class="btn btn-primary btn-block mb-2" style="background-color: #032c57 !important; color: white;">Submit</button>
+                        </div>
+                        <div class="col-md-6">
+                          <button [disabled]="(!form.valid && !all.dirty) || !kpiResult" (click)="onUpdate()" style="width: 100%;" type="button"
+                            class="btn btn-secondary btn-block mb-2" style="background-color: #303031 !important; color: white;">Update</button>
+                        </div>
+                        <!-- <div class="col-md-4">
+                          <button [disabled]="!charID || Form.valid" (click)="onDelete()" style="width: 100%;" type="button"
+                            class="btn btn-dark">Delete</button>
+                        </div> -->
+                      </div>
+                </form>
+            </mdb-card-body>
+            </mdb-card>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+          <mdb-card class="z-depth-5">
+            <mdb-card-header style="background-color: #032c57 !important;">
+              <div class="row" style="justify-content: center;">
+                  <h5 style="color: white;">Progress</h5>
+              </div>
+            </mdb-card-header>
+            <mdb-card-body>
+              <div class="row">
+                <div class="col" mdbTooltip="Progress: {{GetAssessProgress()}}%" placement="top">
+                  <label><mdb-badge style="background-color: #032c57 !important;">How far have you gone?</mdb-badge></label>
+                  <mdb-progress style="height: 20px !important; background-color: #032c57 !important;" value="{{GetAssessProgress()}}" min="0" max="100" aria-valuemin="0" aria-valuemax="100"></mdb-progress>
+                  <hr/>
+                </div>
+              </div>
+              <label><mdb-badge style="background-color: #032c57 !important;">How well are you doing for each KPA?</mdb-badge></label>
+              <div class="row" style="font-size: smaller;">
+                <div [hidden]="DeactivateKPA1()" class="col-12" mdbTooltip="Current Score: {{GetKpa1Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(1)">{{ConvertKPA(1)}}</a>: {{GetKpa1Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA2()" class="col-12" mdbTooltip="Current Score: {{GetKpa2Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(2)">{{ConvertKPA(2)}}</a>: {{GetKpa2Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA3()" class="col-12" mdbTooltip="Current Score: {{GetKpa3Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(3)">{{ConvertKPA(3)}}</a>: {{GetKpa3Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA4()" class="col-12" mdbTooltip="Current Score: {{GetKpa4Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(4)">{{ConvertKPA(4)}}</a>: {{GetKpa4Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA5()" class="col-12" mdbTooltip="Current Score: {{GetKpa5Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(5)">{{ConvertKPA(5)}}</a>: {{GetKpa5Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA6()" class="col-12" mdbTooltip="Current Score: {{GetKpa6Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(6)">{{ConvertKPA(6)}}</a>: {{GetKpa6Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA7()" class="col-12" mdbTooltip="Current Score: {{GetKpa7Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(7)">{{ConvertKPA(7)}}</a>: {{GetKpa7Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA8()" class="col-12" mdbTooltip="Current Score: {{GetKpa8Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(8)">{{ConvertKPA(8)}}</a>: {{GetKpa8Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA9()" class="col-12" mdbTooltip="Current Score: {{GetKpa9Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(9)">{{ConvertKPA(9)}}</a>: {{GetKpa9Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA10()" class="col-12" mdbTooltip="Current Score: {{GetKpa10Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(10)">{{ConvertKPA(10)}}</a>: {{GetKpa10Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA11()" class="col-12" mdbTooltip="Current Score: {{GetKpa11Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(11)">{{ConvertKPA(11)}}</a>: {{GetKpa11Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA12()" class="col-12" mdbTooltip="Current Score: {{GetKpa12Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(12)">{{ConvertKPA(12)}}</a>: {{GetKpa12Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA13()" class="col-12" mdbTooltip="Current Score: {{GetKpa13Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(13)">{{ConvertKPA(13)}}</a>: {{GetKpa13Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA14()" class="col-12" mdbTooltip="Current Score: {{GetKpa14Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(14)">{{ConvertKPA(14)}}</a>: {{GetKpa14Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA15()" class="col-12" mdbTooltip="Current Score: {{GetKpa15Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(15)">{{ConvertKPA(15)}}</a>: {{GetKpa15Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA16()" class="col-12" mdbTooltip="Current Score: {{GetKpa16Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(16)">{{ConvertKPA(16)}}</a>: {{GetKpa16Progress()}}%</p>
+                </div>
+                <div [hidden]="DeactivateKPA17()" class="col-12" mdbTooltip="Current Score: {{GetKpa17Progress()}}%" placement="top">
+                  <p><a (click)="SkipToKPA(17)">{{ConvertKPA(17)}}</a>: {{GetKpa17Progress()}}%</p>
+                </div>
+              </div>
+              <hr/>
+              <div class="row">
+                <div class="col" mdbTooltip="Current Total Score: {{GetKpiTotalScore()}}%" placement="top">
+                  <label><mdb-badge style="background-color: #032c57 !important;">What's your total score so far?</mdb-badge></label>
+                  <mdb-progress style="height: 20px !important; background-color: #032c57 !important;" value="{{GetKpiTotalScore()}}" min="0" max="100" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></mdb-progress>
+                  <hr/>
+                </div>
+              </div>
+            </mdb-card-body>
+            </mdb-card>
+        </div>
+      </div>
+
+      </div>
+  </div>
+  <footer class="fixed-bottom">
+    <div id="footer1" style="height:25px;" class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                <p>
+
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="footer2" style="height: 25px; background: #032c57;
+    opacity: 0.50;" class="shadow-lg">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+              <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                  <p [hidden]="!Visible()" style="color: white;">Running Assessment: {{GetAssessmentName()}}</p>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                  <p style="color:white; padding-left:20px;"> &copy 2020 Powered by Binmak <a routerLink="/" target="_blank"></a></p>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                  <span [hidden]="!Visible()" (click)="onClear(GetAssessment())" class="badge badge-pill badge-dark mr-4">Clear Results</span>
+                  <span [hidden]="!Visible()" (click)="onSave(GetAssessment())" class="badge badge-pill badge-dark">Save Results</span>
+                </div>
+              </div>
+
+
+            </div>
+        </div>
+    </div>
+  </footer>

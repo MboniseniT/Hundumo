@@ -369,6 +369,22 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
+
+        [HttpPost("getFilteredBPQuestions")]
+        public IActionResult GetFilteredBPQuestions([FromBody] Assessment assess)
+        {
+            try
+            {
+                var Questions = GetFilteredBpQuestions(assess);
+                return Ok(Questions);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
         [HttpPost("addBPQuestion")]
         public IActionResult AddBPQuestion([FromBody] BpQuestions Question)
         {
@@ -1289,6 +1305,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         }
 
         //Consensus Results
+            /*KPI Results*/
         [HttpPost("addkpiResults")]
         public IActionResult AddKpiResults([FromBody] KpiResults Result)
         {
@@ -1421,10 +1438,155 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
         }
 
+            /*KPI Results*/
+        [HttpPost("addBPResults")]
+        public IActionResult AddBPResults([FromBody] BpResults Result)
+        {
+            try
+            {
+                _context.bpResults.Add(Result);
+                _context.SaveChanges();
+
+                //Generate Actions
+                GenerateAction(Result);
+
+                var message = Created("", Result);
+                return message;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
 
         //Helper Methods
 
-         IEnumerable<object> GetTableBPs(List<Bps> BPs)
+        void GenerateAction(BpResults Result)
+        {
+            
+
+            if (Result.sect_1 == 2)
+            {
+                AssessmentsActionManager action = new AssessmentsActionManager();
+
+                action.assess_id = Result.assess_id;
+                action.bpQuestion_id = Result.bpQuestion_id;
+                action.action = "";
+                action.biz_impact = "";
+                action.ease_of_imp = "";
+                action.cost_of_imp = "";
+                action.time_to_imp = "";
+                action.priority = "";
+                action.responsible_person = "";
+                action.target_date = "";
+                action.status = "";
+                action.sect_id = _context.assessmentSections.FirstOrDefault(a => a.assess_id == Result.assess_id).sect_1;
+                _context.assessmentsActionManager.Add(action);
+                _context.SaveChanges();
+            }
+            if (Result.sect_2 == 2)
+            {
+                AssessmentsActionManager action1 = new AssessmentsActionManager();
+
+                action1.assess_id = Result.assess_id;
+                action1.bpQuestion_id = Result.bpQuestion_id;
+                action1.action = "";
+                action1.biz_impact = "";
+                action1.ease_of_imp = "";
+                action1.cost_of_imp = "";
+                action1.time_to_imp = "";
+                action1.priority = "";
+                action1.responsible_person = "";
+                action1.target_date = "";
+                action1.status = "";
+                action1.sect_id = (int)_context.assessmentSections.FirstOrDefault(a => a.assess_id == Result.assess_id).sect_2;
+                _context.assessmentsActionManager.Add(action1);
+                _context.SaveChanges();
+            }
+            if (Result.sect_3 == 2)
+            {
+                AssessmentsActionManager action2 = new AssessmentsActionManager();
+
+                action2.assess_id = Result.assess_id;
+                action2.bpQuestion_id = Result.bpQuestion_id;
+                action2.action = "";
+                action2.biz_impact = "";
+                action2.ease_of_imp = "";
+                action2.cost_of_imp = "";
+                action2.time_to_imp = "";
+                action2.priority = "";
+                action2.responsible_person = "";
+                action2.target_date = "";
+                action2.status = "";
+                action2.sect_id = (int)_context.assessmentSections.FirstOrDefault(a => a.assess_id == Result.assess_id).sect_3;
+                _context.assessmentsActionManager.Add(action2);
+                _context.SaveChanges();
+            }
+            if (Result.sect_4 == 2)
+            {
+                AssessmentsActionManager action3 = new AssessmentsActionManager();
+
+                action3.assess_id = Result.assess_id;
+                action3.bpQuestion_id = Result.bpQuestion_id;
+                action3.action = "";
+                action3.biz_impact = "";
+                action3.ease_of_imp = "";
+                action3.cost_of_imp = "";
+                action3.time_to_imp = "";
+                action3.priority = "";
+                action3.responsible_person = "";
+                action3.target_date = "";
+                action3.status = "";
+                action3.sect_id = (int)_context.assessmentSections.FirstOrDefault(a => a.assess_id == Result.assess_id).sect_4;
+                _context.assessmentsActionManager.Add(action3);
+                _context.SaveChanges();
+            }
+            if (Result.sect_5 == 2)
+            {
+                AssessmentsActionManager action4 = new AssessmentsActionManager();
+
+                action4.assess_id = Result.assess_id;
+                action4.bpQuestion_id = Result.bpQuestion_id;
+                action4.action = "";
+                action4.biz_impact = "";
+                action4.ease_of_imp = "";
+                action4.cost_of_imp = "";
+                action4.time_to_imp = "";
+                action4.priority = "";
+                action4.responsible_person = "";
+                action4.target_date = "";
+                action4.status = "";
+                action4.sect_id = (int)_context.assessmentSections.FirstOrDefault(a => a.assess_id == Result.assess_id).sect_5;
+                _context.assessmentsActionManager.Add(action4);
+                _context.SaveChanges();
+            }
+            if (Result.sect_6 == 2)
+            {
+                AssessmentsActionManager action5 = new AssessmentsActionManager();
+
+                action5.assess_id = Result.assess_id;
+                action5.bpQuestion_id = Result.bpQuestion_id;
+                action5.action = "";
+                action5.biz_impact = "";
+                action5.ease_of_imp = "";
+                action5.cost_of_imp = "";
+                action5.time_to_imp = "";
+                action5.priority = "";
+                action5.responsible_person = "";
+                action5.target_date = "";
+                action5.status = "";
+                action5.sect_id = (int)_context.assessmentSections.FirstOrDefault(a => a.assess_id == Result.assess_id).sect_6;
+                _context.assessmentsActionManager.Add(action5);
+                _context.SaveChanges();
+            }
+
+
+
+        }
+
+        IEnumerable<object> GetTableBPs(List<Bps> BPs)
         {
             var tableBPs = BPs.Select(result => new
             {
@@ -1480,6 +1642,49 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             )).ToList();
             return tableKpis;
         }
+
+        IEnumerable<object> GetFilteredBpQuestions(Assessment assess)
+        {
+            var KPAs = _context.kpas.Where(a =>
+            (a.ID == DeactivateKPA1(assess.kpa1) ||
+            a.ID == DeactivateKPA2(assess.kpa2) ||
+            a.ID == DeactivateKPA3(assess.kpa3) ||
+            a.ID == DeactivateKPA4(assess.kpa4) ||
+            a.ID == DeactivateKPA5(assess.kpa5) ||
+            a.ID == DeactivateKPA6(assess.kpa6) ||
+            a.ID == DeactivateKPA7(assess.kpa7) ||
+            a.ID == DeactivateKPA8(assess.kpa8) ||
+            a.ID == DeactivateKPA9(assess.kpa9) ||
+            a.ID == DeactivateKPA10(assess.kpa10) ||
+            a.ID == DeactivateKPA11(assess.kpa11) ||
+            a.ID == DeactivateKPA12(assess.kpa12) ||
+            a.ID == DeactivateKPA13(assess.kpa13) ||
+            a.ID == DeactivateKPA14(assess.kpa14) ||
+            a.ID == DeactivateKPA15(assess.kpa15) ||
+            a.ID == DeactivateKPA16(assess.kpa16) ||
+            a.ID == DeactivateKPA17(assess.kpa17)
+            )
+            ).ToList();
+
+            var Questions = KPAs.Select(results => new
+            {
+                kpaID = results.ID,
+                kpaName = results.name,
+                kpaBps = _context.bps.Where(a => a.kpa_id == results.ID).ToList().Select(result => new {
+                    bpID = result.ID,
+                    bpName = result.name,
+                    bpQuestions = _context.bpQuestions.Where(a => a.bp_id == result.ID && a.frmwrk_id == assess.frmwrk_id && a.version_id == assess.version_id && a.variant_id == assess.variant_id).ToList().Select(res => new
+                    {
+                        qstnID = res.ID,
+                        qstnQuestion = res.question,
+                        qstnDescription = res.description
+                    })
+                })
+            });
+
+            return Questions;
+        }
+
         List<Kpis> GetKPIsForKPA(Assessment assess, int kpa)
         {
             var tableKpis = _context.kpis.Where(a => (a.frmwrk_id == assess.frmwrk_id && a.version_id == assess.version_id && a.variant_id == assess.variant_id) && (a.kpa_id == kpa)).ToList();

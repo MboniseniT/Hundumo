@@ -158,6 +158,9 @@ constructor(private http: HttpClient) { }
       GetBpQuestions(): Observable<BpQuestionTable[]>{
         return this.http.get<BpQuestionTable[]>(this.assessmentUrl+'getBpQuestions');
       }
+      GetFilteredBPQuestions(assessment): Observable<any[]>{
+        return this.http.post<any[]>(this.assessmentUrl+'getFilteredBPQuestions',assessment);
+      }
       AddBPQuestion(bpQuestion){
         return this.http.post(this.assessmentUrl+'addBPQuestion', bpQuestion);
       }
@@ -295,6 +298,14 @@ constructor(private http: HttpClient) { }
         result = Object.assign(result, idSet);
         //console.log(result);
         return this.http.put(this.assessmentUrl+'updateKpiResults', result);
+      }
+
+      //BP Results
+      AddBPResults(result){
+        let idSet = {user_id:JSON.parse(localStorage.getItem('currentUser')).userId};
+        result = Object.assign(result, idSet);
+        //console.log(result);
+        return this.http.post(this.assessmentUrl+'addBPResults', result);
       }
 
 

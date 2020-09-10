@@ -47,6 +47,8 @@ namespace BinmakAPI.Data
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.KpiResults> kpiResults { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Bps> bps { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.BpQuestions> bpQuestions { get; set; }
+        public DbSet<BinmakBackEnd.Areas.Assessments.Entities.BpResults> bpResults { get; set; }
+        public DbSet<BinmakBackEnd.Areas.Assessments.Entities.AssessmentsActionManager> assessmentsActionManager { get; set; }
     }
 
 }

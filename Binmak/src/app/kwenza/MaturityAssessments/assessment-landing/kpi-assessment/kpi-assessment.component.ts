@@ -709,17 +709,78 @@ export class KpiAssessmentComponent implements OnInit {
   onUpdate(){
     this.formRawValue = this.form.getRawValue();
     if(this.formRawValue.all){
-      this.result = {
-        id: this.kpiResult.id,
-        kpa_id: this.kpi[this.page].kpa_id,
-        kpi_id: this.kpi[this.page].id,
-        assess_id: this.assessmentID,
-        sect_1: this.formRawValue.all,
-        sect_2: this.formRawValue.all,
-        sect_3: this.formRawValue.all,
-        sect_4: this.formRawValue.all,
-        sect_5: this.formRawValue.all,
-        sect_6: this.formRawValue.all,
+      if(this.sectCount == 6){
+        this.result = {
+          kpa_id: this.kpi[this.page].kpa_id,
+          kpi_id: this.kpi[this.page].id,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.all,
+          sect_4: this.formRawValue.all,
+          sect_5: this.formRawValue.all,
+          sect_6: this.formRawValue.all,
+        }
+      }else if(this.sectCount == 5){
+        this.result = {
+          kpa_id: this.kpi[this.page].kpa_id,
+          kpi_id: this.kpi[this.page].id,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.all,
+          sect_4: this.formRawValue.all,
+          sect_5: this.formRawValue.all,
+          sect_6: this.formRawValue.sect_6,
+        }
+      }else if(this.sectCount == 4){
+        this.result = {
+          kpa_id: this.kpi[this.page].kpa_id,
+          kpi_id: this.kpi[this.page].id,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.all,
+          sect_4: this.formRawValue.all,
+          sect_5: this.formRawValue.sect_5,
+          sect_6: this.formRawValue.sect_6,
+        }
+      }else if(this.sectCount == 3){
+        this.result = {
+          kpa_id: this.kpi[this.page].kpa_id,
+          kpi_id: this.kpi[this.page].id,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.all,
+          sect_4: this.formRawValue.sect_4,
+          sect_5: this.formRawValue.sect_5,
+          sect_6: this.formRawValue.sect_6,
+        }
+      }else if(this.sectCount == 2){
+        this.result = {
+          kpa_id: this.kpi[this.page].kpa_id,
+          kpi_id: this.kpi[this.page].id,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.sect_3,
+          sect_4: this.formRawValue.sect_4,
+          sect_5: this.formRawValue.sect_5,
+          sect_6: this.formRawValue.sect_6,
+        }
+      }else if(this.sectCount == 1){
+        this.result = {
+          kpa_id: this.kpi[this.page].kpa_id,
+          kpi_id: this.kpi[this.page].id,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.sect_2,
+          sect_3: this.formRawValue.sect_3,
+          sect_4: this.formRawValue.sect_4,
+          sect_5: this.formRawValue.sect_5,
+          sect_6: this.formRawValue.sect_6,
+        }
       }
     }else{
       this.result = {
