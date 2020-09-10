@@ -3,7 +3,7 @@
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span style="color: white !important;" aria-hidden="true">×</span>
     </button>
-    <h4 style="color: white !important;" class="modal-title w-100" id="myModalLabel">Add BP Question</h4>
+    <h4 style="color: white !important;" class="modal-title w-100" id="myModalLabel">Edit BP Question: {{editableRow.qstnID}}</h4>
   </div>
   <div class="modal-body">
     <form [formGroup]="form">
@@ -84,7 +84,7 @@
             (click)="modalRef.hide()" mdbWavesEffect>Close
     </button>
     <button [disabled]="!form.valid" type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
-             (click)="onSave()" style="background-color: #032c57 !important;">Save
+             (click)="editRow()" style="background-color: #032c57 !important;">Save
     </button>
   </div>
 </div>

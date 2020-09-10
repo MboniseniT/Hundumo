@@ -15,6 +15,7 @@ import { EditKpiComponent } from '../manage-kpis/edit-kpi/edit-kpi.component';
 import { AreYouSureComponent } from '../../../are-you-sure/are-you-sure.component';
 import { AddBpQuestionComponent } from './add-bp-question/add-bp-question.component';
 import { BpQuestionTable } from 'src/app/Models/Assessments/bpQuestionTable';
+import { EditBpQuestionComponent } from './edit-bp-question/edit-bp-question.component';
 
 @Component({
   selector: 'app-manage-bp-questions',
@@ -101,10 +102,10 @@ export class ManageBpQuestionsComponent implements OnInit, AfterViewInit {
         editableRow: el
       }
     };
-    this.modalRef = this.modalService.show(EditKpiComponent, modalOptions);
+    this.modalRef = this.modalService.show(EditBpQuestionComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-      this.assessmentService.EditKPI(newElement).toPromise().then((data: any) => {
+      this.assessmentService.EditBPQuestion(newElement).toPromise().then((data: any) => {
         //console.log(data);
         // success notification
         this.toastrService.success('Update Successful!');
@@ -127,13 +128,13 @@ export class ManageBpQuestionsComponent implements OnInit, AfterViewInit {
     const elementIndex = this.elements.findIndex((elem: any) => el === elem);
     const modalOptions = {
       data: {
-        editableRow: {message:"Are you sure you want to DELETE KPA " + el.id + ": "+ el.name + "?"}
+        editableRow: {message:"Are you sure you want to DELETE Question " + el.qstnID + " under BP "+ el.qstnBpID +", "+ el.qstnBpName + "?"}
       }
     };
     this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-    this.assessmentService.DeleteKPI(el).toPromise().then((data: any) => {
+    this.assessmentService.DeleteBPQuestion(el).toPromise().then((data: any) => {
       // success notification
       this.toastrService.warning('Deleted Successfully!');
       setTimeout(() => {
@@ -201,7 +202,7 @@ export class ManageBpQuestionsComponent implements OnInit, AfterViewInit {
         this.toastrService.success('Addition Successful!');
         setTimeout(() => {
           //update DataTable
-          //this.loadDataTable();
+          this.loadDataTable();
         });
       }, error => {
         console.log('httperror: ');

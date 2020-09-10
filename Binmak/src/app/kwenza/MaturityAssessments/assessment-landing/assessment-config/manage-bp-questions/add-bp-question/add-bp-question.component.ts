@@ -19,7 +19,7 @@ export class AddBpQuestionComponent implements OnInit {
   frmwrks: Array<any>;
   versions: Array<any>;
   variants: Array<any>;
-  kpas: Array<any>;
+  bps: Array<any>;
 
   public form: FormGroup = new FormGroup({
     bp_id: new FormControl('', Validators.required),
@@ -76,7 +76,7 @@ export class AddBpQuestionComponent implements OnInit {
 
       this.assessmentService.GetBPs().subscribe(
         (data:BpTable[]) => {
-          this.kpas = data.map((t: any) => {
+          this.bps = data.map((t: any) => {
             return { label: t.bpName, value: t.bpID }
           })
         }, error => {

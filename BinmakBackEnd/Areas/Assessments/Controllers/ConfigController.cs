@@ -387,6 +387,60 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        [HttpPut("editBPQuestion")]
+        public IActionResult EditBPQuestion([FromBody] BpQuestions Question)
+        {
+            try
+            {
+                var lAction = _context.bpQuestions.FirstOrDefault(a => a.ID == Question.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The Question with ID = " + Question.ID + " not found to update!");
+                }
+                else
+                {
+                    lAction.bp_id = Question.bp_id;
+                    lAction.frmwrk_id = Question.frmwrk_id;
+                    lAction.version_id = Question.version_id;
+                    lAction.variant_id = Question.variant_id;
+                    lAction.question = Question.question;
+                    lAction.description = Question.description;
+                    lAction.user_id = Question.user_id;
+                    _context.SaveChanges();
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPost("deleteBPQuestion")]
+        public IActionResult DeleteBPQuestion([FromBody] TableBpQuestions Question)
+        {
+            try
+            {
+                var lAction = _context.bpQuestions.FirstOrDefault(a => a.ID == Question.qstnID);
+                if (lAction == null)
+                {
+                    return NotFound("The Question with ID = " + Question.qstnID + " not found to delete!");
+                }
+                else
+                {
+                    _context.bpQuestions.Remove(lAction);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
 
         //Levels
         [HttpGet("getLevels")]
