@@ -16,6 +16,7 @@ import { KpiResult } from 'src/app/Models/Assessments/kpiResult';
 import { BP } from 'src/app/Models/Assessments/bp';
 import { BpTable } from 'src/app/Models/Assessments/bpTable';
 import { BpQuestionTable } from 'src/app/Models/Assessments/bpQuestionTable';
+import { BpResult } from 'src/app/Models/Assessments/bpResults';
 
 @Injectable({
   providedIn: 'root'
@@ -306,6 +307,18 @@ constructor(private http: HttpClient) { }
         result = Object.assign(result, idSet);
         //console.log(result);
         return this.http.post(this.assessmentUrl+'addBPResults', result);
+      }
+
+      GetBpResultById(bpQuestionID:number, assessID:number): Observable<BpResult>{
+        let idSet:any = {bpQuestion_id:bpQuestionID, assess_id:assessID};
+        return this.http.post<BpResult>(this.assessmentUrl+'getBpResultById', idSet);
+      }
+
+      UpdateBpResults(result){
+        let idSet = {user_id:JSON.parse(localStorage.getItem('currentUser')).userId};
+        result = Object.assign(result, idSet);
+        //console.log(result);
+        return this.http.put(this.assessmentUrl+'updateBpResults', result);
       }
 
 

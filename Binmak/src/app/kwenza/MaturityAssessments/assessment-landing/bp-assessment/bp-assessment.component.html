@@ -131,11 +131,11 @@
                   </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <button (click)="onAdd()" [disabled]="(!form.valid && !all.dirty) || kpiResult" type="submit"
+                          <button (click)="onAdd()" [disabled]="(!form.valid && !all.dirty) || bpResult" type="submit"
                             class="btn btn-primary btn-block mb-2" style="background-color: #032c57 !important; color: white;">Submit</button>
                         </div>
                         <div class="col-md-6">
-                          <button [disabled]="(!form.valid && !all.dirty) || !kpiResult" (click)="onUpdate()" style="width: 100%;" type="button"
+                          <button [disabled]="(!form.valid && !all.dirty) || !bpResult" (click)="onUpdate()" style="width: 100%;" type="button"
                             class="btn btn-secondary btn-block mb-2" style="background-color: #303031 !important; color: white;">Update</button>
                         </div>
                         <!-- <div class="col-md-4">

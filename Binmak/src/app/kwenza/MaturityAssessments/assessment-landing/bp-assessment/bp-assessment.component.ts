@@ -18,6 +18,7 @@ import { KPI } from 'src/app/Models/Assessments/kpi';
 import { Sections } from 'src/app/Models/Assessments/sections';
 import { KpiResult } from 'src/app/Models/Assessments/kpiResult';
 import { BpQuestionTable } from 'src/app/Models/Assessments/bpQuestionTable';
+import { BpResult } from 'src/app/Models/Assessments/bpResults';
 
 @Component({
   selector: 'app-bp-assessment',
@@ -176,7 +177,7 @@ export class BpAssessmentComponent implements OnInit {
   hasSections:boolean;
   sectCount:number;
   result:any;
-  kpiResult:KpiResult;
+  bpResult:BpResult;
   formRawValue:any;
   progress:any;
 
@@ -378,9 +379,54 @@ export class BpAssessmentComponent implements OnInit {
   setViewParams(){
     if(this.KPAtotalRecords){
       this.initKPA = this.kpa;
-      this.form.controls['description'].patchValue(this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnDescription);
-      this.form.controls['question'].patchValue(this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnQuestion);
-      this.SetResults();
+      if(this.kpaBpQuestions){ //this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions
+        console.log('kpas exist...');
+        if(this.kpaBpQuestions[this.kpaPage].kpaBps){
+          console.log('Bps exist under kpa ' + (this.kpaPage + 1));
+          if(this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions.length > 0){
+            console.log('Questions exist under kpa ' + (this.kpaPage + 1) + ', under BP ' + (this.bpPage + 1));
+            console.log('loading page...');
+            this.form.controls['description'].patchValue(this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnDescription);
+            this.form.controls['question'].patchValue(this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnQuestion);
+            this.SetResults();
+            this.ProceedToNextPage(this.kpaPage, this.bpPage, this.qstnPage);
+          }else{
+            if((this.bpPage + 1) != this.kpaBpQuestions[this.kpaPage].kpaBps.length){
+              this.bpPage = Number(this.bpPage) + 1;
+              //load new page...
+              this.ProceedToNextPage(this.kpaPage, this.bpPage, this.qstnPage);
+              setTimeout(() => {
+                this.refresh("/");
+              });
+
+            }else{
+              if((this.kpaPage + 1) != this.kpaBpQuestions.length){
+                this.kpaPage = Number(this.kpaPage) + 1;
+                this.bpPage = 0;
+                this.qstnPage = 0;
+                //load new page...
+                this.ProceedToNextPage(this.kpaPage, this.bpPage, this.qstnPage);
+                setTimeout(() => {
+                  this.refresh("/");
+                });
+              }
+            }
+          }
+
+        }else{
+          if((this.kpaPage + 1) != this.kpaBpQuestions.length){
+            this.kpaPage = Number(this.kpaPage) + 1;
+            //load new page...
+            this.ProceedToNextPage(this.kpaPage, this.bpPage, this.qstnPage);
+            setTimeout(() => {
+              this.refresh("/");
+            });
+          }
+        }
+        //this.bpPage = Number(this.bpPage) + 1
+      }else{
+        console.log('there are questions...');
+      }
     }
   }
 
@@ -411,9 +457,9 @@ export class BpAssessmentComponent implements OnInit {
 
   getResults(){
     //retrieve KPI Results from Database
-    this.assessmentService.GetkpiResultById(this.GetKpiId(this.page),Number(this.assessmentID)).subscribe(
-      (data:KpiResult) => {
-        this.kpiResult = data;
+    this.assessmentService.GetBpResultById(this.GetBpQuestionId(this.kpaPage, this.bpPage, this.qstnPage),Number(this.assessmentID)).subscribe(
+      (data:BpResult) => {
+        this.bpResult = data;
         //console.log(data);
       }, error => {
         console.log('httperror: ');
@@ -423,53 +469,68 @@ export class BpAssessmentComponent implements OnInit {
   }
 
   GetSection1Result(){
-    if(this.kpiResult){
-      return this.kpiResult.sect_1;
+    if(this.bpResult){
+      return this.bpResult.sect_1;
     }
   }
   GetSection2Result(){
-    if(this.kpiResult){
-      return this.kpiResult.sect_2;
+    if(this.bpResult){
+      return this.bpResult.sect_2;
     }
   }
   GetSection3Result(){
-    if(this.kpiResult){
-      return this.kpiResult.sect_3;
+    if(this.bpResult){
+      return this.bpResult.sect_3;
     }
   }
   GetSection4Result(){
-    if(this.kpiResult){
-      return this.kpiResult.sect_4;
+    if(this.bpResult){
+      return this.bpResult.sect_4;
     }
   }
   GetSection5Result(){
-    if(this.kpiResult){
-      return this.kpiResult.sect_5;
+    if(this.bpResult){
+      return this.bpResult.sect_5;
     }
   }
   GetSection6Result(){
-    if(this.kpiResult){
-      return this.kpiResult.sect_6;
+    if(this.bpResult){
+      return this.bpResult.sect_6;
     }
   }
 
-  GetKpiId(page){
+  GetBpQuestionId(kpaPage, bpPage, qstnPage){
     if(this.kpaBpQuestions.length > 0){
-      if(this.kpaBpQuestions[page]){
-        return this.kpaBpQuestions[page].qstnID;
+      if(this.kpaBpQuestions[kpaPage].kpaBps[bpPage].bpQuestions[qstnPage]){
+        console.log('Found questions...');
+        return this.kpaBpQuestions[kpaPage].kpaBps[bpPage].bpQuestions[qstnPage].qstnID;
+      }else{
+        console.log('did not find any questions...');
+        if(this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions.length > 0){
+          //console.log('here...');
+          return this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnID;
+        }
+
       }
     }
   }
 
   GetDescription(){
     if(this.kpaBpQuestions.length > 0){
-      return this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnDescription;
+      if(this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions.length > 0){
+        //console.log('here...');
+        return this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnDescription;
+      }
     }
   }
 
   GetQuestion(){
     if(this.kpaBpQuestions.length > 0){
-      return this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnQuestion;
+      if(this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions.length > 0){
+        //console.log('here...');
+        return this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnQuestion;
+      }
+
     }
   }
 
@@ -639,12 +700,12 @@ export class BpAssessmentComponent implements OnInit {
   SubmitResult(result){
     //Call funtion to update database
     this.assessmentService.AddBPResults(result).toPromise().then((data: any) => {
-      this.kpiResult = data;
+      this.bpResult = data;
       //console.log(this.kpiResult);
 
       // success notification
       this.toastrService.success('Successful!');
-      this.onNext();
+      //this.onNext();
 
     }, error => {
       console.log('httperror: ');
@@ -657,7 +718,7 @@ export class BpAssessmentComponent implements OnInit {
 
   UpdateResult(result){
     //Call funtion to update database
-    this.assessmentService.UpdateKpiResults(result).toPromise().then((data: any) => {
+    this.assessmentService.UpdateBpResults(result).toPromise().then((data: any) => {
       //console.log(data);
       // success notification
       this.toastrService.success('Successful!');
@@ -677,23 +738,83 @@ export class BpAssessmentComponent implements OnInit {
   onUpdate(){
     this.formRawValue = this.form.getRawValue();
     if(this.formRawValue.all){
-      this.result = {
-        id: this.kpiResult.id,
-        kpa_id: this.kpaBpQuestions[this.page].qstnKpaID,
-          kpi_id: this.kpaBpQuestions[this.page].qstnBpID,
-        assess_id: this.assessmentID,
-        sect_1: this.formRawValue.all,
-        sect_2: this.formRawValue.all,
-        sect_3: this.formRawValue.all,
-        sect_4: this.formRawValue.all,
-        sect_5: this.formRawValue.all,
-        sect_6: this.formRawValue.all,
+      if(this.sectCount == 6){
+        this.result = {
+          id: this.bpResult.id,
+          bpQuestion_id: this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnID,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.all,
+          sect_4: this.formRawValue.all,
+          sect_5: this.formRawValue.all,
+          sect_6: this.formRawValue.all,
+        }
+      }else if(this.sectCount == 5){
+        this.result = {
+          id: this.bpResult.id,
+          bpQuestion_id: this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnID,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.all,
+          sect_4: this.formRawValue.all,
+          sect_5: this.formRawValue.all,
+          sect_6: this.formRawValue.sect_6,
+        }
+      }else if(this.sectCount == 4){
+        this.result = {
+          id: this.bpResult.id,
+          bpQuestion_id: this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnID,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.all,
+          sect_4: this.formRawValue.all,
+          sect_5: this.formRawValue.sect_5,
+          sect_6: this.formRawValue.sect_6,
+        }
+      }else if(this.sectCount == 3){
+        this.result = {
+          id: this.bpResult.id,
+          bpQuestion_id: this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnID,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.all,
+          sect_4: this.formRawValue.sect_4,
+          sect_5: this.formRawValue.sect_5,
+          sect_6: this.formRawValue.sect_6,
+        }
+      }else if(this.sectCount == 2){
+        this.result = {
+          id: this.bpResult.id,
+          bpQuestion_id: this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnID,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.all,
+          sect_3: this.formRawValue.sect_3,
+          sect_4: this.formRawValue.sect_4,
+          sect_5: this.formRawValue.sect_5,
+          sect_6: this.formRawValue.sect_6,
+        }
+      }else if(this.sectCount == 1){
+        this.result = {
+          id: this.bpResult.id,
+          bpQuestion_id: this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnID,
+          assess_id: this.assessmentID,
+          sect_1: this.formRawValue.all,
+          sect_2: this.formRawValue.sect_2,
+          sect_3: this.formRawValue.sect_3,
+          sect_4: this.formRawValue.sect_4,
+          sect_5: this.formRawValue.sect_5,
+          sect_6: this.formRawValue.sect_6,
+        }
       }
     }else{
       this.result = {
-        id: this.kpiResult.id,
-        kpa_id: this.kpaBpQuestions[this.page].qstnKpaID,
-          kpi_id: this.kpaBpQuestions[this.page].qstnBpID,
+        id: this.bpResult.id,
+        bpQuestion_id: this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions[this.qstnPage].qstnID,
         assess_id: this.assessmentID,
         sect_1: this.formRawValue.sect_1,
         sect_2: this.formRawValue.sect_2,
@@ -709,33 +830,87 @@ export class BpAssessmentComponent implements OnInit {
   }
 
   onNext(){
-let newPage:number;
-    if(this.page === this.kpaBpQuestions.length){
-      //Do nothing...
-    }else{
-      newPage = Number(this.page) + 1;
-      if((this.form.valid || this.all.dirty) && this.kpiResult){
-        //console.log('form is valid & kpiResult is not null. Go to next page.');
-        this.assessmentService.GetkpiResultById(this.GetKpiId(newPage),Number(this.assessmentID)).subscribe(
-          (data:KpiResult) => {
-            this.kpiResult = data;
-            //console.log(this.kpiResult);
-            this.page = newPage;
-            this.setViewParams();
-            this._router.navigate(['/binmak/kpi-assessment/'+newPage.toString()]);
+let newQstnPage:number;
+let newBpPage:number;
+let newKpaPage:number;
+
+
+    /*Check if KPA, BP & Qstn is Max*/
+    console.log(this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions.length);
+    if((this.kpaPage + 1) != this.kpaBpQuestions.length || (this.bpPage + 1) != this.kpaBpQuestions[this.kpaPage].kpaBps.length || (this.qstnPage + 1) != this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions.length){
+      /*Check if BP & Qstn is Max*/
+      if((this.bpPage + 1) != this.kpaBpQuestions[this.kpaPage].kpaBps.length || (this.qstnPage + 1) != this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions.length){
+        /*Check if Question is Max*/
+        if((this.qstnPage + 1) != this.kpaBpQuestions[this.kpaPage].kpaBps[this.bpPage].bpQuestions.length){
+          newQstnPage = Number(this.qstnPage) + 1;
+          newBpPage = Number(this.bpPage);
+          newKpaPage = Number(this.kpaPage);
+          if((this.form.valid || this.all.dirty) && this.bpResult){
+            //console.log('form is valid & kpiResult is not null. Go to next page.');
+            console.log(newKpaPage+':'+newBpPage+':'+newQstnPage);
+            this.ProceedToNextPage(newKpaPage, newBpPage, newQstnPage);
             setTimeout(() => {
               this.refresh("/");
             });
-            //console.log(data);
-          }, error => {
-            console.log('httperror: ');
-            console.log(error);
+          }else{
+            //console.log('form may be not valid or kpiResult maybe null. Do not proceed to next page.');
           }
-        );
+        }else{
+          newQstnPage = 0;
+          newBpPage = Number(this.bpPage) + 1;
+          newKpaPage = Number(this.kpaPage);
+          if((this.form.valid || this.all.dirty) && this.bpResult){
+            //console.log('form is valid & kpiResult is not null. Go to next page.');
+            console.log(newKpaPage+':'+newBpPage+':'+newQstnPage);
+            this.ProceedToNextPage(newKpaPage, newBpPage, newQstnPage);
+            setTimeout(() => {
+              this.refresh("/");
+            });
+          }else{
+            //console.log('form may be not valid or kpiResult maybe null. Do not proceed to next page.');
+          }
+        }
+        /*Check if Question is Max*/
       }else{
-        //console.log('form may be not valid or kpiResult maybe null. Do not proceed to next page.');
+        newQstnPage = 0;
+          newBpPage = 0;
+          newKpaPage = Number(this.kpaPage) + 1;
+          if((this.form.valid || this.all.dirty) && this.bpResult){
+            //console.log('form is valid & kpiResult is not null. Go to next page.');
+            console.log(newKpaPage+':'+newBpPage+':'+newQstnPage);
+            this.ProceedToNextPage(newKpaPage, newBpPage, newQstnPage);
+            setTimeout(() => {
+              this.refresh("/");
+            });
+          }else{
+            //console.log('form may be not valid or kpiResult maybe null. Do not proceed to next page.');
+          }
       }
+      /*Check if BP is Max*/
+    }else{
+      //Do nothing...
+      console.log('Do nothing...');
     }
+    /*Check if KPA is Max*/
+  }
+
+  ProceedToNextPage(newKpaPage:number, newBpPage:number, newQstnPage:number){
+    this.assessmentService.GetBpResultById(this.GetBpQuestionId(newKpaPage, newBpPage, newQstnPage),Number(this.assessmentID)).subscribe(
+      (data:BpResult) => {
+        this.bpResult = data;
+        //console.log(this.kpiResult);
+        this.kpaPage = newKpaPage;
+        this.bpPage = newBpPage;
+        this.qstnPage = newQstnPage;
+        //this.setViewParams();
+         this._router.navigate(['/binmak/bp-assessment/'+ this.kpaPage +'/'+ this.bpPage +'/'+this.qstnPage.toString()]);
+
+        //console.log(data);
+      }, error => {
+        console.log('httperror: ');
+        console.log(error);
+      }
+    );
   }
 
   onBack(){
@@ -744,9 +919,9 @@ let newPage:number;
       //Do nothing...
     }else{
       newPage = this.page - 1;
-        this.assessmentService.GetkpiResultById(this.GetKpiId(newPage),Number(this.assessmentID)).subscribe(
+        this.assessmentService.GetkpiResultById(this.GetBpQuestionId(this.kpaPage, this.bpPage, newPage),Number(this.assessmentID)).subscribe(
           (data:KpiResult) => {
-            this.kpiResult = data;
+            //this.kpiResult = data;
             //console.log(this.kpiResult);
             this.page = newPage;
             this.setViewParams();
@@ -975,13 +1150,13 @@ let newPage:number;
 
     newPage = this.SearchForSkipLocation(kpa);
         //console.log('form is valid & kpiResult is not null. Go to next page.');
-        this.assessmentService.GetkpiResultById(this.GetKpiId(newPage),Number(this.assessmentID)).subscribe(
+        this.assessmentService.GetkpiResultById(this.GetBpQuestionId(this.kpaPage, this.bpPage, newPage),Number(this.assessmentID)).subscribe(
           (data:KpiResult) => {
             result = data;
             //console.log(result);
             if(result){
             this.page = newPage;
-            this.kpiResult = result;
+            //this.kpiResult = result;
             this.setViewParams();
             this._router.navigate(['/binmak/kpi-assessment/'+newPage.toString()]);
             setTimeout(() => {

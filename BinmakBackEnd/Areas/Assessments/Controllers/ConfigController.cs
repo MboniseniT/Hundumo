@@ -1460,13 +1460,62 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        [HttpPost("getBpResultById")]
+        public IActionResult GetBpResultById([FromBody] BpResultIdSet IdSet)
+        {
+            try
+            {
+                var lAction = _context.bpResults.FirstOrDefault(a => a.bpQuestion_id == IdSet.bpQuestion_id && a.assess_id == IdSet.assess_id);
+
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+        }
+
+        [HttpPut("updateBpResults")]
+        public IActionResult UpdateBpResults([FromBody] BpResults Result)
+        {
+            try
+            {
+                var lAction = _context.bpResults.FirstOrDefault(a => a.ID == Result.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The Result with ID = " + Result.ID + " not found to update!");
+                }
+                else
+                {
+                    lAction.sect_1 = Result.sect_1;
+                    lAction.sect_2 = Result.sect_2;
+                    lAction.sect_3 = Result.sect_3;
+                    lAction.sect_4 = Result.sect_4;
+                    lAction.sect_5 = Result.sect_5;
+                    lAction.sect_6 = Result.sect_6;
+                    _context.SaveChanges();
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
 
         //Helper Methods
 
         void GenerateAction(BpResults Result)
         {
             
-
             if (Result.sect_1 == 2)
             {
                 AssessmentsActionManager action = new AssessmentsActionManager();
@@ -1581,8 +1630,6 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 _context.assessmentsActionManager.Add(action5);
                 _context.SaveChanges();
             }
-
-
 
         }
 
