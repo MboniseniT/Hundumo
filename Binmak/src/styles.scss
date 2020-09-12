@@ -7,6 +7,15 @@
 @import "~ng-uikit-pro-standard/assets/scss/addons-pro/_chat-pro.scss";
 @import "~ng-uikit-pro-standard/assets/scss/addons-pro/_ecommerce-pro.scss";
 
+
+
+.primary-background-color{
+  background-color: rgba(0, 69, 125, 1) !important
+}
+
+.primary-color{
+  color: rgba(0, 69, 125, 1) !important
+}
 /* You can add global styles to this file, and also import other style files */
 .nav-left{
     background-color: rgba(0, 69, 125, 1) !important;
@@ -27,3 +36,26 @@
  //   max-width: 100%;
  //   overflow-x: hidden;
 //}
+#main-menu{
+  cursor: pointer;    
+  transition: all .2s ease-in-out;
+}
+
+#main-menu:hover {
+  transform: scale(1.1);
+}
+.hide{
+  display: none;
+}
+.sub-heading{    
+  border-bottom: 1px solid #eee !important;
+  margin-bottom: 2em;
+  h6{
+    text-align: center;
+    padding-top: 15px;
+  }
+}
+
+.navbar-white{
+  background-color: white;
+}

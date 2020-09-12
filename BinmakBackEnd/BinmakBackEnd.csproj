@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\AssetHealth\Mappers\" />
-    <Folder Include="Areas\AssetHealth\Controllers\" />
   </ItemGroup>
 
 

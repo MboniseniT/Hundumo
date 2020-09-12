@@ -641,7 +641,6 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
-        [HttpPost("deleteAssessment")]
 
         [HttpPut("saveAssessment")]
         public IActionResult SaveAssessment([FromBody] SaveAssessIdSet idSet)
@@ -666,6 +665,8 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
+
+        [HttpPost("deleteAssessment")]
         public IActionResult DeleteAssessment([FromBody] Assessment Assess)
         {
             try

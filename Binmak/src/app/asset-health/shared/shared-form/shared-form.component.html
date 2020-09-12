@@ -1,0 +1,75 @@
+<!--Equipment-->
+<div mdbModal #dataModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 style="text-align: center;">{{title}}</h4>
+
+                <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form #data="ngForm" #form="ngForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <ng-container *ngFor="let item of formData">
+                            <div [class.hide]="!item.visible"
+                                *ngIf="(item.type ==='text' || item.type ==='email' || item.type ==='number')"
+                                class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                <div class="md-form">
+                                    <input mdbInput [disabled]='item.disabled' [(ngModel)]="item.value"
+                                        name="{{item.id}}" type="{{item.type}}" [required]="item.required"
+                                        class="form-control" />
+                                    <label for="{{item.id}}" class="">{{item.display}}</label>
+                                </div>
+                            </div>
+                            <div [class.hide]="!item.visible" *ngIf="(item.type ==='select')"
+                                class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                <div class="md-form">
+                                    <select [disabled]='item.disabled' [(ngModel)]="item.value" [name]="item.id"
+                                    [required]="item.required"
+                                    class="mdb-select md-form form-control" searchable="Search here..">
+                                        <option value="" disabled selected>Choose your {{item.display}}</option>
+                                        <option *ngFor="let option of item.source"
+                                        [value]="option[item.sourceId]">{{ option[item.sourceName] }}</option>
+                                      </select>
+                                </div>
+                            </div>
+                            <div [class.hide]="!item.visible" *ngIf="item.type ==='textarea'"
+                                class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                <div class="md-form">
+                                    <textarea mdbInput [disabled]='item.disabled' [(ngModel)]="item.value"
+                                        name="{{item.id}}" [required]="item.required" class="form-control"
+                                        placeholder="Enter {{item.display}}" class="md-textarea form-control"
+                                        rows="1"></textarea>
+                                    <label for="{{item.id}}" class="">{{item.display}}</label>
+                                </div>
+                            </div>
+                            <div [class.hide]="!item.visible" *ngIf="item.type ==='date'"
+                                class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                <div class="md-form">
+                                    <mdb-date-picker [disabled]='item.disabled' [(ngModel)]="item.value"
+                                        [name]="item.id" [required]="item.required"></mdb-date-picker>
+                                    <label for="{{item.id}}" class="">{{item.display}}</label>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary waves-light primary-background-color" mdbWavesEffect
+                        (click)="onSubmit(data)">
+                        <i *ngIf="actionType=='edit'" class="fa fa-edit" aria-hidden="true"></i>
+                        <i *ngIf="actionType=='add'" class="fa fa-plus" aria-hidden="true"></i>
+                        {{title}}</button>
+                    <button type="button" class="btn btn-secondary waves-light" aria-label="Close" (click)="close()"
+                        mdbWavesEffect> <i class="fa fa-times-circle" aria-hidden="true"></i> Cancel</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

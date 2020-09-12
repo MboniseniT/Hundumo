@@ -52,8 +52,6 @@ import { ExecAssessmentConfigComponent } from './kwenza/MaturityAssessments/asse
 import { ManageKpasComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-kpas/manage-kpas.component';
 import { EditExecKpaComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-kpas/edit-exec-kpa/edit-exec-kpa.component';
 import { ManageCharacteristicsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/manage-characteristics.component';
-import { MdTableComponent } from './asset-health/shared/md-table/md-table.component';
-import { MdFormComponent } from './asset-health/shared/md-form/md-form.component';
 import { EditCharacteristicComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/edit-characteristic/edit-characteristic.component';
 import { SelectKpaLevelComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/select-kpaLevel/select-kpaLevel.component';
 import { AddCharacteristicComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-characteristics/add-characteristic/add-characteristic.component';
@@ -61,6 +59,22 @@ import { AddExecAssessmentComponent } from './kwenza/MaturityAssessments/assessm
 import { ManageExecAssessmentsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/manage-exec-assessments.component';
 import { AreYouSureComponent } from './kwenza/MaturityAssessments/are-you-sure/are-you-sure.component'
 import { ExecManageUsersComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/exec-manage-users/exec-manage-users.component';
+import { AssetHealthService } from './services/asset-health.service';
+import { BokamosoComponent } from './bokamoso/bokamoso.component';
+import { BBSSDeviceComponent } from './asset-health/pages/bbssdevice/bbssdevice.component';
+import { AcknowledgementComponent } from './asset-health/pages/acknowledgement/acknowledgement.component';
+import { MachineComponent } from './asset-health/pages/machine/machine.component';
+import { MachineNotificationSettingComponent } from './asset-health/pages/machine-notification-setting/machine-notification-setting.component';
+import { MachineTypeComponent } from './asset-health/pages/machine-type/machine-type.component';
+import { SensorConditionComponent } from './asset-health/pages/sensor-condition/sensor-condition.component';
+import { SensorDataComponent } from './asset-health/pages/sensor-data/sensor-data.component';
+import { SizeCategoryComponent } from './asset-health/pages/size-category/size-category.component';
+import { UserSettingComponent } from './asset-health/pages/user-setting/user-setting.component';
+import { SharedTableComponent } from './asset-health/shared/shared-table/shared-table.component';
+import { SharedFormComponent } from './asset-health/shared/shared-form/shared-form.component';
+import { MachineConfigurationComponent } from './asset-health/pages/machine-configuration/machine-configuration.component';
+import { ApplicationComponent } from './asset-health/pages/application/application.component';
+import { BinmakTechnologyComponent } from './asset-health/pages/binmak-technology/binmak-technology.component';
 
 //import { ChartModule } from 'angular-highcharts';
 
@@ -101,21 +115,34 @@ import { ExecManageUsersComponent } from './kwenza/MaturityAssessments/assessmen
     ManageKpasComponent,
     EditExecKpaComponent,
     ManageCharacteristicsComponent,
-    MdTableComponent,
-    MdFormComponent,
     EditCharacteristicComponent,
     SelectKpaLevelComponent,
     AddCharacteristicComponent,
     AddExecAssessmentComponent,
     ManageExecAssessmentsComponent,
     AreYouSureComponent,
-    ExecManageUsersComponent
+    ExecManageUsersComponent,
+    BokamosoComponent,
+    BBSSDeviceComponent,
+    AcknowledgementComponent,
+    MachineComponent,
+    MachineNotificationSettingComponent,
+    MachineTypeComponent,
+    SensorConditionComponent,
+    SensorDataComponent,
+    SizeCategoryComponent,
+    UserSettingComponent,
+    SharedTableComponent,
+    SharedFormComponent,
+    MachineConfigurationComponent,
+    ApplicationComponent,
+    BinmakTechnologyComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     DataTablesModule,
-    HttpClientModule,
+    HttpClientModule,    
     BrowserAnimationsModule,
     MDBBootstrapModulesPro.forRoot(),
     FormsModule,
@@ -133,7 +160,7 @@ import { ExecManageUsersComponent } from './kwenza/MaturityAssessments/assessmen
   providers: [MDBModalService, AuthGuard,DatePipe,
     AuthenticationService,
     { provide: MDB_DATE_OPTIONS, useValue: { showTodayBtn: false } },
-    MainServiceService,
+    MainServiceService,AssetHealthService,
     {
         provide: HTTP_INTERCEPTORS,
         useClass: JwtInterceptor,
