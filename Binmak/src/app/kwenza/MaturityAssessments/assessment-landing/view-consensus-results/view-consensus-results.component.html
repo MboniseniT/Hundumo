@@ -13,7 +13,14 @@
           <h3 style="color: white;">Results</h3>
         </mdb-card-header> -->
         <mdb-card-body>
-          <div id="container" style="width:100%; height:450px;"></div>
+          <mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-primary tabs-3'" [contentClass]="'card'">
+            <mdb-tab heading="BP-KPI Bar">
+              <div id="container" style="width:100%; height:450px;"></div>
+            </mdb-tab>
+            <mdb-tab heading="BP-KPI Bubble">
+              <div id="container5" style="width:100%; height:450px;"></div>
+            </mdb-tab>
+          </mdb-tabset>
         </mdb-card-body>
       </mdb-card>
     </div>
@@ -23,16 +30,33 @@
           <h3 style="color: white;">Progress</h3>
         </mdb-card-header> -->
         <mdb-card-body>
-          <div class="row">
-            <div class="col">
-              <div id="container1" style="width:100%; height:225px;"></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div id="container2" style="width:100%; height:225px;"></div>
-            </div>
-          </div>
+          <mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-primary tabs-3'" [contentClass]="'card'">
+            <mdb-tab heading="BP Progress">
+              <div class="row">
+                <div class="col">
+                  <div id="container3" style="width:100%; height:225px;"></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div id="container4" style="width:100%; height:225px;"></div>
+                </div>
+              </div>
+            </mdb-tab>
+            <mdb-tab heading="KPI Progress">
+              <div class="row">
+                <div class="col">
+                  <div id="container1" style="width:100%; height:225px;"></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div id="container2" style="width:100%; height:225px;"></div>
+                </div>
+              </div>
+            </mdb-tab>
+          </mdb-tabset>
+
         </mdb-card-body>
       </mdb-card>
     </div>
