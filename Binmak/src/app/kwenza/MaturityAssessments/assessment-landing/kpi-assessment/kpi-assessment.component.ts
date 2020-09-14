@@ -803,7 +803,7 @@ export class KpiAssessmentComponent implements OnInit {
 
   onNext(){
 let newPage:number;
-    if(this.page === this.kpi.length){
+    if((this.page) === this.kpi.length){
       //Do nothing...
     }else{
       newPage = Number(this.page) + 1;

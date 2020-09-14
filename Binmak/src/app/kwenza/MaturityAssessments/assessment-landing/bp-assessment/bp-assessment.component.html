@@ -21,10 +21,12 @@
                 <div class="col-lg-10 col-md-10 col-sm-6 col-xs-6">
                   <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                      <h5 style="color: white;">KPA {{kpaPage + 1}}: {{ConvertKPA(GetKpaId(kpaPage))}}</h5>
+                      <h5 style="color: white;">KPA: {{ConvertKPA(GetKpaId(kpaPage))}}</h5>
+                      <!-- {{GetKpaId(0)}} -->
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
-                      <h5 style="color: white;">BP {{bpPage + 1}}: {{GetBpName()}}</h5>
+                      <h5 style="color: white;">BP: {{GetBpName()}}</h5>
+                      <!-- {{bpPage + 1}} -->
                     </div>
                   </div>
                 </div>
@@ -49,7 +51,8 @@
                   <div class="row">
                     <div class="col" mdbTooltip="{{GetQuestion()}}" placement="top">
                       <div >
-                        <label for="question">question {{qstnPage + 1}}</label>
+                        <label for="question">question</label>
+                        <!-- {{qstnPage + 1}} -->
                         <textarea type="text" id="question" class="md-textarea form-control mb-4" formControlName="question"
                                 mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
                       </div>

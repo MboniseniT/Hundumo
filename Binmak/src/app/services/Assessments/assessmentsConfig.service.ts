@@ -159,6 +159,9 @@ constructor(private http: HttpClient) { }
       GetBpQuestions(): Observable<BpQuestionTable[]>{
         return this.http.get<BpQuestionTable[]>(this.assessmentUrl+'getBpQuestions');
       }
+      GetFilteredTableBpQuestions(assessment): Observable<BpQuestionTable[]>{
+        return this.http.post<BpQuestionTable[]>(this.assessmentUrl+'getFilteredTableBpQuestions', assessment);
+      }
       GetFilteredBPQuestions(assessment): Observable<any[]>{
         return this.http.post<any[]>(this.assessmentUrl+'getFilteredBPQuestions',assessment);
       }
@@ -307,6 +310,11 @@ constructor(private http: HttpClient) { }
         result = Object.assign(result, idSet);
         //console.log(result);
         return this.http.post(this.assessmentUrl+'addBPResults', result);
+      }
+
+      GetBpResults(assessID:number): Observable<BpResult[]>{
+        let idSet:any = {assess_id:assessID};
+        return this.http.post<BpResult[]>(this.assessmentUrl+'getBpResults', idSet);
       }
 
       GetBpResultById(bpQuestionID:number, assessID:number): Observable<BpResult>{

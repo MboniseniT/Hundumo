@@ -385,6 +385,22 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        [HttpPost("getFilteredTableBpQuestions")]
+        public IActionResult GetFilteredTableBpQuestions([FromBody] Assessment assess)
+        {
+            try
+            {
+                List<BpQuestions> Questions = _context.bpQuestions.ToList();
+                var filteredTableBpQuestions = GetFilteredTableBPQuestions(Questions,assess);
+                return Ok(filteredTableBpQuestions);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
         [HttpPost("addBPQuestion")]
         public IActionResult AddBPQuestion([FromBody] BpQuestions Question)
         {
@@ -1438,7 +1454,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
         }
 
-            /*KPI Results*/
+            /*BP Results*/
         [HttpPost("addBPResults")]
         public IActionResult AddBPResults([FromBody] BpResults Result)
         {
@@ -1458,6 +1474,28 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 return BadRequest("Something bad happened. " + ex.Message);
             }
 
+        }
+
+        [HttpPost("getBpResults")]
+        public IActionResult GetBpResults([FromBody] BpResultIdSet IdSet)
+        {
+            try
+            {
+                var lAction = _context.bpResults.Where(a => a.assess_id == IdSet.assess_id).ToList();
+
+                if (lAction != null)
+                {
+                    return Ok(lAction);
+                }
+                else
+                {
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
         }
 
         [HttpPost("getBpResultById")]
@@ -1501,6 +1539,11 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                     lAction.sect_5 = Result.sect_5;
                     lAction.sect_6 = Result.sect_6;
                     _context.SaveChanges();
+
+                    //Delete curently existing actions is any
+                    DeleteAction(Result);
+                    //Generate new action based on new result
+                    GenerateAction(Result);
                     return Ok(lAction);
                 }
             }
@@ -1633,6 +1676,14 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        void DeleteAction(BpResults Result)
+        {
+            var actions = _context.assessmentsActionManager.Where(a => a.bpQuestion_id == Result.bpQuestion_id && a.assess_id == Result.assess_id).ToList();
+            _context.assessmentsActionManager.RemoveRange(actions);
+            _context.SaveChanges();
+
+        }
+
         IEnumerable<object> GetTableBPs(List<Bps> BPs)
         {
             var tableBPs = BPs.Select(result => new
@@ -1663,7 +1714,50 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 qstnDescription = result.description,
                 lastEdittedBy = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName
             });
+
             return tableBPQuestions;
+
+        }
+
+        IEnumerable<object> GetFilteredTableBPQuestions(List<BpQuestions> Questions, Assessment assess)
+        {
+
+            var tableBPQuestions = Questions.Select(result => new
+            {
+                qstnID = result.ID,
+                qstnKpaID = _context.bps.FirstOrDefault(a => a.ID == result.bp_id).kpa_id,
+                qstnKpaName = _context.kpas.FirstOrDefault(a => a.ID == (_context.bps.FirstOrDefault(a => a.ID == result.bp_id).kpa_id)).name,
+                qstnBpID = result.bp_id,
+                qstnBpName = _context.bps.FirstOrDefault(a => a.ID == result.bp_id).name,
+                qstnFrmwrkID = result.frmwrk_id,
+                qstnVersionID = result.version_id,
+                qstnVariantID = result.variant_id,
+                qstnQuestion = result.question,
+                qstnDescription = result.description,
+                lastEdittedBy = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName
+            });
+
+            var filteredTableBpQuestions = tableBPQuestions.Where(a => (
+            a.qstnKpaID == DeactivateKPA1(assess.kpa1) ||
+            a.qstnKpaID == DeactivateKPA2(assess.kpa2) ||
+            a.qstnKpaID == DeactivateKPA3(assess.kpa3) ||
+            a.qstnKpaID == DeactivateKPA4(assess.kpa4) ||
+            a.qstnKpaID == DeactivateKPA5(assess.kpa5) ||
+            a.qstnKpaID == DeactivateKPA6(assess.kpa6) ||
+            a.qstnKpaID == DeactivateKPA7(assess.kpa7) ||
+            a.qstnKpaID == DeactivateKPA8(assess.kpa8) ||
+            a.qstnKpaID == DeactivateKPA9(assess.kpa9) ||
+            a.qstnKpaID == DeactivateKPA10(assess.kpa10) ||
+            a.qstnKpaID == DeactivateKPA11(assess.kpa11) ||
+            a.qstnKpaID == DeactivateKPA12(assess.kpa12) ||
+            a.qstnKpaID == DeactivateKPA13(assess.kpa13) ||
+            a.qstnKpaID == DeactivateKPA14(assess.kpa14) ||
+            a.qstnKpaID == DeactivateKPA15(assess.kpa15) ||
+            a.qstnKpaID == DeactivateKPA16(assess.kpa16) ||
+            a.qstnKpaID == DeactivateKPA17(assess.kpa17)));
+
+            return filteredTableBpQuestions;
+
         }
 
         List<Kpis> GetFilteredKPIs(Assessment assess)
