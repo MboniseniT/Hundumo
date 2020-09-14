@@ -125,6 +125,7 @@ export class SharedFormComponent implements OnChanges {
       this.visible = false;  
       this.dataModal.hide();
     }, error => {
+      this.visible = false;  
       this.isSpinning = false;
       this.toastService.error(error.error);     
       this.result.emit({

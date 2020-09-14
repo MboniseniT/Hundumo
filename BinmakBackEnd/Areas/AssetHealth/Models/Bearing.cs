@@ -3,6 +3,7 @@
     public class Bearing
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public int BearingNonDrivingEndId { get; set; }
         public int BearingDrivingEndId { get; set; }
         public int MachineId { get; set; }

@@ -25,11 +25,34 @@ export class MachineComponent implements OnChanges {
         this.request.getAll(PreffixUrl.MachineType).subscribe(machineTypeResult => {
           this.request.getAll(PreffixUrl.AssetNode).subscribe(assetnodeResult => {
             this.request.getAll(PreffixUrl.BBSSDevice).subscribe(bbssDeviceResult => {
-              this.dataTable = result.items;
-              this.map.assetNodeId.source = assetnodeResult;
-              this.map.deviceId.source = bbssDeviceResult.items;
-              this.map.machineTypeId.source = machineTypeResult.items;
-              this.map.sizeCategoryId.source = categoryResult.items;
+              this.request.getAll(PreffixUrl.FrequencyPeriod).subscribe(frequencyPeriodResult => {
+                this.request.getAll(PreffixUrl.InsulationLevel).subscribe(insulationLevelResult => {
+                  this.request.getAll(PreffixUrl.MachineLoad).subscribe(machineLoadResult => {
+                    this.dataTable = result.items;
+                    console.log(this.dataTable);
+                    
+                    this.map.assetNodeId.source = assetnodeResult;
+                    this.map.bbssDeviceId.source = bbssDeviceResult.items;
+                    this.map.machineTypeId.source = machineTypeResult.items;
+                    this.map.frequencyPeriodId.source = frequencyPeriodResult.items;
+                    this.map.insulationLevelId.source = insulationLevelResult.items;
+                    this.map.machineLoadId.source = machineLoadResult.items;
+                    this.map.sizeCategoryId.source = categoryResult.items;
+                  }, error => {
+                    this.dataTable = [];
+                   // this.message.error(error.error);
+                    //this.isSpinning=false;
+                  });
+                }, error => {
+                  this.dataTable = [];
+                 // this.message.error(error.error);
+                  //this.isSpinning=false;
+                });
+              }, error => {
+                this.dataTable = [];
+               // this.message.error(error.error);
+                //this.isSpinning=false;
+              });
             }, error => {
               this.dataTable = [];
              // this.message.error(error.error);

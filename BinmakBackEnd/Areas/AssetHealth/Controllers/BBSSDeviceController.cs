@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BinmakBackEnd.Areas.AssetHealth.Controllers
 {
+    [Route("api/v1/[controller]")]
+    [ApiController]
     public class BBSSDeviceController : GenericController<BBSSDevice, int>
     {
         public readonly BinmakDbContext _context;

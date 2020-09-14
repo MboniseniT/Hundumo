@@ -75,6 +75,10 @@ import { SharedFormComponent } from './asset-health/shared/shared-form/shared-fo
 import { MachineConfigurationComponent } from './asset-health/pages/machine-configuration/machine-configuration.component';
 import { ApplicationComponent } from './asset-health/pages/application/application.component';
 import { BinmakTechnologyComponent } from './asset-health/pages/binmak-technology/binmak-technology.component';
+import { FrequencyPeriodComponent } from './asset-health/pages/frequency-period/frequency-period.component';
+import { InsulationLevelComponent } from './asset-health/pages/insulation-level/insulation-level.component';
+import { MachineLoadComponent } from './asset-health/pages/machine-load/machine-load.component';
+import { BearingConditionComponent } from './asset-health/pages/bearing-condition/bearing-condition.component';
 
 //import { ChartModule } from 'angular-highcharts';
 
@@ -136,7 +140,11 @@ import { BinmakTechnologyComponent } from './asset-health/pages/binmak-technolog
     SharedFormComponent,
     MachineConfigurationComponent,
     ApplicationComponent,
-    BinmakTechnologyComponent
+    BinmakTechnologyComponent,
+    FrequencyPeriodComponent,
+    InsulationLevelComponent,
+    MachineLoadComponent,
+    BearingConditionComponent
   ],
   imports: [
     BrowserModule,

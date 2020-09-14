@@ -5,6 +5,7 @@ namespace BinmakBackEnd.Areas.AssetHealth.Models
     public class BBSSDevice
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public string DeviceId { get; set; }
         public int BinmakTechnologyId { get; set; }
         public int ApplicationId { get; set; }

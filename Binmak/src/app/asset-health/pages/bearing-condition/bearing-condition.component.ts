@@ -1,25 +1,25 @@
 import { Component, OnChanges } from '@angular/core';
-import { SizeCategoryMapper } from '../../models/size-category-mapper';
+import { BearingConditionMapper } from '../../models/bearing-condition-mapper';
 import { ActionType } from '../../enums/action-type.enum';
 import { AssetHealthService } from 'src/app/services/asset-health.service';
 import { PreffixUrl } from '../../enums/preffix-url.enum';
 
 @Component({
-  selector: 'app-size-category',
-  templateUrl: './size-category.component.html',
-  styleUrls: ['./size-category.component.scss']
+  selector: 'app-bearing-condition',
+  templateUrl: './bearing-condition.component.html',
+  styleUrls: ['./bearing-condition.component.scss']
 })
-export class SizeCategoryComponent implements OnChanges {
+export class BearingConditionComponent implements OnChanges {
   dataTable: any;  
   data: any;  
-  map = SizeCategoryMapper;
+  map = BearingConditionMapper;
   preffixUrl: any;
-  input=SizeCategoryMapper;
+  input=BearingConditionMapper;
   visible = false;
   title:string;
   actionType:ActionType;
   constructor(private request: AssetHealthService) { 
-    this.preffixUrl = PreffixUrl.SizeCategory;
+    this.preffixUrl = PreffixUrl.BearingCondition;
     this.request.getAll(this.preffixUrl).subscribe(result => {
       this.dataTable = result.items;
     }, error => {

@@ -8,8 +8,6 @@
         <h5>Configuration</h5>
         <p class="text-sm-left">Bokamoso configuration panel for the machine and sensors.</p>
     </div>
-
-    <!-- Nav tabs -->
     <ul class="nav nav-tabs md-tabs nav-justified" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#panelH5" role="tab">
@@ -24,163 +22,140 @@
                 <i class="fas fa-user-cog pr-2"></i>General</a>
         </li>
     </ul>
-    <!-- Nav tabs -->
-
-
-
-    <!-- Tab panels -->
     <div class="tab-content">
         <br>
-        <!-- Panel 1 -->
         <div class="tab-pane fade in show active" id="panelH5" role="tabpanel">
-            <!-- <br> -->
-            <!-- Nav tabs -->
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                     <ul class="nav md-pills pills-primary flex-column" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab">
                                 <i class="fas fa-list ml-2"></i> List
-
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#panel2" role="tab">
                                 <i class="fas fa-object-group ml-2"></i>
-                                Type
+                                Machine Type
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#panel3" role="tab">
-                                <i class="fas fa-bell ml-2"></i> Notification
+                                <i class="fas fa-weight ml-2"></i>
+                                Size Class
                             </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-9">
-                    <!-- Tab panels -->
-                    <div class="tab-content vertical">
-                        <!-- Panel 1 -->
-                        <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
-                            <app-machine></app-machine>
-                        </div>
-                        <!-- Panel 1 -->
-                        <!-- Panel 2 -->
-                        <div class="tab-pane fade" id="panel2" role="tabpanel">
-                            <app-machine-type></app-machine-type>
-                        </div>
-                        <!-- Panel 2 -->
-                        <!-- Panel 3 -->
-                        <div class="tab-pane fade" id="panel3" role="tabpanel">
-                            <app-machine-notification-setting></app-machine-notification-setting>
-                        </div>
-                        <!-- Panel 3 -->
-                    </div>
-                </div>
-
-            </div>
-            <!-- Nav tabs -->
-
-        </div>
-        <!-- Panel 1 -->
-
-
-        <!-- Panel 2 -->
-        <div class="tab-pane fade" id="panelH6" role="tabpanel">
-            <br>
-            <!-- Nav tabs -->
-            <div class="row">
-                <div class="col-md-2">
-                    <ul class="nav md-pills pills-primary flex-column" role="tablist">
+                        </li>                       
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#panel4" role="tab">
-                                <i class="fas fa-thermometer-full ml-2"></i> Sensors
-
+                            <a class="nav-link" data-toggle="tab" href="#panel4" role="tab">
+                                <i class="fas fa-wave-square ml-2"></i>
+                                Frequency Period
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#panel5" role="tab">
-                                <i class="fas fa-file-medical-alt ml-2"></i>
-                                Condition
+                                <i class="fas fa-level-up-alt ml-2"></i>
+                                Insulation Level
                             </a>
                         </li>
-
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#panel6" role="tab">
+                                <i class="fas fa-truck-loading ml-2"></i>
+                                Machine Load
+                            </a>
+                        </li>
                     </ul>
                 </div>
-                <div class="col-md-10">
-                    <!-- Tab panels -->
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                     <div class="tab-content vertical">
-                        <!-- Panel 1 -->
-                        <div class="tab-pane fade in show active" id="panel4" role="tabpanel">
-                            <app-bbssdevice></app-bbssdevice>
+                        <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
+                            <app-machine></app-machine>
                         </div>
-                        <!-- Panel 1 -->
-                        <!-- Panel 2 -->
+                        <div class="tab-pane fade" id="panel2" role="tabpanel">
+                            <app-machine-type></app-machine-type>
+                        </div>                       
+                        <div class="tab-pane fade" id="panel3" role="tabpanel">
+                            <app-size-category></app-size-category>
+                        </div>
+                        <div class="tab-pane fade" id="panel4" role="tabpanel">
+                            <app-frequency-period></app-frequency-period>
+                        </div>
                         <div class="tab-pane fade" id="panel5" role="tabpanel">
-                            <app-sensor-condition></app-sensor-condition>
+                            <app-insulation-level></app-insulation-level>
                         </div>
-                        <!-- Panel 2 -->
+                        <div class="tab-pane fade" id="panel6" role="tabpanel">
+                            <app-machine-load></app-machine-load>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Nav tabs -->
-
         </div>
-        <!-- Panel 2 -->
-        <!-- Panel 2 -->
-        <div class="tab-pane fade" id="panelH7" role="tabpanel">
-                    <!-- Nav tabs -->
+        <div class="tab-pane fade" id="panelH6" role="tabpanel">
+            <br>
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                     <ul class="nav md-pills pills-primary flex-column" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#panel6" role="tab">
-                                <i class="fas fa-list ml-2"></i> Applications
-
+                            <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab">
+                                <i class="fas fa-thermometer-full ml-2"></i> Sensors
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#panel7" role="tab">
+                            <a class="nav-link" data-toggle="tab" href="#panel8" role="tab">
+                                <i class="fas fa-list ml-2"></i> Applications
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#panel9" role="tab">
                                 <i class="fas fa-user-tag ml-2"></i>
                                 Technology
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#panel8" role="tab">
+                            <a class="nav-link" data-toggle="tab" href="#panel10" role="tab">
                                 <i class="fas fa-file-medical-alt ml-2"></i>
-                                Condition
+                                Sensor Condition
                             </a>
                         </li>
-
                     </ul>
                 </div>
-                <div class="col-md-10">
-                    <!-- Tab panels -->
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                     <div class="tab-content vertical">
-                        <!-- Panel 1 -->
-                        <div class="tab-pane fade in show active" id="panel6" role="tabpanel">
+                        <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
+                            <app-bbssdevice></app-bbssdevice>
+                        </div>
+                        <div class="tab-pane fade" id="panel8" role="tabpanel">
                             <app-application></app-application>
                         </div>
-                        <!-- Panel 1 -->
-                        <!-- Panel 2 -->
-                        <div class="tab-pane fade" id="panel7" role="tabpanel">
+                        <div class="tab-pane fade" id="panel9" role="tabpanel">
                             <app-binmak-technology></app-binmak-technology>
                         </div>
-                        <!-- Panel 2 -->
-                        <div class="tab-pane fade" id="panel8" role="tabpanel">
+                        <div class="tab-pane fade" id="panel10" role="tabpanel">
                             <app-sensor-condition></app-sensor-condition>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Nav tabs -->
-
         </div>
-        <!-- Panel 2 -->
+        <div class="tab-pane fade" id="panelH7" role="tabpanel">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <ul class="nav md-pills pills-primary flex-column" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#panel9" role="tab">
+                                <i class="fas fa-fan ml-2"></i>
+                                Bearing Condition
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div class="tab-content vertical">
+                        <div class="tab-pane fade in show active" id="panel9" role="tabpanel">
+                            <app-bearing-condition></app-bearing-condition>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- Tab panels -->
-
-
-    <!-- Nav Tabs -->
-
 </div>

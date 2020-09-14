@@ -12,5 +12,9 @@ export let PreffixUrl = {
     MachineNotificationSetting: { variable:'api/v1/MachineNotificationSetting', key: BaseUrl.Main },
     SensorData: { variable: 'api/v1/SensorData', key: BaseUrl.Main },
     UserSetting: { variable:'api/v1/UserSetting', key: BaseUrl.Main },
+    InsulationLevel: { variable:'api/v1/InsulationLevel', key: BaseUrl.Main },
+    FrequencyPeriod: { variable:'api/v1/FrequencyPeriod', key: BaseUrl.Main },
+    MachineLoad: { variable:'api/v1/MachineLoad', key: BaseUrl.Main },
+    BearingCondition: { variable:'api/v1/BearingCondition', key: BaseUrl.Main },
     AssetNode: { variable: 'api/assetSetup/assetNodesTable?reference='+JSON.parse(localStorage.getItem('currentUser')).userId, key: BaseUrl.Main},
 }
