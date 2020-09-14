@@ -292,20 +292,10 @@ export class BpAssessmentComponent implements OnInit {
   }
 
   getBpQuestions(){
-    //retrieve KpaBpQuestions from Database
-    this.assessmentService.GetFilteredBPQuestions(this.GetAssessment()).subscribe(
-      (data:any[]) => {
-        this.kpaBpQuestions = data;
-        console.log(data);
-      }, error => {
-        console.log('httperror: ');
-        console.log(error);
-      }
-    );
     this.assessmentService.GetFilteredTableBpQuestions(this.GetAssessment()).subscribe(
       (data:BpQuestionTable[]) => {
         this.BpQuestions = data;
-        console.log(this.BpQuestions);
+        //console.log(this.BpQuestions);
       }, error => {
         console.log('httperror: ');
         console.log(error);
@@ -714,8 +704,7 @@ export class BpAssessmentComponent implements OnInit {
 
       // success notification
       this.toastrService.success('Successful!');
-      this.onNext();
-
+        this.onNext();
     }, error => {
       console.log('httperror: ');
         console.log(error);
@@ -849,9 +838,7 @@ export class BpAssessmentComponent implements OnInit {
           if((this.form.valid || this.all.dirty) && this.bpResult){
             //console.log('form is valid & kpiResult is not null. Go to next page.');
            this.ProceedToNextPage(newPage);
-           setTimeout(() => {
-             this.refresh("/");
-           });
+
           }else{
             //console.log('form may be not valid or kpiResult maybe null. Do not proceed to next page.');
           }
@@ -866,6 +853,9 @@ export class BpAssessmentComponent implements OnInit {
         this.kpaPage = newPage;
         //this.setViewParams();
          this._router.navigate(['/binmak/bp-assessment/'+ this.kpaPage +'/0/0']);
+         setTimeout(() => {
+          this.refresh("/");
+        });
 
         //console.log(data);
       }, error => {
@@ -883,10 +873,6 @@ export class BpAssessmentComponent implements OnInit {
       newPage = this.kpaPage - 1;
         this.ProceedToNextPage(newPage);
 
-      setTimeout(() => {
-      //call refresh from AppComponent
-      this.refresh("/");
-    });
     }
   }
 
@@ -979,7 +965,7 @@ export class BpAssessmentComponent implements OnInit {
 
   GetProgress(){
     //retrieve Progress values Results from Database
-    this.assessmentService.GetKpiProgress(this.GetAssessment()).subscribe(
+    this.assessmentService.GetBpProgress(this.GetAssessment()).subscribe(
       (data:any) => {
         this.progress = data;
         //console.log(data);

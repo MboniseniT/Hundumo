@@ -322,6 +322,10 @@ constructor(private http: HttpClient) { }
         return this.http.post<BpResult>(this.assessmentUrl+'getBpResultById', idSet);
       }
 
+      GetBpProgress(assessment): Observable<any>{
+        return this.http.post<any>(this.assessmentUrl+'getBpProgress', assessment);
+      }
+
       UpdateBpResults(result){
         let idSet = {user_id:JSON.parse(localStorage.getItem('currentUser')).userId};
         result = Object.assign(result, idSet);

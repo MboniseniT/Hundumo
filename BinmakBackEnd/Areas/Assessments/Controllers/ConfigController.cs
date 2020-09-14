@@ -1554,6 +1554,48 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        [HttpPost("getBpProgress")]
+        public IActionResult GetBpProgress([FromBody] Assessment assess)
+        {
+            try
+            {
+                List<Assessment> assessment = _context.assessments.Where(a => a.ID == assess.ID).ToList();
+                List<BpQuestions> Questions = _context.bpQuestions.ToList();
+                var allBpResults = _context.bpResults.Where(a => a.assess_id == assess.ID).ToList();
+                var allBpQuestions = GetFilteredTableBPQuestions(Questions,assess).ToList();
+                var progress = assessment.Select(result => new
+                {
+                    AssessProgress = (allBpResults.Count * 100) / allBpQuestions.Count,
+                    kpa1Progress = GetBpResultsForKPA(assess, 1),
+                    kpa2Progress = GetBpResultsForKPA(assess, 2),
+                    kpa3Progress = GetBpResultsForKPA(assess, 3),
+                    kpa4Progress = GetBpResultsForKPA(assess, 4),
+                    kpa5Progress = GetBpResultsForKPA(assess, 5),
+                    kpa6Progress = GetBpResultsForKPA(assess, 6),
+                    kpa7Progress = GetBpResultsForKPA(assess, 7),
+                    kpa8Progress = GetBpResultsForKPA(assess, 8),
+                    kpa9Progress = GetBpResultsForKPA(assess, 9),
+                    kpa10Progress = GetBpResultsForKPA(assess, 10),
+                    kpa11Progress = GetBpResultsForKPA(assess, 11),
+                    kpa12Progress = GetBpResultsForKPA(assess, 12),
+                    kpa13Progress = GetBpResultsForKPA(assess, 13),
+                    kpa14Progress = GetBpResultsForKPA(assess, 14),
+                    kpa15Progress = GetBpResultsForKPA(assess, 15),
+                    kpa16Progress = GetBpResultsForKPA(assess, 16),
+                    kpa17Progress = GetBpResultsForKPA(assess, 17),
+                    TotalScore = GetBPTotalScore(assess)
+                });
+
+
+                return Ok(progress);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+        }
+
         //Helper Methods
 
         void GenerateAction(BpResults Result)
@@ -1832,6 +1874,30 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             return tableKpis;
         }
 
+        IEnumerable<object> GetFilteredTableBPQuestionsForKPA(List<BpQuestions> Questions, Assessment assess, int kpa)
+        {
+
+            var tableBPQuestions = Questions.Select(result => new
+            {
+                qstnID = result.ID,
+                qstnKpaID = _context.bps.FirstOrDefault(a => a.ID == result.bp_id).kpa_id,
+                qstnKpaName = _context.kpas.FirstOrDefault(a => a.ID == (_context.bps.FirstOrDefault(a => a.ID == result.bp_id).kpa_id)).name,
+                qstnBpID = result.bp_id,
+                qstnBpName = _context.bps.FirstOrDefault(a => a.ID == result.bp_id).name,
+                qstnFrmwrkID = result.frmwrk_id,
+                qstnVersionID = result.version_id,
+                qstnVariantID = result.variant_id,
+                qstnQuestion = result.question,
+                qstnDescription = result.description,
+                lastEdittedBy = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName
+            });
+
+            var filteredTableBpQuestions = tableBPQuestions.Where(a => (a.qstnKpaID == kpa));
+
+            return filteredTableBpQuestions;
+
+        }
+
         float GetKPIsResultsForKPA(Assessment assess, int kpa)
         {
             float total = 0;
@@ -1858,6 +1924,51 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             return total;
         }
 
+        float GetBpResultsForKPA(Assessment assess, int kpa)
+        {
+            float total = 0;
+
+            List<BpQuestions> Questions = _context.bpQuestions.ToList();
+            var allBpQuestions = GetFilteredTableBPQuestionsForKPA(Questions, assess, kpa).ToList();
+            List<BpResults> Results = _context.bpResults.Where(a => a.assess_id == assess.ID).ToList();
+            var tableBPResults = Results.Select(result => new
+            {
+                resultID = result.ID,
+                resultKpaID = _context.bps.FirstOrDefault(a => a.ID == (_context.bpQuestions.FirstOrDefault(q => q.ID == result.bpQuestion_id)).bp_id).kpa_id,
+                resultQuestionId = result.bpQuestion_id,
+                resultAssessId = result.assess_id,
+                resultSect1 = result.sect_1,
+                resultSect2 = result.sect_2,
+                resultSect3 = result.sect_3,
+                resultSect4 = result.sect_4,
+                resultSect5 = result.sect_5,
+                resultSect6 = result.sect_6,
+            });
+
+            var tableKPABPResults = tableBPResults.Where(a => a.resultKpaID == kpa);
+
+            var bpResult = tableKPABPResults.Select(result => new
+            {
+                bpQuestionId = result.resultQuestionId,
+                bpRes = (ConvertBpResult(result.resultSect1) + ConvertBpResult(result.resultSect2) + ConvertBpResult(result.resultSect3) + ConvertBpResult(result.resultSect4) + ConvertBpResult(result.resultSect5) + ConvertBpResult(result.resultSect6)) / SectCount(assess.ID)
+            });
+
+            foreach (var result in bpResult)
+            {
+                total = total + result.bpRes;
+            }
+            if (allBpQuestions.Count > 0)
+            {
+                total = (total) / allBpQuestions.Count;
+            }
+            else
+            {
+                total = 0;
+            }
+
+            return total;
+        }
+
         float GetKPITotalScore(Assessment assess)
         {
             float total = 0;
@@ -1875,6 +1986,34 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             if (GetFilteredKPIs(assess).Count > 0)
             {
                 total = (total) / GetFilteredKPIs(assess).Count;
+            }
+            else
+            {
+                total = 0;
+            }
+
+            return total;
+        }
+
+        float GetBPTotalScore(Assessment assess)
+        {
+            float total = 0;
+            List<BpQuestions> Questions = _context.bpQuestions.ToList();
+            var allBpQuestions = GetFilteredTableBPQuestions(Questions, assess).ToList();
+            List<BpResults> bpResults = _context.bpResults.Where(a => (a.assess_id == assess.ID)).ToList();
+            var bpResult = bpResults.Select(result => new
+            {
+                bpQuestionId = result.ID,
+                bpRes = (ConvertBpResult(result.sect_1) + ConvertBpResult(result.sect_2) + ConvertBpResult(result.sect_3) + ConvertBpResult(result.sect_4) + ConvertBpResult(result.sect_5) + ConvertBpResult(result.sect_6)) / SectCount(assess.ID)
+            });
+
+            foreach (var result in bpResult)
+            {
+                total = total + result.bpRes;
+            }
+            if (allBpQuestions.Count > 0)
+            {
+                total = (total) / allBpQuestions.Count;
             }
             else
             {
@@ -1938,6 +2077,21 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             else if(sect == 5)
             {
                 value = 100;
+            }
+
+            return value;
+        }
+
+        int ConvertBpResult(int sect)
+        {
+            int value = 0;
+            if (sect == 1)
+            {
+                value = 100;
+            }
+            else if (sect == 2)
+            {
+                value = 0;
             }
 
             return value;
