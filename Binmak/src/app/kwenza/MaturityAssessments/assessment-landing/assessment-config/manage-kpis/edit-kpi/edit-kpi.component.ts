@@ -57,7 +57,7 @@ export class EditKpiComponent implements OnInit {
     this.form.controls['understanding'].patchValue(this.editableRow.understanding);
     this.form.controls['competence'].patchValue(this.editableRow.competence);
     this.form.controls['excellence'].patchValue(this.editableRow.excellence);
-    this.form.controls['userId'].patchValue(JSON.parse(localStorage.getItem('currentUser')).userId);
+    this.form.controls['user_id'].patchValue(JSON.parse(localStorage.getItem('currentUser')).userId);
 
   }
 

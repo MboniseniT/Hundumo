@@ -71,6 +71,7 @@ import { EditBpComponent } from './kwenza/MaturityAssessments/assessment-landing
 import { ManageBpQuestionsComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-bp-questions/manage-bp-questions.component';
 import { AddBpQuestionComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-bp-questions/add-bp-question/add-bp-question.component';
 import { EditBpQuestionComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-bp-questions/edit-bp-question/edit-bp-question.component';
+import { ManageActionsComponent } from './kwenza/MaturityAssessments/assessment-landing/manage-actions/manage-actions.component';
 
 //import { ChartModule } from 'angular-highcharts';
 
@@ -129,7 +130,8 @@ import { EditBpQuestionComponent } from './kwenza/MaturityAssessments/assessment
     EditBpComponent,
     ManageBpQuestionsComponent,
     AddBpQuestionComponent,
-    EditBpQuestionComponent
+    EditBpQuestionComponent,
+    ManageActionsComponent
   ],
   imports: [
     BrowserModule,

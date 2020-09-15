@@ -64,7 +64,7 @@
         <div class="row" style="justify-content: center;">
             <!-- <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div> -->
 
-            <div [hidden]="!Visible() || !hasSections" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/consensus-results">
+            <div [hidden]="!Visible() || !hasSections" class="col-lg-3 col-md-3 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/consensus-results">
               <!-- [hidden]="isAdmin" -->
               <div style="text-align: center;">
                   <i class="fas fa-poll fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
@@ -73,7 +73,7 @@
               </div>
           </div>
 
-            <div [hidden]="getSavedState() || !Visible() || !hasSections" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/bp-assessment/{{getBpPage()}}/0/0">
+            <div [hidden]="getSavedState() || !Visible() || !hasSections" class="col-lg-3 col-md-3 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/bp-assessment/{{getBpPage()}}/0/0">
               <div style="text-align: center;">
                   <i class="far fa-thumbs-up fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
                   <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Run BP Assessment
@@ -81,13 +81,21 @@
               </div>
           </div>
 
-          <div [hidden]="getSavedState() || !Visible() || !hasSections" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/kpi-assessment/{{getKpiPage()}}">
+          <div [hidden]="getSavedState() || !Visible() || !hasSections" class="col-lg-3 col-md-3 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/kpi-assessment/{{getKpiPage()}}">
             <div style="text-align: center;">
                 <i class="fas fa-tachometer-alt fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
                 <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Run KPI Assessment
                 </h6>
             </div>
         </div>
+
+        <div [hidden]="!Visible() || !hasSections" class="col-lg-3 col-md-3 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/manage-actions">
+          <div style="text-align: center;">
+              <i class="far fa-calendar-check fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
+              <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Action Manager
+              </h6>
+          </div>
+      </div>
 
 
 

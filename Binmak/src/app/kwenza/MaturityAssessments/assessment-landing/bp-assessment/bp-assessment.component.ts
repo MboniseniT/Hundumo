@@ -899,7 +899,7 @@ export class BpAssessmentComponent implements OnInit {
 
   NotAssignedProtect(){
     if(!this.Visible()){
-      this._router.navigate(['/binmak/exec-assessment-landing']);
+      this._router.navigate(['/binmak/assessment-landing']);
     }
   }
 

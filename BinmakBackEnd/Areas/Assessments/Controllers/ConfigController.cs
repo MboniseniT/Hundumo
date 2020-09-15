@@ -473,6 +473,23 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        //Action Manager
+        [HttpPost("getAllActions")]
+        public IActionResult GetAllActions([FromBody] Reference assessID)
+        {
+            try
+            {
+                //var tableKpis = _context.kpis.ToList();
+                List<AssessmentsActionManager> actionz = _context.assessmentsActionManager.Where(a => a.assess_id == int.Parse(assessID.reference)).ToList();
+                var tableActions = GetTableActions(actionz);
+                return Ok(tableActions);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
 
         //Levels
         [HttpGet("getLevels")]
@@ -1758,6 +1775,35 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             });
 
             return tableBPQuestions;
+
+        }
+
+        IEnumerable<object> GetTableActions(List<AssessmentsActionManager> actionz)
+        {
+
+            var tableActions = actionz.Select(result => new
+            {
+                actionID = result.ID,
+                actionAssessID = result.assess_id,
+                actionAssessDate = _context.assessments.FirstOrDefault(a => a.ID == result.assess_id).assess_date,
+                actionAssessNode = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == (_context.assessments.FirstOrDefault(a => a.ID == result.assess_id).assetNodeId)).Name,
+                actionSectionName = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_id).Name,
+                actionKpaID = _context.bps.FirstOrDefault(a => a.ID == (_context.bpQuestions.FirstOrDefault(a => a.ID == result.bpQuestion_id)).bp_id).kpa_id,
+                actionKpaName = _context.kpas.FirstOrDefault(a => a.ID == (_context.bps.FirstOrDefault(a => a.ID == (_context.bpQuestions.FirstOrDefault(a => a.ID == result.bpQuestion_id)).bp_id).kpa_id)).name,
+                actionBpQuestion = _context.bpQuestions.FirstOrDefault(a => a.ID == result.bpQuestion_id).question,
+                actionBpName = _context.bps.FirstOrDefault(a => a.ID == (_context.bpQuestions.FirstOrDefault(a => a.ID == result.bpQuestion_id).bp_id)).name,
+                actionAction = result.action,
+                actionBizImpact = result.biz_impact,
+                actionEaseOfImp = result.ease_of_imp,
+                actionCostOfImp = result.cost_of_imp,
+                actionTimeToImp = result.time_to_imp,
+                actionPriority = result.priority,
+                actionResponsiblePerson = result.responsible_person,
+                actionTargetDate = result.target_date,
+                actionStatus = result.status
+            });
+
+            return tableActions;
 
         }
 

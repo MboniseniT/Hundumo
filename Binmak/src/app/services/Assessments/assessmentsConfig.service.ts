@@ -17,6 +17,7 @@ import { BP } from 'src/app/Models/Assessments/bp';
 import { BpTable } from 'src/app/Models/Assessments/bpTable';
 import { BpQuestionTable } from 'src/app/Models/Assessments/bpQuestionTable';
 import { BpResult } from 'src/app/Models/Assessments/bpResults';
+import { ActionTable } from 'src/app/Models/Assessments/actionTable';
 
 @Injectable({
   providedIn: 'root'
@@ -173,6 +174,12 @@ constructor(private http: HttpClient) { }
       }
       DeleteBPQuestion(bpQuestion){
         return this.http.post(this.assessmentUrl+'deleteBPQuestion', bpQuestion);
+      }
+
+      /*Action Manager*/
+      GetAllActions(assessmentID): Observable<ActionTable[]>{
+        let idSet = {reference:assessmentID};
+        return this.http.post<ActionTable[]>(this.assessmentUrl+'getAllActions',idSet);
       }
 
       /*Levels*/
