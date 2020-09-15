@@ -181,6 +181,13 @@ constructor(private http: HttpClient) { }
         let idSet = {reference:assessmentID};
         return this.http.post<ActionTable[]>(this.assessmentUrl+'getAllActions',idSet);
       }
+      GetFilteredActions(assessmentID, sectionID): Observable<ActionTable[]>{
+        let idSet = {assessID:assessmentID, sectID:sectionID};
+        return this.http.post<ActionTable[]>(this.assessmentUrl+'GetFilteredActions',idSet);
+      }
+      EditAction(action){
+        return this.http.put(this.assessmentUrl+'editAction', action);
+      }
 
       /*Levels*/
       getLevels(): Observable<Level[]>{

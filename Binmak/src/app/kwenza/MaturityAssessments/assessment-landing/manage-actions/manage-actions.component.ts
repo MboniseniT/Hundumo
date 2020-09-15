@@ -14,6 +14,8 @@ import { TableKPI } from 'src/app/Models/Assessments/TableKPI';
 import { EditKpiComponent } from '../assessment-config/manage-kpis/edit-kpi/edit-kpi.component';
 import { AreYouSureComponent } from '../../../MaturityAssessments/are-you-sure/are-you-sure.component';
 import { ActionTable } from 'src/app/Models/Assessments/actionTable';
+import { EditActionComponent } from './edit-action/edit-action.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-manage-actions',
@@ -52,9 +54,16 @@ export class ManageActionsComponent implements OnInit {
 
   kpaLevel:any = {};
 
+  sections: Array<any>;
+  sectionID;
+
   formError:string = "";
 
   isAdmin:boolean;
+
+  form = new FormGroup({
+    section: new FormControl('', [Validators.required, Validators.minLength(1)]),
+  });
 
   constructor(
     private assessmentService: AssessmentsConfigService,
@@ -78,6 +87,7 @@ export class ManageActionsComponent implements OnInit {
     this.setHasSections();
     this.SavedProtect();
     this.NotAssignedProtect();
+    this.loadDropDowns();
     setTimeout(() => {
       this.loadDataTable();
     });
@@ -88,6 +98,19 @@ export class ManageActionsComponent implements OnInit {
   }
 
   //Init Methods
+
+  loadDropDowns(){
+    //retrieve AssetNodes from Database
+    this.assessmentService.getSectionNodes(this.GetAssessmentNodeId()).subscribe(
+      resp => {
+        //console.log(resp);
+        this.sections = resp.map((t: any) => {
+          return { label: t.name, value: t.assetNodeId }
+        })
+      }
+    );
+  }
+
   AdminProtect(){
     if (!this.isAdmin) {
       console.log('here');
@@ -188,18 +211,38 @@ export class ManageActionsComponent implements OnInit {
     return JSON.parse(localStorage.getItem("currentAssessment"));
   }
 
+  GetAssessmentNodeId(){
+    return JSON.parse(localStorage.getItem("currentAssessment")).assetNodeId;
+  }
+
    //Custom Methods
    loadDataTable(){
-    this.assessmentService.GetAllActions(this.assessmentID).subscribe((data: ActionTable[]) => {
-      this.elements = data;
-      console.log(this.elements);
-      this.mdbTable.setDataSource(this.elements);
-      }, error => {
-        console.log('httperror: ');
-        console.log(error);
-      });
-      this.elements = this.mdbTable.getDataSource();
+     if(this.form.valid){
+       this.sectionID = this.form.getRawValue();
+       //console.log(this.sectionID.section);
+      this.assessmentService.GetFilteredActions(this.assessmentID, this.sectionID.section).subscribe((data: ActionTable[]) => {
+        this.elements = data;
+        //console.log(this.elements);
+        this.mdbTable.setDataSource(this.elements);
+        }, error => {
+          console.log('httperror: ');
+          console.log(error);
+        });
+        this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
+     }else{
+      this.assessmentService.GetAllActions(this.assessmentID).subscribe((data: ActionTable[]) => {
+        this.elements = data;
+        //console.log(this.elements);
+        this.mdbTable.setDataSource(this.elements);
+        }, error => {
+          console.log('httperror: ');
+          console.log(error);
+        });
+        this.elements = this.mdbTable.getDataSource();
+      this.previous = this.mdbTable.getDataSource();
+     }
+
   }
 
   onEdit(el: any){
@@ -209,10 +252,10 @@ export class ManageActionsComponent implements OnInit {
         editableRow: el
       }
     };
-    this.modalRef = this.modalService.show(EditKpiComponent, modalOptions);
+    this.modalRef = this.modalService.show(EditActionComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-      this.assessmentService.EditKPI(newElement).toPromise().then((data: any) => {
+      this.assessmentService.EditAction(newElement).toPromise().then((data: any) => {
         //console.log(data);
         // success notification
         this.toastrService.success('Update Successful!');

@@ -12,13 +12,13 @@ namespace BinmakBackEnd.Areas.Assessments.Entities
         public int sect_id { get; set; }
         public int bpQuestion_id { get; set; }
         public string action { get; set; }
-        public string biz_impact { get; set; }
-        public string ease_of_imp { get; set; }
+        public int biz_impact { get; set; }
+        public int ease_of_imp { get; set; }
         public string cost_of_imp { get; set; }
-        public string time_to_imp { get; set; }
-        public string priority { get; set; }
+        public int time_to_imp { get; set; }
+        public int priority { get; set; }
         public string responsible_person { get; set; }
         public string target_date { get; set; }
-        public string status { get; set; }
+        public int status { get; set; }
     }
 }

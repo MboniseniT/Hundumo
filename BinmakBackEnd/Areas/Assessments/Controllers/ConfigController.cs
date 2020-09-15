@@ -491,6 +491,55 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        [HttpPost("GetFilteredActions")]
+        public IActionResult GetFilteredActions([FromBody] ActionIdSet IdSet)
+        {
+            try
+            {
+                //var tableKpis = _context.kpis.ToList();
+                List<AssessmentsActionManager> actionz = _context.assessmentsActionManager.Where(a => a.assess_id == IdSet.assessID && a.sect_id == IdSet.sectID).ToList();
+                var tableActions = GetTableActions(actionz);
+                return Ok(tableActions);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPut("editAction")]
+        public IActionResult EditAction([FromBody] AssessmentsActionManager Action)
+        {
+            try
+            {
+                var lAction = _context.assessmentsActionManager.FirstOrDefault(a => a.ID == Action.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The Action with ID = " + Action.ID + " not found to update!");
+                }
+                else
+                {
+                    lAction.action = Action.action;
+                    lAction.biz_impact = Action.biz_impact;
+                    lAction.ease_of_imp = Action.ease_of_imp;
+                    lAction.cost_of_imp = Action.cost_of_imp;
+                    lAction.time_to_imp = Action.time_to_imp;
+                    lAction.priority = Action.priority;
+                    lAction.responsible_person = Action.responsible_person;
+                    lAction.target_date = Action.target_date;
+                    lAction.status = Action.status;
+                    _context.SaveChanges();
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
         //Levels
         [HttpGet("getLevels")]
         public IActionResult getLevels()
@@ -1613,6 +1662,10 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
         }
 
+
+
+
+
         //Helper Methods
 
         void GenerateAction(BpResults Result)
@@ -1625,14 +1678,14 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 action.assess_id = Result.assess_id;
                 action.bpQuestion_id = Result.bpQuestion_id;
                 action.action = "";
-                action.biz_impact = "";
-                action.ease_of_imp = "";
+                action.biz_impact = 0;
+                action.ease_of_imp = 0;
                 action.cost_of_imp = "";
-                action.time_to_imp = "";
-                action.priority = "";
+                action.time_to_imp = 0;
+                action.priority = 0;
                 action.responsible_person = "";
                 action.target_date = "";
-                action.status = "";
+                action.status = 1;
                 action.sect_id = _context.assessmentSections.FirstOrDefault(a => a.assess_id == Result.assess_id).sect_1;
                 _context.assessmentsActionManager.Add(action);
                 _context.SaveChanges();
@@ -1644,14 +1697,14 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 action1.assess_id = Result.assess_id;
                 action1.bpQuestion_id = Result.bpQuestion_id;
                 action1.action = "";
-                action1.biz_impact = "";
-                action1.ease_of_imp = "";
+                action1.biz_impact = 0;
+                action1.ease_of_imp = 0;
                 action1.cost_of_imp = "";
-                action1.time_to_imp = "";
-                action1.priority = "";
+                action1.time_to_imp = 0;
+                action1.priority = 0;
                 action1.responsible_person = "";
                 action1.target_date = "";
-                action1.status = "";
+                action1.status = 1;
                 action1.sect_id = (int)_context.assessmentSections.FirstOrDefault(a => a.assess_id == Result.assess_id).sect_2;
                 _context.assessmentsActionManager.Add(action1);
                 _context.SaveChanges();
@@ -1663,14 +1716,14 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 action2.assess_id = Result.assess_id;
                 action2.bpQuestion_id = Result.bpQuestion_id;
                 action2.action = "";
-                action2.biz_impact = "";
-                action2.ease_of_imp = "";
+                action2.biz_impact = 0;
+                action2.ease_of_imp = 0;
                 action2.cost_of_imp = "";
-                action2.time_to_imp = "";
-                action2.priority = "";
+                action2.time_to_imp = 0;
+                action2.priority = 0;
                 action2.responsible_person = "";
                 action2.target_date = "";
-                action2.status = "";
+                action2.status = 1;
                 action2.sect_id = (int)_context.assessmentSections.FirstOrDefault(a => a.assess_id == Result.assess_id).sect_3;
                 _context.assessmentsActionManager.Add(action2);
                 _context.SaveChanges();
@@ -1682,14 +1735,14 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 action3.assess_id = Result.assess_id;
                 action3.bpQuestion_id = Result.bpQuestion_id;
                 action3.action = "";
-                action3.biz_impact = "";
-                action3.ease_of_imp = "";
+                action3.biz_impact = 0;
+                action3.ease_of_imp = 0;
                 action3.cost_of_imp = "";
-                action3.time_to_imp = "";
-                action3.priority = "";
+                action3.time_to_imp = 0;
+                action3.priority = 0;
                 action3.responsible_person = "";
                 action3.target_date = "";
-                action3.status = "";
+                action3.status = 1;
                 action3.sect_id = (int)_context.assessmentSections.FirstOrDefault(a => a.assess_id == Result.assess_id).sect_4;
                 _context.assessmentsActionManager.Add(action3);
                 _context.SaveChanges();
@@ -1701,14 +1754,14 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 action4.assess_id = Result.assess_id;
                 action4.bpQuestion_id = Result.bpQuestion_id;
                 action4.action = "";
-                action4.biz_impact = "";
-                action4.ease_of_imp = "";
+                action4.biz_impact = 0;
+                action4.ease_of_imp = 0;
                 action4.cost_of_imp = "";
-                action4.time_to_imp = "";
-                action4.priority = "";
+                action4.time_to_imp = 0;
+                action4.priority = 0;
                 action4.responsible_person = "";
                 action4.target_date = "";
-                action4.status = "";
+                action4.status = 1;
                 action4.sect_id = (int)_context.assessmentSections.FirstOrDefault(a => a.assess_id == Result.assess_id).sect_5;
                 _context.assessmentsActionManager.Add(action4);
                 _context.SaveChanges();
@@ -1720,14 +1773,14 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 action5.assess_id = Result.assess_id;
                 action5.bpQuestion_id = Result.bpQuestion_id;
                 action5.action = "";
-                action5.biz_impact = "";
-                action5.ease_of_imp = "";
+                action5.biz_impact = 0;
+                action5.ease_of_imp = 0;
                 action5.cost_of_imp = "";
-                action5.time_to_imp = "";
-                action5.priority = "";
+                action5.time_to_imp = 0;
+                action5.priority = 0;
                 action5.responsible_person = "";
                 action5.target_date = "";
-                action5.status = "";
+                action5.status = 1;
                 action5.sect_id = (int)_context.assessmentSections.FirstOrDefault(a => a.assess_id == Result.assess_id).sect_6;
                 _context.assessmentsActionManager.Add(action5);
                 _context.SaveChanges();
@@ -1793,18 +1846,166 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 actionBpQuestion = _context.bpQuestions.FirstOrDefault(a => a.ID == result.bpQuestion_id).question,
                 actionBpName = _context.bps.FirstOrDefault(a => a.ID == (_context.bpQuestions.FirstOrDefault(a => a.ID == result.bpQuestion_id).bp_id)).name,
                 actionAction = result.action,
-                actionBizImpact = result.biz_impact,
-                actionEaseOfImp = result.ease_of_imp,
+                actionBizImpact = ConvertImpact(result.biz_impact),
+                actionBizImpactID = result.biz_impact,
+                actionEaseOfImp = ConvertEase(result.ease_of_imp),
+                actionEaseOfImpID = result.ease_of_imp,
                 actionCostOfImp = result.cost_of_imp,
-                actionTimeToImp = result.time_to_imp,
-                actionPriority = result.priority,
-                actionResponsiblePerson = result.responsible_person,
+                actionTimeToImp = ConvertDuration(result.time_to_imp),
+                actionTimeToImpID = result.time_to_imp,
+                actionPriority = ConvertPriority(result.priority),
+                actionPriorityID = result.priority,
+                actionResponsiblePerson = ConvertUserID(result.responsible_person),
+                actionResponsiblePersonID = result.responsible_person,
                 actionTargetDate = result.target_date,
-                actionStatus = result.status
+                actionStatus = ConvertStatus(result.status),
+                actionStatusID = result.status
             });
 
             return tableActions;
 
+        }
+
+        string ConvertImpact(int impact)
+        {
+            string value = "";
+            if(impact == 1)
+            {
+                value = "Highest";
+            }
+            else if(impact == 2)
+            {
+                value = "High";
+            }
+            else if (impact == 3)
+            {
+                value = "Medium";
+            }
+            else if (impact == 4)
+            {
+                value = "Low";
+            }
+            else if (impact == 5)
+            {
+                value = "Lowest";
+            }
+
+            return value;
+
+        }
+
+        string ConvertEase(int ease)
+        {
+            string value = "";
+            if (ease == 1)
+            {
+                value = "Very easy";
+            }
+            else if (ease == 2)
+            {
+                value = "Easy";
+            }
+            else if (ease == 3)
+            {
+                value = "Difficult";
+            }
+            else if (ease == 4)
+            {
+                value = "Very Difficult";
+            }
+
+            return value;
+
+        }
+
+        string ConvertDuration(int duration)
+        {
+            string value = "";
+            if (duration == 1)
+            {
+                value = "1 week";
+            }
+            else if (duration == 2)
+            {
+                value = "2 weeks";
+            }
+            else if (duration == 3)
+            {
+                value = "1 month";
+            }
+            else if (duration == 4)
+            {
+                value = "2 months";
+            }
+            else if (duration == 5)
+            {
+                value = "3 months";
+            }
+            else if (duration == 5)
+            {
+                value = "longer than 3 months";
+            }
+
+            return value;
+
+        }
+
+        string ConvertPriority(int priority)
+        {
+            string value = "";
+            if (priority == 1)
+            {
+                value = "Highest";
+            }
+            else if (priority == 2)
+            {
+                value = "High";
+            }
+            else if (priority == 3)
+            {
+                value = "Medium";
+            }
+            else if (priority == 4)
+            {
+                value = "Low";
+            }
+            else if (priority == 5)
+            {
+                value = "Lowest";
+            }
+
+            return value;
+
+        }
+
+        string ConvertStatus(int status)
+        {
+            string value = "";
+            if (status == 1)
+            {
+                value = "incomplete";
+            }
+            else if (status == 2)
+            {
+                value = "complete";
+            }
+
+            return value;
+
+        }
+
+        string ConvertUserID(string userID)
+        {
+            var user = _context.Users.FirstOrDefault(a => a.Id == userID);
+
+            if(user != null)
+            {
+                return user.FirstName + " " + user.LastName;
+            }
+            else
+            {
+                return "";
+            }
         }
 
         IEnumerable<object> GetFilteredTableBPQuestions(List<BpQuestions> Questions, Assessment assess)

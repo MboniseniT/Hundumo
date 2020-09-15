@@ -1,0 +1,132 @@
+<div class="modal-content">
+  <div class="modal-header" style="background-color: #032c57 !important;">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true" style="color: white !important;">×</span>
+    </button>
+    <h4 style="color: white !important;" class="modal-title w-100" id="myModalLabel">Edit Action: {{editableRow.actionID}}</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+
+      <!-- Nav Tabs -->
+<mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-primary tabs-3'" [contentClass]="'card'">
+  <!--Panel 1-->
+  <mdb-tab heading="Page 1">
+    <div class="row">
+      <div class="col">
+        <div class="md-form">
+          <textarea type="text" id="question" class="md-textarea form-control" formControlName="question"
+                  mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+          <label for="question">question</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <textarea type="text" id="action" class="md-textarea form-control" formControlName="action"
+                  mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+          <label for="action">* action</label>
+          <mdb-error *ngIf="action.invalid && (action.dirty || action.touched)">Action is required</mdb-error>
+        </div>
+      </div>
+    </div>
+  </mdb-tab>
+  <!--Panel 2-->
+  <mdb-tab heading="Page 2">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="md-form">
+          <mdb-select  [options]="Impact" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="biz_impact"
+          label="* impact" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="biz_impact.invalid && (biz_impact.dirty || biz_impact.touched)">Business impact is required</mdb-error>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="md-form">
+          <mdb-select  [options]="Ease" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="ease_of_imp"
+          label="* ease" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="ease_of_imp.invalid && (ease_of_imp.dirty || ease_of_imp.touched)">Ease of implementation is required</mdb-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="md-form">
+          <input id="cost_of_imp" type="text" class="form-control" formControlName="cost_of_imp" mdbInput mdbValidate
+                 [validateSuccess]="false">
+          <label for="cost_of_imp">* cost</label>
+          <mdb-error *ngIf="cost_of_imp.invalid && (cost_of_imp.dirty || cost_of_imp.touched)">Cost of implementation is required</mdb-error>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="md-form">
+          <mdb-select  [options]="Duration" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="time_to_imp"
+          label="* duration" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="time_to_imp.invalid && (time_to_imp.dirty || time_to_imp.touched)">Duration of implementation is required</mdb-error>
+        </div>
+      </div>
+    </div>
+
+  </mdb-tab>
+  <!--Panel 3-->
+  <mdb-tab heading="Page 3">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="md-form">
+          <mdb-select  [options]="Priority" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="priority"
+          label="* priority" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="priority.invalid && (priority.dirty || priority.touched)">Priority of implementation is required</mdb-error>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="md-form">
+          <mdb-select  [options]="users" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="responsible_person"
+          label="* assigned to" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="responsible_person.invalid && (responsible_person.dirty || responsible_person.touched)">Please assign someone to this action</mdb-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="md-form">
+          <input id="target_date" type="date" class="form-control" formControlName="target_date" mdbInput mdbValidate
+                 [validateSuccess]="false">
+          <label for="target_date">* due date</label>
+          <mdb-error *ngIf="target_date.invalid && (target_date.dirty || target_date.touched)">A due date is required</mdb-error>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="md-form">
+          <mdb-select  [options]="Status" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="status"
+          label="* status" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="status.invalid && (status.dirty || status.touched)">A status is required</mdb-error>
+        </div>
+      </div>
+    </div>
+  </mdb-tab>
+</mdb-tabset>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" mdbBtn color="light" class="waves-light" aria-label="Close"
+            (click)="modalRef.hide()" mdbWavesEffect>Close
+    </button>
+    <button style="background-color: #032c57 !important;" [disabled]="!form.valid" type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+             (click)="editRow()">Save
+    </button>
+  </div>
+</div>
