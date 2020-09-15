@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Version } from '@angular/core';
 import {MDBModalRef} from "ng-uikit-pro-standard";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subject} from "rxjs";
 import { AssessmentsConfigService } from 'src/app/services/Assessments/assessmentsConfig.service';
 import { KPA } from 'src/app/Models/Assessments/kpa';
 import { BP } from 'src/app/Models/Assessments/bp';
-import { Frmwrk } from 'src/app/Models/Assessments/frmwrk';
 
 @Component({
-  selector: 'app-add-frmwrk',
-  templateUrl: './add-frmwrk.component.html',
-  styleUrls: ['./add-frmwrk.component.scss']
+  selector: 'app-add-version',
+  templateUrl: './add-version.component.html',
+  styleUrls: ['./add-version.component.scss']
 })
-export class AddFrmwrkComponent implements OnInit {
-  public editableRow: Frmwrk;
+export class AddVersionComponent implements OnInit {
+  public editableRow: Version;
   public saveButtonClicked: Subject<any> = new Subject();
 
   kpas: Array<any>;

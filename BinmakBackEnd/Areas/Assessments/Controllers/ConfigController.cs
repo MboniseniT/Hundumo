@@ -987,6 +987,72 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        [HttpGet("getTableVersions")]
+        public IActionResult getTableVersions()
+        {
+            try
+            {
+                var lAction = _context.versions.ToList();
+                if (lAction != null)
+                {
+                    return Ok(GetTableVersions(lAction));
+                }
+                else
+                {
+                    return NotFound("HTTP resource is currently unavailable!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPost("addVersion")]
+        public IActionResult AddVersion([FromBody] Versions Version)
+        {
+            try
+            {
+                _context.versions.Add(Version);
+                _context.SaveChanges();
+
+                var message = Created("", Version);
+                return message;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPut("editVersion")]
+        public IActionResult EditVersion([FromBody] Versions Version)
+        {
+            try
+            {
+                var lAction = _context.versions.FirstOrDefault(a => a.ID == Version.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The Version with ID = " + Version.ID + " not found to update!");
+                }
+                else
+                {
+                    lAction.name = Version.name;
+                    lAction.description = Version.description;
+                    lAction.user_id = Version.user_id;
+                    _context.SaveChanges();
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
         //Variants
         [HttpGet("getVariants")]
         public IActionResult GetVariants()
@@ -1885,6 +1951,17 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 LastEdittedBy = ConvertUserID(result.user_id)
             });
             return tableFrmwrks;
+        }
+        IEnumerable<object> GetTableVersions(List<Versions> Version)
+        {
+            var tableVersions = Version.Select(result => new
+            {
+                versionID = result.ID,
+                versionName = result.name,
+                versionDescription = result.description,
+                LastEdittedBy = ConvertUserID(result.user_id)
+            });
+            return tableVersions;
         }
         IEnumerable<object> GetTableBPQuestions(List<BpQuestions> Questions)
         {

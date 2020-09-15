@@ -45,6 +45,7 @@ import { ManageBpComponent } from './kwenza/MaturityAssessments/assessment-landi
 import { ManageBpQuestionsComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-bp-questions/manage-bp-questions.component';
 import { ManageActionsComponent } from './kwenza/MaturityAssessments/assessment-landing/manage-actions/manage-actions.component';
 import { ManageFrmwrksComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-frmwrks/manage-frmwrks.component';
+import { ManageVersionsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-versions/manage-versions.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'binmak', pathMatch: 'full'},
@@ -91,7 +92,8 @@ const routes: Routes = [
         { path: 'manage-bps', component: ManageBpComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'manage-bp-questions', component: ManageBpQuestionsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'manage-actions', component: ManageActionsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-        { path: 'manage-frmwrks', component: ManageFrmwrksComponent, pathMatch: 'full', canActivate: [AuthGuard]}
+        { path: 'manage-frmwrks', component: ManageFrmwrksComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'manage-versions', component: ManageVersionsComponent, pathMatch: 'full', canActivate: [AuthGuard]}
       ]
     },
     {path:'**', redirectTo: 'binmak', pathMatch: 'full', canActivate: [AuthGuard]}

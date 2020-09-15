@@ -11,22 +11,25 @@ import { AddBpComponent } from '../../../assessment-landing/assessment-config/ma
 import { BP } from 'src/app/Models/Assessments/bp';
 import { BpTable } from 'src/app/Models/Assessments/bpTable';
 import { EditBpComponent } from '../../../assessment-landing/assessment-config/manage-bp/edit-bp/edit-bp.component';
-import { AddFrmwrkComponent } from './add-frmwrk/add-frmwrk.component';
+import { AddFrmwrkComponent } from '../manage-frmwrks/add-frmwrk/add-frmwrk.component';
 import { Frmwrk } from 'src/app/Models/Assessments/frmwrk';
 import { FrmwrkTable } from 'src/app/Models/Assessments/frmwrkTable';
-import { EditFrmwrkComponent } from './edit-frmwrk/edit-frmwrk.component';
+import { EditFrmwrkComponent } from '../manage-frmwrks/edit-frmwrk/edit-frmwrk.component';
+import { AddVersionComponent } from './add-version/add-version.component';
+import { VersionTable } from 'src/app/Models/Assessments/versionTable';
+import { EditVersionComponent } from './edit-version/edit-version.component';
 
 @Component({
-  selector: 'app-manage-frmwrks',
-  templateUrl: './manage-frmwrks.component.html',
-  styleUrls: ['./manage-frmwrks.component.scss']
+  selector: 'app-manage-versions',
+  templateUrl: './manage-versions.component.html',
+  styleUrls: ['./manage-versions.component.scss']
 })
-export class ManageFrmwrksComponent implements OnInit , AfterViewInit {
+export class ManageVersionsComponent implements OnInit , AfterViewInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row', { static: true }) row: ElementRef;
 
-  elements: FrmwrkTable[] = [];
+  elements: VersionTable[] = [];
   headElements = ['ID', 'Name', 'Description', 'Last Editted By', 'commands'];
 
   modalRef: MDBModalRef;
@@ -82,7 +85,7 @@ export class ManageFrmwrksComponent implements OnInit , AfterViewInit {
 
    //Custom Methods
    loadDataTable(){
-    this.assessmentService.getTableFrameworks().subscribe((data: FrmwrkTable[]) => {
+    this.assessmentService.getTableVersions().subscribe((data: VersionTable[]) => {
       this.elements = data;
       //console.log(this.elements);
       this.mdbTable.setDataSource(this.elements);
@@ -101,10 +104,10 @@ export class ManageFrmwrksComponent implements OnInit , AfterViewInit {
         editableRow: el
       }
     };
-    this.modalRef = this.modalService.show(EditFrmwrkComponent, modalOptions);
+    this.modalRef = this.modalService.show(EditVersionComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-      this.assessmentService.EditFrmwrk(newElement).toPromise().then((data: any) => {
+      this.assessmentService.EditVersion(newElement).toPromise().then((data: any) => {
         //console.log(newElement);
         // success notification
         this.toastrService.success('Update Successful!');
@@ -193,10 +196,10 @@ export class ManageFrmwrksComponent implements OnInit , AfterViewInit {
       //   editableRow: {kpa_id: this.kpaLevel.kpaID, level_id: this.kpaLevel.LevelID, description: "", frmwrk_id: null, version_id: null, variant_id: null}
       // }
     };
-    this.modalRef = this.modalService.show(AddFrmwrkComponent, modalOptions);
+    this.modalRef = this.modalService.show(AddVersionComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-      this.assessmentService.AddFramework(newElement).toPromise().then((data: any) => {
+      this.assessmentService.AddVersion(newElement).toPromise().then((data: any) => {
         // success notification
         this.toastrService.success('Addition Successful!');
         setTimeout(() => {

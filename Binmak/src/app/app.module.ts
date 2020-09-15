@@ -76,6 +76,9 @@ import { EditActionComponent } from './kwenza/MaturityAssessments/assessment-lan
 import { ManageFrmwrksComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-frmwrks/manage-frmwrks.component';
 import { AddFrmwrkComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-frmwrks/add-frmwrk/add-frmwrk.component';
 import { EditFrmwrkComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-frmwrks/edit-frmwrk/edit-frmwrk.component';
+import { ManageVersionsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-versions/manage-versions.component';
+import { AddVersionComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-versions/add-version/add-version.component';
+import { EditVersionComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-versions/edit-version/edit-version.component';
 
 
 //import { ChartModule } from 'angular-highcharts';
@@ -140,7 +143,10 @@ import { EditFrmwrkComponent } from './kwenza/MaturityAssessments/assessment-lan
     EditActionComponent,
     ManageFrmwrksComponent,
     AddFrmwrkComponent,
-    EditFrmwrkComponent
+    EditFrmwrkComponent,
+    ManageVersionsComponent,
+    AddVersionComponent,
+    EditVersionComponent
   ],
   imports: [
     BrowserModule,

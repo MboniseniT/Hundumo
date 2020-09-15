@@ -19,6 +19,7 @@ import { BpQuestionTable } from 'src/app/Models/Assessments/bpQuestionTable';
 import { BpResult } from 'src/app/Models/Assessments/bpResults';
 import { ActionTable } from 'src/app/Models/Assessments/actionTable';
 import { FrmwrkTable } from 'src/app/Models/Assessments/frmwrkTable';
+import { VersionTable } from 'src/app/Models/Assessments/versionTable';
 
 @Injectable({
   providedIn: 'root'
@@ -254,6 +255,15 @@ constructor(private http: HttpClient) { }
       /*Versions*/
       getVersions(): Observable<Version[]>{
         return this.http.get<Version[]>(this.assessmentUrl+'getVersions');
+      }
+      getTableVersions(): Observable<VersionTable[]>{
+        return this.http.get<VersionTable[]>(this.assessmentUrl+'getTableVersions');
+      }
+      AddVersion(version){
+        return this.http.post(this.assessmentUrl+'addVersion', version);
+      }
+      EditVersion(version){
+        return this.http.put(this.assessmentUrl+'editVersion', version);
       }
 
       /*Variants*/
