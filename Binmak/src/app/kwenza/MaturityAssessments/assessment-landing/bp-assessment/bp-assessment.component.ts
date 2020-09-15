@@ -169,7 +169,6 @@ export class BpAssessmentComponent implements OnInit {
 
 
   page:number = 0;
-  kpaPage:number = 0;
   bpPage:number = 0;
   qstnPage:number = 0;
   isSaved:number;
@@ -224,7 +223,6 @@ export class BpAssessmentComponent implements OnInit {
     this.NotAssignedProtect();
     }
     this.page = Number(this.route.snapshot.params['kpaPage']);
-    this.kpaPage = Number(this.route.snapshot.params['kpaPage']);
     this.bpPage = Number(this.route.snapshot.params['bpPage']);
     this.qstnPage = Number(this.route.snapshot.params['qstnPage']);
     this.getKPAs();
@@ -428,8 +426,8 @@ export class BpAssessmentComponent implements OnInit {
       //   console.log('there are questions...');
       // }
       setTimeout(() => {
-        this.form.controls['description'].patchValue(this.BpQuestions[this.kpaPage].qstnDescription);
-      this.form.controls['question'].patchValue(this.BpQuestions[this.kpaPage].qstnQuestion);
+        this.form.controls['description'].patchValue(this.BpQuestions[this.page].qstnDescription);
+      this.form.controls['question'].patchValue(this.BpQuestions[this.page].qstnQuestion);
       this.SetResults();
       });
 
@@ -463,7 +461,7 @@ export class BpAssessmentComponent implements OnInit {
 
   getResults(){
     //retrieve KPI Results from Database
-    this.assessmentService.GetBpResultById(this.GetBpQuestionId(this.kpaPage),Number(this.assessmentID)).subscribe(
+    this.assessmentService.GetBpResultById(this.GetBpQuestionId(this.page),Number(this.assessmentID)).subscribe(
       (data:BpResult) => {
         this.bpResult = data;
         //console.log(data);
@@ -508,42 +506,44 @@ export class BpAssessmentComponent implements OnInit {
   GetBpQuestionId(page){
     if(this.BpQuestions.length > 0){
       //console.log('here...');
-      return this.BpQuestions[page].qstnID;
+      if(this.BpQuestions[page]){
+        return this.BpQuestions[page].qstnID;
+      }
   }
   }
 
   GetDescription(){
     if(this.BpQuestions.length > 0){
         //console.log('here...');
-        return this.BpQuestions[this.kpaPage].qstnDescription;
+        return this.BpQuestions[this.page].qstnDescription;
     }
   }
 
   GetQuestion(){
     if(this.BpQuestions.length > 0){
       //console.log('here...');
-      return this.BpQuestions[this.kpaPage].qstnQuestion;
+      return this.BpQuestions[this.page].qstnQuestion;
   }
   }
 
   GetKpaId(p:number):number{
     if(this.BpQuestions.length > 0){
       //console.log('here...');
-      return this.BpQuestions[this.kpaPage].qstnKpaID;
+      return this.BpQuestions[this.page].qstnKpaID;
   }
   }
 
   GetBpId(p:number):number{
     if(this.BpQuestions.length > 0){
       //console.log('here...');
-      return this.BpQuestions[this.kpaPage].qstnBpID;
+      return this.BpQuestions[this.page].qstnBpID;
   }
   }
 
   GetBpName():string{
     if(this.BpQuestions.length > 0){
       //console.log('here...');
-      return this.BpQuestions[this.kpaPage].qstnBpName;
+      return this.BpQuestions[this.page].qstnBpName;
   }
   }
 
@@ -613,7 +613,7 @@ export class BpAssessmentComponent implements OnInit {
     if(this.formRawValue.all){
       if(this.sectCount == 6){
         this.result = {
-          bpQuestion_id: this.BpQuestions[this.kpaPage].qstnID,
+          bpQuestion_id: this.BpQuestions[this.page].qstnID,
           assess_id: this.assessmentID,
           sect_1: this.formRawValue.all,
           sect_2: this.formRawValue.all,
@@ -624,7 +624,7 @@ export class BpAssessmentComponent implements OnInit {
         }
       }else if(this.sectCount == 5){
         this.result = {
-          bpQuestion_id: this.BpQuestions[this.kpaPage].qstnID,
+          bpQuestion_id: this.BpQuestions[this.page].qstnID,
           assess_id: this.assessmentID,
           sect_1: this.formRawValue.all,
           sect_2: this.formRawValue.all,
@@ -635,7 +635,7 @@ export class BpAssessmentComponent implements OnInit {
         }
       }else if(this.sectCount == 4){
         this.result = {
-          bpQuestion_id: this.BpQuestions[this.kpaPage].qstnID,
+          bpQuestion_id: this.BpQuestions[this.page].qstnID,
           assess_id: this.assessmentID,
           sect_1: this.formRawValue.all,
           sect_2: this.formRawValue.all,
@@ -646,7 +646,7 @@ export class BpAssessmentComponent implements OnInit {
         }
       }else if(this.sectCount == 3){
         this.result = {
-          bpQuestion_id: this.BpQuestions[this.kpaPage].qstnID,
+          bpQuestion_id: this.BpQuestions[this.page].qstnID,
           assess_id: this.assessmentID,
           sect_1: this.formRawValue.all,
           sect_2: this.formRawValue.all,
@@ -657,7 +657,7 @@ export class BpAssessmentComponent implements OnInit {
         }
       }else if(this.sectCount == 2){
         this.result = {
-          bpQuestion_id: this.BpQuestions[this.kpaPage].qstnID,
+          bpQuestion_id: this.BpQuestions[this.page].qstnID,
           assess_id: this.assessmentID,
           sect_1: this.formRawValue.all,
           sect_2: this.formRawValue.all,
@@ -668,7 +668,7 @@ export class BpAssessmentComponent implements OnInit {
         }
       }else if(this.sectCount == 1){
         this.result = {
-          bpQuestion_id: this.BpQuestions[this.kpaPage].qstnID,
+          bpQuestion_id: this.BpQuestions[this.page].qstnID,
           assess_id: this.assessmentID,
           sect_1: this.formRawValue.all,
           sect_2: this.formRawValue.sect_2,
@@ -680,7 +680,7 @@ export class BpAssessmentComponent implements OnInit {
       }
     }else{
       this.result = {
-        bpQuestion_id: this.BpQuestions[this.kpaPage].qstnID,
+        bpQuestion_id: this.BpQuestions[this.page].qstnID,
         assess_id: this.assessmentID,
         sect_1: this.formRawValue.sect_1,
         sect_2: this.formRawValue.sect_2,
@@ -739,7 +739,7 @@ export class BpAssessmentComponent implements OnInit {
       if(this.sectCount == 6){
         this.result = {
           id: this.bpResult.id,
-          bpQuestion_id: this.BpQuestions[this.kpaPage].qstnID,
+          bpQuestion_id: this.BpQuestions[this.page].qstnID,
           assess_id: this.assessmentID,
           sect_1: this.formRawValue.all,
           sect_2: this.formRawValue.all,
@@ -751,7 +751,7 @@ export class BpAssessmentComponent implements OnInit {
       }else if(this.sectCount == 5){
         this.result = {
           id: this.bpResult.id,
-          bpQuestion_id: this.BpQuestions[this.kpaPage].qstnID,
+          bpQuestion_id: this.BpQuestions[this.page].qstnID,
           assess_id: this.assessmentID,
           sect_1: this.formRawValue.all,
           sect_2: this.formRawValue.all,
@@ -763,7 +763,7 @@ export class BpAssessmentComponent implements OnInit {
       }else if(this.sectCount == 4){
         this.result = {
           id: this.bpResult.id,
-          bpQuestion_id: this.BpQuestions[this.kpaPage].qstnID,
+          bpQuestion_id: this.BpQuestions[this.page].qstnID,
           assess_id: this.assessmentID,
           sect_1: this.formRawValue.all,
           sect_2: this.formRawValue.all,
@@ -775,7 +775,7 @@ export class BpAssessmentComponent implements OnInit {
       }else if(this.sectCount == 3){
         this.result = {
           id: this.bpResult.id,
-          bpQuestion_id: this.BpQuestions[this.kpaPage].qstnID,
+          bpQuestion_id: this.BpQuestions[this.page].qstnID,
           assess_id: this.assessmentID,
           sect_1: this.formRawValue.all,
           sect_2: this.formRawValue.all,
@@ -787,7 +787,7 @@ export class BpAssessmentComponent implements OnInit {
       }else if(this.sectCount == 2){
         this.result = {
           id: this.bpResult.id,
-          bpQuestion_id: this.BpQuestions[this.kpaPage].qstnID,
+          bpQuestion_id: this.BpQuestions[this.page].qstnID,
           assess_id: this.assessmentID,
           sect_1: this.formRawValue.all,
           sect_2: this.formRawValue.all,
@@ -799,7 +799,7 @@ export class BpAssessmentComponent implements OnInit {
       }else if(this.sectCount == 1){
         this.result = {
           id: this.bpResult.id,
-          bpQuestion_id: this.BpQuestions[this.kpaPage].qstnID,
+          bpQuestion_id: this.BpQuestions[this.page].qstnID,
           assess_id: this.assessmentID,
           sect_1: this.formRawValue.all,
           sect_2: this.formRawValue.sect_2,
@@ -812,7 +812,7 @@ export class BpAssessmentComponent implements OnInit {
     }else{
       this.result = {
         id: this.bpResult.id,
-        bpQuestion_id: this.BpQuestions[this.kpaPage].qstnID,
+        bpQuestion_id: this.BpQuestions[this.page].qstnID,
         assess_id: this.assessmentID,
         sect_1: this.formRawValue.sect_1,
         sect_2: this.formRawValue.sect_2,
@@ -831,10 +831,10 @@ export class BpAssessmentComponent implements OnInit {
 
   onNext(){
     let newPage:number;
-        if((this.kpaPage + 1) === this.BpQuestions.length){
+        if((this.page + 1) === this.BpQuestions.length){
           //Do nothing...
         }else{
-          newPage = Number(this.kpaPage) + 1;
+          newPage = Number(this.page) + 1;
           if((this.form.valid || this.all.dirty) && this.bpResult){
             //console.log('form is valid & kpiResult is not null. Go to next page.');
            this.ProceedToNextPage(newPage);
@@ -850,9 +850,9 @@ export class BpAssessmentComponent implements OnInit {
       (data:BpResult) => {
         this.bpResult = data;
         //console.log(this.kpiResult);
-        this.kpaPage = newPage;
+        this.page = newPage;
         //this.setViewParams();
-         this._router.navigate(['/binmak/bp-assessment/'+ this.kpaPage +'/0/0']);
+         this._router.navigate(['/binmak/bp-assessment/'+ this.page +'/0/0']);
          setTimeout(() => {
           this.refresh("/");
         });
@@ -867,10 +867,10 @@ export class BpAssessmentComponent implements OnInit {
 
   onBack(){
     let newPage:number;
-    if(this.kpaPage === 0){
+    if(this.page === 0){
       //Do nothing...
     }else{
-      newPage = this.kpaPage - 1;
+      newPage = this.page - 1;
         this.ProceedToNextPage(newPage);
 
     }
@@ -1082,15 +1082,15 @@ export class BpAssessmentComponent implements OnInit {
 
     newPage = this.SearchForSkipLocation(kpa);
         //console.log('form is valid & kpiResult is not null. Go to next page.');
-        this.assessmentService.GetkpiResultById(this.GetBpQuestionId(this.kpaPage),Number(this.assessmentID)).subscribe(
-          (data:KpiResult) => {
+        this.assessmentService.GetBpResultById(this.GetBpQuestionId(newPage),Number(this.assessmentID)).subscribe(
+          (data:BpResult) => {
             result = data;
             //console.log(result);
             if(result){
             this.page = newPage;
-            //this.kpiResult = result;
-            this.setViewParams();
-            this._router.navigate(['/binmak/kpi-assessment/'+newPage.toString()]);
+            //this.bpResult = result;
+            //this.setViewParams();
+            this._router.navigate(['/binmak/bp-assessment/'+ this.page +'/0/0']);
             setTimeout(() => {
               this.refresh("/");
             });
@@ -1245,8 +1245,8 @@ export class BpAssessmentComponent implements OnInit {
 
   SearchForSkipLocation(kpa){
     let p:number;
-    for(p = 0; p < this.kpaBpQuestions.length; p++){
-      if(Number(this.kpaBpQuestions[p].kpa_id) === kpa){
+    for(p = 0; p < this.BpQuestions.length; p++){
+      if(Number(this.BpQuestions[p].qstnKpaID) === kpa){
         return p;
       }
     }
