@@ -898,6 +898,72 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        [HttpGet("getTableFrameworks")]
+        public IActionResult getTableFrameworks()
+        {
+            try
+            {
+                var lAction = _context.frmwrks.ToList();
+                if (lAction != null)
+                {
+                    return Ok(GetTableFrmwrks(lAction));
+                }
+                else
+                {
+                    return NotFound("HTTP resource is currently unavailable!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPost("addFramework")]
+        public IActionResult AddFramework([FromBody] Frmwrks Frmwrk)
+        {
+            try
+            {
+                _context.frmwrks.Add(Frmwrk);
+                _context.SaveChanges();
+
+                var message = Created("", Frmwrk);
+                return message;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPut("editFrmwrk")]
+        public IActionResult EditFrmwrk([FromBody] Frmwrks Frmwrk)
+        {
+            try
+            {
+                var lAction = _context.frmwrks.FirstOrDefault(a => a.ID == Frmwrk.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The Framework with ID = " + Frmwrk.ID + " not found to update!");
+                }
+                else
+                {
+                    lAction.name = Frmwrk.name;
+                    lAction.description = Frmwrk.description;
+                    lAction.user_id = Frmwrk.user_id;
+                    _context.SaveChanges();
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
         //Versions
         [HttpGet("getVersions")]
         public IActionResult GetVersions()
@@ -1808,6 +1874,17 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 LastEdittedBy = _context.Users.FirstOrDefault(id => id.Id == result.user_id).FirstName + " " + _context.Users.FirstOrDefault(id => id.Id == result.user_id).LastName
             });
             return tableBPs;
+        }
+        IEnumerable<object> GetTableFrmwrks(List<Frmwrks> Frmwrk)
+        {
+            var tableFrmwrks = Frmwrk.Select(result => new
+            {
+                frmwrkID = result.ID,
+                frmwrkName = result.name,
+                frmwrkDescription = result.description,
+                LastEdittedBy = ConvertUserID(result.user_id)
+            });
+            return tableFrmwrks;
         }
         IEnumerable<object> GetTableBPQuestions(List<BpQuestions> Questions)
         {

@@ -18,6 +18,7 @@ import { BpTable } from 'src/app/Models/Assessments/bpTable';
 import { BpQuestionTable } from 'src/app/Models/Assessments/bpQuestionTable';
 import { BpResult } from 'src/app/Models/Assessments/bpResults';
 import { ActionTable } from 'src/app/Models/Assessments/actionTable';
+import { FrmwrkTable } from 'src/app/Models/Assessments/frmwrkTable';
 
 @Injectable({
   providedIn: 'root'
@@ -239,6 +240,15 @@ constructor(private http: HttpClient) { }
       /*Frameworks*/
       getFrameworks(): Observable<Frmwrk[]>{
         return this.http.get<Frmwrk[]>(this.assessmentUrl+'getFrameworks');
+      }
+      getTableFrameworks(): Observable<FrmwrkTable[]>{
+        return this.http.get<FrmwrkTable[]>(this.assessmentUrl+'getTableFrameworks');
+      }
+      AddFramework(frmwrk){
+        return this.http.post(this.assessmentUrl+'addFramework', frmwrk);
+      }
+      EditFrmwrk(frmwrk){
+        return this.http.put(this.assessmentUrl+'editFrmwrk', frmwrk);
       }
 
       /*Versions*/

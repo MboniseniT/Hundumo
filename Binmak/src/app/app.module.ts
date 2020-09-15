@@ -73,6 +73,10 @@ import { AddBpQuestionComponent } from './kwenza/MaturityAssessments/assessment-
 import { EditBpQuestionComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-bp-questions/edit-bp-question/edit-bp-question.component';
 import { ManageActionsComponent } from './kwenza/MaturityAssessments/assessment-landing/manage-actions/manage-actions.component';
 import { EditActionComponent } from './kwenza/MaturityAssessments/assessment-landing/manage-actions/edit-action/edit-action.component';
+import { ManageFrmwrksComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-frmwrks/manage-frmwrks.component';
+import { AddFrmwrkComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-frmwrks/add-frmwrk/add-frmwrk.component';
+import { EditFrmwrkComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-frmwrks/edit-frmwrk/edit-frmwrk.component';
+
 
 //import { ChartModule } from 'angular-highcharts';
 
@@ -133,7 +137,10 @@ import { EditActionComponent } from './kwenza/MaturityAssessments/assessment-lan
     AddBpQuestionComponent,
     EditBpQuestionComponent,
     ManageActionsComponent,
-    EditActionComponent
+    EditActionComponent,
+    ManageFrmwrksComponent,
+    AddFrmwrkComponent,
+    EditFrmwrkComponent
   ],
   imports: [
     BrowserModule,
