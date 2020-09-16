@@ -77,8 +77,7 @@ export class ManageActionsComponent implements OnInit {
   ) { }
 
   @HostListener('input') oninput() {
-    this.mdbTablePagination.searchText = this.searchText;
-  }
+   }
 
   ngOnInit() {
     if(localStorage.getItem('currentAssessment')){
