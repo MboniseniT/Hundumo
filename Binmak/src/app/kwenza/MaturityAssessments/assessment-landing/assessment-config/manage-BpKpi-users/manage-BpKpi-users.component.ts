@@ -199,7 +199,7 @@ export class ManageBpKpiUsersComponent implements OnInit, AfterViewInit  {
   }
 
   back(){
-    this.router.navigate(['/binmak/exec-assessment-config']);
+    this.router.navigate(['/binmak/assessment-config']);
   }
 
   //DataTable Methods

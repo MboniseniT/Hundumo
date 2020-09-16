@@ -3,32 +3,37 @@ import { KPA } from 'src/app/Models/Assessments/kpa';
 import { AssessmentsConfigService } from 'src/app/services/Assessments/assessmentsConfig.service';
 import { MdbTableDirective, MdbTablePaginationComponent } from 'ng-uikit-pro-standard';
 import {HttpClient} from "@angular/common/http";
-import { EditExecKpaComponent } from '../../../assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-kpas/edit-exec-kpa/edit-exec-kpa.component';
 import {MDBModalRef, MDBModalService} from "ng-uikit-pro-standard";
 import { ToastService } from 'ng-uikit-pro-standard';
 import { Router } from '@angular/router';
-import { AddExecAssessmentComponent } from '../../../assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/add-exec-assessment/add-exec-assessment.component';
-import { AddKpiComponent } from '../../../assessment-landing/assessment-config/manage-kpis/add-kpi/add-kpi.component';
-import { KPI } from 'src/app/Models/Assessments/kpi';
-import { TableKPI } from 'src/app/Models/Assessments/TableKPI';
-import { EditKpiComponent } from '../manage-kpis/edit-kpi/edit-kpi.component';
 import { AreYouSureComponent } from '../../../are-you-sure/are-you-sure.component';
-import { AddBpQuestionComponent } from './add-bp-question/add-bp-question.component';
-import { BpQuestionTable } from 'src/app/Models/Assessments/bpQuestionTable';
-import { EditBpQuestionComponent } from './edit-bp-question/edit-bp-question.component';
+import { AddBpComponent } from '../../../assessment-landing/assessment-config/manage-bp/add-bp/add-bp.component';
+import { BP } from 'src/app/Models/Assessments/bp';
+import { BpTable } from 'src/app/Models/Assessments/bpTable';
+import { EditBpComponent } from '../../../assessment-landing/assessment-config/manage-bp/edit-bp/edit-bp.component';
+import { AddFrmwrkComponent } from '../manage-frmwrks/add-frmwrk/add-frmwrk.component';
+import { Frmwrk } from 'src/app/Models/Assessments/frmwrk';
+import { FrmwrkTable } from 'src/app/Models/Assessments/frmwrkTable';
+import { EditFrmwrkComponent } from '../manage-frmwrks/edit-frmwrk/edit-frmwrk.component';
+import { AddVersionComponent } from '../manage-versions/add-version/add-version.component';
+import { VersionTable } from 'src/app/Models/Assessments/versionTable';
+import { EditVersionComponent } from '../manage-versions/edit-version/edit-version.component';
+import { AddVariantComponent } from './add-variant/add-variant.component';
+import { VariantTable } from 'src/app/Models/Assessments/variantTable';
+import { EditVariantComponent } from './edit-variant/edit-variant.component';
 
 @Component({
-  selector: 'app-manage-bp-questions',
-  templateUrl: './manage-bp-questions.component.html',
-  styleUrls: ['./manage-bp-questions.component.scss']
+  selector: 'app-manage-variants',
+  templateUrl: './manage-variants.component.html',
+  styleUrls: ['./manage-variants.component.scss']
 })
-export class ManageBpQuestionsComponent implements OnInit, AfterViewInit {
+export class ManageVariantsComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row', { static: true }) row: ElementRef;
 
-  elements: BpQuestionTable[] = [];
-  headElements = ['ID', 'Question', 'Description', 'Bp', 'Kpa','LastEditedBy', 'commands']; //'LastEditedBy',
+  elements: VariantTable[] = [];
+  headElements = ['ID', 'Name', 'Description', 'Last Editted By', 'commands'];
 
   modalRef: MDBModalRef;
 
@@ -71,8 +76,8 @@ export class ManageBpQuestionsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
     this.isBinmak = JSON.parse(localStorage.getItem('currentUser')).isBinmak;
-    this.BinmakProtect();
     //this.AdminProtect();
+    this.BinmakProtect();
     this.loadDataTable();
   }
 
@@ -92,7 +97,7 @@ export class ManageBpQuestionsComponent implements OnInit, AfterViewInit {
 
    //Custom Methods
    loadDataTable(){
-    this.kpaService.GetBpQuestions().subscribe((data: BpQuestionTable[]) => {
+    this.assessmentService.getTableVariants().subscribe((data: VariantTable[]) => {
       this.elements = data;
       //console.log(this.elements);
       this.mdbTable.setDataSource(this.elements);
@@ -111,11 +116,11 @@ export class ManageBpQuestionsComponent implements OnInit, AfterViewInit {
         editableRow: el
       }
     };
-    this.modalRef = this.modalService.show(EditBpQuestionComponent, modalOptions);
+    this.modalRef = this.modalService.show(EditVariantComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-      this.assessmentService.EditBPQuestion(newElement).toPromise().then((data: any) => {
-        //console.log(data);
+      this.assessmentService.EditVariant(newElement).toPromise().then((data: any) => {
+        //console.log(newElement);
         // success notification
         this.toastrService.success('Update Successful!');
         setTimeout(() => {
@@ -137,13 +142,13 @@ export class ManageBpQuestionsComponent implements OnInit, AfterViewInit {
     const elementIndex = this.elements.findIndex((elem: any) => el === elem);
     const modalOptions = {
       data: {
-        editableRow: {message:"Are you sure you want to DELETE Question " + el.qstnID + " under BP "+ el.qstnBpID +", "+ el.qstnBpName + "?"}
+        editableRow: {message:"Are you sure you want to DELETE BP " + el.bpID + ": "+ el.bpName + "?"}
       }
     };
     this.modalRef = this.modalService.show(AreYouSureComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-    this.assessmentService.DeleteBPQuestion(el).toPromise().then((data: any) => {
+    this.assessmentService.DeleteBP(el).toPromise().then((data: any) => {
       // success notification
       this.toastrService.warning('Deleted Successfully!');
       setTimeout(() => {
@@ -162,7 +167,7 @@ export class ManageBpQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   back(){
-    this.router.navigate(['/binmak/assessment-config']);
+    this.router.navigate(['/binmak/assessment-system-config']);
   }
 
   //DataTable Methods
@@ -203,10 +208,10 @@ export class ManageBpQuestionsComponent implements OnInit, AfterViewInit {
       //   editableRow: {kpa_id: this.kpaLevel.kpaID, level_id: this.kpaLevel.LevelID, description: "", frmwrk_id: null, version_id: null, variant_id: null}
       // }
     };
-    this.modalRef = this.modalService.show(AddBpQuestionComponent, modalOptions);
+    this.modalRef = this.modalService.show(AddVariantComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
       //Call funtion to update database
-      this.assessmentService.AddBPQuestion(newElement).toPromise().then((data: any) => {
+      this.assessmentService.AddVariant(newElement).toPromise().then((data: any) => {
         // success notification
         this.toastrService.success('Addition Successful!');
         setTimeout(() => {

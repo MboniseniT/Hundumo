@@ -9,7 +9,7 @@
 
     </div>
     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-      <div class="row">
+      <div class="row" style="justify-content: center;">
           <button type="button" class="btn btn-info btn-block mb-1" aria-label="Close" mdbWavesEffect (click)="onAdd()"
           style="background-color: #032c57 !important; color: white;"><i class="fas fa-plus"></i>
           ADD NEW</button>
@@ -17,7 +17,7 @@
     </div>
   </div>
 
-    <h5 style="text-align: center;">Manage KPIs</h5>
+    <h5 style="text-align: center;">Manage Variants</h5>
 
     <div class="row">
       <div class="col-md-6 mx-auto">
@@ -43,39 +43,24 @@
           <tr mdbTableCol
               *ngFor="let el of elements; let i = index">
             <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
-                scope="row">{{el.id}}
+                scope="row">{{el.variantID}}
             </th>
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
-                class="red-text">{{el.name}}
+                class="red-text">{{el.variantName}}
             </td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-              {{el.description}}
-            </td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-              {{el.guideline}}
-            </td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-              {{el.innocence}}
-            </td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-              {{el.awareness}}
-            </td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-              {{el.understanding}}
-            </td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-              {{el.competence}}
-            </td>
-            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
-              {{el.excellence}}
-            </td>
+            <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
+              class="red-text">{{el.variantDescription}}
+          </td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
+            class="red-text">{{el.lastEdittedBy}}
+        </td>
             <!-- <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
               {{el.userId}}
             </td> -->
             <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
               <!-- style="width: 200px;" -->
               <button mdbBtn color="warning" size="sm" mdbWavesEffect (click)="onEdit(el)"><i class="far fa-edit"></i></button>
-              <button mdbBtn color="danger" size="sm" mdbWavesEffect (click)="onDelete(el)"><i class="far fa-trash-alt"></i></button>
+              <!-- <button mdbBtn color="danger" size="sm" mdbWavesEffect (click)="onDelete(el)"><i class="far fa-trash-alt"></i></button> -->
             </td>
           </tr>
           </tbody>

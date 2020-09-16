@@ -45,11 +45,11 @@
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/assessment-landing">
                 <div style="text-align: center;">
                     <i class="fas fa-graduation-cap fa-3x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
-                    <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Assessments</h6>
+                    <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Consensus Assessments</h6>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/assessment-system-config">
+            <div [hidden]="!isAdmin" class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/assessment-system-config">
               <!-- routerLink="/binmak/assessment-system-config" -->
               <div style="text-align: center;">
                   <i class="fas fa-cogs fa-3x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>

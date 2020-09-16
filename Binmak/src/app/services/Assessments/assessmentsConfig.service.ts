@@ -20,6 +20,7 @@ import { BpResult } from 'src/app/Models/Assessments/bpResults';
 import { ActionTable } from 'src/app/Models/Assessments/actionTable';
 import { FrmwrkTable } from 'src/app/Models/Assessments/frmwrkTable';
 import { VersionTable } from 'src/app/Models/Assessments/versionTable';
+import { VariantTable } from 'src/app/Models/Assessments/variantTable';
 
 @Injectable({
   providedIn: 'root'
@@ -269,6 +270,15 @@ constructor(private http: HttpClient) { }
       /*Variants*/
       getVariants(): Observable<Variant[]>{
         return this.http.get<Variant[]>(this.assessmentUrl+'getVariants');
+      }
+      getTableVariants(): Observable<VariantTable[]>{
+        return this.http.get<VariantTable[]>(this.assessmentUrl+'getTableVariants');
+      }
+      AddVariant(version){
+        return this.http.post(this.assessmentUrl+'addVariant', version);
+      }
+      EditVariant(version){
+        return this.http.put(this.assessmentUrl+'editVariant', version);
       }
 
       /*AssetNodes*/

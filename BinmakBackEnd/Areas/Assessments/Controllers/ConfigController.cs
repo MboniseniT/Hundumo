@@ -1076,6 +1076,72 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        [HttpGet("getTableVariants")]
+        public IActionResult getTableVariants()
+        {
+            try
+            {
+                var lAction = _context.variants.ToList();
+                if (lAction != null)
+                {
+                    return Ok(GetTableVariants(lAction));
+                }
+                else
+                {
+                    return NotFound("HTTP resource is currently unavailable!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPost("addVariant")]
+        public IActionResult AddVariant([FromBody] Variants Variant)
+        {
+            try
+            {
+                _context.variants.Add(Variant);
+                _context.SaveChanges();
+
+                var message = Created("", Variant);
+                return message;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
+        [HttpPut("editVariant")]
+        public IActionResult EditVariant([FromBody] Variants Variant)
+        {
+            try
+            {
+                var lAction = _context.variants.FirstOrDefault(a => a.ID == Variant.ID);
+                if (lAction == null)
+                {
+                    return NotFound("The Variant with ID = " + Variant.ID + " not found to update!");
+                }
+                else
+                {
+                    lAction.name = Variant.name;
+                    lAction.description = Variant.description;
+                    lAction.user_id = Variant.user_id;
+                    _context.SaveChanges();
+                    return Ok(lAction);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+
+        }
+
         //Asset Nodes
         [HttpPost("getAssestNodes")]
         public IActionResult GetAssetNodes([FromBody] Reference Ref)
@@ -1962,6 +2028,17 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 LastEdittedBy = ConvertUserID(result.user_id)
             });
             return tableVersions;
+        }
+        IEnumerable<object> GetTableVariants(List<Variants> Variant)
+        {
+            var tableVariants = Variant.Select(result => new
+            {
+                variantID = result.ID,
+                variantName = result.name,
+                variantDescription = result.description,
+                LastEdittedBy = ConvertUserID(result.user_id)
+            });
+            return tableVariants;
         }
         IEnumerable<object> GetTableBPQuestions(List<BpQuestions> Questions)
         {

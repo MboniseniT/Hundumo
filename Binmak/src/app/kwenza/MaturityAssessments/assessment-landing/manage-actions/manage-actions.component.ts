@@ -60,6 +60,7 @@ export class ManageActionsComponent implements OnInit {
   formError:string = "";
 
   isAdmin:boolean;
+  isBinmak:boolean;
 
   form = new FormGroup({
     section: new FormControl('', [Validators.required, Validators.minLength(1)]),
@@ -93,6 +94,8 @@ export class ManageActionsComponent implements OnInit {
     });
     }
     this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
+    this.isBinmak = JSON.parse(localStorage.getItem('currentUser')).isBinmak;
+    //this.BinmakProtect();
     this.AdminProtect();
 
   }
@@ -114,6 +117,12 @@ export class ManageActionsComponent implements OnInit {
   AdminProtect(){
     if (!this.isAdmin) {
       console.log('here');
+      this.router.navigate(['/binmak/assessment-types']);
+    }
+  }
+
+  BinmakProtect(){
+    if (!this.isBinmak) {
       this.router.navigate(['/binmak/assessment-types']);
     }
   }

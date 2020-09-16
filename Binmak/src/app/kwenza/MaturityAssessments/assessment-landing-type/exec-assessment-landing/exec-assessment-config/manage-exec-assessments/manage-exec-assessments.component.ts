@@ -61,6 +61,7 @@ export class ManageExecAssessmentsComponent implements OnInit, AfterViewInit {
   });
 
   isAdmin:boolean;
+  isBinmak:boolean;
 
   constructor(
     private assessmentService: AssessmentsConfigService,
@@ -78,7 +79,9 @@ export class ManageExecAssessmentsComponent implements OnInit, AfterViewInit {
 
 ngOnInit():void {
   this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
+  this.isBinmak = JSON.parse(localStorage.getItem('currentUser')).isBinmak;
     this.AdminProtect();
+    //this.BinmakProtect();
     this.loadDataTable();
     this.loadDropdowns();
   }
@@ -325,7 +328,12 @@ ngOnInit():void {
 
     AdminProtect(){
       if (!this.isAdmin) {
-        console.log('here');
+        this.router.navigate(['/binmak/assessment-types']);
+      }
+    }
+
+    BinmakProtect(){
+      if (!this.isBinmak) {
         this.router.navigate(['/binmak/assessment-types']);
       }
     }
