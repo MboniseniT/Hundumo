@@ -11,6 +11,7 @@ export class ExecAssessmentConfigComponent implements OnInit {
   name: string;
   surname: string;
   isAdmin:boolean;
+  isBinmak:boolean;
 
   constructor(private router: Router) { }
 
@@ -18,7 +19,8 @@ export class ExecAssessmentConfigComponent implements OnInit {
     this.name = JSON.parse(localStorage.getItem('currentUser')).firstName;
     this.surname = JSON.parse(localStorage.getItem('currentUser')).lastName;
     this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
-    this.AdminProtect();
+    this.isBinmak = JSON.parse(localStorage.getItem('currentUser')).isBinmak;
+    this.BinmakOrAdminProtect();
   }
 
   back(){
@@ -32,4 +34,11 @@ export class ExecAssessmentConfigComponent implements OnInit {
     }
   }
 
+  BinmakOrAdminProtect(){
+    if(this.isBinmak || this.isAdmin){
+      return true;
+    }else{
+      return false;
+    }
+  }
 }

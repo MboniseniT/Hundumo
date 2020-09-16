@@ -78,7 +78,7 @@ export class ManageCharacteristicsComponent implements OnInit, AfterViewInit {
     this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
     this.isBinmak = JSON.parse(localStorage.getItem('currentUser')).isBinmak;
     this.BinmakProtect();
-    this.AdminProtect();
+    //this.AdminProtect();
     //this.loadDataTable();
     this.loadDropdowns();
   }
