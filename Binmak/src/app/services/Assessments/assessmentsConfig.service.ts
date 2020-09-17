@@ -26,7 +26,8 @@ import { VariantTable } from 'src/app/Models/Assessments/variantTable';
   providedIn: 'root'
 })
 export class AssessmentsConfigService {
-  assessmentUrl="http://localhost:44318/Assessments/Config/";
+  //assessmentUrl="http://localhost:44318/Assessments/Config/";
+  assessmentUrl="http://binmakdev.dedicated.co.za:93/Assessments/Config/";
 constructor(private http: HttpClient) { }
 
 //Exec Assessments

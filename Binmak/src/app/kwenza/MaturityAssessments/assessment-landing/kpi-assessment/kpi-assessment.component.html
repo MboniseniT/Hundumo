@@ -29,10 +29,11 @@
                   </div>
                 </div>
                 <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3 d-flex flex-row-reverse">
-                  <h5><a [hidden]="last" (click)="onNext()" style="color: white;"><i class="fas fa-arrow-circle-right"></i></a></h5>
+                  <h5><a (click)="onNext()" style="color: white;"><i class="fas fa-arrow-circle-right"></i></a></h5>
                 </div>
               </div>
             </mdb-card-header>
+            <mdb-progress-bar [hidden]="GetDescription()" class="progress primary-color-dark" mode="indeterminate"></mdb-progress-bar>
             <mdb-card-body>
                 <form [formGroup]="form">
 
@@ -40,8 +41,9 @@
                     <div class="col" mdbTooltip="{{GetDescription()}}" placement="top">
                       <div >
                         <label for="description">description</label>
-                        <textarea type="text" id="description" class="md-textarea form-control mb-4" formControlName="description"
-                                mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+
+                        <textarea disabled type="text" id="description" class="md-textarea form-control mb-4"
+                                mdbValidate [validateSuccess]="false" rows="2" mdbInput>{{GetDescription()}}</textarea>
 
                       </div>
                     </div>
@@ -50,8 +52,8 @@
                     <div class="col" mdbTooltip="{{GetGuideline()}}" placement="top">
                       <div >
                         <label for="guideline">guideline</label>
-                        <textarea type="text" id="guideline" class="md-textarea form-control mb-4" formControlName="guideline"
-                                mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+                        <textarea disabled type="text" id="guideline" class="md-textarea form-control mb-4"
+                                mdbValidate [validateSuccess]="false" rows="2" mdbInput>{{GetGuideline()}}</textarea>
                       </div>
                     </div>
                   </div>
@@ -64,40 +66,40 @@
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                       <div mdbTooltip="{{GetInnocence()}}" placement="top">
                         <label for="innocence">innocence</label>
-                        <textarea style="border-color: #f13405;" type="text" id="innocence" class="md-textarea form-control mb-4" formControlName="innocence"
-                                mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+                        <textarea disabled style="border-color: #f13405;" type="text" id="innocence" class="md-textarea form-control mb-4"
+                                mdbValidate [validateSuccess]="false" rows="2" mdbInput>{{GetInnocence()}}</textarea>
 
                       </div>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                       <div mdbTooltip="{{GetAwareness()}}" placement="top">
                         <label for="awareness">awareness</label>
-                        <textarea style="border-color: #fd8a07;" type="text" id="awareness" class="md-textarea form-control mb-4" formControlName="awareness"
-                                mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+                        <textarea disabled style="border-color: #fd8a07;" type="text" id="awareness" class="md-textarea form-control mb-4"
+                                mdbValidate [validateSuccess]="false" rows="2" mdbInput>{{GetAwareness()}}</textarea>
 
                       </div>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                       <div mdbTooltip="{{GetUnderstanding()}}" placement="top">
                         <label for="understanding">understanding</label>
-                        <textarea style="border-color: #f9fd06;" type="text" id="understanding" class="md-textarea form-control mb-4" formControlName="understanding"
-                                mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+                        <textarea disabled style="border-color: #f9fd06;" type="text" id="understanding" class="md-textarea form-control mb-4"
+                                mdbValidate [validateSuccess]="false" rows="2" mdbInput>{{GetUnderstanding()}}</textarea>
 
                       </div>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                       <div mdbTooltip="{{GetCompetence()}}" placement="top">
                         <label for="competence">competence</label>
-                        <textarea style="border-color: #03880e;" type="text" id="competence" class="md-textarea form-control mb-4" formControlName="competence"
-                                mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+                        <textarea disabled style="border-color: #03880e;" type="text" id="competence" class="md-textarea form-control mb-4"
+                                mdbValidate [validateSuccess]="false" rows="2" mdbInput>{{GetCompetence()}}</textarea>
 
                       </div>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                       <div mdbTooltip="{{GetExcellence()}}" placement="top">
                         <label for="excellence">excellence</label>
-                        <textarea style="border-color: #034388;" type="text" id="excellence" class="md-textarea form-control mb-4" formControlName="excellence"
-                                mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+                        <textarea disabled style="border-color: #034388;" type="text" id="excellence" class="md-textarea form-control mb-4"
+                                mdbValidate [validateSuccess]="false" rows="2" mdbInput>{{GetExcellence()}}</textarea>
 
                       </div>
                     </div>
@@ -105,6 +107,7 @@
                   <hr />
                   <div class="row" style="justify-content: center;">
                     <h6><mdb-badge style="background-color: #032c57 !important;">Please select an answer for each section.</mdb-badge>
+                      <mdb-progress-bar [hidden]="resultsExist" class="progress primary-color-dark" mode="indeterminate"></mdb-progress-bar>
                     </h6>
                   </div>
                   <div class="row">
@@ -200,6 +203,7 @@
                   <h5 style="color: white;">Progress</h5>
               </div>
             </mdb-card-header>
+            <mdb-progress-bar [hidden]="progress" class="progress primary-color-dark" mode="indeterminate"></mdb-progress-bar>
             <mdb-card-body>
               <div class="row">
                 <div class="col" mdbTooltip="Progress: {{GetAssessProgress()}}%" placement="top">

@@ -60,11 +60,12 @@ namespace BinmakBackEnd
 
             //var connection = @"Server=DPSA32213;Initial Catalog=HundumoDatabase;Trusted_Connection=True;MultipleActiveResultSets=true";
             //var connection = @"Server=tcp:binmakdev.dedicated.co.za;Initial Catalog=HundumoDatabase;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
+            var connection = @"Server=tcp:binmakdev.dedicated.co.za;Initial Catalog=HundumoBinmakDB;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
             //var connection = @"Server=tcp:binmakdev.dedicated.co.za;Initial Catalog=BinmakDb;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
             //var connection = @"Server=tcp:binmak.com;Initial Catalog=BinmakDb;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
             services.AddDbContext<BinmakDbContext>
-             (options => options.UseSqlServer(Configuration.GetConnectionString("HundumoDbContext")));
-             //(options => options.UseSqlServer(connection));
+             (options => options.UseSqlServer(connection));  //Configuration.GetConnectionString("HundumoDbContext")
+                                                   //(options => options.UseSqlServer(connection));
 
             services.AddDirectoryBrowser();
 

@@ -175,6 +175,7 @@ export class KpiAssessmentComponent implements OnInit {
   kpiResult:KpiResult;
   formRawValue:any;
   progress:any;
+  resultsExist:boolean;
 
   levels:Array<any>;
 
@@ -217,6 +218,7 @@ export class KpiAssessmentComponent implements OnInit {
     this.SavedProtect();
     this.NotAssignedProtect();
     }
+    this.resultsExist = false;
     this.page = Number(this.route.snapshot.params['id']);
     this.getKPAs();
     this.getKPIs();
@@ -241,11 +243,11 @@ export class KpiAssessmentComponent implements OnInit {
       }
     },500);
     setTimeout(() => {
-      this.getResults();
-      setTimeout(() => {
-        this.setViewParams();
-      },500);
-    }, 500);
+      // this.getResults();
+      // setTimeout(() => {
+      //   this.setViewParams();
+      // },500);
+    });
   }
 
   setHasSections(){
@@ -288,6 +290,10 @@ export class KpiAssessmentComponent implements OnInit {
       (data:KPI[]) => {
         this.kpi = data;
         //console.log(data);
+        this.getResults();
+      setTimeout(() => {
+        //this.setViewParams();
+      },500);
         this.KPItotalRecords = data.length;
       }, error => {
         console.log('httperror: ');
@@ -368,13 +374,13 @@ export class KpiAssessmentComponent implements OnInit {
     if(this.KPAtotalRecords){
       this.initKPA = this.kpa;
       this.iniKPI = this.kpi;
-      this.form.controls['description'].patchValue(this.kpi[this.page].description);
-      this.form.controls['guideline'].patchValue(this.kpi[this.page].guideline);
-      this.form.controls['innocence'].patchValue(this.kpi[this.page].innocence);
-      this.form.controls['awareness'].patchValue(this.kpi[this.page].awareness);
-      this.form.controls['understanding'].patchValue(this.kpi[this.page].understanding);
-      this.form.controls['competence'].patchValue(this.kpi[this.page].competence);
-      this.form.controls['excellence'].patchValue(this.kpi[this.page].excellence);
+      //this.form.controls['description'].patchValue(this.GetDescription());
+      //this.form.controls['guideline'].patchValue(this.GetGuideline());
+      //this.form.controls['innocence'].patchValue(this.GetInnocence());
+      //this.form.controls['awareness'].patchValue(this.GetAwareness());
+      //this.form.controls['understanding'].patchValue(this.GetUnderstanding());
+      //this.form.controls['competence'].patchValue(this.GetCompetence());
+      //this.form.controls['excellence'].patchValue(this.GetExcellence());
       this.SetResults();
     }
   }
@@ -409,6 +415,8 @@ export class KpiAssessmentComponent implements OnInit {
     this.assessmentService.GetkpiResultById(this.GetKpiId(this.page),Number(this.assessmentID)).subscribe(
       (data:KpiResult) => {
         this.kpiResult = data;
+        this.setViewParams();
+        this.resultsExist = true;
         //console.log(data);
       }, error => {
         console.log('httperror: ');

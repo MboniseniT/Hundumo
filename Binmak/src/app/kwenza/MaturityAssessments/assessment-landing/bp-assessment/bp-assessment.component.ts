@@ -180,6 +180,7 @@ export class BpAssessmentComponent implements OnInit {
   bpResult:BpResult;
   formRawValue:any;
   progress:any;
+  resultsExist:boolean;
 
   levels:Array<any>;
 
@@ -222,6 +223,7 @@ export class BpAssessmentComponent implements OnInit {
     this.SavedProtect();
     this.NotAssignedProtect();
     }
+    this.resultsExist = false;
     this.page = Number(this.route.snapshot.params['kpaPage']);
     this.bpPage = Number(this.route.snapshot.params['bpPage']);
     this.qstnPage = Number(this.route.snapshot.params['qstnPage']);
@@ -248,9 +250,9 @@ export class BpAssessmentComponent implements OnInit {
       }
     },500);
     setTimeout(() => {
-      this.getResults();
+
       setTimeout(() => {
-        this.setViewParams();
+
       },500);
     }, 500);
   }
@@ -293,6 +295,7 @@ export class BpAssessmentComponent implements OnInit {
     this.assessmentService.GetFilteredTableBpQuestions(this.GetAssessment()).subscribe(
       (data:BpQuestionTable[]) => {
         this.BpQuestions = data;
+        this.getResults();
         //console.log(this.BpQuestions);
       }, error => {
         console.log('httperror: ');
@@ -426,8 +429,8 @@ export class BpAssessmentComponent implements OnInit {
       //   console.log('there are questions...');
       // }
       setTimeout(() => {
-        this.form.controls['description'].patchValue(this.BpQuestions[this.page].qstnDescription);
-      this.form.controls['question'].patchValue(this.BpQuestions[this.page].qstnQuestion);
+      //   this.form.controls['description'].patchValue(this.BpQuestions[this.page].qstnDescription);
+      // this.form.controls['question'].patchValue(this.BpQuestions[this.page].qstnQuestion);
       this.SetResults();
       });
 
@@ -464,6 +467,8 @@ export class BpAssessmentComponent implements OnInit {
     this.assessmentService.GetBpResultById(this.GetBpQuestionId(this.page),Number(this.assessmentID)).subscribe(
       (data:BpResult) => {
         this.bpResult = data;
+        this.setViewParams();
+        this.resultsExist = true;
         //console.log(data);
       }, error => {
         console.log('httperror: ');

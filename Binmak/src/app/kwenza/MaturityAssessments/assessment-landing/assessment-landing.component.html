@@ -22,8 +22,15 @@
               <div class="row">
                 <div class="col">
                   <h5 [hidden]="!userAssessments.length" style="font-weight:250; color: white; font-weight: bold; text-align: center;" class="tk-museo-sans">Choose An Assessment</h5>
-                  <h5 [hidden]="userAssessments.length" style="font-weight:250; color: white; font-weight: bold; text-align: center;" class="tk-museo-sans">You have no Assessments assigned to you. Please check with your Administrator to confirm this.</h5>
+                  <h5 [hidden]="!(!userAssessments.length && userAssessCheck)" style="font-weight:250; color: white; font-weight: bold; text-align: center;" class="tk-museo-sans">You have no Assessments assigned to you. Please check with your Administrator to confirm this.</h5>
                   <!-- [hidden]="isAdmin" -->
+                  <div class="row" style="justify-content: center;">
+                    <h5 [hidden]="spinner" style="font-weight:250; color: white; font-weight: bold; text-align: center;" class="tk-museo-sans">Loading Your Assessments...</h5>
+
+                  </div>
+                  <div class="row" style="justify-content: center;">
+                    <mdb-spinner [hidden]="spinner" spinnerType="big" spinnerColor="blue"></mdb-spinner>
+                  </div>
                   <br>
                 </div>
                 <div class="row" style="justify-content: center;">
@@ -62,8 +69,13 @@
     <div style="padding:20px">
         <br>
 <br>
-        <div class="row" style="justify-content: center;">
+<div class="row" style="justify-content: center;">
+  <!-- <h5 [hidden]="loadAssesSpinner" style="font-weight:250; color: black; font-weight: bold; text-align: center;" class="tk-museo-sans">Loading...</h5> -->
+  <mdb-spinner [hidden]="loadAssesSpinner" spinnerType="big" spinnerColor="blue"></mdb-spinner>
+</div>
+        <div class="row" style="justify-content: center;" [hidden]="!loadAssesSpinner">
             <!-- <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"></div> -->
+
 
             <div [hidden]="!Visible() || !hasSections" class="col-lg-3 col-md-3 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/consensus-results">
               <!-- [hidden]="isAdmin" -->
