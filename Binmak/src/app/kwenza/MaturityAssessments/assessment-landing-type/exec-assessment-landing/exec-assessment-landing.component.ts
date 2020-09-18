@@ -20,6 +20,10 @@ export class ExecAssessmentLandingComponent implements OnInit {
   assessName:string = "";
   isAdmin:boolean;
 
+  userAssessCheck:boolean;
+  spinner:boolean;
+  loadAssesSpinner:boolean = true;
+
   assessment: Assessment[];
   assessTotalRecords:number;
 
@@ -38,6 +42,8 @@ export class ExecAssessmentLandingComponent implements OnInit {
     this.name = JSON.parse(localStorage.getItem('currentUser')).firstName;
     this.surname = JSON.parse(localStorage.getItem('currentUser')).lastName;
     this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
+    this.userAssessCheck = false;
+    this.spinner = false;
     this.loadUserAssessments();
     if(localStorage.getItem('currentAssessment')){
       this.isSaved = Number(JSON.parse(localStorage.getItem('currentAssessment')).isSaved);
@@ -55,28 +61,35 @@ export class ExecAssessmentLandingComponent implements OnInit {
       this.assessmentService.GetExecAssessmentUsers().subscribe(
         (data:any[]) => {
           this.userAssessments = data;
+          this.userAssessCheck = true;
+          this.spinner = true;
           //console.log(data);
           this.totalRecords = data.length;
         }, error => {
           console.log('httperror: ');
           console.log(error);
+          this.spinner = true;
         }
       );
     }else{
       this.assessmentService.GetExecAssessmentUsersForSelection().subscribe(
         (data:any[]) => {
           this.userAssessments = data;
+          this.userAssessCheck = true;
+          this.spinner = true;
           //console.log(data);
           this.totalRecords = data.length;
         }, error => {
           console.log('httperror: ');
           console.log(error);
+          this.spinner = true;
         }
       );
     }
   }
 
   selectAssessment(assessID:string, isSavedState:number){
+    this.loadAssesSpinner = false;
     localStorage.removeItem("currentAssessment");
     this.assessmentService.GetAssessmentById(assessID).subscribe(
       (data:Assessment[]) => {
@@ -89,6 +102,7 @@ export class ExecAssessmentLandingComponent implements OnInit {
         //console.log(localStorage.getItem("currentAssessment"));
         this.isSaved = Number(JSON.parse(localStorage.getItem('currentAssessment')).isSaved);
         this.assessName = JSON.parse(localStorage.getItem('currentAssessment')).assess_name;
+        this.loadAssesSpinner = true;
       }, error => {
         console.log('httperror: ');
         console.log(error);

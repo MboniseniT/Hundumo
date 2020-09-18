@@ -851,20 +851,21 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
-        [HttpPut("editResult")]
+        [HttpPost("editResult")]
         public IActionResult editResult([FromBody] Results Result)
         {
             try
             {
-                var lAction = _context.results.FirstOrDefault(a => a.ID == Result.ID);
+                var lAction = _context.results.Where(a => a.kpa_id == Result.kpa_id && a.assess_id == Result.assess_id).ToList();
                 if (lAction == null)
                 {
-                    return NotFound("The Result with ID = " + Result.ID + " not found to update!");
+                    return NotFound("The Results not found to update!");
                 }
                 else
                 {
-                    lAction.value = Result.value;
+                    _context.results.RemoveRange(lAction);
                     _context.SaveChanges();
+
                     return Ok(lAction);
                 }
             }
@@ -1265,7 +1266,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
-        [HttpPost("deleteAssessment")]
+        
 
         [HttpPut("saveAssessment")]
         public IActionResult SaveAssessment([FromBody] SaveAssessIdSet idSet)
@@ -1290,6 +1291,8 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
+
+        [HttpPost("deleteAssessment")]
         public IActionResult DeleteAssessment([FromBody] Assessment Assess)
         {
             try

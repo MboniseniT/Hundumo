@@ -26,8 +26,8 @@ import { VariantTable } from 'src/app/Models/Assessments/variantTable';
   providedIn: 'root'
 })
 export class AssessmentsConfigService {
-  //assessmentUrl="http://localhost:44318/Assessments/Config/";
-  assessmentUrl="http://binmakdev.dedicated.co.za:93/Assessments/Config/";
+  assessmentUrl="http://localhost:44318/Assessments/Config/";
+  //assessmentUrl="http://binmakdev.dedicated.co.za:93/Assessments/Config/";
 constructor(private http: HttpClient) { }
 
 //Exec Assessments
@@ -314,10 +314,10 @@ constructor(private http: HttpClient) { }
         return this.http.post(this.assessmentUrl+'addResult', result);
       }
 
-      putResult(id:string,result){
-        let idSet:any = {ID:id};
-        result = Object.assign(result, idSet);
-        return this.http.put(this.assessmentUrl+'editResult', result)
+      putResult(result){
+        //let idSet:any = {ID:id};
+        //result = Object.assign(result, idSet);
+        return this.http.post(this.assessmentUrl+'editResult', result)
       }
 
       //KPI Results
