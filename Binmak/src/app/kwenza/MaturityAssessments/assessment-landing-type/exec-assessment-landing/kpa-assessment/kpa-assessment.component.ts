@@ -218,7 +218,7 @@ export class KpaAssessmentComponent implements OnInit {
 
   //Init Methods
   getKPAs(){
-    console.log('kpas');
+    //console.log('kpas');
     //retrieve KPAs from Database
     this.assessmentService.GetExecKPAs().subscribe(
       (data:KPA[]) => {
@@ -233,7 +233,7 @@ export class KpaAssessmentComponent implements OnInit {
     );
   }
   getLevels(){
-    console.log('levels');
+    //console.log('levels');
      //retrieve Levels from Database
     this.assessmentService.getLevels().subscribe(
       (data:Level[]) => {
@@ -253,7 +253,7 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[0].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level1 = data;
-        console.log('chars1');
+        //console.log('chars1');
         setTimeout(() => {
           if(this.level1totalRecords && this.level2totalRecords && this.level3totalRecords && this.level4totalRecords && this.level5totalRecords){
             this.charsSet = true;
@@ -269,7 +269,7 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[1].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level2 = data;
-        console.log('chars2');
+        //console.log('chars2');
         setTimeout(() => {
           if(this.level1totalRecords && this.level2totalRecords && this.level3totalRecords && this.level4totalRecords && this.level5totalRecords){
             this.charsSet = true;
@@ -285,7 +285,7 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[2].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level3 = data;
-        console.log('chars3');
+        //console.log('chars3');
         setTimeout(() => {
           if(this.level1totalRecords && this.level2totalRecords && this.level3totalRecords && this.level4totalRecords && this.level5totalRecords){
             this.charsSet = true;
@@ -301,7 +301,7 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[3].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level4 = data;
-        console.log('chars4');
+        //console.log('chars4');
         setTimeout(() => {
           if(this.level1totalRecords && this.level2totalRecords && this.level3totalRecords && this.level4totalRecords && this.level5totalRecords){
             this.charsSet = true;
@@ -317,7 +317,7 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[4].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level5 = data;
-        console.log('chars5');
+        //console.log('chars5');
         setTimeout(() => {
           if(this.level1totalRecords && this.level2totalRecords && this.level3totalRecords && this.level4totalRecords && this.level5totalRecords){
             this.charsSet = true;
@@ -342,7 +342,7 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getCurrentUserResults(this.kpaID.toString(),this.level[0].id.toString(), this.assessID, this.userID).subscribe(
       (r1:LResult[]) => {
         this.level1Results = r1;
-        console.log('getResults1');
+        //console.log('getResults1');
         setTimeout(() => {
           if(!this.resultsSet){
           this.setViewParams();
@@ -358,7 +358,7 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getCurrentUserResults(this.kpaID.toString(),this.level[1].id.toString(), this.assessID, this.userID).subscribe(
       (data:LResult[]) => {
         this.level2Results = data;
-        console.log('getResults2');
+        //console.log('getResults2');
         setTimeout(() => {
           if(!this.resultsSet){
           this.setViewParams();
@@ -374,7 +374,7 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getCurrentUserResults(this.kpaID.toString(),this.level[2].id.toString(), this.assessID, this.userID).subscribe(
       (data:LResult[]) => {
         this.level3Results = data;
-        console.log('getResults3');
+        //console.log('getResults3');
         setTimeout(() => {
           if(!this.resultsSet){
           this.setViewParams();
@@ -390,7 +390,8 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getCurrentUserResults(this.kpaID.toString(),this.level[3].id.toString(), this.assessID, this.userID).subscribe(
       (data:LResult[]) => {
         this.level4Results = data;
-        console.log('getResults4');
+
+        //console.log('getResults4');
 
           setTimeout(() => {
             if(!this.resultsSet){
@@ -415,7 +416,7 @@ export class KpaAssessmentComponent implements OnInit {
           }
           }, 2000);
 
-        console.log('getResults5');
+        //console.log('getResults5');
 
         //console.log(data);
         this.level5ResultstotalRecords = data.length;
@@ -570,7 +571,7 @@ export class KpaAssessmentComponent implements OnInit {
       this.rslt4();
       this.rslt5();
 
-      console.log('setViewParams');
+      //console.log('setViewParams');
     }
 
     if(this.KPAtotalRecords){
