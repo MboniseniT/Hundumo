@@ -12,8 +12,8 @@ namespace BinmakBackEnd.Areas.AssetHealth.Models
         public int AssetNodeId { get; set; }
         public int SizeCategoryId { get; set; }
 
-        public double RmsAlert { get; set; }
-        public double RmsAlarm { get; set; }
+        public decimal RmsAlert { get; set; }
+        public decimal RmsAlarm { get; set; }
         public int MachineTypeId { get; set; }
         public int RevolutionPerMinute { get; set; }
         public int InsulationLevelId { get; set; }
