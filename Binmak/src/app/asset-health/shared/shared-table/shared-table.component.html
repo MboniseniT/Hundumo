@@ -10,8 +10,8 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let i = index; let data of input">
+    <tbody #row>
+      <tr mdbTableCol  *ngFor="let i = index; let data of input">
         <td>{{ i+1 }}</td>
         <ng-container *ngFor="let heading of headings ;let j = index;">
           <td *ngIf="heading.visible || heading.type ==='textarea'">
@@ -42,5 +42,5 @@
           </button> 
         </td>
       </tr>
-    </tbody>
+    </tbody>    
   </table>

@@ -32,7 +32,7 @@ export class SkinTemperatureChartsComponent implements OnChanges {
       },
 
       xAxis: {
-        categories: this.data.map(a=>a.regiDate),
+        categories: this.data.map(a=>new Date(a?.regiDate)),
         
       },
 
@@ -52,12 +52,21 @@ export class SkinTemperatureChartsComponent implements OnChanges {
 
       series: [{
         name: 'Skin Temperature',
-        data: this.data.map(a=>a.temperature)
+        data: this.data.map(a=>a?.temperature),
+        color:'#00457d'
       }, 
-      // {
-      //   name: 'Manufacturing',
-      //   data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-      // },
+      {
+        name: 'Alert',
+        data: this.data.map(a=>a?.temperatureAlert),
+        color:'#ff0000',
+        dashStyle:'Dash'     
+      },
+      {
+        name: 'Alarm',
+        data: this.data.map(a=>a?.temperatureAlarm), 
+        color:'#ffa500',
+        dashStyle:'Dash'     
+      },
     ],
 
       responsive: {

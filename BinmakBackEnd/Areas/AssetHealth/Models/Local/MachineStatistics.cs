@@ -15,6 +15,8 @@ namespace BinmakBackEnd.Areas.AssetHealth.Models.Local
         public string AssetName { get; set; }
         public decimal RmsAlert { get; set; }
         public decimal RmsAlarm { get; set; }
+        public decimal TemperatureAlarm { get; set; }
+        public decimal TemperatureAlert { get; set; }
         public DateTime RegiDate { get; set; }
     }
 }

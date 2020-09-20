@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { ActionType } from '../../enums/action-type.enum';
 import { AssetHealthService } from 'src/app/services/asset-health.service';
 
@@ -17,11 +16,11 @@ export class SharedTableComponent implements OnChanges {
  // @Input() actions: any;
   @Input() url: any;
   selectedRow: number = -1;
-  constructor(private router: Router, private request: AssetHealthService) {
+  constructor( private request: AssetHealthService) {
   }
-
-  ngOnChanges() {    
-    for (const key in this.input) {
+  
+  ngOnChanges() {   
+     for (const key in this.input) {
       if (!this.input.hasOwnProperty(key)) { continue; }
       this.headings = [];
       for (const prop in this.mapper) {

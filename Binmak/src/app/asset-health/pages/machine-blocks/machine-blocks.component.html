@@ -15,7 +15,7 @@
             [animation]="'slide'">
             <mdb-slide  *ngFor="let machines of dataTable">
                 <div *ngFor="let machine of machines" class="col-md-4 clearfix d-none d-md-block">
-                    <mdb-card cascade="true" narrower="true" class="card-ecommerce">
+                    <mdb-card cascade="true" narrower="true" class="card-ecommerce" routerLink="/binmak/machine-charts/{{machine.id}}">
                         <div style="height: 200px;" class="view view-cascade overlay waves-light" mdbWavesEffect>
                             <mdb-card-img src="{{machine.imageUrl}}" alt="sample photo"></mdb-card-img>
                             <a>

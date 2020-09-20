@@ -33,7 +33,9 @@ namespace BinmakBackEnd.Areas.AssetHealth.Models.Respositories
                        Temperature = a.Temperature,
                        TimeStamp = a.TimeStamp,
                        RmsAlarm = a.Machine.RmsAlarm,
-                       RmsAlert = a.Machine.RmsAlert
+                       RmsAlert = a.Machine.RmsAlert,
+                       TemperatureAlarm = a.Machine.TemperatureAlarm,
+                       TemperatureAlert = a.Machine.TemperatureAlert
                 });
                 
         }

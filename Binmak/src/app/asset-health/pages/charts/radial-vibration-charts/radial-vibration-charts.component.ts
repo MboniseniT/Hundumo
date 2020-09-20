@@ -32,7 +32,7 @@ export class RadialVibrationChartsComponent implements OnChanges {
       },
 
       xAxis: {
-        categories: this.data.map(a=>a.regiDate),
+        categories: this.data.map(a=> new Date(a?.regiDate)),
         
       },
 
@@ -52,12 +52,21 @@ export class RadialVibrationChartsComponent implements OnChanges {
 
       series: [{
         name: 'Radial vibration',
-        data: this.data.map(a=>a.radialRMS)
+        data: this.data.map(a=>a?.radialRMS),
+        color:'#00457d'
       }, 
-      // {
-      //   name: 'Manufacturing',
-      //   data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-      // },
+      {
+        name: 'Alert',
+        data: this.data.map(a=>a?.rmsAlert),
+        color:'#ff0000',
+        dashStyle:'Dash'     
+      },
+      {
+        name: 'Alarm',
+        data: this.data.map(a=>a?.rmsAlarm), 
+        color:'#ffa500',
+        dashStyle:'Dash'     
+      },
     ],
 
       responsive: {
