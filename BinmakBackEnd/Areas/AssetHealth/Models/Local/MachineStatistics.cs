@@ -13,8 +13,8 @@ namespace BinmakBackEnd.Areas.AssetHealth.Models.Local
         public double OverallRMS { get; set; }
         public string MachineName { get; set; }
         public string AssetName { get; set; }
-        public double RmsAlert { get; set; }
-        public double RmsAlarm { get; set; }
+        public decimal RmsAlert { get; set; }
+        public decimal RmsAlarm { get; set; }
         public DateTime RegiDate { get; set; }
     }
 }
