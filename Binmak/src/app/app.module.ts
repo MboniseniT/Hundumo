@@ -79,6 +79,15 @@ import { FrequencyPeriodComponent } from './asset-health/pages/frequency-period/
 import { InsulationLevelComponent } from './asset-health/pages/insulation-level/insulation-level.component';
 import { MachineLoadComponent } from './asset-health/pages/machine-load/machine-load.component';
 import { BearingConditionComponent } from './asset-health/pages/bearing-condition/bearing-condition.component';
+import { DiagnosisChartsComponent } from './asset-health/pages/diagnosis-charts/diagnosis-charts.component';
+import { MachineBlocksComponent } from './asset-health/pages/machine-blocks/machine-blocks.component';
+import { MainComponent } from './asset-health/pages/charts/main/main.component';
+import { OverallVibrationChartsComponent } from './asset-health/pages/charts/overall-vibration-charts/overall-vibration-charts.component';
+import { RadialVibrationChartsComponent } from './asset-health/pages/charts/radial-vibration-charts/radial-vibration-charts.component';
+import { TangentialVibrationChartsComponent } from './asset-health/pages/charts/tangential-vibration-charts/tangential-vibration-charts.component';
+import { AxialVibrationChartsComponent } from './asset-health/pages/charts/axial-vibration-charts/axial-vibration-charts.component';
+import { SkinTemperatureChartsComponent } from './asset-health/pages/charts/skin-temperature-charts/skin-temperature-charts.component';
+import { BearingComponent } from './asset-health/pages/bearing/bearing.component';
 
 //import { ChartModule } from 'angular-highcharts';
 
@@ -144,7 +153,16 @@ import { BearingConditionComponent } from './asset-health/pages/bearing-conditio
     FrequencyPeriodComponent,
     InsulationLevelComponent,
     MachineLoadComponent,
-    BearingConditionComponent
+    BearingConditionComponent,
+    DiagnosisChartsComponent,
+    MachineBlocksComponent,
+    MainComponent,
+    OverallVibrationChartsComponent,
+    RadialVibrationChartsComponent,
+    TangentialVibrationChartsComponent,
+    AxialVibrationChartsComponent,
+    SkinTemperatureChartsComponent,
+    BearingComponent,
   ],
   imports: [
     BrowserModule,

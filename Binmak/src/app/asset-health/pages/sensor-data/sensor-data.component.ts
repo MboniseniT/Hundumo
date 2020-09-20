@@ -20,27 +20,26 @@ export class SensorDataComponent implements OnChanges {
   actionType:ActionType;
   constructor(private request: AssetHealthService) { 
     this.preffixUrl = PreffixUrl.SensorData;
-    this.request.getAll(this.preffixUrl).subscribe(result => {
-      this.request.getAll(PreffixUrl.Machine).subscribe(machineResult => {
-        this.request.getAll(PreffixUrl.SensorCondtion).subscribe(sensorConditionResult => {
-          this.dataTable = result.items;
-          this.map.machineId.source = machineResult.items;
-          this.map.conditionId.source = sensorConditionResult.items;
-        }, error => {
-          this.dataTable = [];
-         // this.message.error(error.error);
-          //this.isSpinning=false;
-        });
-      }, error => {
-        this.dataTable = [];
-       // this.message.error(error.error);
-        //this.isSpinning=false;
-      });
-    }, error => {
-      this.dataTable = [];
-     // this.message.error(error.error);
-      //this.isSpinning=false;
-    });
+    // this.request.getAll(this.preffixUrl).subscribe(result => {
+    //   this.request.getAll(PreffixUrl.Machine).subscribe(machineResult => {
+    //     this.request.getAll(PreffixUrl.SensorCondtion).subscribe(sensorConditionResult => {
+    //       this.dataTable = result.items;
+    //       this.map.machineId.source = machineResult.items;
+    //     }, error => {
+    //       this.dataTable = [];
+    //      // this.message.error(error.error);
+    //       //this.isSpinning=false;
+    //     });
+    //   }, error => {
+    //     this.dataTable = [];
+    //    // this.message.error(error.error);
+    //     //this.isSpinning=false;
+    //   });
+    // }, error => {
+    //   this.dataTable = [];
+    //  // this.message.error(error.error);
+    //   //this.isSpinning=false;
+    // });
   }
 
   ngOnChanges (): void {

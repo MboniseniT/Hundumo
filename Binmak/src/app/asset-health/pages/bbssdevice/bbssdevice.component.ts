@@ -26,7 +26,6 @@ export class BBSSDeviceComponent implements OnChanges {
           this.dataTable = result.items;
           this.map.applicationId.source = applicationResult.items;
           this.map.binmakTechnologyId.source = binmakTechnologyResult.items;
-          console.log(this.dataTable);
         }, error => {
           this.dataTable = [];
          // this.message.error(error.error);

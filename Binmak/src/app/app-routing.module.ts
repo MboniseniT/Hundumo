@@ -42,6 +42,9 @@ import { BokamosoComponent } from './bokamoso/bokamoso.component';
 import { AcknowledgementComponent } from './asset-health/pages/acknowledgement/acknowledgement.component';
 import { BBSSDeviceComponent } from './asset-health/pages/bbssdevice/bbssdevice.component';
 import { MachineConfigurationComponent } from './asset-health/pages/machine-configuration/machine-configuration.component';
+import { DiagnosisChartsComponent } from './asset-health/pages/diagnosis-charts/diagnosis-charts.component';
+import { MachineBlocksComponent } from './asset-health/pages/machine-blocks/machine-blocks.component';
+import { MainComponent } from './asset-health/pages/charts/main/main.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'binmak', pathMatch: 'full'},
@@ -69,6 +72,10 @@ const routes: Routes = [
         { path: 'acknowledgement', component: AcknowledgementComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'bbssdevice', component: BBSSDeviceComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'machine-configuration', component: MachineConfigurationComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'machine-configuration', component: MachineConfigurationComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'diagnosis-charts', component: DiagnosisChartsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'machine-blocks/:id/:name', component: MachineBlocksComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'machine-charts/:id', component: MainComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         //Asset Management Maturity Assessor
         { path: 'ukwazi-assessments', component: AssessmentsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'assessment-landing', component: AssessmentLandingComponent, pathMatch: 'full', canActivate: [AuthGuard]},

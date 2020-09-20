@@ -1,4 +1,5 @@
 ﻿using BinmakAPI.Data;
+using BinmakBackEnd.Areas.AssetHealth.Models.Local;
 using System.Linq;
 
 namespace BinmakBackEnd.Areas.AssetHealth.Models.Respositories
@@ -12,6 +13,9 @@ namespace BinmakBackEnd.Areas.AssetHealth.Models.Respositories
         }
 
         public Machine FindByDeviceId(string deviceId) => _context.Machines.FirstOrDefault(a=>a.DeviceId.Equals(deviceId));
+        public Pageable<Machine> FindBySensorConditionId(int id, Pagination pagination) =>
+             new Pageable<Machine>(_context.Machines.Where(a => a.ConditionId == id), pagination.Page, pagination.Size);
+        
     }
 }
 

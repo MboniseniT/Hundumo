@@ -27,20 +27,11 @@
                             <div [class.hide]="!item.visible" *ngIf="(item.type ==='select')"
                                 class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
                                 <div class="md-form">
-                                    <select [disabled]='item.disabled' [(ngModel)]="item.value" [name]="item.id"
-                                    [required]="item.required"
-                                    class="form-control" mdbSelect searchable="Search here..">
-                                        <option value="" disabled selected>Choose your {{item.display}}</option>
-                                        <option *ngFor="let option of item.source"
-                                        [value]="option[item.sourceId]">{{ option[item.sourceName] }}</option>
-                                      </select>
-                                      <!-- <mdb-select  [filterEnabled]="true" [multiple]="false"
-                                      [highlightFirst]="false" 
-                                      label="* Select {{item.display}}" [enableSelectAll]="false">
-                                      <mdb-select-option value="" disabled selected>Choose your {{item.display}}</mdb-select-option>
-                                      <mdb-select-option *ngFor="let option of item.source"
-                                      [value]="option[item.sourceId]">{{ option[item.sourceName] }}</mdb-select-option>
-                                  </mdb-select> -->
+                                      <mdb-select-2  [(ngModel)]="item.value" [name]="item.id"
+                                      [required]="item.required" placeholder="Choose your {{item.display}}">
+                                        <mdb-select-option *ngFor="let option of item.source"
+                                        [value]="option[item.sourceId]">{{ option[item.sourceName] }}</mdb-select-option>
+                                      </mdb-select-2>
                                 </div>
                             </div>
                             <div [class.hide]="!item.visible" *ngIf="item.type ==='textarea'"

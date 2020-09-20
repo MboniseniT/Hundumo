@@ -19,13 +19,11 @@ export class BearingConditionComponent implements OnChanges {
   title:string;
   actionType:ActionType;
   constructor(private request: AssetHealthService) { 
-    this.preffixUrl = PreffixUrl.BearingCondition;
+    this.preffixUrl = PreffixUrl.MachineCondition;
     this.request.getAll(this.preffixUrl).subscribe(result => {
       this.dataTable = result.items;
     }, error => {
       this.dataTable = [];
-     // this.message.error(error.error);
-      //this.isSpinning=false;
     });
   }
 

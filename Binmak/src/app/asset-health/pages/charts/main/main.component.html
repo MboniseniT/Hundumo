@@ -1,0 +1,164 @@
+<div class="container">
+    <mdb-breadcrumb>
+        <mdb-breadcrumb-item class="blue-text" routerLink="/binmak">Home</mdb-breadcrumb-item>
+        <mdb-breadcrumb-item class="blue-text" routerLink="/binmak/bokamoso">Bokamoso</mdb-breadcrumb-item>
+        <mdb-breadcrumb-item class="blue-text" routerLink="/binmak/diagnosis-charts">Machine Diagnosis
+        </mdb-breadcrumb-item>
+        <mdb-breadcrumb-item class="active">Charts</mdb-breadcrumb-item>
+    </mdb-breadcrumb>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="tab-content vertical">
+                <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
+                    <app-overall-vibration-charts [data]='data'></app-overall-vibration-charts>
+                </div>
+                <div class="tab-pane fade" id="panel2" role="tabpanel">
+                    <app-radial-vibration-charts [data]='data'></app-radial-vibration-charts>
+                </div>
+                <div class="tab-pane fade" id="panel3" role="tabpanel">
+                    <app-tangential-vibration-charts [data]='data'></app-tangential-vibration-charts>
+                </div>
+                <div class="tab-pane fade" id="panel4" role="tabpanel">
+                    <app-axial-vibration-charts [data]='data'></app-axial-vibration-charts>
+                </div>
+                <div class="tab-pane fade" id="panel5" role="tabpanel">
+                    Not implemented yet
+                </div>
+                <div class="tab-pane fade" id="panel6" role="tabpanel">
+                    <app-skin-temperature-charts [data]='data'></app-skin-temperature-charts>
+                </div>
+                <div class="tab-pane fade" id="panel7" role="tabpanel">
+                  Motor Supply not yet implemented
+                </div>
+                <div class="tab-pane fade" id="panel8" role="tabpanel">
+                    bearing condition not yet implemented
+                </div>
+                <div class="tab-pane fade" id="panel9" role="tabpanel">
+                  Simple Misalignment not yet implemented
+                </div>
+                <div class="tab-pane fade" id="panel10" role="tabpanel">
+                   Misalignment not yet implemented
+                </div>
+                <div class="tab-pane fade" id="panel11" role="tabpanel">
+                    bearing not yet implemented
+                </div>
+                <div class="tab-pane fade" id="panel12" role="tabpanel">
+                    loosenes not yet implemented
+                </div>
+                <div class="tab-pane fade" id="panel13" role="tabpanel">
+                   unbalance not yet implemented
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <mdb-accordion [multiple]="false">
+                <mdb-accordion-item [collapsed]="false">
+                    <mdb-accordion-item-head>Vibration Parameters</mdb-accordion-item-head>
+                    <mdb-accordion-item-body>
+                        <ul class="nav md-pills pills-primary flex-column" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab">
+                                    <i class="fas fa-list ml-2"></i> Overall Vibration
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panel2" role="tab">
+                                    <i class="fas fa-object-group ml-2"></i>
+                                    Radial Vibration
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panel3" role="tab">
+                                    <i class="fas fa-weight ml-2"></i>
+                                    Tangential Vibration
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panel4" role="tab">
+                                    <i class="fas fa-wave-square ml-2"></i>
+                                    Axial Vibration
+                                </a>
+                            </li>
+                        </ul>
+                    </mdb-accordion-item-body>
+                </mdb-accordion-item>
+
+                <mdb-accordion-item>
+                    <mdb-accordion-item-head>Operating Parameters</mdb-accordion-item-head>
+                    <mdb-accordion-item-body>
+                        <ul class="nav md-pills pills-primary flex-column" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panel5" role="tab">
+                                    <i class="fas fa-list ml-2"></i>  Speed
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panel6" role="tab">
+                                    <i class="fas fa-object-group ml-2"></i>
+                                    Skin Temperature
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panel7" role="tab">
+                                    <i class="fas fa-weight ml-2"></i>
+                                    Motor Supply Frequency
+                                </a>
+                            </li>                           
+                        </ul>
+                    </mdb-accordion-item-body>
+                </mdb-accordion-item>
+
+
+                <mdb-accordion-item>
+                    <mdb-accordion-item-head>Health Parameters</mdb-accordion-item-head>
+                    <mdb-accordion-item-body>
+                        <ul class="nav md-pills pills-primary flex-column" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panel8" role="tab">
+                                    <i class="fas fa-list ml-2"></i>  Bearing Condition
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panel9" role="tab">
+                                    <i class="fas fa-object-group ml-2"></i>
+                                    Simple Misalignment
+                                </a>
+                            </li>                                              
+                        </ul>
+                    </mdb-accordion-item-body>
+                </mdb-accordion-item>
+
+                <mdb-accordion-item>
+                    <mdb-accordion-item-head>Vibration Analysis Guide</mdb-accordion-item-head>
+                    <mdb-accordion-item-body>
+                        <ul class="nav md-pills pills-primary flex-column" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panel10" role="tab">
+                                    <i class="fas fa-list ml-2"></i>  Misalignment
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panel11" role="tab">
+                                    <i class="fas fa-object-group ml-2"></i>
+                                    Bearings
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panel12" role="tab">
+                                    <i class="fas fa-weight ml-2"></i>
+                                    Looseness
+                                </a>
+                            </li>  
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panel13" role="tab">
+                                    <i class="fas fa-weight ml-2"></i>
+                                    Unbalance++
+                                </a>
+                            </li>                           
+                        </ul>
+                    </mdb-accordion-item-body>
+                </mdb-accordion-item>
+            </mdb-accordion>
+        </div>
+    </div>
+</div>

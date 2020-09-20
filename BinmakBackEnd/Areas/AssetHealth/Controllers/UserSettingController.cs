@@ -14,7 +14,7 @@ namespace BinmakBackEnd.Areas.AssetHealth.Controllers
             _context = context;
         }
 
-        [HttpGet("user/id")]
+        [HttpGet("user/{id}")]
         public IActionResult GetByUserId([FromRoute]string id)
         {
             var userSettingRepository = new UserSettingRepository(_context);

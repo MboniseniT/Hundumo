@@ -119,7 +119,7 @@ export class SharedFormComponent implements OnChanges {
       this.result.emit({
         data: this.list,
         actionType: this.actionType,
-        success: true
+        success: false
       });
       this.toastService.success(response.message); 
       this.visible = false;  
@@ -131,7 +131,7 @@ export class SharedFormComponent implements OnChanges {
       this.result.emit({
         data: this.list,
         actionType: this.actionType,
-        success: true
+        success: false
       });
     });
   }
@@ -151,7 +151,7 @@ export class SharedFormComponent implements OnChanges {
       this.result.emit({
         data: this.list,
         actionType: this.actionType,
-        success: true
+        success: false
       });
      this.toastService.success(response.message);  
      this.visible = false;
@@ -161,7 +161,7 @@ export class SharedFormComponent implements OnChanges {
       this.result.emit({
         data: this.list,
         actionType: this.actionType,
-        success: true
+        success: false
       });
       this.toastService.error(error.error);
     });

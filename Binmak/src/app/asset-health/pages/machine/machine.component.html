@@ -4,21 +4,211 @@
             <h6 style="text-align: center;">Machine List</h6>
         </div>
         <div class="col-md-3">
-            <button type="button" class="btn waves-light primary-background-color" aria-label="Close"
-                mdbWavesEffect (click)="open()" style="background-color: rgba(0, 69, 125, 1)!important; color: white;">
+            <button type="button" class="btn waves-light primary-background-color" aria-label="Close" mdbWavesEffect
+                (click)="open()" style="background-color: rgba(0, 69, 125, 1)!important; color: white;">
                 <i class="fas fa-plus"></i> Add</button>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
+            <!--Equipment-->
+            <div mdbModal #dataModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="myBasicModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 style="text-align: center;">{{title}}</h4>
+
+                            <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <form #data="ngForm" #form="ngForm">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                        <div class="col-md-12">
+                                            <img [src]="url" alt="thumbnail" class="img-thumbnail" style="width: 100%">
+                                            <br />
+                                            <input type='file' mdbInput class="form-control"
+                                                [(ngModel)]="input.imageUrl" name="imageUrl"
+                                                (change)="onSelectFile($event)">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12" style="display: none;">
+                                                <div class="md-form">
+                                                    <input mdbInput [(ngModel)]="input.id" name="id"
+                                                        type="number" [required]="true" class="form-control" />
+                                                    <label for="id" class="">ID</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                <div class="md-form">
+                                                    <input mdbInput [(ngModel)]="input.name" name="name" type="text"
+                                                        [required]="true" class="form-control" #name="ngModel" />
+                                                    <label for="name" class="">Name</label>
+                                                    <mdb-error *ngIf="name.invalid && (name.dirty || name.touched)">Name
+                                                        required</mdb-error>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                <div class="md-form">
+                                                    <input mdbInput [(ngModel)]="input.deviceId" name="deviceId"
+                                                        #deviceId="ngModel" type="text" [required]="true"
+                                                        class="form-control" />
+                                                    <label for="deviceId" class="">Device ID</label>
+                                                    <mdb-error
+                                                        *ngIf="deviceId.invalid && (deviceId.dirty || deviceId.touched)">
+                                                        Device ID
+                                                        required</mdb-error>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                <div class="md-form">
+                                                    <mdb-select-2 placeholder="Choose your Asset"
+                                                        [(ngModel)]="input.assetNodeId" name="assetNodeId">
+                                                        <mdb-select-option *ngFor="let option of map.assetNodeId.source"
+                                                            [value]="option.assetNodeId">{{ option.name }}
+                                                        </mdb-select-option>
+                                                    </mdb-select-2>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12" style="display: none;">
+                                                <div class="md-form">
+                                                    <mdb-select-2 placeholder="Choose your Asset"
+                                                        [(ngModel)]="input.bbssDeviceId" name="bbssDeviceId">
+                                                        <mdb-select-option *ngFor="let option of map.bbssDeviceId.source"
+                                                            [value]="option.id">{{ option.name }}
+                                                        </mdb-select-option>
+                                                    </mdb-select-2>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                <div class="md-form">
+                                                    <mdb-select-2 placeholder="Choose your Size Class"
+                                                        [(ngModel)]="input.sizeCategoryId" name="sizeCategoryId">
+                                                        <mdb-select-option
+                                                            *ngFor="let option of map.sizeCategoryId.source"
+                                                            [value]="option.id">{{ option.name }}</mdb-select-option>
+                                                    </mdb-select-2>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                <div class="md-form">
+                                                    <mdb-select-2 placeholder="Choose your Machine Type"
+                                                        [(ngModel)]="input.machineTypeId" name="machineTypeId">
+                                                        <mdb-select-option
+                                                            *ngFor="let option of map.machineTypeId.source"
+                                                            [value]="option.id">{{ option.name }}</mdb-select-option>
+                                                    </mdb-select-2>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                <div class="md-form">
+                                                    <input mdbInput [(ngModel)]="input.revolutionPerMinute" name="revolutionPerMinute"
+                                                        type="number" [required]="true" class="form-control" />
+                                                    <label for="revolutionPerMinute" class="">Revolution Per
+                                                        Minute</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                <div class="md-form">
+                                                    <mdb-select-2 placeholder="Choose your Insulation Level"
+                                                        [(ngModel)]="input.insulationLevelId" name="insulationLevelId">
+                                                        <mdb-select-option
+                                                            *ngFor="let option of map.insulationLevelId.source"
+                                                            [value]="option.id">{{ option.name }}</mdb-select-option>
+                                                    </mdb-select-2>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                <div class="md-form">
+                                                    <mdb-select-2 placeholder="Choose your Frequency Period"
+                                                        [(ngModel)]="input.frequencyPeriodId" name="frequencyPeriodId">
+                                                        <mdb-select-option
+                                                            *ngFor="let option of map.frequencyPeriodId.source"
+                                                            [value]="option.id">{{ option.name }}</mdb-select-option>
+                                                    </mdb-select-2>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                <div class="md-form">
+                                                    <mdb-select-2 placeholder="Choose your Machine Load"
+                                                        [(ngModel)]="input.machineLoadId" name="machineLoadId">
+                                                        <mdb-select-option
+                                                            *ngFor="let option of map.machineLoadId.source"
+                                                            [value]="option.id">{{ option.name }}</mdb-select-option>
+                                                    </mdb-select-2>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                <div class="md-form">
+                                                    <input mdbInput [(ngModel)]="input.nonDrivingEndId"
+                                                        name="nonDrivingEndId" type="text" [required]="true"
+                                                        class="form-control" />
+                                                    <label for="nonDrivingEndId" class="">Non Driving End</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                <div class="md-form">
+                                                    <input mdbInput [(ngModel)]="input.drivingEndId" name="drivingEndId"
+                                                        type="text" [required]="true" class="form-control" />
+                                                    <label for="drivingEndId" class="">Driving End</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                                <div class="md-form">
+                                                    <input mdbInput [(ngModel)]="input.criticality" name="criticality"
+                                                        type="text" [required]="true" class="form-control" />
+                                                    <label for="criticality" class="">Criticality</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12" style="display: none;">
+                                                <div class="md-form">
+                                                    <mdb-select-2 placeholder="Choose your condition"
+                                                        [(ngModel)]="input.conditionId" name="conditionId">
+                                                        <mdb-select-option *ngFor="let option of map.conditionId.source"
+                                                            [value]="option.id">{{ option.name }}</mdb-select-option>
+                                                    </mdb-select-2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn waves-light primary-background-color" mdbWavesEffect
+                                    (click)="onSubmit(data)" style="color: white;" [disabled]="!data.valid">
+                                    <i *ngIf="actionType=='edit'" class="fa fa-edit" aria-hidden="true"></i>
+                                    <i *ngIf="actionType=='add'" class="fa fa-plus" aria-hidden="true"></i>
+                                    {{title}}</button>
+                                <button type="button" class="btn waves-light" aria-label="Close" (click)="close()"
+                                    mdbWavesEffect> <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                    Cancel</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="col-md-12">
             <app-shared-table [input]='dataTable' [change]="visible" [url]='preffixUrl' [mapper]="map"
                 (result)="tableResult($event)">
             </app-shared-table>
-        </div>
-        <div class="col-md-12">
-            <app-shared-form (result)="result($event)" [list]='dataTable' [title]='title' [input]='input'
+            <!-- <app-shared-form (result)="result($event)" [list]='dataTable' [title]='title' [input]='input'
                 [actionType]='actionType' [url]='preffixUrl' [visible]="visible" [mapper]="map">
-            </app-shared-form>
+            </app-shared-form> -->
         </div>
     </div>
     <!--Equipment-->

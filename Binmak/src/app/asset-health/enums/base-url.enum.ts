@@ -1,3 +1,3 @@
 export enum BaseUrl {
-     Main="http://localhost:44318/",
+     Main="http://binmakdev.dedicated.co.za:92/",
 }

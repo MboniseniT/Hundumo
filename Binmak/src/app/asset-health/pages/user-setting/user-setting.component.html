@@ -1,1 +1,57 @@
-<p>user-setting works!</p>
+<div class="container-fluid">
+    <div class="row sub-heading">
+        <div class="col-md-12">
+            <h6 style="text-align: center;">User Notification Settings</h6>
+        </div>
+    </div>
+    <div class="row">
+        <table mdbTable striped="true">
+            <thead>
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">Messages </th>
+                <th scope="col">WhatsApp</th>
+                <th scope="col">Email </th>
+                <th scope="col">Call </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr mdbTableCol>
+                <th scope="row">Measurement</th>
+                <td><mdb-checkbox [(ngModel)]="data.messageMeasurement" name="data.messageMeasurement" (change)="submit(data)" [checked]="data?.messageMeasurement"></mdb-checkbox></td>
+                <td><mdb-checkbox [(ngModel)]="data.waMeasurement" name="data.waMeasurement" (change)="submit(data)" [checked]="data.waMeasurement"></mdb-checkbox></td>
+                <td><mdb-checkbox [(ngModel)]="data.emailMeasurement" name="data.emailMeasurement" (change)="submit(data)" [checked]="data.emailMeasurement"></mdb-checkbox></td>
+                <td><mdb-checkbox [indeterminate]="true" [disabled]="true"></mdb-checkbox></td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row">Alert</th>
+                <td><mdb-checkbox [(ngModel)]="data.messageAlert" name="data.messageAlert" (change)="submit(data)" [checked]="data.messageAlert"></mdb-checkbox></td>
+                <td><mdb-checkbox [(ngModel)]="data.waAlert" name="data.waAlert" (change)="submit(data)" [checked]="data.waAlert"></mdb-checkbox></td>
+                <td><mdb-checkbox [(ngModel)]="data.emailAlert" name="data.emailAlert" (change)="submit(data)" [checked]="data.emailAlert"></mdb-checkbox></td>
+                <td><mdb-checkbox [(ngModel)]="data.callAlert" name="data.callAlert" (change)="submit(data)" [checked]="data.callAlert"></mdb-checkbox></td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row">Alarm</th>
+                <td><mdb-checkbox [(ngModel)]="data.messageAlarm" name="data.messageAlarm" (change)="submit(data)" [checked]="data.messageAlarm"></mdb-checkbox></td>
+                <td><mdb-checkbox [(ngModel)]="data.waAlarm" name="data.waAlarm" (change)="submit(data)" [checked]="data.waAlarm"></mdb-checkbox></td>
+                <td><mdb-checkbox [(ngModel)]="data.emailAlarm" name="data.emailAlarm" (change)="submit(data)" [checked]="data.emailAlarm"></mdb-checkbox></td>
+                <td><mdb-checkbox [(ngModel)]="data.callAlarm" name="data.callAlarm" (change)="submit(data)" [checked]="data.callAlarm"></mdb-checkbox></td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row">Battery Low</th>
+                <td><mdb-checkbox [(ngModel)]="data.messageBatteryLow" name="data.messageBatteryLow" (change)="submit(data)" [checked]="data.messageBatteryLow"></mdb-checkbox></td>
+                <td><mdb-checkbox [(ngModel)]="data.waBatteryLow" name="data.waBatteryLow" (change)="submit(data)" [checked]="data.waBatteryLow"></mdb-checkbox></td>
+                <td><mdb-checkbox [(ngModel)]="data.emailBatteryLow" name="data.emailBatteryLow" (change)="submit(data)" [checked]="data.emailBatteryLow"></mdb-checkbox></td>
+                <td><mdb-checkbox [indeterminate]="true" [disabled]="true"></mdb-checkbox></td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row">Daily</th>
+                <td><mdb-checkbox [(ngModel)]="data.messageDaily" name="data.messageDaily" (change)="submit(data)" [checked]="data.messageDaily"></mdb-checkbox></td>
+                <td><mdb-checkbox [(ngModel)]="data.waDaily" name="data.waDaily" (change)="submit(data)" [checked]="data.waDaily"></mdb-checkbox></td>
+                <td><mdb-checkbox [(ngModel)]="data.emailDaily" name="data.emailDaily" (change)="submit(data)" [checked]="data.emailDaily"></mdb-checkbox></td>
+                <td><mdb-checkbox [indeterminate]="true" [disabled]="true"></mdb-checkbox></td>
+              </tr>
+            </tbody>
+          </table>        
+    </div>
+</div>

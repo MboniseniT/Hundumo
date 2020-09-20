@@ -12,7 +12,7 @@ namespace BinmakBackEnd.Areas.AssetHealth.Models
         public DateTime RegiDate { get; set; }
 
         public virtual ApplicationUser User { get; set; }
-        public virtual SensorCondition Condition { get; set; }
+        public virtual MachineCondition Condition { get; set; }
         public virtual Machine Machine { get; set; }
 
     }

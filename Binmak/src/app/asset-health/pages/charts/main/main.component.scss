@@ -1,0 +1,23 @@
+.nav-tabs .nav-link.active {
+    background-color: transparent;
+    border-color: transparent transparent;
+    border-bottom: 2px solid #00457d !important;
+    color: #000;
+    font-size: 20px;
+}
+.nav-tabs .nav-link {
+   border: 1px solid transparent;
+   border-top-left-radius: .25rem;
+   border-top-right-radius: .25rem;
+   color: #000;
+}
+.nav-tabs .nav-link:hover {
+   color: #00457d;
+}
+
+.nav-item .nav-link.active {
+   color: #00457d;
+}
+.card-header {
+    color: #00457d !important;
+}

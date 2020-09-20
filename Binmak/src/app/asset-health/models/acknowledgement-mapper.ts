@@ -5,7 +5,7 @@ export let AcknowledgementMapper = {
      machineId : new Mapper ({type:InputType.select.toString(),display:'Machine', visible:true,
      required:true,defaultValue:"",}),
      userId : new Mapper ({type:InputType.select.toString(),display:'User', visible:true,
-     required:true,defaultValue:"",}),
+     required:true,defaultValue:JSON.parse(localStorage.getItem('currentUser'))?.userId, disabled:true}),
      conditionId : new Mapper ({type:InputType.select.toString(),display:'Condition', visible:true,
      required:true,defaultValue:"",}),
      action : new Mapper ({type:InputType.select.toString(),display:'Action', visible:true,

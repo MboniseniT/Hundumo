@@ -1,5 +1,6 @@
 ﻿using BinmakAPI.Data;
 using BinmakBackEnd.Areas.AssetHealth.Models;
+using BinmakBackEnd.Areas.AssetHealth.Models.Local;
 using BinmakBackEnd.Areas.AssetHealth.Models.Respositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,14 @@ namespace BinmakBackEnd.Areas.AssetHealth.Controllers
         public IActionResult GetbyDeviceId([FromRoute]string id)
         {
             var data = new MachineRepository(_context).FindByDeviceId(id);
+            if (data == null) return StatusCode(StatusCodes.Status404NotFound, "Not Found");
+            return Ok(data);
+        }
+
+        [HttpGet("sensor/{id}")]
+        public IActionResult GetbySensorConditionId([FromRoute]int id, [FromQuery]Pagination pagination)
+        {
+            var data = new MachineRepository(_context).FindBySensorConditionId(id, pagination);
             if (data == null) return StatusCode(StatusCodes.Status404NotFound, "Not Found");
             return Ok(data);
         }

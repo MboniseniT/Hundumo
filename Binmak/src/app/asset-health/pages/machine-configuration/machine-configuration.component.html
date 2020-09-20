@@ -63,6 +63,12 @@
                                 Machine Load
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#panel11" role="tab">
+                                <i class="fas fa-fan ml-2"></i>
+                                Machine Condition
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
@@ -84,6 +90,9 @@
                         </div>
                         <div class="tab-pane fade" id="panel6" role="tabpanel">
                             <app-machine-load></app-machine-load>
+                        </div>
+                        <div class="tab-pane fade" id="panel11" role="tabpanel">
+                            <app-bearing-condition></app-bearing-condition>
                         </div>
                     </div>
                 </div>
@@ -139,19 +148,28 @@
         <div class="tab-pane fade" id="panelH7" role="tabpanel">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <ul class="nav md-pills pills-primary flex-column" role="tablist">
+                    <ul class="nav md-pills pills-primary flex-column" role="tablist">                       
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#panel9" role="tab">
-                                <i class="fas fa-fan ml-2"></i>
-                                Bearing Condition
+                            <a class="nav-link active" data-toggle="tab" href="#panel12" role="tab">
+                                <i class="fas fa-flag ml-2"></i>
+                                User Notification
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#panel13" role="tab">
+                                <i class="fas fa-flag ml-2"></i>
+                                Bearing
                             </a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    <div class="tab-content vertical">
-                        <div class="tab-pane fade in show active" id="panel9" role="tabpanel">
-                            <app-bearing-condition></app-bearing-condition>
+                    <div class="tab-content vertical">                       
+                        <div class="tab-pane fade in show active" id="panel12" role="tabpanel">
+                            <app-user-setting></app-user-setting>
+                        </div>
+                        <div class="tab-pane fade" id="panel13" role="tabpanel">
+                            <app-bearing></app-bearing>
                         </div>
                     </div>
                 </div>

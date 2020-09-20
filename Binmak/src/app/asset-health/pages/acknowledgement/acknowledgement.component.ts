@@ -22,12 +22,24 @@ export class AcknowledgementComponent implements OnChanges {
   constructor(private request: AssetHealthService) { 
     this.preffixUrl = PreffixUrl.Acknowledgement;
     this.request.getAll(this.preffixUrl).subscribe(result => {
-      this.dataTable = result;
-      this.isSpinning=false;
+      this.request.getAll(PreffixUrl.Machine).subscribe(machineResult => {
+        this.request.getAll(PreffixUrl.MachineCondition).subscribe(machineConditionResult => {
+          this.request.getAll(PreffixUrl.User).subscribe(userResult => {
+            this.dataTable = result;
+            this.map.machineId.source = machineResult.items;
+            this.map.conditionId.source = machineConditionResult.items;
+            this.map.userId.source = userResult.items;
+          }, error => {
+            this.dataTable = [];
+          });
+        }, error => {
+          this.dataTable = [];
+        });
+      }, error => {
+        this.dataTable = [];
+      });
     }, error => {
       this.dataTable = [];
-     // this.message.error(error.error);
-      this.isSpinning=false;
     });
   }
 

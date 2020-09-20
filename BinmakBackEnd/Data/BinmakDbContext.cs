@@ -45,23 +45,21 @@ namespace BinmakAPI.Data
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Versions> versions { get; set; }
 
         //Asset Health
+        public DbSet<Acknowledgement> Acknowledgements { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<AuditTrail> AuditTrails { get; set; }
-        public DbSet<Acknowledgement> Acknowledgements { get; set; }
         public DbSet<BBSSDevice> BBSSDevices { get; set; }
         public DbSet<Bearing> Bearings { get; set; }
-        public DbSet<BearingCondition> BearingConditions { get; set; }
-        public DbSet<BearingDrivingEnd> BearingDrivingEnds { get; set; }
-        public DbSet<BearingNonDrivingEnd> BearingNonDrivingEnds { get; set; }
         public DbSet<BinmakTechnology> BinmakTechnologies { get; set; }
         public DbSet<FrequencyPeriod> FrequencyPeriods { get; set; }
         public DbSet<InsulationLevel> InsulationLevels { get; set; }
         public DbSet<Machine> Machines { get; set; }
+        public DbSet<MachineCondition> MachineConditions { get; set; }
         public DbSet<MachineLoad> MachineLoads { get; set; }
         public DbSet<MachineNotificationSetting> MachineNotificationSettings { get; set; }
         public DbSet<MachineType> MachineTypes { get; set; }
         public DbSet<SensorCondition> SensorConditions { get; set; }
-        public DbSet<SensorData> SensorDatas { get; set; }
+        public DbSet<SensorData> SensorData { get; set; }
         public DbSet<SizeCategory> SizeCategories { get; set; }
         public DbSet<UserSetting> UserSettings { get; set; }
     }
