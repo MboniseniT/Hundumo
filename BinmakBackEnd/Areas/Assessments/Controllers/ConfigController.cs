@@ -1250,6 +1250,8 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                     _context.assessments.Add(Assess);
                     _context.SaveChanges();
 
+                    GenerateAvgs(Assess);
+
                     var message = Created("", Assess);
                     return message;
                 }
@@ -1265,8 +1267,6 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
-
-        
 
         [HttpPut("saveAssessment")]
         public IActionResult SaveAssessment([FromBody] SaveAssessIdSet idSet)
@@ -1711,6 +1711,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                     TotalScore = GetKPITotalScore(assess)
                 });
 
+                UpdateKpiAvg(assess);
 
                 return Ok(progress);
 
@@ -1853,6 +1854,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                     TotalScore = GetBPTotalScore(assess)
                 });
 
+                UpdateBpAvg(assess);
 
                 return Ok(progress);
 
@@ -1863,11 +1865,71 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
         }
 
+        //Year to Year Analysis
 
+        [HttpPost("getBpKpiYearToYear")]
+        public IActionResult GetBpKpiYearToYear([FromBody] Assessment assess)
+        {
+            try
+            {
+                var AllAvgs = _context.bpKpiAssessmentAvgs.ToList();
+
+                var tableAvgs = AllAvgs.Select(result => new
+                {
+                    avgID = result.ID,
+                    avgAssessID = result.assess_id,
+                    avgAssetNodeID = _context.assessments.FirstOrDefault(a => a.ID == result.assess_id).assetNodeId,
+                    avgAssessName = _context.assessments.FirstOrDefault(a => a.ID == result.assess_id).assess_name,
+                    avgBp = result.bp_avg,
+                    avgKpi = result.kpi_avg
+                });
+
+                var filteredTableAvgs = tableAvgs.Where(a => a.avgAssetNodeID == assess.assetNodeId);
+
+                return Ok(filteredTableAvgs);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
+        }
 
 
 
         //Helper Methods
+        void UpdateBpAvg(Assessment assess)
+        {
+            var Avgs = _context.bpKpiAssessmentAvgs.FirstOrDefault(a => a.assess_id == assess.ID);
+
+            if (Avgs != null)
+            {
+                Avgs.bp_avg = (int)GetBPTotalScore(assess);
+                _context.SaveChanges();
+            }
+        }
+
+        void UpdateKpiAvg(Assessment assess)
+        {
+            var Avgs = _context.bpKpiAssessmentAvgs.FirstOrDefault(a => a.assess_id == assess.ID);
+
+            if (Avgs != null)
+            {
+                Avgs.kpi_avg = (int)GetKPITotalScore(assess);
+                _context.SaveChanges();
+            }
+        }
+        void GenerateAvgs(Assessment Assess)
+        {
+            BpKpiAssessmentAvgs Avgs = new BpKpiAssessmentAvgs();
+
+            Avgs.assess_id = Assess.ID;
+            Avgs.bp_avg = 0;
+            Avgs.kpi_avg = 0;
+
+            _context.bpKpiAssessmentAvgs.Add(Avgs);
+            _context.SaveChanges();
+        }
 
         void GenerateAction(BpResults Result)
         {

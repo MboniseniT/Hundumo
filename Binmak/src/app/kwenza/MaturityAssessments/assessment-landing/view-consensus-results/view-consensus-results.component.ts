@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { AssessmentsConfigService } from 'src/app/services/Assessments/assessmentsConfig.service';
 import { MDBModalService, ToastService, MDBModalRef } from 'ng-uikit-pro-standard';
 import { AreYouSureComponent } from '../../are-you-sure/are-you-sure.component';
+import { AvgTable } from 'src/app/Models/Assessments/avgTable';
 
 declare var require: any;
 let Boost = require('highcharts/modules/boost');
@@ -31,6 +32,7 @@ export class ViewConsensusResultsComponent implements OnInit {
   hasSections:boolean;
   kpiProgressInfor:any;
   bpProgressInfor:any;
+  yearToYearProgressInfor:AvgTable[];
   kpiProgress:number;
   kpiProgressOther:number;
   bpProgress:number;
@@ -65,6 +67,7 @@ export class ViewConsensusResultsComponent implements OnInit {
   bpdata:any = [];
   kpidata:any = [];
   kpabubbledata:any = [];
+  yearToYearData:any = [];
 
   public options: any = {
     chart: {
@@ -290,6 +293,21 @@ export class ViewConsensusResultsComponent implements OnInit {
     //console.log(this.kpidata);
   }
 
+  feedYearToYearBubble(){
+    let i:number;
+    for(i=0;i<this.yearToYearProgressInfor.length;i++){
+      this.yearToYearData.push({
+        x: Math.round(Number(this.yearToYearProgressInfor[i].avgBp)),
+        y: Math.round(Number(this.yearToYearProgressInfor[i].avgKpi)),
+        z: 2,
+        name: this.yearToYearProgressInfor[i].avgAssessID.toString(),
+        kpa: this.yearToYearProgressInfor[i].avgAssessName
+      })
+    }
+
+
+  }
+
   SetBpKpiBubble(){
    this.bubbleSM = {
       x: Math.round(Number(this.bpProgressInfor[0].kpa1Progress)),
@@ -456,7 +474,7 @@ export class ViewConsensusResultsComponent implements OnInit {
     this.assessmentService.GetBpProgress(this.GetAssessment()).subscribe(
       (data:any) => {
         this.bpProgressInfor = data;
-        console.log(data);
+        //console.log(data);
         this.SetCategories();
         setTimeout(() => {
           this.loadChart();
@@ -467,10 +485,255 @@ export class ViewConsensusResultsComponent implements OnInit {
         console.log(error);
       }
     );
+    //retrieve yearToYearProgress values/Results from Database
+    this.assessmentService.GetBpKpiYearToYear(this.GetAssessment()).subscribe(
+      (data:AvgTable[]) => {
+        this.yearToYearProgressInfor = data;
+        //console.log(data);
+        this.feedYearToYearBubble();
+        //console.log(this.yearToYearData);
+        this.loadAnnualBubble();
+        //this.SetCategories();
+        // setTimeout(() => {
+        //   this.loadChart();
+        //   this.calcTotalScore();
+        // });
+      }, error => {
+        console.log('httperror: ');
+        console.log(error);
+      }
+    );
   }
 
   GetAssessment(){
     return JSON.parse(localStorage.getItem("currentAssessment"));
+  }
+
+  loadAnnualBubble(){
+    let options:any = {
+      chart: {
+        type: 'bubble',
+        plotBorderWidth: 1,
+        zoomType: 'xy'
+      },
+      legend: {
+        enabled: false
+      },
+      title: {
+                      text: 'BP and KPI per KPA<br><br>Year To Year Analysis Bubble'
+      },
+      subtitle: {
+        text: 'Source: <a href="#">BP Assessment</a> and <a href="#">KPI Assessment</a>'
+      },
+      accessibility: {
+        point: {
+          valueDescriptionFormat: '{index}. {point.name}, BP: {point.x}%, KPI: {point.y}%, Nothing: {point.z}%.'
+        }
+      },
+      xAxis: {
+        min: 0,
+        max: 100,
+        tickInterval: 20,
+        gridLineWidth: 1,
+        title: {
+          text: 'Best Practice'
+        },
+        labels: {
+          format: '{value} %'
+        },
+        plotLines: [{
+          color: 'red',
+          dashStyle: 'dot',
+          width: 2,
+          value: 20,
+          label: {
+            rotation: 0,
+            y: 337,
+            x: -75,
+            style: {
+              fontStyle: 'italic'
+            },
+            text: '', //'Innocence'
+          },
+          zIndex: 3
+        }, {
+            color: 'orange',
+            dashStyle: 'dot',
+            width: 2,
+            value: 40,
+            label: {
+              rotation: 0,
+              y: 15,
+              style: {
+                fontStyle: 'italic'
+              },
+              text: ''
+            },
+            zIndex: 3
+          }, {
+            color: 'yellow',
+            dashStyle: 'dot',
+            width: 2,
+            value: 60,
+            label: {
+              rotation: 0,
+              y: 15,
+              style: {
+                fontStyle: 'italic'
+              },
+              text: ''
+            },
+            zIndex: 3
+          }, {
+            color: 'green',
+            dashStyle: 'dot',
+            width: 2,
+            value: 80,
+            label: {
+              rotation: 0,
+              y: 15,
+              style: {
+                fontStyle: 'italic'
+              },
+              text: ''
+            },
+            zIndex: 3
+          }, {
+            color: 'blue',
+            dashStyle: 'dot',
+            width: 2,
+            value: 100,
+            label: {
+              rotation: 0,
+              y: 15,
+              style: {
+                fontStyle: 'italic'
+              },
+              text: ''
+            },
+            zIndex: 3
+          }],
+        accessibility: {
+          rangeDescription: 'Range: 0 to 100 %.'
+        }
+      },
+      yAxis: {
+        min: 0,
+        max: 100,
+        tickInterval: 20,
+        startOnTick: false,
+        endOnTick: false,
+        title: {
+                          text: 'Key Performance Indicator<br><br>'
+        },
+        labels: {
+          format: '{value} %'
+        },
+        maxPadding: 0.2,
+        plotLines: [{
+          color: 'red',
+          dashStyle: 'dot',
+          width: 2,
+          value: 20,
+          label: {
+            align: 'right',
+            style: {
+              fontStyle: 'italic'
+            },
+            text: '',
+            x: -10
+          },
+          zIndex: 3
+        }, {
+            color: 'orange',
+            dashStyle: 'dot',
+            width: 2,
+            value: 40,
+            label: {
+              align: 'right',
+              style: {
+                fontStyle: 'italic'
+              },
+              text: '', //'Awareness',
+              x: -254,
+              y:42
+            },
+            zIndex: 3
+          }, {
+            color: 'yellow',
+            dashStyle: 'dot',
+            width: 2,
+            value: 60,
+            label: {
+              align: 'right',
+              style: {
+                fontStyle: 'italic'
+              },
+              text: '', //'Understanding',
+              x: -158,
+              y:39
+            },
+            zIndex: 3
+          }, {
+            color: 'green',
+            dashStyle: 'dot',
+            width: 2,
+            value: 80,
+            label: {
+              align: 'right',
+              style: {
+                fontStyle: 'italic'
+              },
+              text: '', //'Competence',
+              x: -86,
+              y:39
+            },
+            zIndex: 3
+          }, {
+            color: 'blue',
+            dashStyle: 'dot',
+            width: 2,
+            value: 100,
+            label: {
+              align: 'right',
+              style: {
+                fontStyle: 'italic'
+              },
+              text: '', //'Excellence',
+              x: -10,
+              y:39
+            },
+            zIndex: 3
+          }],
+        accessibility: {
+          rangeDescription: 'Range: 0 to 100 %.'
+        }
+      },
+      tooltip: {
+        useHTML: true,
+        headerFormat: '<table>',
+        pointFormat: '<tr><th colspan="2"><h3>{point.kpa}</h3></th></tr>' +
+          '<tr><th>BP:</th><td>{point.x}%</td></tr>' +
+          '<tr><th>KPI:</th><td>{point.y}%</td></tr>',
+        footerFormat: '</table>',
+        followPointer: true
+      },
+      plotOptions: {
+        series: {
+          maxSize: '12%',
+          dataLabels: {
+            enabled: true,
+            format: '{point.name}'
+          }
+        }
+      },
+      series: [{
+        data: this.yearToYearData,
+        color: '#FF9900'
+
+      }]
+    }
+    Highcharts.chart('container6', options);
   }
 
   loadChart(){

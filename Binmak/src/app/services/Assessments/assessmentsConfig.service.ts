@@ -21,6 +21,7 @@ import { ActionTable } from 'src/app/Models/Assessments/actionTable';
 import { FrmwrkTable } from 'src/app/Models/Assessments/frmwrkTable';
 import { VersionTable } from 'src/app/Models/Assessments/versionTable';
 import { VariantTable } from 'src/app/Models/Assessments/variantTable';
+import { AvgTable } from 'src/app/Models/Assessments/avgTable';
 
 @Injectable({
   providedIn: 'root'
@@ -376,6 +377,11 @@ constructor(private http: HttpClient) { }
         result = Object.assign(result, idSet);
         //console.log(result);
         return this.http.put(this.assessmentUrl+'updateBpResults', result);
+      }
+
+      //year to year analysis
+      GetBpKpiYearToYear(assessment): Observable<AvgTable[]>{
+        return this.http.post<AvgTable[]>(this.assessmentUrl+'getBpKpiYearToYear', assessment);
       }
 
 
