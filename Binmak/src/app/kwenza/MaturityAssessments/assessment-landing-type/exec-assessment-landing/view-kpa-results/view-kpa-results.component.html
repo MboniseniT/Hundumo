@@ -15,8 +15,14 @@
         </mdb-card-header> -->
 
         <mdb-card-body>
-          <mdb-progress-bar [hidden]="hasLoaded()" class="progress primary-color-dark" mode="indeterminate"></mdb-progress-bar>
-          <div id="container" style="width:100%; height:450px;"></div>
+
+          <div [hidden]="!hasLoaded()" id="container" style="width:100%; height:450px;"></div>
+          <div [hidden]="hasLoaded()" class="row" style="justify-content: center; width:100%; height:450px;">
+            <div class="row" style="justify-content: center;">
+              <h5>Compiling Chat...</h5>
+            </div>
+            <mdb-spinner spinnerColor="blue"></mdb-spinner>
+          </div>
         </mdb-card-body>
       </mdb-card>
     </div>
@@ -26,16 +32,22 @@
           <h3 style="color: white;">Progress</h3>
         </mdb-card-header> -->
         <mdb-card-body>
-          <mdb-progress-bar [hidden]="hasLoaded()" class="progress primary-color-dark" mode="indeterminate"></mdb-progress-bar>
-          <div class="row">
+          <div class="row" [hidden]="!hasLoaded()">
             <div class="col">
               <div id="container1" style="width:100%; height:225px;"></div>
             </div>
           </div>
-          <div class="row">
+          <div class="row" [hidden]="!hasLoaded()">
             <div class="col">
               <div id="container2" style="width:100%; height:225px;"></div>
             </div>
+          </div>
+          <div [hidden]="hasLoaded()" class="row" style="justify-content: center; width:100%; height:450px;">
+            <div class="row" style="justify-content: center;">
+              <h5>Compiling Chats...</h5>
+            </div>
+
+            <mdb-spinner spinnerColor="blue"></mdb-spinner>
           </div>
         </mdb-card-body>
       </mdb-card>

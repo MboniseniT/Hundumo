@@ -15,13 +15,31 @@
         <mdb-card-body>
           <mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-primary tabs-3'" [contentClass]="'card'">
             <mdb-tab heading="BP-KPI Bar">
-              <div id="container" style="width:100%; height:450px;"></div>
+              <div [hidden]="!bpProgressInfor || !kpiProgressInfor" id="container" style="width:100%; height:450px;"></div>
+              <div [hidden]="bpProgressInfor && kpiProgressInfor" class="row" style="justify-content: center; width:100%; height:450px;">
+                <div class="row" style="justify-content: center;">
+                  <h5>Compiling Chat...</h5>
+                </div>
+                <mdb-spinner  spinnerColor="blue"></mdb-spinner>
+              </div>
             </mdb-tab>
             <mdb-tab heading="BP-KPI">
-              <div id="container5" style="width:100%; height:450px;"></div>
+              <div [hidden]="!bpProgressInfor || !kpiProgressInfor" id="container5" style="width:100%; height:450px;"></div>
+              <div [hidden]="bpProgressInfor && kpiProgressInfor" class="row" style="justify-content: center; width:100%; height:450px;">
+                <div class="row" style="justify-content: center;">
+                  <h5>Compiling Chat...</h5>
+                </div>
+                <mdb-spinner  spinnerColor="blue"></mdb-spinner>
+              </div>
             </mdb-tab>
             <mdb-tab heading="Annual">
-              <div id="container6" style="width:100%; height:450px;"></div>
+              <div [hidden]="!yearToYearProgressInfor" id="container6" style="width:100%; height:450px;"></div>
+              <div [hidden]="yearToYearProgressInfor" class="row" style="justify-content: center; width:100%; height:450px;">
+                <div class="row" style="justify-content: center;">
+                  <h5>Compiling Chat...</h5>
+                </div>
+                <mdb-spinner  spinnerColor="blue"></mdb-spinner>
+              </div>
             </mdb-tab>
           </mdb-tabset>
         </mdb-card-body>
@@ -35,27 +53,39 @@
         <mdb-card-body>
           <mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-primary tabs-3'" [contentClass]="'card'">
             <mdb-tab heading="BP Progress">
-              <div class="row">
+              <div class="row" [hidden]="!bpProgressInfor">
                 <div class="col">
                   <div id="container3" style="width:100%; height:225px;"></div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" [hidden]="!bpProgressInfor">
                 <div class="col">
                   <div id="container4" style="width:100%; height:225px;"></div>
                 </div>
               </div>
+              <div [hidden]="bpProgressInfor" class="row" style="justify-content: center; width:100%; height:450px;">
+                <div class="row" style="justify-content: center;">
+                  <h5>Compiling Chats...</h5>
+                </div>
+                <mdb-spinner spinnerColor="blue"></mdb-spinner>
+              </div>
             </mdb-tab>
             <mdb-tab heading="KPI Progress">
-              <div class="row">
+              <div class="row" [hidden]="!kpiProgressInfor">
                 <div class="col">
                   <div id="container1" style="width:100%; height:225px;"></div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" [hidden]="!kpiProgressInfor">
                 <div class="col">
                   <div id="container2" style="width:100%; height:225px;"></div>
                 </div>
+              </div>
+              <div [hidden]="kpiProgressInfor" class="row" style="justify-content: center; width:100%; height:450px;">
+                <div class="row" style="justify-content: center;">
+                  <h5>Compiling Chats...</h5>
+                </div>
+                <mdb-spinner spinnerColor="blue"></mdb-spinner>
               </div>
             </mdb-tab>
           </mdb-tabset>

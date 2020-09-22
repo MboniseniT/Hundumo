@@ -516,9 +516,9 @@ export class ViewKpaResultsComponent implements OnInit {
       }]
     }
 
-    Highcharts.chart('container', options);
-    Highcharts.chart('container1', this.options1);
-    Highcharts.chart('container2', this.options1);
+    // Highcharts.chart('container', options);
+    // Highcharts.chart('container1', this.options1);
+    // Highcharts.chart('container2', this.options1);
     setTimeout(() => {
       this.calcProgress();
       Highcharts.chart('container', options);

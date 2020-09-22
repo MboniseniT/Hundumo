@@ -16,6 +16,7 @@ import { AreYouSureComponent } from '../../../MaturityAssessments/are-you-sure/a
 import { ActionTable } from 'src/app/Models/Assessments/actionTable';
 import { EditActionComponent } from './edit-action/edit-action.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DownloadActionsComponent } from './download-actions/download-actions.component';
 
 @Component({
   selector: 'app-manage-actions',
@@ -51,6 +52,8 @@ export class ManageActionsComponent implements OnInit {
   assessName:string = "";
   assessmentID: string;
   hasSections:boolean;
+
+  downloading:boolean =false;
 
   kpaLevel:any = {};
 
@@ -236,19 +239,11 @@ export class ManageActionsComponent implements OnInit {
           console.log('httperror: ');
           console.log(error);
         });
-        this.assessmentService.CreatePDF(this.assessmentID, this.sectionID.section).subscribe((data: any) => {
-          Download.file(data);
-          //console.log(data);
-          //this.elements = data;
-          //console.log(this.elements);
-         // this.mdbTable.setDataSource(this.elements);
-          }, error => {
-            console.log('httperror: ');
-            console.log(error);
-          });
+
         this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
      }else{
+       //console.log(this.form.value);
       this.assessmentService.GetAllActions(this.assessmentID).subscribe((data: ActionTable[]) => {
         this.elements = data;
         //console.log(this.elements);
@@ -356,30 +351,44 @@ export class ManageActionsComponent implements OnInit {
     });
     }
 
-  onAdd(){
+  onDownloadTable(){
+    this.downloading = true;
+    this.sectionID = this.form.getRawValue();
     const modalOptions = {
       // data: {
       //   editableRow: {kpa_id: this.kpaLevel.kpaID, level_id: this.kpaLevel.LevelID, description: "", frmwrk_id: null, version_id: null, variant_id: null}
       // }
     };
-    this.modalRef = this.modalService.show(AddKpiComponent, modalOptions);
+    this.modalRef = this.modalService.show(DownloadActionsComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
-      //Call funtion to update database
-      this.assessmentService.AddKPI(newElement).toPromise().then((data: any) => {
-        // success notification
-        this.toastrService.success('Addition Successful!');
-        setTimeout(() => {
-          //update DataTable
-          this.loadDataTable();
-        });
-      }, error => {
-        console.log('httperror: ');
+    //console.log(newElement);
+    if(newElement.format == 1){
+      //console.log('Downloading PDF...');
+      this.assessmentService.CreatePDF(this.assessmentID, this.sectionID.section).subscribe((data: any) => {
+        Download.file(data);
+        this.downloading = false;
+        //console.log(data);
+        //this.elements = data;
+        //console.log(this.elements);
+       // this.mdbTable.setDataSource(this.elements);
+        }, error => {
+          console.log('httperror: ');
           console.log(error);
-          // error notification
-          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
-          this.toastrService.error(error);
-      });
-
+        });
+    }else{
+      //console.log('Downloading Excel...');
+      this.assessmentService.CreateExcel(this.assessmentID, this.sectionID.section).subscribe((data: any) => {
+        Download.file(data);
+        this.downloading = false;
+        //console.log(data);
+        //this.elements = data;
+        //console.log(this.elements);
+       // this.mdbTable.setDataSource(this.elements);
+        }, error => {
+          console.log('httperror: ');
+          console.log(error);
+        });
+    }
     });
     //this.mdbTable.setDataSource(this.elements);
   }

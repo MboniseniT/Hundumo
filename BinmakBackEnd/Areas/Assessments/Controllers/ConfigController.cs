@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BinmakAPI.Data;
 using BinmakBackEnd.Areas.Assessments.Entities;
 using BinmakBackEnd.Areas.Assessments.Models;
+using ClosedXML.Excel;
 using DinkToPdf;
 using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Cors;
@@ -506,7 +507,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 Orientation = Orientation.Landscape,
                 PaperSize = PaperKind.A4,
                 Margins = new MarginSettings { Top = 10 },
-                DocumentTitle = "PDF Report",
+                DocumentTitle = "Binmak Action Manager Report",
                 //Out = @"C:\Users\user\Documents\PDFConverter\BinmakActionManagerReport.pdf"
             };
 
@@ -516,7 +517,7 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
                 HtmlContent = GetHTMLString(IdSet),
                 WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "styles.css") },
                 HeaderSettings = { FontName = "Arial", FontSize = 9, Right = "Page [page] of [toPage]", Line = true },
-                FooterSettings = {FontName = "Arial", FontSize = 9, Line = true, Center = "Report Footer"}
+                FooterSettings = {FontName = "Arial", FontSize = 9, Line = true, Center = "(c) Binmak Corp, 2020"}
             };
 
             var pdf = new HtmlToPdfDocument
@@ -529,6 +530,117 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             List<AssessmentsActionManager> actionz = _context.assessmentsActionManager.Where(a => a.assess_id == IdSet.assessID).ToList();
             var tableActions = GetTableActions(actionz);
             return File(_converter.Convert(pdf), "application/pdf");
+        }
+
+        [HttpPost("createExcel")]
+        public IActionResult CreateExcel(ActionIdSet IdSet)
+        {
+            List<AssessmentsActionManager> actionz;
+
+            if (IdSet.sectID == 0)
+            {
+                actionz = _context.assessmentsActionManager.Where(a => a.assess_id == IdSet.assessID).ToList();
+            }
+            else
+            {
+                actionz = _context.assessmentsActionManager.Where(a => a.assess_id == IdSet.assessID && a.sect_id == IdSet.sectID).ToList();
+            }
+            
+            var tableActions = actionz.Select(result => new
+            {
+                actionID = result.ID,
+                actionAssessID = result.assess_id,
+                actionAssessDate = _context.assessments.FirstOrDefault(a => a.ID == result.assess_id).assess_date,
+                actionAssessNode = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == (_context.assessments.FirstOrDefault(a => a.ID == result.assess_id).assetNodeId)).Name,
+                actionSectionName = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_id).Name,
+                actionKpaID = _context.bps.FirstOrDefault(a => a.ID == (_context.bpQuestions.FirstOrDefault(a => a.ID == result.bpQuestion_id)).bp_id).kpa_id,
+                actionKpaName = _context.kpas.FirstOrDefault(a => a.ID == (_context.bps.FirstOrDefault(a => a.ID == (_context.bpQuestions.FirstOrDefault(a => a.ID == result.bpQuestion_id)).bp_id).kpa_id)).name,
+                actionBpQuestion = _context.bpQuestions.FirstOrDefault(a => a.ID == result.bpQuestion_id).question,
+                actionBpName = _context.bps.FirstOrDefault(a => a.ID == (_context.bpQuestions.FirstOrDefault(a => a.ID == result.bpQuestion_id).bp_id)).name,
+                actionAction = result.action,
+                actionBizImpact = ConvertImpact(result.biz_impact),
+                actionBizImpactID = result.biz_impact,
+                actionEaseOfImp = ConvertEase(result.ease_of_imp),
+                actionEaseOfImpID = result.ease_of_imp,
+                actionCostOfImp = result.cost_of_imp,
+                actionTimeToImp = ConvertDuration(result.time_to_imp),
+                actionTimeToImpID = result.time_to_imp,
+                actionPriority = ConvertPriority(result.priority),
+                actionPriorityID = result.priority,
+                actionResponsiblePerson = ConvertUserID(result.responsible_person),
+                actionResponsiblePersonID = result.responsible_person,
+                actionTargetDate = result.target_date,
+                actionStatus = ConvertStatus(result.status),
+                actionStatusID = result.status
+            });
+
+            var reportData = tableActions.ToList();
+
+            string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            string fileName = "BinmakActionManagerReport.xlsx";
+            try
+            {
+                using (var workbook = new XLWorkbook())
+                {
+                    IXLWorksheet worksheet =
+                    workbook.Worksheets.Add("Binmak Action Manager");
+                    worksheet.Cell(1, 1).Value = "ID";
+                    worksheet.Cell(1, 2).Value = "Section";
+                    worksheet.Cell(1, 3).Value = "KPA";
+                    worksheet.Cell(1, 4).Value = "BP";
+                    worksheet.Cell(1, 5).Value = "Question";
+                    worksheet.Cell(1, 6).Value = "Action";
+                    worksheet.Cell(1, 7).Value = "Impact";
+                    worksheet.Cell(1, 8).Value = "Ease";
+                    worksheet.Cell(1, 9).Value = "Cost";
+                    worksheet.Cell(1, 10).Value = "Duration";
+                    worksheet.Cell(1, 11).Value = "Priority";
+                    worksheet.Cell(1, 12).Value = "AssignedTo";
+                    worksheet.Cell(1, 13).Value = "Deadline";
+                    worksheet.Cell(1, 14).Value = "Status";
+                    for (int index = 1; index <= reportData.Count; index++)
+                    {
+                        worksheet.Cell(index + 1, 1).Value =
+                        reportData[index - 1].actionID;
+                        worksheet.Cell(index + 1, 2).Value =
+                        reportData[index - 1].actionSectionName;
+                        worksheet.Cell(index + 1, 3).Value =
+                        reportData[index - 1].actionKpaName;
+                        worksheet.Cell(index + 1, 4).Value =
+                        reportData[index - 1].actionBpName;
+                        worksheet.Cell(index + 1, 5).Value =
+                        reportData[index - 1].actionBpQuestion;
+                        worksheet.Cell(index + 1, 6).Value =
+                        reportData[index - 1].actionAction;
+                        worksheet.Cell(index + 1, 7).Value =
+                        reportData[index - 1].actionBizImpact;
+                        worksheet.Cell(index + 1, 8).Value =
+                        reportData[index - 1].actionEaseOfImp;
+                        worksheet.Cell(index + 1, 9).Value =
+                        reportData[index - 1].actionCostOfImp;
+                        worksheet.Cell(index + 1, 10).Value =
+                        reportData[index - 1].actionTimeToImp;
+                        worksheet.Cell(index + 1, 11).Value =
+                        reportData[index - 1].actionPriority;
+                        worksheet.Cell(index + 1, 12).Value =
+                        reportData[index - 1].actionResponsiblePerson;
+                        worksheet.Cell(index + 1, 13).Value =
+                        reportData[index - 1].actionTargetDate;
+                        worksheet.Cell(index + 1, 14).Value =
+                        reportData[index - 1].actionStatus;
+                    }
+                    using (var stream = new MemoryStream())
+                    {
+                        workbook.SaveAs(stream);
+                        var content = stream.ToArray();
+                        return File(content, contentType, fileName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Something bad happened. " + ex.Message);
+            }
         }
 
         [HttpPost("GetFilteredActions")]
@@ -1942,7 +2054,16 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
         //Helper Methods
         string GetHTMLString(ActionIdSet IdSet)
         {
-            List<AssessmentsActionManager> actionz = _context.assessmentsActionManager.Where(a => a.assess_id == IdSet.assessID && a.sect_id == IdSet.sectID).ToList();
+            List<AssessmentsActionManager> actionz;
+
+            if (IdSet.sectID == 0)
+            {
+                actionz = _context.assessmentsActionManager.Where(a => a.assess_id == IdSet.assessID).ToList();
+            }
+            else
+            {
+                actionz = _context.assessmentsActionManager.Where(a => a.assess_id == IdSet.assessID && a.sect_id == IdSet.sectID).ToList();
+            }
             var tableActions = actionz.Select(result => new
             {
                 actionID = result.ID,

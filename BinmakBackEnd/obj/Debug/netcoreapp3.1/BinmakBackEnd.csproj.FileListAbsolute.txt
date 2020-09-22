@@ -142,6 +142,10 @@ C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\obj\Debug\n
 C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\obj\Debug\netcoreapp3.1\BinmakBackEnd.dll
 C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\obj\Debug\netcoreapp3.1\BinmakBackEnd.pdb
 C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\obj\Debug\netcoreapp3.1\BinmakBackEnd.genruntimeconfig.cache
+C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\bin\Debug\netcoreapp3.1\DinkToPdf.dll
+C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\bin\Debug\netcoreapp3.1\ClosedXML.dll
+C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\bin\Debug\netcoreapp3.1\DocumentFormat.OpenXml.dll
+C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\bin\Debug\netcoreapp3.1\ExcelNumberFormat.dll
+C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\bin\Debug\netcoreapp3.1\System.IO.Packaging.dll
 C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\obj\Debug\netcoreapp3.1\BinmakBackEnd.csproj.CoreCompileInputs.cache
 C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\obj\Debug\netcoreapp3.1\BinmakBackEnd.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\bin\Debug\netcoreapp3.1\DinkToPdf.dll

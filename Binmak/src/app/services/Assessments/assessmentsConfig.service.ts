@@ -191,8 +191,18 @@ constructor(private http: HttpClient) { }
         return this.http.post<ActionTable[]>(this.assessmentUrl+'GetFilteredActions',idSet);
       }
       CreatePDF(assessmentID, sectionID): any{
+        if(sectionID == ""){
+          sectionID = 0;
+        }
         let idSet = {assessID:assessmentID, sectID:sectionID};
         return this.http.post(this.assessmentUrl+'createPDF',idSet,{observe: 'response', responseType: 'blob'});
+      }
+      CreateExcel(assessmentID, sectionID): any{
+        if(sectionID == ""){
+          sectionID = 0;
+        }
+        let idSet = {assessID:assessmentID, sectID:sectionID};
+        return this.http.post(this.assessmentUrl+'createExcel',idSet,{observe: 'response', responseType: 'blob'});
       }
       EditAction(action){
         return this.http.put(this.assessmentUrl+'editAction', action);

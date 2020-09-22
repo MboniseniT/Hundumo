@@ -82,6 +82,7 @@ import { EditVersionComponent } from './kwenza/MaturityAssessments/assessment-la
 import { ManageVariantsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-variants/manage-variants.component';
 import { AddVariantComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-variants/add-variant/add-variant.component';
 import { EditVariantComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-variants/edit-variant/edit-variant.component';
+import { DownloadActionsComponent } from './kwenza/MaturityAssessments/assessment-landing/manage-actions/download-actions/download-actions.component';
 
 
 //import { ChartModule } from 'angular-highcharts';
@@ -152,7 +153,8 @@ import { EditVariantComponent } from './kwenza/MaturityAssessments/assessment-la
     EditVersionComponent,
     ManageVariantsComponent,
     AddVariantComponent,
-    EditVariantComponent
+    EditVariantComponent,
+    DownloadActionsComponent
   ],
   imports: [
     BrowserModule,
