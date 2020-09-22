@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using BinmakAPI.Data;
 using BinmakBackEnd.Areas.Assessments.Entities;
 using BinmakBackEnd.Areas.Assessments.Models;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -19,10 +23,12 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
     public class ConfigController : ControllerBase
     {
         private readonly BinmakDbContext _context;
+        private readonly IConverter _converter;
 
-        public ConfigController(BinmakDbContext context)
+        public ConfigController(BinmakDbContext context, IConverter converter)
         {
             _context = context;
+            _converter = converter;
         }
 
         //KPAs
@@ -491,6 +497,40 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
         }
 
+        [HttpPost("createPDF")]
+        public IActionResult CreatePDF([FromBody] ActionIdSet IdSet)
+        {
+            var globalSettings = new GlobalSettings
+            {
+                ColorMode = ColorMode.Color,
+                Orientation = Orientation.Landscape,
+                PaperSize = PaperKind.A4,
+                Margins = new MarginSettings { Top = 10 },
+                DocumentTitle = "PDF Report",
+                //Out = @"C:\Users\user\Documents\PDFConverter\BinmakActionManagerReport.pdf"
+            };
+
+            var objectSettings = new ObjectSettings
+            {
+                PagesCount = true,
+                HtmlContent = GetHTMLString(IdSet),
+                WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "styles.css") },
+                HeaderSettings = { FontName = "Arial", FontSize = 9, Right = "Page [page] of [toPage]", Line = true },
+                FooterSettings = {FontName = "Arial", FontSize = 9, Line = true, Center = "Report Footer"}
+            };
+
+            var pdf = new HtmlToPdfDocument
+            {
+                GlobalSettings = globalSettings,
+                Objects = {objectSettings}
+            };
+            _converter.Convert(pdf);
+
+            List<AssessmentsActionManager> actionz = _context.assessmentsActionManager.Where(a => a.assess_id == IdSet.assessID).ToList();
+            var tableActions = GetTableActions(actionz);
+            return File(_converter.Convert(pdf), "application/pdf");
+        }
+
         [HttpPost("GetFilteredActions")]
         public IActionResult GetFilteredActions([FromBody] ActionIdSet IdSet)
         {
@@ -539,6 +579,8 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
             }
 
         }
+
+
 
         //Levels
         [HttpGet("getLevels")]
@@ -1898,6 +1940,86 @@ namespace BinmakBackEnd.Areas.Assessments.Controllers
 
 
         //Helper Methods
+        string GetHTMLString(ActionIdSet IdSet)
+        {
+            List<AssessmentsActionManager> actionz = _context.assessmentsActionManager.Where(a => a.assess_id == IdSet.assessID && a.sect_id == IdSet.sectID).ToList();
+            var tableActions = actionz.Select(result => new
+            {
+                actionID = result.ID,
+                actionAssessID = result.assess_id,
+                actionAssessDate = _context.assessments.FirstOrDefault(a => a.ID == result.assess_id).assess_date,
+                actionAssessNode = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == (_context.assessments.FirstOrDefault(a => a.ID == result.assess_id).assetNodeId)).Name,
+                actionSectionName = _context.AssetNodes.FirstOrDefault(a => a.AssetNodeId == result.sect_id).Name,
+                actionKpaID = _context.bps.FirstOrDefault(a => a.ID == (_context.bpQuestions.FirstOrDefault(a => a.ID == result.bpQuestion_id)).bp_id).kpa_id,
+                actionKpaName = _context.kpas.FirstOrDefault(a => a.ID == (_context.bps.FirstOrDefault(a => a.ID == (_context.bpQuestions.FirstOrDefault(a => a.ID == result.bpQuestion_id)).bp_id).kpa_id)).name,
+                actionBpQuestion = _context.bpQuestions.FirstOrDefault(a => a.ID == result.bpQuestion_id).question,
+                actionBpName = _context.bps.FirstOrDefault(a => a.ID == (_context.bpQuestions.FirstOrDefault(a => a.ID == result.bpQuestion_id).bp_id)).name,
+                actionAction = result.action,
+                actionBizImpact = ConvertImpact(result.biz_impact),
+                actionBizImpactID = result.biz_impact,
+                actionEaseOfImp = ConvertEase(result.ease_of_imp),
+                actionEaseOfImpID = result.ease_of_imp,
+                actionCostOfImp = result.cost_of_imp,
+                actionTimeToImp = ConvertDuration(result.time_to_imp),
+                actionTimeToImpID = result.time_to_imp,
+                actionPriority = ConvertPriority(result.priority),
+                actionPriorityID = result.priority,
+                actionResponsiblePerson = ConvertUserID(result.responsible_person),
+                actionResponsiblePersonID = result.responsible_person,
+                actionTargetDate = result.target_date,
+                actionStatus = ConvertStatus(result.status),
+                actionStatusID = result.status
+            });
+
+            var sb = new StringBuilder();
+            sb.Append(@"
+            <html>
+                <head></head>
+                    <body>
+                        <div class='header'><h1>Binmak Action Manager Report</h1></div>
+                        <table align='center'>
+                            <tr>
+                                <th>ID</th>
+                                <th>Section</th>
+                                <th>KPA</th>
+                                <th>BP</th>
+                                <th>Question</th>
+                                <th>Action</th>
+                                <th>Impact</th>
+                                <th>Ease</th>
+                                <th>Cost</th>
+                                <th>Duration</th>
+                                <th>Priority</th>
+                                <th>AssignedTo</th>
+                                <th>Deadline</th>
+                                <th>Status</th>
+                            </tr>");
+            foreach (var action in tableActions)
+            {
+                sb.AppendFormat(@"<tr>
+                                    <td>{0}</td>
+                                    <td>{1}</td>
+                                    <td>{2}</td>
+                                    <td>{3}</td>
+                                    <td>{4}</td>
+                                    <td>{5}</td>
+                                    <td>{6}</td>
+                                    <td>{7}</td>
+                                    <td>{8}</td>
+                                    <td>{9}</td>
+                                    <td>{10}</td>
+                                    <td>{11}</td>
+                                    <td>{12}</td>
+                                    <td>{13}</td>
+                                </tr>", action.actionID, action.actionSectionName, action.actionKpaName, action.actionBpName, action.actionBpQuestion, action.actionAction, action.actionBizImpact, action.actionEaseOfImp, action.actionCostOfImp, action.actionTimeToImp, action.actionPriority, action.actionResponsiblePerson, action.actionTargetDate, action.actionStatus);
+            }
+            sb.Append(@"
+                        </table>
+                     </body>
+                  </html>");
+            return sb.ToString();
+        }
+
         void UpdateBpAvg(Assessment assess)
         {
             var Avgs = _context.bpKpiAssessmentAvgs.FirstOrDefault(a => a.assess_id == assess.ID);

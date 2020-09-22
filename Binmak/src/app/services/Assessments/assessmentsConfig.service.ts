@@ -27,8 +27,8 @@ import { AvgTable } from 'src/app/Models/Assessments/avgTable';
   providedIn: 'root'
 })
 export class AssessmentsConfigService {
-  //assessmentUrl="http://localhost:44318/Assessments/Config/";
-  assessmentUrl="http://binmakdev.dedicated.co.za:93/Assessments/Config/";
+  assessmentUrl="http://localhost:44318/Assessments/Config/";
+  //assessmentUrl="http://binmakdev.dedicated.co.za:93/Assessments/Config/";
 constructor(private http: HttpClient) { }
 
 //Exec Assessments
@@ -189,6 +189,10 @@ constructor(private http: HttpClient) { }
       GetFilteredActions(assessmentID, sectionID): Observable<ActionTable[]>{
         let idSet = {assessID:assessmentID, sectID:sectionID};
         return this.http.post<ActionTable[]>(this.assessmentUrl+'GetFilteredActions',idSet);
+      }
+      CreatePDF(assessmentID, sectionID): any{
+        let idSet = {assessID:assessmentID, sectID:sectionID};
+        return this.http.post(this.assessmentUrl+'createPDF',idSet,{observe: 'response', responseType: 'blob'});
       }
       EditAction(action){
         return this.http.put(this.assessmentUrl+'editAction', action);

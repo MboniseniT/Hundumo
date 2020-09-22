@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "jmDiQQw0QVMWQcVMAQ1ggW7FCw+9c95I8lsjJ/+QQRe8x0BZDP8SuKcW9u+zTKy5KeWcBAfuuP7FLYjk0ov4Yg==",
+  "dgSpecHash": "ZJwKA1ryt5cD+B6hTut/DSvm0ZYp51jIqALm0vXIdm5vmKfC/28Eo1//4ALm1YQrsxAxBczWCCVxyVT9MCzPxw==",
   "success": true,
   "projectFilePath": "C:\\Users\\user\\source\\repos\\HundumoBackup\\HundumoBackup\\BinmakBackEnd\\BinmakBackEnd.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\dinktopdf\\1.0.8\\dinktopdf.1.0.8.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\jsonapiserializer\\1.7.4\\jsonapiserializer.1.7.4.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.6\\microsoft.aspnetcore.authentication.jwtbearer.3.1.6.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.6\\microsoft.aspnetcore.cryptography.internal.3.1.6.nupkg.sha512",
@@ -142,6 +143,7 @@
     "C:\\Users\\user\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.threading.tasks.extensions\\4.3.0\\system.threading.tasks.extensions.4.3.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\system.threading.thread\\4.0.0\\system.threading.thread.4.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.threading.timer\\4.3.0\\system.threading.timer.4.3.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",

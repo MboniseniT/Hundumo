@@ -236,6 +236,16 @@ export class ManageActionsComponent implements OnInit {
           console.log('httperror: ');
           console.log(error);
         });
+        this.assessmentService.CreatePDF(this.assessmentID, this.sectionID.section).subscribe((data: any) => {
+          Download.file(data);
+          //console.log(data);
+          //this.elements = data;
+          //console.log(this.elements);
+         // this.mdbTable.setDataSource(this.elements);
+          }, error => {
+            console.log('httperror: ');
+            console.log(error);
+          });
         this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
      }else{
@@ -374,4 +384,14 @@ export class ManageActionsComponent implements OnInit {
     //this.mdbTable.setDataSource(this.elements);
   }
 
+}
+
+export class Download {
+  static file(data: any) {
+      let url = window.URL.createObjectURL(data.body);
+      let pwa = window.open(url);
+      if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+          alert( 'Please disable your Pop-up blocker and try again.');
+      }
+  }
 }

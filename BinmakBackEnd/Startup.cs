@@ -16,6 +16,10 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BinmakAPI.Entities;
 using Microsoft.EntityFrameworkCore;
+using DinkToPdf.Contracts;
+using DinkToPdf;
+using BinmakBackEnd.Assessblies;
+using System.IO;
 
 namespace BinmakBackEnd
 {
@@ -33,6 +37,8 @@ namespace BinmakBackEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+
             services.AddIdentity<ApplicationUser, IdentityRole>(cfg =>
             {
                 cfg.User.RequireUniqueEmail = true;
@@ -83,6 +89,13 @@ namespace BinmakBackEnd
             services.AddCors();
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             //services.AddControllers();
+            var processSuffix = "32bit";
+            if (Environment.Is64BitProcess && IntPtr.Size == 8)
+            {
+                processSuffix = "64bit";
+            }
+            var context = new CustomAssemblyLoadContext();
+            context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), $"PDFNative\\{processSuffix}\\libwkhtmltox.dll"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
