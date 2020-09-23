@@ -59,6 +59,42 @@ import { AddExecAssessmentComponent } from './kwenza/MaturityAssessments/assessm
 import { ManageExecAssessmentsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/manage-exec-assessments.component';
 import { AreYouSureComponent } from './kwenza/MaturityAssessments/are-you-sure/are-you-sure.component'
 import { ExecManageUsersComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/exec-manage-users/exec-manage-users.component';
+import { AssetHealthService } from './services/asset-health.service';
+import { BokamosoComponent } from './bokamoso/bokamoso.component';
+import { BBSSDeviceComponent } from './asset-health/pages/bbssdevice/bbssdevice.component';
+import { AcknowledgementComponent } from './asset-health/pages/acknowledgement/acknowledgement.component';
+import { MachineComponent } from './asset-health/pages/machine/machine.component';
+import { MachineNotificationSettingComponent } from './asset-health/pages/machine-notification-setting/machine-notification-setting.component';
+import { MachineTypeComponent } from './asset-health/pages/machine-type/machine-type.component';
+import { SensorConditionComponent } from './asset-health/pages/sensor-condition/sensor-condition.component';
+import { SensorDataComponent } from './asset-health/pages/sensor-data/sensor-data.component';
+import { SizeCategoryComponent } from './asset-health/pages/size-category/size-category.component';
+import { UserSettingComponent } from './asset-health/pages/user-setting/user-setting.component';
+import { SharedTableComponent } from './asset-health/shared/shared-table/shared-table.component';
+import { SharedFormComponent } from './asset-health/shared/shared-form/shared-form.component';
+import { MachineConfigurationComponent } from './asset-health/pages/machine-configuration/machine-configuration.component';
+import { ApplicationComponent } from './asset-health/pages/application/application.component';
+import { BinmakTechnologyComponent } from './asset-health/pages/binmak-technology/binmak-technology.component';
+import { FrequencyPeriodComponent } from './asset-health/pages/frequency-period/frequency-period.component';
+import { InsulationLevelComponent } from './asset-health/pages/insulation-level/insulation-level.component';
+import { MachineLoadComponent } from './asset-health/pages/machine-load/machine-load.component';
+import { BearingConditionComponent } from './asset-health/pages/bearing-condition/bearing-condition.component';
+import { DiagnosisChartsComponent } from './asset-health/pages/diagnosis-charts/diagnosis-charts.component';
+import { MachineBlocksComponent } from './asset-health/pages/machine-blocks/machine-blocks.component';
+import { MainComponent } from './asset-health/pages/charts/main/main.component';
+import { OverallVibrationChartsComponent } from './asset-health/pages/charts/overall-vibration-charts/overall-vibration-charts.component';
+import { RadialVibrationChartsComponent } from './asset-health/pages/charts/radial-vibration-charts/radial-vibration-charts.component';
+import { TangentialVibrationChartsComponent } from './asset-health/pages/charts/tangential-vibration-charts/tangential-vibration-charts.component';
+import { AxialVibrationChartsComponent } from './asset-health/pages/charts/axial-vibration-charts/axial-vibration-charts.component';
+import { SkinTemperatureChartsComponent } from './asset-health/pages/charts/skin-temperature-charts/skin-temperature-charts.component';
+import { BearingComponent } from './asset-health/pages/bearing/bearing.component';
+import { AxialVibrationWaterfallChartsComponent } from './asset-health/pages/charts/axial-vibration-charts/axial-vibration-waterfall-charts/axial-vibration-waterfall-charts.component';
+import { RadialVibrationWaterfallChartsComponent } from './asset-health/pages/charts/radial-vibration-charts/radial-vibration-waterfall-charts/radial-vibration-waterfall-charts.component';
+import { AxialVibrationSpectrumChartsComponent } from './asset-health/pages/charts/axial-vibration-charts/axial-vibration-spectrum-charts/axial-vibration-spectrum-charts.component';
+import { RadialVibrationSpectrumChartsComponent } from './asset-health/pages/charts/radial-vibration-charts/radial-vibration-spectrum-charts/radial-vibration-spectrum-charts.component';
+import { TangentialVibrationSpectrumChartsComponent } from './asset-health/pages/charts/tangential-vibration-charts/tangential-vibration-spectrum-charts/tangential-vibration-spectrum-charts.component';
+import { TangentialVibrationWaterfallChartsComponent } from './asset-health/pages/charts/tangential-vibration-charts/tangential-vibration-waterfall-charts/tangential-vibration-waterfall-charts.component';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { ManageKpisComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-kpis/manage-kpis.component';
 import { AddKpiComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-kpis/add-kpi/add-kpi.component';
 import { EditKpiComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-kpis/edit-kpi/edit-kpi.component';
@@ -131,6 +167,41 @@ import { DownloadActionsComponent } from './kwenza/MaturityAssessments/assessmen
     ManageExecAssessmentsComponent,
     AreYouSureComponent,
     ExecManageUsersComponent,
+    BokamosoComponent,
+    BBSSDeviceComponent,
+    AcknowledgementComponent,
+    MachineComponent,
+    MachineNotificationSettingComponent,
+    MachineTypeComponent,
+    SensorConditionComponent,
+    SensorDataComponent,
+    SizeCategoryComponent,
+    UserSettingComponent,
+    SharedTableComponent,
+    SharedFormComponent,
+    MachineConfigurationComponent,
+    ApplicationComponent,
+    BinmakTechnologyComponent,
+    FrequencyPeriodComponent,
+    InsulationLevelComponent,
+    MachineLoadComponent,
+    BearingConditionComponent,
+    DiagnosisChartsComponent,
+    MachineBlocksComponent,
+    MainComponent,
+    OverallVibrationChartsComponent,
+    RadialVibrationChartsComponent,
+    TangentialVibrationChartsComponent,
+    AxialVibrationChartsComponent,
+    SkinTemperatureChartsComponent,
+    BearingComponent,
+    AxialVibrationSpectrumChartsComponent,
+    AxialVibrationWaterfallChartsComponent,
+    RadialVibrationWaterfallChartsComponent,
+    RadialVibrationSpectrumChartsComponent,
+    TangentialVibrationSpectrumChartsComponent,
+    TangentialVibrationWaterfallChartsComponent
+    ExecManageUsersComponent,
     ManageKpisComponent,
     AddKpiComponent,
     EditKpiComponent,
@@ -160,11 +231,12 @@ import { DownloadActionsComponent } from './kwenza/MaturityAssessments/assessmen
     BrowserModule,
     AppRoutingModule,
     DataTablesModule,
-    HttpClientModule,
+    HttpClientModule,    
     BrowserAnimationsModule,
     MDBBootstrapModulesPro.forRoot(),
     FormsModule,
-    //ChartModule,
+    NgxDaterangepickerMd.forRoot(),
+    //ChartModule,    
     DataTablesModule,
     ReactiveFormsModule,
     SelectModule,
@@ -178,7 +250,7 @@ import { DownloadActionsComponent } from './kwenza/MaturityAssessments/assessmen
   providers: [MDBModalService, AuthGuard,DatePipe,
     AuthenticationService,
     { provide: MDB_DATE_OPTIONS, useValue: { showTodayBtn: false } },
-    MainServiceService,
+    MainServiceService,AssetHealthService,
     {
         provide: HTTP_INTERCEPTORS,
         useClass: JwtInterceptor,

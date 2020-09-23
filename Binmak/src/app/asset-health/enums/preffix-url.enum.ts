@@ -1,0 +1,25 @@
+import { BaseUrl } from './base-url.enum';
+
+export let PreffixUrl = {
+    Acknowledgement: { variable: 'api/v1/Acknowledgement', key: BaseUrl.Main },
+    BBSSDevice: { variable: 'api/v1/BBSSDevice', key: BaseUrl.Main },
+    Application: { variable: 'api/v1/Application', key: BaseUrl.Main },
+    BinmakTechnology: { variable: 'api/v1/BinmakTechnology', key: BaseUrl.Main }, 
+    SensorCondtion: { variable: 'api/v1/SensorCondition', key: BaseUrl.Main },
+    MachineType: { variable:'api/v1/MachineType', key: BaseUrl.Main },
+    SizeCategory: { variable:'api/v1/SizeCategory', key: BaseUrl.Main },
+    Machine: { variable:'api/v1/Machine', key: BaseUrl.Main },
+    MachineSensorCondtion: { variable:'api/v1/Machine/sensor', key: BaseUrl.Main },
+    MachineNotificationSetting: { variable:'api/v1/MachineNotificationSetting', key: BaseUrl.Main },
+    SensorData: { variable: 'api/v1/SensorData', key: BaseUrl.Main },
+    SensorDataMachine: { variable: 'api/v1/SensorData/machine', key: BaseUrl.Main },
+    UserSetting: { variable:'api/v1/UserSetting', key: BaseUrl.Main },
+    UserSettingUser: { variable:'api/v1/UserSetting/user', key: BaseUrl.Main },
+    InsulationLevel: { variable:'api/v1/InsulationLevel', key: BaseUrl.Main },
+    FrequencyPeriod: { variable:'api/v1/FrequencyPeriod', key: BaseUrl.Main },
+    MachineLoad: { variable:'api/v1/MachineLoad', key: BaseUrl.Main },
+    MachineCondition: { variable:'api/v1/MachineCondition', key: BaseUrl.Main },
+    User: { variable:'api/Account/admins', key: BaseUrl.Main },
+    Bearing: { variable:'api/v1/Bearing', key: BaseUrl.Main },
+    AssetNode: { variable: 'api/assetSetup/assetNodesTable?reference='+JSON.parse(localStorage.getItem('currentUser'))?.userId, key: BaseUrl.Main},
+}

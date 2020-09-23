@@ -37,7 +37,7 @@ namespace BinmakAPI.Controllers
             _signInManager = signInManager;
         }
 
-        public string CreatePassword(int length)
+        string CreatePassword(int length)
         {
             const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             StringBuilder res = new StringBuilder();
@@ -70,26 +70,26 @@ namespace BinmakAPI.Controllers
 
                 if (result.Succeeded)
                 {
-                    
-                        var smtp = new SmtpClient
-                        {
-                            Host = "smtp.gmail.com",
-                            Port = 587,
-                            EnableSsl = true,
-                            DeliveryMethod = SmtpDeliveryMethod.Network,
-                            Credentials = new NetworkCredential("binmak-systems@m-theth.co.za", "Binmak@2020"),
-                            Timeout = 20000
-                        };
 
-                        using (var message = new MailMessage("binmak-systems@m-theth.co.za", forgotPassword.Email)
-                        {
-                            IsBodyHtml = true,
-                            Subject = "Password Change",
-                            Body = "<html><body>Hi " + user.FirstName + ", <br/><br/>Your Password change in Binmak System has been successfully changed, Here are your updated credentials: <br/> Username: " + user.Email + " <br/>Password: " + password + "  <br/><br/><p>Binmak</p></body></html></body></html>"
-                        })
-                        {
-                            smtp.Send(message);
-                        }
+                    var smtp = new SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        Credentials = new NetworkCredential("binmak-systems@m-theth.co.za", "Binmak@2020"),
+                        Timeout = 20000
+                    };
+
+                    using (var message = new MailMessage("binmak-systems@m-theth.co.za", forgotPassword.Email)
+                    {
+                        IsBodyHtml = true,
+                        Subject = "Password Change",
+                        Body = "<html><body>Hi " + user.FirstName + ", <br/><br/>Your Password change in Binmak System has been successfully changed, Here are your updated credentials: <br/> Username: " + user.Email + " <br/>Password: " + password + "  <br/><br/><p>Binmak</p></body></html></body></html>"
+                    })
+                    {
+                        smtp.Send(message);
+                    }
 
                     return Ok();
                 }
@@ -102,7 +102,7 @@ namespace BinmakAPI.Controllers
             }
             catch (Exception Ex)
             {
-                return BadRequest("Something bad happened! "+Ex.Message);
+                return BadRequest("Something bad happened! " + Ex.Message);
             }
 
         }
@@ -185,19 +185,19 @@ namespace BinmakAPI.Controllers
         public async Task<IActionResult> CreateSystemAccount([FromBody] ApplicationUserVM applicationUser)
         {
 
-                try
+            try
+            {
+                string response = "";
+
+                if (applicationUser == null)
                 {
-                    string response = "";
+                    return BadRequest("Invalid User Data");
+                }
 
-                    if (applicationUser == null)
-                    {
-                        return BadRequest("Invalid User Data");
-                    }
+                var user = await _userManager.FindByEmailAsync(applicationUser.Email);
 
-                    var user = await _userManager.FindByEmailAsync(applicationUser.Email);
-
-                    if (user == null)
-                    {
+                if (user == null)
+                {
 
                         user = new ApplicationUser
                         {
@@ -216,55 +216,55 @@ namespace BinmakAPI.Controllers
                             IsBinmak = false
                         };
 
-                        var userResult = await _userManager.CreateAsync(user, applicationUser.Password);
+                    var userResult = await _userManager.CreateAsync(user, applicationUser.Password);
 
-                        if (userResult != IdentityResult.Success)
-                        {
-                            response = "Account for " + applicationUser.Email + " Could Not Be Created At This Time. Try again. ";
-                            return BadRequest(response);
-                        }
-                        else
-                        {
-
-                            var smtp = new SmtpClient
-                            {
-                                Host = "smtp.gmail.com",
-                                Port = 587,
-                                EnableSsl = true,
-                                DeliveryMethod = SmtpDeliveryMethod.Network,
-                                Credentials = new NetworkCredential("binmak-systems@m-theth.co.za", "Binmak@2020"),
-                                Timeout = 20000
-                            };
-
-                            using (var message = new MailMessage("binmak-systems@m-theth.co.za", applicationUser.Email)
-                            {
-                                IsBodyHtml = true,
-                                Subject = "Binmak Software System Account Details",
-                                Body = "<html><body>Hi " + applicationUser.FirstName + ", <br/>Please use the credentials below in order to log in to Binmak Software System: <br/><br/>Link: http://binmakdev.dedicated.co.za <br/>Domain: " + applicationUser.CompanyName + "<br/>Username: " + applicationUser.Email + " <br/>Password: " + applicationUser.Password+ "  <br/><br/><p>Binmak</p></body></html></body></html>"
-                            })
-                            {
-                                smtp.Send(message);
-                            }
-
-                        }
+                    if (userResult != IdentityResult.Success)
+                    {
+                        response = "Account for " + applicationUser.Email + " Could Not Be Created At This Time. Try again. ";
+                        return BadRequest(response);
                     }
                     else
                     {
-                        return BadRequest("Account already created! Choose different email or sign-in");
-                    }
 
-                    
+                        var smtp = new SmtpClient
+                        {
+                            Host = "smtp.gmail.com",
+                            Port = 587,
+                            EnableSsl = true,
+                            DeliveryMethod = SmtpDeliveryMethod.Network,
+                            Credentials = new NetworkCredential("binmak-systems@m-theth.co.za", "Binmak@2020"),
+                            Timeout = 20000
+                        };
+
+                        using (var message = new MailMessage("binmak-systems@m-theth.co.za", applicationUser.Email)
+                        {
+                            IsBodyHtml = true,
+                            Subject = "Binmak Software System Account Details",
+                            Body = "<html><body>Hi " + applicationUser.FirstName + ", <br/>Please use the credentials below in order to log in to Binmak Software System: <br/><br/>Link: http://binmakdev.dedicated.co.za <br/>Domain: " + applicationUser.CompanyName + "<br/>Username: " + applicationUser.Email + " <br/>Password: " + applicationUser.Password + "  <br/><br/><p>Binmak</p></body></html></body></html>"
+                        })
+                        {
+                            smtp.Send(message);
+                        }
+
+                    }
                 }
-                catch (Exception Ex)
+                else
                 {
-                    return BadRequest("Could not create account for: " + applicationUser.Email + " " + Ex.Message);
+                    return BadRequest("Account already created! Choose different email or sign-in");
                 }
+
+
+            }
+            catch (Exception Ex)
+            {
+                return BadRequest("Could not create account for: " + applicationUser.Email + " " + Ex.Message);
+            }
 
             return Ok();
         }
-    
 
-        public Company CreateCompany(string CompanyName)
+
+        Company CreateCompany(string CompanyName)
         {
             Company company = new Company();
             company.DateStamp = DateTime.Now;

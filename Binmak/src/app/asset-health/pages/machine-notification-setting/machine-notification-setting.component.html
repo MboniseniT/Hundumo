@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <div class="row sub-heading">
+        <div class="col-md-9">
+            <h6>Machine Notification Settings</h6>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn waves-light primary-background-color" aria-label="Close"
+                mdbWavesEffect (click)="open()"  style="color:white">
+                <i class="fas fa-plus"></i> Add</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <app-shared-table [input]='dataTable' [change]="visible" [url]='preffixUrl' [mapper]="map"
+                (result)="tableResult($event)">
+            </app-shared-table>
+        </div>
+        <div class="col-md-12">
+            <app-shared-form (result)="result($event)" [list]='dataTable' [title]='title' [input]='input'
+                [actionType]='actionType' [url]='preffixUrl' [visible]="visible" [mapper]="map">
+            </app-shared-form>
+        </div>
+    </div>
+    <!--Equipment-->
+</div>

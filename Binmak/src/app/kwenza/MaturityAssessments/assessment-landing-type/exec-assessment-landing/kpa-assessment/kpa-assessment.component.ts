@@ -23,11 +23,11 @@ import { AreYouSureComponent } from '../../../are-you-sure/are-you-sure.componen
 export class KpaAssessmentComponent implements OnInit {
 
   @ViewChild('Form') addCharForm: NgForm;
-  assessID:string = JSON.parse(localStorage.getItem("currentAssessment")).id;
-  userID:string = JSON.parse(localStorage.getItem("currentUser")).userId;
-  Frmwrk:string = JSON.parse(localStorage.getItem("currentAssessment")).frmwrk_id;
-  Version:string = JSON.parse(localStorage.getItem("currentAssessment")).version_id;
-  Variant:string = JSON.parse(localStorage.getItem("currentAssessment")).variant_id;
+  assessID:string = JSON.parse(localStorage.getItem("currentAssessment"))?.id;
+  userID:string = JSON.parse(localStorage.getItem("currentUser"))?.userId;
+  Frmwrk:string = JSON.parse(localStorage.getItem("currentAssessment"))?.frmwrk_id;
+  Version:string = JSON.parse(localStorage.getItem("currentAssessment"))?.version_id;
+  Variant:string = JSON.parse(localStorage.getItem("currentAssessment"))?.variant_id;
   kpa: KPA[] = [];
   initKPA: KPA[] = [
     {"id":0,"name":"KPA1","description": "","user_id": null},
@@ -599,8 +599,8 @@ export class KpaAssessmentComponent implements OnInit {
     this.results = this.addCharForm.value;
     let i: number;
     let ID: string;
-    let assess_id: string = JSON.parse(localStorage.getItem("currentAssessment")).id;
-    let user_id: string = JSON.parse(localStorage.getItem("currentUser")).userId;
+    let assess_id: string = JSON.parse(localStorage.getItem("currentAssessment"))?.id;
+    let user_id: string = JSON.parse(localStorage.getItem("currentUser"))?.userId;
     let exists:boolean = false;
     //console.log(this.level1ResultstotalRecords);
     if(this.level1ResultstotalRecords > 0){
@@ -857,8 +857,8 @@ export class KpaAssessmentComponent implements OnInit {
     let i: number;
     let ID: string;
     let resultID:string;
-    let assess_id: string = JSON.parse(localStorage.getItem("currentAssessment")).id;
-    let user_id: string = JSON.parse(localStorage.getItem("currentUser")).userId;
+    let assess_id: string = JSON.parse(localStorage.getItem("currentAssessment"))?.id;
+    let user_id: string = JSON.parse(localStorage.getItem("currentUser"))?.userId;
     let exists:boolean = false;
 
 

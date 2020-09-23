@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace BinmakBackEnd
 {
@@ -21,6 +16,11 @@ namespace BinmakBackEnd
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseSerilog((context, config) => {
+                        config.WriteTo.File("wwwroot\\Logs\\log.txt",
+                            rollingInterval: RollingInterval.Day,
+                            restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information);
+                    });
                 });
     }
 }

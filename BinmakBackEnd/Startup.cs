@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BinmakAPI.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using DinkToPdf.Contracts;
 using DinkToPdf;
 using BinmakBackEnd.Assessblies;
@@ -28,8 +29,6 @@ namespace BinmakBackEnd
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-
         }
 
         public IConfiguration Configuration { get; }
@@ -50,6 +49,11 @@ namespace BinmakBackEnd
             }).
             AddEntityFrameworkStores<BinmakDbContext>().
             AddDefaultTokenProviders();
+            services.AddSwaggerGen(settings =>
+            {
+                settings.SwaggerDoc("v1", new OpenApiInfo { Title = "Hundumo API", Version = "v1" });
+                settings.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+            });
 
             services.AddAuthentication().
                 AddJwtBearer(cfg => {
@@ -70,8 +74,8 @@ namespace BinmakBackEnd
             //var connection = @"Server=tcp:binmakdev.dedicated.co.za;Initial Catalog=BinmakDb;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
             //var connection = @"Server=tcp:binmak.com;Initial Catalog=BinmakDb;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
             services.AddDbContext<BinmakDbContext>
-             (options => options.UseSqlServer(connection));  //Configuration.GetConnectionString("HundumoDbContext")
-                                                   //(options => options.UseSqlServer(connection));
+             (options => options.UseSqlServer(Configuration.GetConnectionString("HundumoDbContext")));
+             //(options => options.UseSqlServer(connection));
 
             services.AddDirectoryBrowser();
 
@@ -105,14 +109,17 @@ namespace BinmakBackEnd
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hundumo API V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
