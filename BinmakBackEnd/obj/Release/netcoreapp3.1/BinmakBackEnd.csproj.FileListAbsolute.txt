@@ -145,3 +145,7 @@ C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\obj\Release
 C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\obj\Release\netcoreapp3.1\BinmakBackEnd.pdb
 C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\obj\Release\netcoreapp3.1\BinmakBackEnd.genruntimeconfig.cache
 C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\bin\Release\netcoreapp3.1\DinkToPdf.dll
+C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\bin\Release\netcoreapp3.1\ClosedXML.dll
+C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\bin\Release\netcoreapp3.1\DocumentFormat.OpenXml.dll
+C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\bin\Release\netcoreapp3.1\ExcelNumberFormat.dll
+C:\Users\user\source\repos\HundumoBackup\HundumoBackup\BinmakBackEnd\bin\Release\netcoreapp3.1\System.IO.Packaging.dll
