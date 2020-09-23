@@ -8,7 +8,7 @@
       <li>
         <div class="logo-wrapper waves-light">
           <a style="width: 100% !important">
-            <img src="./../../assets/binmak1.PNG" class="img-fluid flex-center">
+            <img src="./../../assets/binmak-logo.png" class="img-fluid flex-center">
           </a>
         </div>
       </li>
@@ -46,9 +46,11 @@
               </mdb-accordion-item-head>
               <mdb-accordion-item-body>
                 <ul>
-                  <li routerLink="/binmak/learning-management"><a style="color: white; font-weight: 300; font-size: 75%;" mdbWavesEffect>LEARNING MANAGEMENT</a>
-                  </li>                  
-                  <li routerLink="/binmak/ukwazi-assessments"><a style="color: white; font-weight: 300; font-size: 75%;" mdbWavesEffect>ASSESSMENTS</a>
+                  <li routerLink="/binmak/learning-management"><a
+                      style="color: white; font-weight: 300; font-size: 75%;" mdbWavesEffect>LEARNING MANAGEMENT</a>
+                  </li>
+                  <li routerLink="/binmak/ukwazi-assessments"><a style="color: white; font-weight: 300; font-size: 75%;"
+                      mdbWavesEffect>ASSESSMENTS</a>
                   </li>
                 </ul>
               </mdb-accordion-item-body>
@@ -105,35 +107,25 @@
 
     <!-- Footer -->
     <footer class="page-footer font-small rgba-white-slight pt-3 fixed-bottom">
-
       <!-- Footer Links -->
       <div class="container-fluid text-center">
-
         <!-- Grid row -->
         <div class="row">
-
           <!-- Grid column -->
           <div class="col-12" style="padding: 0; cursor: pointer;">
-
             <a href="www.m-theth.co.za" style="color: white; font-weight: bold;">Support</a>
           </div>
           <!-- Grid column -->
-
         </div>
         <!-- Grid row -->
-
       </div>
       <!-- Footer Links -->
-
     </footer>
     <!-- Footer -->
   </mdb-side-nav>
   <!--/. Sidebar navigation -->
-
   <!-- Navbar -->
-  <mdb-navbar SideClass="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav"
-    [containerInside]="false">
-
+  <mdb-navbar SideClass="navbar-white navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav" [containerInside]="false">
     <navlinks class="navbar-container">
       <!-- SideNav slide-out button -->
       <div class="">
@@ -143,17 +135,15 @@
       </div>
       <!--/. SideNav slide-out button -->
     </navlinks>
-
     <mdb-navbar-brand>
       <!-- Breadcrumb-->
       <div class="breadcrumbs breadcrumbs-hidden-nav breadcrumb-dn mr-auto">
         <img alt="" style="max-height: 40px;">
-        <h4 style="font-weight: 400; color:rgba(0, 69, 125, 1);" id="main-menu" routerLink="#">BINMAK HUNDUMO: SOFTWARE
+        <h4 style="font-weight: 400; color:rgba(0, 69, 125, 1);" routerLink="#">BINMAK HUNDUMO: SOFTWARE
           SYSTEMS</h4>
       </div>
       <!--/. Breadcrumb-->
     </mdb-navbar-brand>
-
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item">
         <a class="nav-link waves-effect waves-light"
@@ -168,16 +158,19 @@
           <i class="fas fa-sign-out-alt" style="padding-right: 10px;"></i>
         </a>
       </li>
-
     </ul>
-
   </mdb-navbar>
   <!--/. Navbar -->
-
 </header>
 <!--/.Double navigation-->
-
-
 <main style="margin: 0 !important;">
   <router-outlet></router-outlet>
 </main>
+<footer class="page-footer font-small primary-background-color fixed-bottom" style="position: relative; margin-top: 5em;">
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Binmak Corporation. All Rights Reserved. Powered by:
+    <a href="https://www.binmak.net/">Binmak </a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->

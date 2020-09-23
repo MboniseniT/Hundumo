@@ -15,7 +15,7 @@ import { LResult } from 'src/app/Models/Assessments/lResults';
   providedIn: 'root'
 })
 export class AssessmentsConfigService {
-  assessmentUrl="http://localhost:44318/Assessments/Config/";
+  assessmentUrl="http://binmakdev.dedicated.co.za:92/Assessments/Config/";
 constructor(private http: HttpClient) { }
 
 //Exec Assessments

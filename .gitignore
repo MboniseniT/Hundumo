@@ -364,4 +364,10 @@ BinmakBackEnd/obj
 BinmakBackEnd/.vs
 BinmakBackEnd/bin
 BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.csproj.FileListAbsolute.txt
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.dll
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.csprojAssemblyReference.cache
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.csproj.FileListAbsolute.txt
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.csproj.CoreCompileInputs.cache
+BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.assets.cache
+/BinmakBackEnd/Logs
 /BinmakBackEnd/Logs

@@ -25,8 +25,6 @@ namespace BinmakBackEnd
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-
         }
 
         public IConfiguration Configuration { get; }
@@ -97,7 +95,6 @@ namespace BinmakBackEnd
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
