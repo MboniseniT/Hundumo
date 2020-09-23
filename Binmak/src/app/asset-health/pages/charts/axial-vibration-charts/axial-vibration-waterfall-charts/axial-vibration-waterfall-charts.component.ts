@@ -17,6 +17,15 @@ export class AxialVibrationWaterfallChartsComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(): void {
+     var series = [];
+     var frequency = [];
+     this.data.forEach(element => {
+      series.push( {
+         type: 'spline',         
+         data: element.xfft
+      }),
+      frequency.push(element.modFreq)
+     });
     this.options = {      
       chart: {         
          type: 'scatter',
@@ -45,32 +54,12 @@ export class AxialVibrationWaterfallChartsComponent implements OnChanges {
          }
       },         
       title : {
-         text: '3D Scatter Plot'   
+         text: 'Axial Vibration Spectrum Waterfall'   
       },
-      // xAxis:{
-      //    min:0,
-      //    max:100        
-      // }, 
-      // yAxis:{
-      //    min:0,
-      //    max:100        
-      // },
-      // zAxis:{
-      //    min:0,
-      //    ax:100      
-      // },
-      series : [
-        {
-          type: 'spline',
-          name: 'Average',
-          data: this.data.machineStatistics.map(a=>a.xfft.reduce((a, b) => a + b, 0))
+      zAxis: {
+         categories: frequency,
        },
-       {
-         type: 'spline',
-         name: 'Average',
-         data: this.data.machineStatistics.map(a=>a.modFreq.reduce((a, b) => a + b, 0))
-      },
-       ]
+      series : series
    };
     Highcharts.chart('axialWaterfallContainer', this.options);
   }

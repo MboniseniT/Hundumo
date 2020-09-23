@@ -120,7 +120,6 @@ import { AddVariantComponent } from './kwenza/MaturityAssessments/assessment-lan
 import { EditVariantComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-variants/edit-variant/edit-variant.component';
 import { DownloadActionsComponent } from './kwenza/MaturityAssessments/assessment-landing/manage-actions/download-actions/download-actions.component';
 
-
 //import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
@@ -200,7 +199,7 @@ import { DownloadActionsComponent } from './kwenza/MaturityAssessments/assessmen
     RadialVibrationWaterfallChartsComponent,
     RadialVibrationSpectrumChartsComponent,
     TangentialVibrationSpectrumChartsComponent,
-    TangentialVibrationWaterfallChartsComponent
+    TangentialVibrationWaterfallChartsComponent,
     ExecManageUsersComponent,
     ManageKpisComponent,
     AddKpiComponent,

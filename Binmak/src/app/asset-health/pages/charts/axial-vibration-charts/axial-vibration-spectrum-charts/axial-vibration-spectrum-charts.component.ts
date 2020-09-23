@@ -18,7 +18,7 @@ export class AxialVibrationSpectrumChartsComponent implements OnChanges {
   ngOnChanges(): void {
     this.options = {
       title: {
-        text: 'Axial Spectrum Vibration Of Machine By Date'
+        text: 'Axial Vibration Frequency'
       },
 
       subtitle: {
@@ -27,12 +27,12 @@ export class AxialVibrationSpectrumChartsComponent implements OnChanges {
 
       yAxis: {
         title: {
-          text: 'Machine Axial Spectrum Vibration'
+          text: 'Acceleration'
         }
       },
 
       xAxis: {
-        categories: this.data.machineStatistics.map(a=> a.modFreq.reduce((a, b) => a + b, 0)),        
+        categories: this.data.modFreq,
       },
 
       legend: {
@@ -50,11 +50,11 @@ export class AxialVibrationSpectrumChartsComponent implements OnChanges {
       },
 
       series: [{
-        name: 'Axial Spectrum vibration',
-        data: this.data.machineStatistics.map(a=>a.xfft.reduce((a, b) => a + b, 0)),
-        color:'#00457d'
-      }, 
-    ],
+        name: 'Frequency',
+        data: this.data.xfft,
+        color: '#00457d'
+      },
+      ],
 
       responsive: {
         rules: [{
@@ -74,4 +74,4 @@ export class AxialVibrationSpectrumChartsComponent implements OnChanges {
     };
     Highcharts.chart('axialSpectrumContainer', this.options);
   }
-  }
+}

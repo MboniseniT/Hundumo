@@ -15,12 +15,5 @@ namespace BinmakBackEnd.Areas.AssetHealth.Models.Local
         public decimal? RmsAlarm { get; set; }
         public decimal? TemperatureAlarm { get; set; }
         public decimal? TemperatureAlert { get; set; }
-        public double[]? Xfft { get; set; }
-
-        public double[]? Yfft { get; set; }
-
-        public double[]? Zfft { get; set; }
-
-        public double[]? ModFreq { get; set; }
     }
 }

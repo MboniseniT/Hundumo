@@ -18,9 +18,25 @@ namespace BinmakBackEnd.Areas.AssetHealth.Controllers
         }
 
         [HttpPost("machine")]
-        public IActionResult GetByDeviceId([FromBody]SearchMachineRequest request)
+        public IActionResult SearchStatistic([FromBody]SearchMachineRequest request)
         {
-            var data = new SensorDataRepository(_context).FindByMachineId(request);
+            var data = new SensorDataRepository(_context).SearchMachineStatistic(request);
+            if (data == null) return StatusCode(StatusCodes.Status404NotFound, "Not Found");
+            return Ok(data);
+        }
+
+        [HttpPost("machine/spectrum")]
+        public IActionResult SearchachineSpectrum([FromBody]SearchMachineRequest request)
+        {
+            var data = new SensorDataRepository(_context).SearchMachineSpectrum(request);
+            if (data == null) return StatusCode(StatusCodes.Status404NotFound, "Not Found");
+            return Ok(data);
+        }
+
+        [HttpPost("machine/waterfall")]
+        public IActionResult SearchachineWaterfall([FromBody]SearchMachineRequest request)
+        {
+            var data = new SensorDataRepository(_context).SearchMachineWaterfall(request);
             if (data == null) return StatusCode(StatusCodes.Status404NotFound, "Not Found");
             return Ok(data);
         }

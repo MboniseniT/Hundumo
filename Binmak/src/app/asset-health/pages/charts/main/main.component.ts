@@ -14,6 +14,8 @@ export class MainComponent implements OnInit {
   //selected: {startDate: Moment, endDate: Moment};
   dataTable: any;
   data: any;
+  spectrumData:any;
+  waterfallData:any;
   dateFrom:any;
   dateTo:any;
   assetId: any;
@@ -25,7 +27,7 @@ export class MainComponent implements OnInit {
   searchForm = {
     machineId:0,
     dateFrom: new Date('2020-06-22T13:18:33.427Z'),
-    dateTo: new Date('2020-08-23T13:18:33.427Z')
+    dateTo: new Date()
   }
   constructor(private request: AssetHealthService, private route: ActivatedRoute) {
     this.preffixUrl = PreffixUrl.SensorDataMachine;
@@ -52,17 +54,23 @@ export class MainComponent implements OnInit {
   }
 
   getData(data){
-    this.loading = true;
     this.request.post(data, this.preffixUrl).subscribe(result => {
-      this.data = result;
-      this.loading = false;      
+      this.data = result;   
       this.assetId =this.data.machineName
       this.deviceId =this.data.deviceId
       this.assetDetails =this.data.assetName
     },error=>{
-      console.log(error);
-      
-      this.loading = false;    
-    })
+      console.log(error);     
+    });
+    this.request.post(data, PreffixUrl.MachineSpectrum).subscribe(result => {
+      this.spectrumData = result;
+    },error=>{    
+      console.log(error);     
+    });
+    this.request.post(data, PreffixUrl.MachineWaterfall).subscribe(result => {
+      this.waterfallData = result;
+    },error=>{
+      console.log(error);      
+    });
   }
 }
