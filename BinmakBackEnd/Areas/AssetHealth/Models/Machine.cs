@@ -26,8 +26,8 @@ namespace BinmakBackEnd.Areas.AssetHealth.Models
         public int ConditionId { get; set; }
 
         public virtual SensorCondition Condition { get; set; }
-        public virtual Bearing NonDrivingEnd { get; set; }
-        public virtual Bearing DrivingEnd { get; set; }
+        //public virtual Bearing NonDrivingEnd { get; set; }
+        //public virtual Bearing DrivingEnd { get; set; }
         public virtual MachineLoad MachineLoad { get; set; }
         public virtual FrequencyPeriod FrequencyPeriod { get; set; }
         public virtual SizeCategory SizeCategory { get; set; }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { BaseUrl } from '../enums/base-url.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class MainServiceService {
     //urlBase = 'http://binmakdev.dedicated.co.za:81/';
     //url = 'http://localhost:44318/api/';
     //urlBase = 'http://localhost:44318/';
-    url = 'http://binmakdev.dedicated.co.za:93/api/';
-    urlBase = 'http://binmakdev.dedicated.co.za:93/';
+    url = BaseUrl.Main+'api/';
+    urlBase = BaseUrl.Main;
     //url = 'http://binmak.dedicated.co.za:84/api/';
     //url = 'http://binmakdev.dedicated.co.za:81/api/';
     //url = 'http://binmaktest.dedicated.co.za:81/api/';

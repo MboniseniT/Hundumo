@@ -22,13 +22,14 @@ import { FrmwrkTable } from 'src/app/Models/Assessments/frmwrkTable';
 import { VersionTable } from 'src/app/Models/Assessments/versionTable';
 import { VariantTable } from 'src/app/Models/Assessments/variantTable';
 import { AvgTable } from 'src/app/Models/Assessments/avgTable';
+import { BaseUrl } from 'src/app/enums/base-url.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssessmentsConfigService {
   //assessmentUrl="http://localhost:44318/Assessments/Config/";
-  assessmentUrl="http://binmakdev.dedicated.co.za:93/Assessments/Config/";
+  assessmentUrl=BaseUrl.Main+"Assessments/Config/";
 constructor(private http: HttpClient) { }
 
 //Exec Assessments
