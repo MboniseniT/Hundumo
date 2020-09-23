@@ -364,3 +364,4 @@ BinmakBackEnd/obj
 BinmakBackEnd/.vs
 BinmakBackEnd/bin
 BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.csproj.FileListAbsolute.txt
+/BinmakBackEnd/Logs
