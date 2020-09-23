@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IMyOptions } from 'ng-uikit-pro-standard/public_api';
 import { PreffixUrl } from 'src/app/asset-health/enums/preffix-url.enum';
@@ -11,6 +11,7 @@ import { AssetHealthService } from 'src/app/services/asset-health.service';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
+  //selected: {startDate: Moment, endDate: Moment};
   dataTable: any;
   data: any;
   dateFrom:any;
@@ -20,10 +21,11 @@ export class MainComponent implements OnInit {
   assetDetails: any;
   map = SensorDataMapper;
   preffixUrl: any;
+  public loading = false;
   searchForm = {
     machineId:0,
-    dateFrom:new Date('0001-01-01T00:00:00Z'),
-    dateTo:new Date('2100-01-01Z00:00:00:000')
+    dateFrom: new Date('2020-06-22T13:18:33.427Z'),
+    dateTo: new Date('2020-08-23T13:18:33.427Z')
   }
   constructor(private request: AssetHealthService, private route: ActivatedRoute) {
     this.preffixUrl = PreffixUrl.SensorDataMachine;
@@ -40,8 +42,8 @@ export class MainComponent implements OnInit {
     };
 
   search(data){
-    this.searchForm.dateTo = new Date('2100-01-01Z00:00:00:000');
-    this.searchForm.dateFrom = new Date('0001-01-01T00:00:00Z');
+    this.searchForm.dateTo = new Date('2020-08-23T13:18:33.427Z');
+    this.searchForm.dateFrom = new Date('2020-06-22T13:18:33.427Z');
     if(data.value.dateFrom!= null || data.value.dateFrom != undefined)
     this.searchForm.dateFrom = new Date(data.value.dateFrom);
     if(data.value.dateTo!= null || data.value.dateTo != undefined)
@@ -50,11 +52,17 @@ export class MainComponent implements OnInit {
   }
 
   getData(data){
+    this.loading = true;
     this.request.post(data, this.preffixUrl).subscribe(result => {
       this.data = result;
-      this.assetId =this.data[0]?.machineName
-      this.deviceId =this.data[0]?.deviceId
-      this.assetDetails =this.data[0]?.assetName
+      this.loading = false;      
+      this.assetId =this.data.machineName
+      this.deviceId =this.data.deviceId
+      this.assetDetails =this.data.assetName
+    },error=>{
+      console.log(error);
+      
+      this.loading = false;    
     })
   }
 }

@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { ActionType } from '../../enums/action-type.enum';
 import { AssetHealthService } from 'src/app/services/asset-health.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-shared-table',
@@ -13,13 +14,20 @@ export class SharedTableComponent implements OnChanges {
   @Output() result = new EventEmitter<any>();
   @Input() input: any;
   @Input() mapper: any;
- // @Input() actions: any;
   @Input() url: any;
   selectedRow: number = -1;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
   constructor( private request: AssetHealthService) {
   }
   
-  ngOnChanges() {   
+  ngOnChanges() {  
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      processing: true,
+      destroy:true
+    }; 
      for (const key in this.input) {
       if (!this.input.hasOwnProperty(key)) { continue; }
       this.headings = [];
@@ -65,6 +73,7 @@ export class SharedTableComponent implements OnChanges {
       }
       break;
     }
+    this.dtTrigger.next();    
   }
   findIndexToUpdate(newItem) {
     return newItem.id === this;

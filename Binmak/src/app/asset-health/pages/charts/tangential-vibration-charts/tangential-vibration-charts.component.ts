@@ -1,5 +1,5 @@
 import { Input } from '@angular/core';
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnChanges } from '@angular/core';
 import * as Highcharts from 'highcharts';
 
 @Component({
@@ -32,7 +32,7 @@ export class TangentialVibrationChartsComponent implements OnChanges {
       },
 
       xAxis: {
-        categories: this.data.map(a=> new Date(a?.regiDate)),
+        categories: this.data.machineStatistics.map(a=> new Date(a.timeStamp *1000)),
         
       },
 
@@ -52,18 +52,18 @@ export class TangentialVibrationChartsComponent implements OnChanges {
 
       series: [{
         name: 'Tangential vibration',
-        data: this.data.map(a=>a?.tangentialRMS),
+        data: this.data.machineStatistics.map(a=>a?.tangentialRMS),
         color:'#00457d'
       }, 
       {
         name: 'Alert',
-        data: this.data.map(a=>a?.rmsAlert),
+        data: this.data.machineStatistics.map(a=>a.rmsAlert),
         color:'#ff0000',
         dashStyle:'Dash'     
       },
       {
         name: 'Alarm',
-        data: this.data.map(a=>a?.rmsAlarm), 
+        data: this.data.machineStatistics.map(a=>a?.rmsAlarm), 
         color:'#ffa500',
         dashStyle:'Dash'     
       },

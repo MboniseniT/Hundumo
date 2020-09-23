@@ -17,7 +17,7 @@ namespace BinmakBackEnd
                 {
                     webBuilder.UseStartup<Startup>();
                     webBuilder.UseSerilog((context, config) => {
-                        config.WriteTo.File("Logs\\log.txt",
+                        config.WriteTo.File("wwwroot\\Logs\\log.txt",
                             rollingInterval: RollingInterval.Day,
                             restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information);
                     });

@@ -27,9 +27,5 @@
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\AssetHealth\Mappers\" />
-  </ItemGroup>
-
 
 </Project>

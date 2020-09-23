@@ -159,3 +159,4 @@ C:\Users\Admin\Documents\Projects\Load And Haul\Hundumo\BinmakBackEnd\obj\Debug\
 C:\Users\Admin\Documents\Projects\Load And Haul\Hundumo\BinmakBackEnd\obj\Debug\netcoreapp3.1\BinmakBackEnd.pdb
 C:\Users\Admin\Documents\Projects\Load And Haul\Hundumo\BinmakBackEnd\obj\Debug\netcoreapp3.1\BinmakBackEnd.genruntimeconfig.cache
 C:\Users\Admin\Documents\Projects\Load And Haul\Hundumo\BinmakBackEnd\obj\Debug\netcoreapp3.1\BinmakBackEnd.csprojAssemblyReference.cache
+C:\Users\Admin\Documents\Projects\Load And Haul\Hundumo\BinmakBackEnd\bin\Debug\netcoreapp3.1\web.config

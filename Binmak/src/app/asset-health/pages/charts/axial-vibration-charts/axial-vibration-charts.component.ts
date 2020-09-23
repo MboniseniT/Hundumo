@@ -11,10 +11,9 @@ export class AxialVibrationChartsComponent implements OnChanges {
   options: any;
   @Input() data: any;
   constructor() { 
-    
   }
 
-  ngOnChanges(): void {    
+  ngOnChanges(): void {        
     this.options = {
       title: {
         text: 'Axial Vibration Of Machine By Date'
@@ -31,7 +30,7 @@ export class AxialVibrationChartsComponent implements OnChanges {
       },
 
       xAxis: {
-        categories: this.data.map(a=> new Date(a.regiDate)),        
+        categories: this.data.machineStatistics.map(a=> new Date(a.timeStamp *1000)),        
       },
 
       legend: {
@@ -50,18 +49,18 @@ export class AxialVibrationChartsComponent implements OnChanges {
 
       series: [{
         name: 'Axial vibration',
-        data: this.data.map(a=>a?.axialRMS),
+        data: this.data.machineStatistics.map(a=>a.axialRMS),
         color:'#00457d'
       }, 
       {
         name: 'Alert',
-        data: this.data.map(a=>a?.rmsAlert),
+        data: this.data.machineStatistics.map(a=>a.rmsAlert),
         color:'#ff0000',
         dashStyle:'Dash'     
       },
       {
         name: 'Alarm',
-        data: this.data.map(a=>a?.rmsAlarm), 
+        data: this.data.machineStatistics.map(a=>a.rmsAlarm), 
         color:'#ffa500',
         dashStyle:'Dash'     
       },

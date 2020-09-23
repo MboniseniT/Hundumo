@@ -88,6 +88,13 @@ import { TangentialVibrationChartsComponent } from './asset-health/pages/charts/
 import { AxialVibrationChartsComponent } from './asset-health/pages/charts/axial-vibration-charts/axial-vibration-charts.component';
 import { SkinTemperatureChartsComponent } from './asset-health/pages/charts/skin-temperature-charts/skin-temperature-charts.component';
 import { BearingComponent } from './asset-health/pages/bearing/bearing.component';
+import { AxialVibrationWaterfallChartsComponent } from './asset-health/pages/charts/axial-vibration-charts/axial-vibration-waterfall-charts/axial-vibration-waterfall-charts.component';
+import { RadialVibrationWaterfallChartsComponent } from './asset-health/pages/charts/radial-vibration-charts/radial-vibration-waterfall-charts/radial-vibration-waterfall-charts.component';
+import { AxialVibrationSpectrumChartsComponent } from './asset-health/pages/charts/axial-vibration-charts/axial-vibration-spectrum-charts/axial-vibration-spectrum-charts.component';
+import { RadialVibrationSpectrumChartsComponent } from './asset-health/pages/charts/radial-vibration-charts/radial-vibration-spectrum-charts/radial-vibration-spectrum-charts.component';
+import { TangentialVibrationSpectrumChartsComponent } from './asset-health/pages/charts/tangential-vibration-charts/tangential-vibration-spectrum-charts/tangential-vibration-spectrum-charts.component';
+import { TangentialVibrationWaterfallChartsComponent } from './asset-health/pages/charts/tangential-vibration-charts/tangential-vibration-waterfall-charts/tangential-vibration-waterfall-charts.component';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 
 //import { ChartModule } from 'angular-highcharts';
 
@@ -163,6 +170,12 @@ import { BearingComponent } from './asset-health/pages/bearing/bearing.component
     AxialVibrationChartsComponent,
     SkinTemperatureChartsComponent,
     BearingComponent,
+    AxialVibrationSpectrumChartsComponent,
+    AxialVibrationWaterfallChartsComponent,
+    RadialVibrationWaterfallChartsComponent,
+    RadialVibrationSpectrumChartsComponent,
+    TangentialVibrationSpectrumChartsComponent,
+    TangentialVibrationWaterfallChartsComponent
   ],
   imports: [
     BrowserModule,
@@ -172,7 +185,8 @@ import { BearingComponent } from './asset-health/pages/bearing/bearing.component
     BrowserAnimationsModule,
     MDBBootstrapModulesPro.forRoot(),
     FormsModule,
-    //ChartModule,
+    NgxDaterangepickerMd.forRoot(),
+    //ChartModule,    
     DataTablesModule,
     ReactiveFormsModule,
     SelectModule,

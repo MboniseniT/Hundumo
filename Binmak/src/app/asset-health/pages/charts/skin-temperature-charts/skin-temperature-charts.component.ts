@@ -32,7 +32,7 @@ export class SkinTemperatureChartsComponent implements OnChanges {
       },
 
       xAxis: {
-        categories: this.data.map(a=>new Date(a?.regiDate)),
+        categories: this.data.machineStatistics.map(a=>new Date(a.timeStamp *1000)),
         
       },
 
@@ -52,18 +52,18 @@ export class SkinTemperatureChartsComponent implements OnChanges {
 
       series: [{
         name: 'Skin Temperature',
-        data: this.data.map(a=>a?.temperature),
+        data: this.data.machineStatistics.map(a=>a.temperature),
         color:'#00457d'
       }, 
       {
         name: 'Alert',
-        data: this.data.map(a=>a?.temperatureAlert),
+        data: this.data.machineStatistics.map(a=>a.temperatureAlert),
         color:'#ff0000',
         dashStyle:'Dash'     
       },
       {
         name: 'Alarm',
-        data: this.data.map(a=>a?.temperatureAlarm), 
+        data: this.data.machineStatistics.map(a=>a.temperatureAlarm), 
         color:'#ffa500',
         dashStyle:'Dash'     
       },

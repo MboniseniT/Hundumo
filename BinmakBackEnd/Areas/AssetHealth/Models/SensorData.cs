@@ -7,7 +7,7 @@ namespace BinmakBackEnd.Areas.AssetHealth.Models
         public int Id { get; set; }
         public string DeviceId { get; set; }
         public int MachineId { get; set; }
-        public long TimeStamp { get; set; }
+        public double TimeStamp { get; set; }
         public bool Waveform { get; set; }
         public bool FFT { get; set; }
         public double Temperature { get; set; }

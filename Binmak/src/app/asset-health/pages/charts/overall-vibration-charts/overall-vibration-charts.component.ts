@@ -33,7 +33,7 @@ export class OverallVibrationChartsComponent implements OnChanges {
       },
 
       xAxis: {
-        categories: this.data.map(a=>a?.regiDate),
+        categories: this.data.machineStatistics.map(a=>new Date(a.timeStamp *1000)),
         
       },
 
@@ -53,18 +53,18 @@ export class OverallVibrationChartsComponent implements OnChanges {
 
       series: [{
         name: 'Overall vibration',
-        data: this.data.map(a=>a?.overallRMS),
+        data: this.data.machineStatistics.map(a=>a.overallRMS),
         color:'#00457d'
       }, 
       {
         name: 'Alert',
-        data: this.data.map(a=>a?.rmsAlert),
+        data: this.data.machineStatistics.map(a=>a.rmsAlert),
         color:'#ff0000',
         dashStyle:'Dash'     
       },
       {
         name: 'Alarm',
-        data: this.data.map(a=>a?.rmsAlarm), 
+        data: this.data.machineStatistics.map(a=>a.rmsAlarm), 
         color:'#ffa500',
         dashStyle:'Dash'     
       },

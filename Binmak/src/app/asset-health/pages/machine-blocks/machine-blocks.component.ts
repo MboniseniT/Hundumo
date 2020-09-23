@@ -40,12 +40,14 @@ export class MachineBlocksComponent implements OnInit {
   visible = false;
   title: string;
   actionType: ActionType;
+  listData: [];
   @ViewChild('dataModal', { static: false }) dataModal: ModalDirective;
   constructor(private request: AssetHealthService, private route: ActivatedRoute) {
     this.preffixUrl = PreffixUrl.MachineSensorCondtion;
     this.route.params.subscribe(params => {
       this.condition = params["name"];
       this.request.get(params["id"], this.preffixUrl).subscribe(result => {
+        this.listData = result.items;
         var list = [];
         this.dataTable =[];
         var i = 0;

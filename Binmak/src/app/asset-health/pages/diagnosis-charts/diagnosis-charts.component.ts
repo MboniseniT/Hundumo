@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import * as Highcharts from 'highcharts';
+import * as Highcharts from 'highcharts/highcharts.src'
 import { AssetHealthService } from 'src/app/services/asset-health.service';
 import { PreffixUrl } from '../../enums/preffix-url.enum';
-
+import highcharts3D from 'highcharts/highcharts-3d.src'
+highcharts3D(Highcharts);
 @Component({
   selector: 'app-diagnosis-charts',
   templateUrl: './diagnosis-charts.component.html',
   styleUrls: ['./diagnosis-charts.component.scss']
 })
 export class DiagnosisChartsComponent implements OnInit {
-  options: any;
+  chartOptions: any;
   constructor(private request: AssetHealthService, private router: Router) {
   }
 
@@ -26,7 +27,7 @@ export class DiagnosisChartsComponent implements OnInit {
         data.push(element.id);
         dataList.push(data);
        });
-        this.options = {
+        this.chartOptions = {
           chart: {
             type: 'pie',
             options3d: {
@@ -66,7 +67,7 @@ export class DiagnosisChartsComponent implements OnInit {
             data: dataList,
           }]
         };
-        Highcharts.chart('container', this.options);
+         Highcharts.chart('container', this.chartOptions);
       })
     });
 
