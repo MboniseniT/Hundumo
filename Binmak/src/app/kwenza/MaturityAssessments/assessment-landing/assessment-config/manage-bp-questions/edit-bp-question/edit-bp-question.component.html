@@ -1,0 +1,90 @@
+<div class="modal-content">
+  <div class="modal-header" style="background-color: #032c57 !important;">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span style="color: white !important;" aria-hidden="true">×</span>
+    </button>
+    <h4 style="color: white !important;" class="modal-title w-100" id="myModalLabel">Edit BP Question: {{editableRow.qstnID}}</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+
+      <!-- Nav Tabs -->
+<mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-primary tabs-3'" [contentClass]="'card'">
+  <!--Panel 1-->
+  <mdb-tab heading="Basic Infor">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <mdb-select  [options]="frmwrks" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="frmwrk_id"
+          label="* Framework" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="frmwrk_id.invalid && (frmwrk_id.dirty || frmwrk_id.touched)">Framework is required</mdb-error>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <mdb-select [options]="versions" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="version_id"
+          label="* Version" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="version_id.invalid && (version_id.dirty || version_id.touched)">Version is required</mdb-error>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <mdb-select [options]="variants" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="variant_id"
+          label="* Variant" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="variant_id.invalid && (variant_id.dirty || variant_id.touched)">Variant is required</mdb-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="md-form">
+          <mdb-select [options]="bps" [filterEnabled]="true" [multiple]="false"
+          [highlightFirst]="false" formControlName="bp_id"
+          label="* Select Parent BP" [enableSelectAll]="false">
+          </mdb-select>
+          <mdb-error *ngIf="bp_id.invalid && (bp_id.dirty || bp_id.touched)">BP is required</mdb-error>
+        </div>
+      </div>
+    </div>
+  </mdb-tab>
+  <!--Panel 2-->
+  <mdb-tab heading="Qstn & Desc">
+    <div class="row">
+      <div class="col">
+        <div class="md-form">
+          <textarea type="text" id="guideline" class="md-textarea form-control" formControlName="question"
+                  mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+          <label for="question">* question</label>
+          <mdb-error *ngIf="question.invalid && (question.dirty || question.touched)">Question is required</mdb-error>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="md-form">
+          <textarea type="text" id="description" class="md-textarea form-control" formControlName="description"
+                  mdbValidate [validateSuccess]="false" rows="2" mdbInput></textarea>
+          <label for="description">description</label>
+          <!-- <mdb-error *ngIf="description.invalid && (description.dirty || description.touched)">Description is required</mdb-error> -->
+        </div>
+      </div>
+    </div>
+  </mdb-tab>
+</mdb-tabset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" mdbBtn color="light" class="waves-light" aria-label="Close"
+            (click)="modalRef.hide()" mdbWavesEffect>Close
+    </button>
+    <button [disabled]="!form.valid" type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+             (click)="editRow()" style="background-color: #032c57 !important;">Save
+    </button>
+  </div>
+</div>

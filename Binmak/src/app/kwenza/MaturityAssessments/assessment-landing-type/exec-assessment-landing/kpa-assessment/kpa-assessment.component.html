@@ -21,6 +21,7 @@
             </div>
           </div>
         </mdb-card-header>
+        <mdb-progress-bar [hidden]="KPAtotalRecords" class="progress primary-color-dark" mode="indeterminate"></mdb-progress-bar>
         <mdb-card-body>
           <form (ngSubmit)='onAdd()' #Form="ngForm">
             <div class="form-group col-12">
@@ -31,6 +32,7 @@
                 </div>
               </div>
               <mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-primary tabs-3'" [contentClass]="'card'">
+                <mdb-progress-bar [hidden]="level1totalRecords && level2totalRecords && level3totalRecords && level4totalRecords && level5totalRecords && resultsSet" class="progress primary-color-dark" mode="indeterminate"></mdb-progress-bar>
                 <mdb-tab heading="Innocence" id="tab1">
                   <div class="form-group">
                     <div class="custom-control custom-checkbox" id="innocence" *ngFor="let innocence of level1; let i = index;">
@@ -90,11 +92,11 @@
               <hr />
                   <div class="row">
                     <div class="col-md-6">
-                      <button [disabled]="!Form.valid || level1ResultstotalRecords" type="submit"
+                      <button [disabled]="!Form.valid || !(level1totalRecords && level2totalRecords && level3totalRecords && level4totalRecords && level5totalRecords) || level1ResultstotalRecords || level2ResultstotalRecords || level3ResultstotalRecords || level4ResultstotalRecords || level5ResultstotalRecords || !KPAtotalRecords" type="submit"
                         class="btn btn-primary btn-block mb-2" style="background-color: #032c57 !important; color: white;">Submit</button>
                     </div>
                     <div class="col-md-6">
-                      <button [disabled]="!level1ResultstotalRecords" (click)="onUpdate()" style="width: 100%;" type="button"
+                      <button [disabled]="!(level1totalRecords && level2totalRecords && level3totalRecords && level4totalRecords && level5totalRecords) || !level1ResultstotalRecords || !level2ResultstotalRecords || !level3ResultstotalRecords || !level4ResultstotalRecords || !level5ResultstotalRecords || !KPAtotalRecords" (click)="onUpdate()" style="width: 100%;" type="button"
                         class="btn btn-secondary btn-block mb-2" style="background-color: #303031 !important; color: white;">Update</button>
                     </div>
                     <!-- <div class="col-md-4">

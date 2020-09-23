@@ -17,6 +17,7 @@ namespace BinmakAPI.Entities
         public string LastName { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsAdmin { get; set; }
+        public bool IsBinmak { get; set; }
         public string Address { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }

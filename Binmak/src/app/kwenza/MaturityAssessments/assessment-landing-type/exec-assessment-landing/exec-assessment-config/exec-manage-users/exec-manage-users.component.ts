@@ -84,7 +84,7 @@ export class ExecManageUsersComponent implements OnInit, AfterViewInit {
 
   //Custom Methods
   loadDataTable(){
-    this.assessmentService.GetAssessmentUsers().subscribe((data: any[]) => {
+    this.assessmentService.GetExecAssessmentUsers().subscribe((data: any[]) => {
       this.elements = data;
       console.log(data);
           this.mdbTable.setDataSource(this.elements);
@@ -150,7 +150,7 @@ export class ExecManageUsersComponent implements OnInit, AfterViewInit {
     this.assessmentUser = Object.assign(this.assessmentUser, this.formAssessmentUser.value);
 
       //Call funtion to update database
-      this.assessmentService.AddAssessmentUser(this.assessmentUser).toPromise().then((data: any) => {
+      this.assessmentService.AddExecAssessmentUser(this.assessmentUser).toPromise().then((data: any) => {
         //console.log(data);
         // success notification
         this.toastrService.success('Addition Successful!');
@@ -237,7 +237,7 @@ export class ExecManageUsersComponent implements OnInit, AfterViewInit {
     AdminProtect(){
       if (!this.isAdmin) {
         console.log('here');
-        this.router.navigate(['/binmak/exec-assessment-landing']);
+        this.router.navigate(['/binmak/assessment-types']);
       }
     }
 

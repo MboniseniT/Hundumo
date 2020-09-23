@@ -41,6 +41,7 @@ export class ManageKpasComponent implements OnInit, AfterViewInit {
   formError:string = "";
 
   isAdmin:boolean;
+  isBinmak:boolean;
 
   constructor(
     private kpaService: AssessmentsConfigService,
@@ -57,8 +58,17 @@ export class ManageKpasComponent implements OnInit, AfterViewInit {
 
   ngOnInit():void {
     this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
-    this.AdminProtect();
+    this.isBinmak = JSON.parse(localStorage.getItem('currentUser')).isBinmak;
+    this.BinmakProtect();
+    //this.AdminProtect();
     this.loadDataTable();
+  }
+
+  //Init methods
+  BinmakProtect(){
+    if (!this.isBinmak) {
+      this.router.navigate(['/binmak/assessment-types']);
+    }
   }
 
   //Custom Methods
@@ -151,7 +161,7 @@ export class ManageKpasComponent implements OnInit, AfterViewInit {
     AdminProtect(){
       if (!this.isAdmin) {
         console.log('here');
-        this.router.navigate(['/binmak/exec-assessment-landing']);
+        this.router.navigate(['/binmak/assessment-types']);
       }
     }
 }

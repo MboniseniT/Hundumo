@@ -19,7 +19,7 @@
     },
     "BinmakBackEnd": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": true, //true
       "launchUrl": "weatherforecast",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

@@ -6,7 +6,7 @@ import { MdbTableDirective, MdbTablePaginationComponent } from 'ng-uikit-pro-sta
 import {HttpClient} from "@angular/common/http";
 import { EditCharacteristicComponent } from '../manage-characteristics/edit-characteristic/edit-characteristic.component';
 import { SelectKpaLevelComponent } from '../manage-characteristics/select-kpaLevel/select-kpaLevel.component';
-import { AddExecAssessmentComponent } from '../manage-exec-assessments/add-exec-assessment/add-exec-assessment.component'
+import { AddExecAssessmentComponent } from '../manage-exec-assessments/add-exec-assessment/add-exec-assessment.component';
 import {MDBModalRef, MDBModalService} from "ng-uikit-pro-standard";
 import { ToastService } from 'ng-uikit-pro-standard';
 import { Router } from '@angular/router';
@@ -16,6 +16,7 @@ import { Char } from 'src/app/Models/Assessments/char';
 import { from } from 'rxjs';
 import { Assessment } from 'src/app/Models/Assessments/assessment';
 import { AreYouSureComponent } from 'src/app/kwenza/MaturityAssessments/are-you-sure/are-you-sure.component';
+import { AddSectionsComponent } from './add-sections/add-sections.component';
 
 @Component({
   selector: 'app-manage-exec-assessments',
@@ -43,6 +44,7 @@ export class ManageExecAssessmentsComponent implements OnInit, AfterViewInit {
 
   kpa: Array<any>;
   levels: Array<any>;
+  assessmentSection: Array<any>;
 
   kpas:KPA[] =[];
   level:Level[]= [];
@@ -59,6 +61,7 @@ export class ManageExecAssessmentsComponent implements OnInit, AfterViewInit {
   });
 
   isAdmin:boolean;
+  isBinmak:boolean;
 
   constructor(
     private assessmentService: AssessmentsConfigService,
@@ -76,7 +79,9 @@ export class ManageExecAssessmentsComponent implements OnInit, AfterViewInit {
 
 ngOnInit():void {
   this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
+  this.isBinmak = JSON.parse(localStorage.getItem('currentUser')).isBinmak;
     this.AdminProtect();
+    //this.BinmakProtect();
     this.loadDataTable();
     this.loadDropdowns();
   }
@@ -99,12 +104,6 @@ ngOnInit():void {
   loadDropdowns(){
     //retrieve KPAs from Database
     this.assessmentService.GetExecKPAs().subscribe(
-      // (data:KPA[]) => {
-      //   this.kpas = data;
-      // }, error => {
-      //   console.log('httperror: ');
-      //   console.log(error);
-      // }
       resp => {
         this.kpa = resp.map((t: any) => {
           return { label: t.name, value: t.id }
@@ -190,6 +189,24 @@ ngOnInit():void {
     //this.mdbTable.setDataSource(this.elements);
   }
 
+  onSections(el){
+    let assessmentSection: Array<any>;
+    //retrieve Sections this assessment from Database
+    this.assessmentService.GetSections(el.id).subscribe(
+      (data:any[]) => {
+        assessmentSection = data;
+        if(assessmentSection.length > 0){
+          this.toastrService.warning('Sections for this Assessment exist! You can neither edit nor add new sections anymore. Thank you.');
+        }else{
+          this.addSections(el);
+        }
+
+      }, error => {
+        console.log(error);
+      }
+    );
+  }
+
   onClear(el: any){
     const elementIndex = this.elements.findIndex((elem: any) => el === elem);
     const modalOptions = {
@@ -245,7 +262,36 @@ ngOnInit():void {
   }
 
   back(){
-    this.router.navigate(['/binmak/exec-assessment-config']);
+    this.router.navigate(['/binmak/assessment-system-config']);
+  }
+
+  addSections(el){
+    //const elementIndex = this.elements.findIndex((elem: any) => el === elem);
+    const modalOptions = {
+      data: {
+        editableRow: el
+      }
+    };
+    this.modalRef = this.modalService.show(AddSectionsComponent, modalOptions);
+    this.modalRef.content.saveButtonClicked.subscribe((newElement: any) => {
+      //Call funtion to update database
+      this.assessmentService.AddSections(newElement).toPromise().then((data: any) => {
+        //console.log(data);
+        // success notification
+        this.toastrService.success('Add Sections Successful!');
+        setTimeout(() => {
+          //update DataTable
+          //this.elements[elementIndex] = newElement;
+        });
+      }, error => {
+        console.log('httperror: ');
+          console.log(error);
+          // error notification
+          //this.formError = JSON.stringify(error.error.Message + " " +error.error.ModelState['']);
+          this.toastrService.error(error);
+      });
+
+    });
   }
 
   //DataTable Methods
@@ -282,8 +328,13 @@ ngOnInit():void {
 
     AdminProtect(){
       if (!this.isAdmin) {
-        console.log('here');
-        this.router.navigate(['/binmak/exec-assessment-landing']);
+        this.router.navigate(['/binmak/assessment-types']);
+      }
+    }
+
+    BinmakProtect(){
+      if (!this.isBinmak) {
+        this.router.navigate(['/binmak/assessment-types']);
       }
     }
 

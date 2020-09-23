@@ -9,5 +9,7 @@ namespace BinmakBackEnd.Areas.Assessments.Entities
     {
         public int ID { get; set; }
         public string name { get; set; }
+        public string description { get; set; }
+        public string user_id { get; set; }
     }
 }

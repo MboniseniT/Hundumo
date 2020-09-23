@@ -1,9 +1,9 @@
 <div class="modal-content">
-  <div class="modal-header">
+  <div class="modal-header" style="background-color: #032c57 !important;">
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">×</span>
+      <span style="color: white;" aria-hidden="true">×</span>
     </button>
-    <h4 class="modal-title w-100" id="myModalLabel">Add Assessment</h4>
+    <h4 style="color: white;" class="modal-title w-100" id="myModalLabel">Add Assessment</h4>
   </div>
   <div class="modal-body">
     <form [formGroup]="form">
@@ -385,7 +385,7 @@
             (click)="modalRef.hide()" mdbWavesEffect>Close
     </button>
     <button [disabled]="!form.valid" type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
-             (click)="onSave()">Save!
+             (click)="onSave()" style="background-color: #032c57 !important;">Save
     </button>
   </div>
 </div>

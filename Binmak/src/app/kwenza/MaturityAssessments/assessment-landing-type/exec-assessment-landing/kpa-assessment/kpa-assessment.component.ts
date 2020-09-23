@@ -155,6 +155,8 @@ export class KpaAssessmentComponent implements OnInit {
 
   isSaved:number;
   assessName:string = "";
+  resultsSet:boolean = false;
+  charsSet:boolean = false;
 
   // listen out for incoming message
   @Input() charID: string;
@@ -196,12 +198,12 @@ export class KpaAssessmentComponent implements OnInit {
       }else{
         this.last = false;
       }
-      this.getCharacteristics();
+
     },500);
     setTimeout(() => {
-      this.getResults();
+
       setTimeout(() => {
-        this.setViewParams();
+
       },500);
     }, 500);
   }
@@ -216,10 +218,12 @@ export class KpaAssessmentComponent implements OnInit {
 
   //Init Methods
   getKPAs(){
+    //console.log('kpas');
     //retrieve KPAs from Database
     this.assessmentService.GetExecKPAs().subscribe(
       (data:KPA[]) => {
         this.kpa = data;
+        this.initKPA = this.kpa;
         //console.log(data);
         this.KPAtotalRecords = data.length;
       }, error => {
@@ -229,10 +233,12 @@ export class KpaAssessmentComponent implements OnInit {
     );
   }
   getLevels(){
+    //console.log('levels');
      //retrieve Levels from Database
     this.assessmentService.getLevels().subscribe(
       (data:Level[]) => {
         this.level = data;
+        this.getCharacteristics();
         //console.log(data);
         this.leveltotalRecords = data.length;
       }, error => {
@@ -247,6 +253,12 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[0].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level1 = data;
+        //console.log('chars1');
+        setTimeout(() => {
+          if(this.level1totalRecords && this.level2totalRecords && this.level3totalRecords && this.level4totalRecords && this.level5totalRecords){
+            this.charsSet = true;
+          }
+        }, 250);
         //console.log(data);
         this.level1totalRecords = data.length;
       }, error => {
@@ -257,6 +269,12 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[1].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level2 = data;
+        //console.log('chars2');
+        setTimeout(() => {
+          if(this.level1totalRecords && this.level2totalRecords && this.level3totalRecords && this.level4totalRecords && this.level5totalRecords){
+            this.charsSet = true;
+          }
+        }, 500);
         //console.log(data);
         this.level2totalRecords = data.length;
       }, error => {
@@ -267,6 +285,12 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[2].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level3 = data;
+        //console.log('chars3');
+        setTimeout(() => {
+          if(this.level1totalRecords && this.level2totalRecords && this.level3totalRecords && this.level4totalRecords && this.level5totalRecords){
+            this.charsSet = true;
+          }
+        }, 1000);
         //console.log(data);
         this.level3totalRecords = data.length;
       }, error => {
@@ -277,6 +301,12 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[3].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level4 = data;
+        //console.log('chars4');
+        setTimeout(() => {
+          if(this.level1totalRecords && this.level2totalRecords && this.level3totalRecords && this.level4totalRecords && this.level5totalRecords){
+            this.charsSet = true;
+          }
+        }, 1500);
         //console.log(data);
         this.level4totalRecords = data.length;
       }, error => {
@@ -287,6 +317,16 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getRunKPALevelChars(this.kpaID.toString(),this.level[4].id.toString(), this.Frmwrk, this.Version, this.Variant).subscribe(
       (data:Char[]) => {
         this.level5 = data;
+        //console.log('chars5');
+        setTimeout(() => {
+          if(this.level1totalRecords && this.level2totalRecords && this.level3totalRecords && this.level4totalRecords && this.level5totalRecords){
+            this.charsSet = true;
+          }
+          if(!this.charsSet){
+            this.toastrService.error('Your network connection is poor! Please try and connect to a better connection.');
+          }
+        }, 2000);
+        this.getResults();
         //console.log(data);
         this.level5totalRecords = data.length;
       }, error => {
@@ -302,6 +342,12 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getCurrentUserResults(this.kpaID.toString(),this.level[0].id.toString(), this.assessID, this.userID).subscribe(
       (r1:LResult[]) => {
         this.level1Results = r1;
+        //console.log('getResults1');
+        setTimeout(() => {
+          if(!this.resultsSet){
+          this.setViewParams();
+        }
+        }, 250);
         //console.log(r1);
         this.level1ResultstotalRecords = r1.length;
       }, error => {
@@ -312,6 +358,12 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getCurrentUserResults(this.kpaID.toString(),this.level[1].id.toString(), this.assessID, this.userID).subscribe(
       (data:LResult[]) => {
         this.level2Results = data;
+        //console.log('getResults2');
+        setTimeout(() => {
+          if(!this.resultsSet){
+          this.setViewParams();
+        }
+        }, 500);
         //console.log(data);
         this.level2ResultstotalRecords = data.length;
       }, error => {
@@ -322,6 +374,12 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getCurrentUserResults(this.kpaID.toString(),this.level[2].id.toString(), this.assessID, this.userID).subscribe(
       (data:LResult[]) => {
         this.level3Results = data;
+        //console.log('getResults3');
+        setTimeout(() => {
+          if(!this.resultsSet){
+          this.setViewParams();
+        }
+        }, 1000);
         //console.log(data);
         this.level3ResultstotalRecords = data.length;
       }, error => {
@@ -332,6 +390,15 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getCurrentUserResults(this.kpaID.toString(),this.level[3].id.toString(), this.assessID, this.userID).subscribe(
       (data:LResult[]) => {
         this.level4Results = data;
+
+        //console.log('getResults4');
+
+          setTimeout(() => {
+            if(!this.resultsSet){
+            this.setViewParams();
+          }
+          }, 1500);
+
         //console.log(data);
         this.level4ResultstotalRecords = data.length;
       }, error => {
@@ -342,6 +409,15 @@ export class KpaAssessmentComponent implements OnInit {
     this.assessmentService.getCurrentUserResults(this.kpaID.toString(),this.level[4].id.toString(), this.assessID, this.userID).subscribe(
       (data:LResult[]) => {
         this.level5Results = data;
+
+          setTimeout(() => {
+            if(!this.resultsSet){
+            this.setViewParams();
+          }
+          }, 2000);
+
+        //console.log('getResults5');
+
         //console.log(data);
         this.level5ResultstotalRecords = data.length;
       }, error => {
@@ -487,22 +563,39 @@ export class KpaAssessmentComponent implements OnInit {
   }
 
   setViewParams(){
-    if(this.level1ResultstotalRecords){
+    this.resultsSet = true;
+    if(this.level1ResultstotalRecords && this.level2ResultstotalRecords && this.level3ResultstotalRecords && this.level4ResultstotalRecords && this.level5ResultstotalRecords){
       this.rslt1();
       this.rslt2();
       this.rslt3();
       this.rslt4();
       this.rslt5();
+
+      //console.log('setViewParams');
     }
 
     if(this.KPAtotalRecords){
-      this.initKPA = this.kpa;
+
     }
   }
 
   //funtion Methods
   onAdd(){
 
+    this.submitResults();
+
+  setTimeout(() => {
+    let newKpaID = Number(this.kpaID) + 1;
+      this._router.navigate(['/binmak/kpa-assessment/'+newKpaID.toString()]);
+      setTimeout(() => {
+        //call refresh from AppComponent
+      this.refresh("");
+      });
+  },100);
+  }
+
+  submitResults(){
+    console.log('submitting...');
     this.results = this.addCharForm.value;
     let i: number;
     let ID: string;
@@ -757,15 +850,6 @@ export class KpaAssessmentComponent implements OnInit {
       }
       }
     }
-
-  setTimeout(() => {
-    let newKpaID = Number(this.kpaID) + 1;
-      this._router.navigate(['/binmak/kpa-assessment/'+newKpaID.toString()]);
-      setTimeout(() => {
-        //call refresh from AppComponent
-      this.refresh("");
-      });
-  },100);
   }
 
   onUpdate(){
@@ -776,264 +860,41 @@ export class KpaAssessmentComponent implements OnInit {
     let assess_id: string = JSON.parse(localStorage.getItem("currentAssessment"))?.id;
     let user_id: string = JSON.parse(localStorage.getItem("currentUser"))?.userId;
     let exists:boolean = false;
-    //console.log(this.level1ResultstotalRecords);
-    if(this.level1ResultstotalRecords === 0){
-      //console.log('do nothing!');
-    }else{
-      //console.log('Result does exist! Editting...');
-      for(i=0;i<this.level1totalRecords;i++){
-        // Set Characteristic ID
-        ID = this.level1[i].id.toString();
-        resultID = this.level1Results[i].id.toString();
-        //console.log(ID);
-        // Process Result
-      for(var key in this.results){
-        if(key == ID){
-          // Convert result to binary
-          if(this.results[key] != false ){
-            this.results[key] = 1;
-          }else
-          {
-            this.results[key] = 0;
-          }
-          //console.log(this.results[key]);
-          // Feed result into JSON
-          this.iResult = {
-            "characteristic_id": Number(ID),
-            "assess_id": assess_id,
-            "user_id":user_id,
-            "kpa_id":this.kpaID,
-            "level_id":this.level[0].id,
-            "value":this.results[key]
-          };
-          //console.log(this.iResult);
-          //Post result to API
-            this.assessmentService.putResult(resultID.toString(),this.iResult).toPromise().then((data: any) => {
-              //console.log(data);
-              // success notification
-              // alertify.success('Addition Successful!');
-            }, error => {
-              console.log('httperror: ');
-                console.log(error);
-                // error notification
-                // alertify.error('httperror: '+error);
-            });
 
-          // Check if result exists before submitting
-          //retrieve result from Database
-          //console.log(ID);
 
-        }
-      }
-      }
-    }
-    if(this.level2ResultstotalRecords === 0){
-      //console.log('result exists!');
-    }else{
-      //console.log('Result does not exist!');
-      for(i=0;i<this.level2totalRecords;i++){
-        // Set Characteristic ID
-        ID = this.level2[i].id.toString();
-        resultID = this.level2Results[i].id.toString();
-        //console.log(ID);
-        // Process Result
-      for(var key in this.results){
-        if(key == ID){
-          // Convert result to binary
-          if(this.results[key] != false ){
-            this.results[key] = 1;
-          }else
-          {
-            this.results[key] = 0;
-          }
-          //console.log(this.results[key]);
-          // Feed result into JSON
-          this.iResult = {
-            "characteristic_id": Number(ID),
-            "assess_id": assess_id,
-            "user_id":user_id,
-            "kpa_id":this.kpaID,
-            "level_id":this.level[1].id,
-            "value":this.results[key]
-          };
-          //console.log(this.iResult);
-          //Post result to API
-          this.assessmentService.putResult(resultID.toString(),this.iResult).toPromise().then((data: any) => {
-              //console.log(data);
-              // success notification
-              // alertify.success('Addition Successful!');
-            }, error => {
-              console.log('httperror: ');
-                console.log(error);
-                // error notification
-                // alertify.error('httperror: '+error);
-            });
+    this.iResult = {
+      "characteristic_id": 1,
+      "assess_id": assess_id,
+      "user_id":user_id,
+      "kpa_id":this.kpaID,
+      "level_id":this.level[0].id,
+      "value":0
+    };
+    //console.log(this.iResult);
+    //Post result to API
+      this.assessmentService.putResult(this.iResult).toPromise().then((data: any) => {
+        //console.log(data);
+        // success notification
+        // alertify.success('Successful!');
+        this.level1ResultstotalRecords = 0;
+        this.level2ResultstotalRecords = 0;
+        this.level3ResultstotalRecords = 0;
+        this.level4ResultstotalRecords = 0;
+        this.level5ResultstotalRecords = 0;
 
-          // Check if result exists before submitting
-          //retrieve result from Database
-          //console.log(ID);
-
-        }
-      }
-      }
-    }
-    if(this.level3ResultstotalRecords === 0){
-      //console.log('result exists!');
-    }else{
-      //console.log('Result does not exist!');
-      for(i=0;i<this.level3totalRecords;i++){
-        // Set Characteristic ID
-        ID = this.level3[i].id.toString();
-        resultID = this.level3Results[i].id.toString();
-        //console.log(ID);
-        // Process Result
-      for(var key in this.results){
-        if(key == ID){
-          // Convert result to binary
-          if(this.results[key] != false ){
-            this.results[key] = 1;
-          }else
-          {
-            this.results[key] = 0;
-          }
-          //console.log(this.results[key]);
-          // Feed result into JSON
-          this.iResult = {
-            "characteristic_id": Number(ID),
-            "assess_id": assess_id,
-            "user_id":user_id,
-            "kpa_id":this.kpaID,
-            "level_id":this.level[2].id,
-            "value":this.results[key]
-          };
-          //console.log(this.iResult);
-          //Post result to API
-          this.assessmentService.putResult(resultID.toString(),this.iResult).toPromise().then((data: any) => {
-              //console.log(data);
-              // success notification
-              // alertify.success('Addition Successful!');
-            }, error => {
-              console.log('httperror: ');
-                console.log(error);
-                // error notification
-                // alertify.error('httperror: '+error);
-            });
-
-          // Check if result exists before submitting
-          //retrieve result from Database
-          //console.log(ID);
-
-        }
-      }
-      }
-    }
-
-    if(this.level4ResultstotalRecords === 0){
-      //console.log('result exists!');
-    }else{
-      //console.log('Result does not exist!');
-      for(i=0;i<this.level4totalRecords;i++){
-        // Set Characteristic ID
-        ID = this.level4[i].id.toString();
-        resultID = this.level4Results[i].id.toString();
-        //console.log(ID);
-        // Process Result
-      for(var key in this.results){
-        if(key == ID){
-          // Convert result to binary
-          if(this.results[key] != false ){
-            this.results[key] = 1;
-          }else
-          {
-            this.results[key] = 0;
-          }
-          //console.log(this.results[key]);
-          // Feed result into JSON
-          this.iResult = {
-            "characteristic_id": Number(ID),
-            "assess_id": assess_id,
-            "user_id":user_id,
-            "kpa_id":this.kpaID,
-            "level_id":this.level[3].id,
-            "value":this.results[key]
-          };
-          //console.log(this.iResult);
-          //Post result to API
-          this.assessmentService.putResult(resultID.toString(),this.iResult).toPromise().then((data: any) => {
-              //console.log(data);
-              // success notification
-              // alertify.success('Addition Successful!');
-            }, error => {
-              console.log('httperror: ');
-                console.log(error);
-                // error notification
-                // alertify.error('httperror: '+error);
-            });
-
-          // Check if result exists before submitting
-          //retrieve result from Database
-          //console.log(ID);
-
-        }
-      }
-      }
-    }
-
-    if(this.level5ResultstotalRecords === 0){
-      //console.log('result exists!');
-    }else{
-      //console.log('Result does not exist!');
-      for(i=0;i<this.level5totalRecords;i++){
-        // Set Characteristic ID
-        ID = this.level5[i].id.toString();
-        resultID = this.level5Results[i].id.toString();
-        //console.log(ID);
-        // Process Result
-      for(var key in this.results){
-        if(key == ID){
-          // Convert result to binary
-          if(this.results[key] != false ){
-            this.results[key] = 1;
-          }else
-          {
-            this.results[key] = 0;
-          }
-          //console.log(this.results[key]);
-          // Feed result into JSON
-          this.iResult = {
-            "characteristic_id": Number(ID),
-            "assess_id": assess_id,
-            "user_id":user_id,
-            "kpa_id":this.kpaID,
-            "level_id":this.level[4].id,
-            "value":this.results[key]
-          };
-          //console.log(this.iResult);
-          //Post result to API
-          this.assessmentService.putResult(resultID.toString(),this.iResult).toPromise().then((data: any) => {
-              //console.log(data);
-              // success notification
-              // alertify.success('Addition Successful!');
-            }, error => {
-              console.log('httperror: ');
-                console.log(error);
-                // error notification
-                // alertify.error('httperror: '+error);
-            });
-
-          // Check if result exists before submitting
-          //retrieve result from Database
-          //console.log(ID);
-
-        }
-      }
-      }
-    }
+        this.submitResults();
+        this.toastrService.success('Successful!');
+      }, error => {
+        console.log('httperror: ');
+          console.log(error);
+          // error notification
+          // alertify.error('httperror: '+error);
+      });
 
   setTimeout(() => {
       //call refresh from AppComponent
       this.refresh("");
-  },100);
+  },1000);
   }
 
   onNext(){

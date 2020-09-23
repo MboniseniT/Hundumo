@@ -95,6 +95,31 @@ import { RadialVibrationSpectrumChartsComponent } from './asset-health/pages/cha
 import { TangentialVibrationSpectrumChartsComponent } from './asset-health/pages/charts/tangential-vibration-charts/tangential-vibration-spectrum-charts/tangential-vibration-spectrum-charts.component';
 import { TangentialVibrationWaterfallChartsComponent } from './asset-health/pages/charts/tangential-vibration-charts/tangential-vibration-waterfall-charts/tangential-vibration-waterfall-charts.component';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { ManageKpisComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-kpis/manage-kpis.component';
+import { AddKpiComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-kpis/add-kpi/add-kpi.component';
+import { EditKpiComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-kpis/edit-kpi/edit-kpi.component';
+import { ManageBpKpiUsersComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-BpKpi-users/manage-BpKpi-users.component';
+import { AddSectionsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/exec-assessment-landing/exec-assessment-config/manage-exec-assessments/add-sections/add-sections.component';
+import { ViewConsensusResultsComponent } from './kwenza/MaturityAssessments/assessment-landing/view-consensus-results/view-consensus-results.component';
+import { ManageBpComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-bp/manage-bp.component';
+import { AddBpComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-bp/add-bp/add-bp.component';
+import { EditBpComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-bp/edit-bp/edit-bp.component';
+import { ManageBpQuestionsComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-bp-questions/manage-bp-questions.component';
+import { AddBpQuestionComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-bp-questions/add-bp-question/add-bp-question.component';
+import { EditBpQuestionComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-bp-questions/edit-bp-question/edit-bp-question.component';
+import { ManageActionsComponent } from './kwenza/MaturityAssessments/assessment-landing/manage-actions/manage-actions.component';
+import { EditActionComponent } from './kwenza/MaturityAssessments/assessment-landing/manage-actions/edit-action/edit-action.component';
+import { ManageFrmwrksComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-frmwrks/manage-frmwrks.component';
+import { AddFrmwrkComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-frmwrks/add-frmwrk/add-frmwrk.component';
+import { EditFrmwrkComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-frmwrks/edit-frmwrk/edit-frmwrk.component';
+import { ManageVersionsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-versions/manage-versions.component';
+import { AddVersionComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-versions/add-version/add-version.component';
+import { EditVersionComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-versions/edit-version/edit-version.component';
+import { ManageVariantsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-variants/manage-variants.component';
+import { AddVariantComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-variants/add-variant/add-variant.component';
+import { EditVariantComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-variants/edit-variant/edit-variant.component';
+import { DownloadActionsComponent } from './kwenza/MaturityAssessments/assessment-landing/manage-actions/download-actions/download-actions.component';
+
 
 //import { ChartModule } from 'angular-highcharts';
 
@@ -176,6 +201,31 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
     RadialVibrationSpectrumChartsComponent,
     TangentialVibrationSpectrumChartsComponent,
     TangentialVibrationWaterfallChartsComponent
+    ExecManageUsersComponent,
+    ManageKpisComponent,
+    AddKpiComponent,
+    EditKpiComponent,
+    ManageBpKpiUsersComponent,
+    AddSectionsComponent,
+    ViewConsensusResultsComponent,
+    ManageBpComponent,
+    AddBpComponent,
+    EditBpComponent,
+    ManageBpQuestionsComponent,
+    AddBpQuestionComponent,
+    EditBpQuestionComponent,
+    ManageActionsComponent,
+    EditActionComponent,
+    ManageFrmwrksComponent,
+    AddFrmwrkComponent,
+    EditFrmwrkComponent,
+    ManageVersionsComponent,
+    AddVersionComponent,
+    EditVersionComponent,
+    ManageVariantsComponent,
+    AddVariantComponent,
+    EditVariantComponent,
+    DownloadActionsComponent
   ],
   imports: [
     BrowserModule,

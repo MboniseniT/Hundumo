@@ -37,9 +37,11 @@ namespace BinmakAPI.Data
         //Assessments
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Assessment> assessments { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.AssessmentUsers> assessmentUsers { get; set; }
+        public DbSet<BinmakBackEnd.Areas.Assessments.Entities.AssessmentSections> assessmentSections { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Characteristics> characteristics { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Frmwrks> frmwrks { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Kpas> kpas { get; set; }
+        public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Kpis> kpis { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Levels> levels { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Results> results { get; set; }
         public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Variants> variants { get; set; }
@@ -74,6 +76,12 @@ namespace BinmakAPI.Data
         public DbSet<CriteriaRiskMatrix> CriteriaRiskMatrix { get; set; }
         public DbSet<ConsequenceCategory> ConsequenceCategory { get; set; }
 
+        public DbSet<BinmakBackEnd.Areas.Assessments.Entities.KpiResults> kpiResults { get; set; }
+        public DbSet<BinmakBackEnd.Areas.Assessments.Entities.Bps> bps { get; set; }
+        public DbSet<BinmakBackEnd.Areas.Assessments.Entities.BpQuestions> bpQuestions { get; set; }
+        public DbSet<BinmakBackEnd.Areas.Assessments.Entities.BpResults> bpResults { get; set; }
+        public DbSet<BinmakBackEnd.Areas.Assessments.Entities.AssessmentsActionManager> assessmentsActionManager { get; set; }
+        public DbSet<BinmakBackEnd.Areas.Assessments.Entities.BpKpiAssessmentAvgs> bpKpiAssessmentAvgs { get; set; }
     }
 
 }

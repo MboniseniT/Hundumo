@@ -199,21 +199,22 @@ namespace BinmakAPI.Controllers
                 if (user == null)
                 {
 
-                    user = new ApplicationUser
-                    {
-                        FirstName = applicationUser.FirstName,
-                        LastName = applicationUser.LastName,
-                        Email = applicationUser.Email,
-                        UserName = applicationUser.Email,
-                        DateStamp = DateTime.Now,
-                        CompanyId = CreateCompany(applicationUser.CompanyName).CompanyId,
-                        CountryId = applicationUser.CountryId,
-                        Address = applicationUser.Address,
-                        Address2 = applicationUser.Address2,
-                        City = applicationUser.City,
-                        Zip = applicationUser.Zip,
-                        IsAdmin = true
-                    };
+                        user = new ApplicationUser
+                        {
+                            FirstName = applicationUser.FirstName,
+                            LastName = applicationUser.LastName,
+                            Email = applicationUser.Email,
+                            UserName = applicationUser.Email,
+                            DateStamp = DateTime.Now,
+                            CompanyId = CreateCompany(applicationUser.CompanyName).CompanyId,
+                            CountryId = applicationUser.CountryId,
+                            Address = applicationUser.Address,
+                            Address2 = applicationUser.Address2,
+                            City = applicationUser.City,
+                            Zip = applicationUser.Zip,
+                            IsAdmin = true,
+                            IsBinmak = false
+                        };
 
                     var userResult = await _userManager.CreateAsync(user, applicationUser.Password);
 
@@ -327,7 +328,8 @@ namespace BinmakAPI.Controllers
                             username = user.UserName,
                             firstName = user.FirstName,
                             lastName = user.LastName,
-                            isAdmin = user.IsAdmin
+                            isAdmin = user.IsAdmin,
+                            isBinmak = user.IsBinmak
                         };
 
                         return Created("", results);

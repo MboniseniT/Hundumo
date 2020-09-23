@@ -45,6 +45,15 @@ import { MachineConfigurationComponent } from './asset-health/pages/machine-conf
 import { DiagnosisChartsComponent } from './asset-health/pages/diagnosis-charts/diagnosis-charts.component';
 import { MachineBlocksComponent } from './asset-health/pages/machine-blocks/machine-blocks.component';
 import { MainComponent } from './asset-health/pages/charts/main/main.component';
+import { ManageKpisComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-kpis/manage-kpis.component';
+import { ManageBpKpiUsersComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-BpKpi-users/manage-BpKpi-users.component'
+import { ViewConsensusResultsComponent } from './kwenza/MaturityAssessments/assessment-landing/view-consensus-results/view-consensus-results.component';
+import { ManageBpComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-bp/manage-bp.component';
+import { ManageBpQuestionsComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-config/manage-bp-questions/manage-bp-questions.component';
+import { ManageActionsComponent } from './kwenza/MaturityAssessments/assessment-landing/manage-actions/manage-actions.component';
+import { ManageFrmwrksComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-frmwrks/manage-frmwrks.component';
+import { ManageVersionsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-versions/manage-versions.component';
+import { ManageVariantsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-variants/manage-variants.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'binmak', pathMatch: 'full'},
@@ -81,8 +90,8 @@ const routes: Routes = [
         { path: 'assessment-landing', component: AssessmentLandingComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'assessment-types', component: AssessmentLandingTypeComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'assessment-system-config', component: SystemConfigComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-        { path: 'kpi-assessment', component: KpiAssessmentComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-        { path: 'bp-assessment', component: BpAssessmentComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'kpi-assessment/:id', component: KpiAssessmentComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'bp-assessment/:kpaPage/:bpPage/:qstnPage', component: BpAssessmentComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'assessment-config', component: AssessmentConfigComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'exec-assessment-landing', component: ExecAssessmentLandingComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'kpa-assessment/:id', component: KpaAssessmentComponent, pathMatch: 'full', canActivate: [AuthGuard]},
@@ -91,7 +100,16 @@ const routes: Routes = [
         { path: 'manage-exec-kpas', component: ManageKpasComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'manage-exec-characteristics', component: ManageCharacteristicsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'manage-exec-assessments', component: ManageExecAssessmentsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-        { path: 'manage-exec-users', component: ExecManageUsersComponent, pathMatch: 'full', canActivate: [AuthGuard]}
+        { path: 'manage-exec-users', component: ExecManageUsersComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'manage-kpis', component: ManageKpisComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'manage-BpKpi-users', component: ManageBpKpiUsersComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'consensus-results', component: ViewConsensusResultsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'manage-bps', component: ManageBpComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'manage-bp-questions', component: ManageBpQuestionsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'manage-actions', component: ManageActionsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'manage-frmwrks', component: ManageFrmwrksComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'manage-versions', component: ManageVersionsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'manage-variants', component: ManageVariantsComponent, pathMatch: 'full', canActivate: [AuthGuard]}
       ]
     },
     {path:'**', redirectTo: 'binmak', pathMatch: 'full', canActivate: [AuthGuard]}
