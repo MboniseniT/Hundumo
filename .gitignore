@@ -371,3 +371,4 @@ BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.csproj.CoreCompileInputs.cac
 BinmakBackEnd/obj/Debug/netcoreapp3.1/BinmakBackEnd.assets.cache
 /BinmakBackEnd/Logs
 /BinmakBackEnd/Logs
+*.txt
