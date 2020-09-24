@@ -1,5 +1,7 @@
-﻿using System;
+﻿using BinmakAPI.Entities;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +13,8 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Entities
         public int AssetId { get; set; }
         public string Reference { get; set; }
         public string UserId { get; set; }
+        [ForeignKey("Id")]
+        public ApplicationUser ApplicationUser { get; set; }
         public DateTime DateStamp { get; set; }
         public bool IsOverallProductionProcess { get; set; }
         public bool IsOverallProductionBuffer { get; set; }

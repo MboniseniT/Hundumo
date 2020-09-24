@@ -36,11 +36,21 @@ export class ReadingsComponent implements OnInit {
 
   targetTemplateObject: any;
 
+  isAdmin: boolean;
+  isSuperAdmin: boolean;
+  isUser: boolean;
+  isGuest: boolean;
+
   constructor(private service: MainServiceService,
     private route: ActivatedRoute, private router: Router, private toastrService: ToastService) {
   }
 
   ngOnInit(): void {
+
+    this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
+    this.isSuperAdmin = JSON.parse(localStorage.getItem('currentUser')).isSuperAdmin;
+    this.isUser = JSON.parse(localStorage.getItem('currentUser')).isUser;
+    this.isGuest = JSON.parse(localStorage.getItem('currentUser')).isGuest;
 
     this.route.params.subscribe(params => {
       this.assetId = +params['assetNodeId']; // (+) converts string 'id' to a number         
@@ -109,6 +119,17 @@ export class ReadingsComponent implements OnInit {
 
   loadMonthlyReadings(model) {
 
+    debugger;
+
+    this.date = this.dateForm.value.SelectedDate;
+    //model.date = this.date;
+
+    if(this.date == ""){
+      this.date = model.ProductionDate;
+    }
+
+    localStorage.setItem('date', this.date);
+
     this.service.getAssetRedings(model)
       .subscribe((resp: any) => {
         if(resp.length > 0){
@@ -126,6 +147,12 @@ export class ReadingsComponent implements OnInit {
   }
 
   loadMonthlyReadings2(model) {
+
+    debugger;
+
+    this.date = this.dateForm.value.SelectedDate;
+    //model.date = this.date;
+    localStorage.setItem('date', this.date);
 
     this.service.getAssetRedings(model)
       .subscribe((resp: any) => {

@@ -37,6 +37,7 @@ export class RegisterComponent implements OnInit {
     FirstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
     LastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
     Password: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    ConfirmPassword: new FormControl('', [Validators.required, Validators.minLength(5)]),
     Email: new FormControl('', [Validators.required, Validators.email]),
     CompanyName: new FormControl('', [Validators.required, Validators.minLength(2)]),
     Country: new FormControl(0, [Validators.required, Validators.minLength(2)]),
@@ -61,6 +62,7 @@ export class RegisterComponent implements OnInit {
       FirstName: this.form.value.FirstName,
       LastName: this.form.value.LastName,
       Password: this.form.value.Password,
+      ConfirmPassword: this.form.value.ConfirmPassword,
       Email: this.form.value.Email,
       CountryId: this.form.value.Country,
       CompanyName: this.form.value.CompanyName,
@@ -70,16 +72,22 @@ export class RegisterComponent implements OnInit {
       Zip: this.form.value.Zip,
     };
 
-    this.authService.registerBinMakUser(model)
-    .subscribe((resp: any)=>{
-      this.toastrService.success('Registered successfully, please login');
-      this.loading = false;
-      this.form.reset();
-    }, (error:any)=>{
-      this.loading = false;
-      this.toastrService.error(error.error);
-    })
-    console.log(this.form.value);
+    if(this.form.value.Password == this.form.value.ConfirmPassword)
+      {
+        this.authService.registerBinMakUser(model)
+        .subscribe((resp: any)=>{
+          this.toastrService.success('Registered successfully, please login');
+          this.loading = false;
+          this.form.reset();
+        }, (error:any)=>{
+          this.loading = false;
+          this.toastrService.error(error.error);
+        })
+      }
+      else{
+        this.loading = false;
+        this.toastrService.error('Password and Confirm Passowrd do not match, Try again!');
+      }
   }
 
 }

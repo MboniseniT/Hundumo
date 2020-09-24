@@ -17,7 +17,9 @@ namespace BinmakAPI.Models
         public string Address { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }
-        public int Zip { get; set; }
+        public string Zip { get; set; }
+        public int RoleId { get; set; }
+        public bool IsLocked { get; set; }
 
     }
 }

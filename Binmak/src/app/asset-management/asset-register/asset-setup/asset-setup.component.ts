@@ -19,7 +19,8 @@ export class AssetSetupComponent implements OnInit {
   @ViewChild('organizationModal', { static: false }) organizationModal: ModalDirective;
   @ViewChild('equipmentModal', { static: false }) equipmentModal: ModalDirective;
   @ViewChild('editAssetNodeModal', { static: false }) editAssetNodeModal: ModalDirective;
-  
+  @ViewChild('viewAssetNodeModal', { static: false }) viewAssetNodeModal: ModalDirective;
+
 
   nodeCheckerObject: any;
   loadingNodeAction: boolean;
@@ -62,39 +63,74 @@ export class AssetSetupComponent implements OnInit {
     private service: MainServiceService, private authService: AuthenticationService,
     private toastrService: ToastService) { }
 
-    onChangeTogler($event){
+  onChangeTogler($event) {
 
-      
-      if(this.formOrganization.value.ParentOrganazationId == null){
-        this.sameAddressTogglerFlag = false;
-        console.log(this.formOrganization.value.ParentOrganazationId);
-      }else{
-        this.sameAddressTogglerFlag = true;
-        console.log(this.formOrganization.value.ParentOrganazationId);
-      }
+
+    if (this.formOrganization.value.ParentOrganazationId == null) {
+      this.sameAddressTogglerFlag = false;
+      console.log(this.formOrganization.value.ParentOrganazationId);
+    } else {
+      this.sameAddressTogglerFlag = true;
+      console.log(this.formOrganization.value.ParentOrganazationId);
+    }
+  }
+
+  onChangeOrganization($event){
+
+    const obj = this.data1.find(x => x.assetNodeId == $event)
+
+      if(obj != null){
+        this.formOrganization.patchValue({
+        CompanyCode: obj.code
+      })
     }
 
-    onChangePUTogler($event){
+  }
 
-      if(this.formProductiveUnit.value.OrganazationId == null){
-        this.sameAddressTogglerPUFlag = false;
-        console.log(this.formProductiveUnit.value.ParentOrganazationId);
-      }else{
-        this.sameAddressTogglerPUFlag = true;
-        console.log(this.formProductiveUnit.value.ParentOrganazationId);
-      }
+  onChangeProductiveUnit($event){
+
+    const obj = this.data1.find(x => x.assetNodeId == $event)
+
+      if(obj != null){
+        this.formProductiveUnit.patchValue({
+          ProductiveUnitCode: obj.code
+      })
     }
 
-    onChangeETogler($event){
+  }
 
-      if(this.formEquiment.value.EquipmentId == null || this.formEquiment.value.EquipmentId == ''){
-        this.sameAddressTogglerEFlag = false;
-        console.log(this.formEquiment.value.EquipmentId);
-      }else{
-        this.sameAddressTogglerEFlag = true;
-        console.log(this.formEquiment.value.EquipmentId);
-      }
+  onChangeEquipment($event){
+    const obj = this.data1.find(x => x.assetNodeId == $event)
+
+      if(obj != null){
+        this.formEquiment.patchValue({
+          EquipmentCode: obj.code
+      })
     }
+
+  }
+
+  onChangePUTogler($event) {
+
+    if (this.formProductiveUnit.value.OrganazationId == null) {
+      this.sameAddressTogglerPUFlag = false;
+      console.log(this.formProductiveUnit.value.ParentOrganazationId);
+    } else {
+      this.sameAddressTogglerPUFlag = true;
+      console.log(this.formProductiveUnit.value.ParentOrganazationId);
+    }
+  }
+
+  onChangeETogler($event) {
+
+    if (this.formEquiment.value.EquipmentId == null || this.formEquiment.value.EquipmentId == '') {
+      this.sameAddressTogglerEFlag = false;
+      console.log(this.formEquiment.value.EquipmentId);
+    } else {
+      this.sameAddressTogglerEFlag = true;
+      console.log(this.formEquiment.value.EquipmentId);
+    }
+  }
 
   ngOnInit() {
     this.tree = true;
@@ -109,15 +145,17 @@ export class AssetSetupComponent implements OnInit {
         this.tree = false;
       }, (error: any) => {
         console.log(error);
+        this.toastrService.error(error.error);
         this.tree = false;
       });
 
-      this.service.getAssetNodesTable(JSON.parse(localStorage.getItem('currentUser')).userId)
-      .subscribe((resp:any)=>{
+    this.service.getAssetNodesTable(JSON.parse(localStorage.getItem('currentUser')).userId)
+      .subscribe((resp: any) => {
         this.data1 = resp;
         this.dtTrigger.next();
         console.log(resp);
-      }, (error:any)=>{
+      }, (error: any) => {
+        this.toastrService.error(error.error);
         console.log(error)
       })
 
@@ -163,6 +201,8 @@ export class AssetSetupComponent implements OnInit {
           return { label: t.code + '-' + t.name, value: t.assetNodeId }
         })
 
+        console.log(this.productiveUnits);
+
       })
 
 
@@ -189,15 +229,6 @@ export class AssetSetupComponent implements OnInit {
     Address2: new FormControl(''),
     City: new FormControl(''),
     Zip: new FormControl('')
-    /*ProductiveUnitName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    ProductiveUnitCode: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    OrganazationId: new FormControl('', Validators.required),
-    ParentProductiveId: new FormControl(0),
-    CountryId: new FormControl(''),
-    Address: new FormControl(''),
-    Address2: new FormControl(''),
-    City: new FormControl(''),
-    Zip: new FormControl('')*/
   });
 
   formEquiment = new FormGroup({
@@ -209,15 +240,6 @@ export class AssetSetupComponent implements OnInit {
     Address2: new FormControl(''),
     City: new FormControl(''),
     Zip: new FormControl('')
-    /*EquipmentName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    EquipmentCode: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    ProductiveUnitId: new FormControl('', Validators.required),
-    ParentEquipmentId: new FormControl(0),
-    CountryId: new FormControl(''),
-    Address: new FormControl(''),
-    Address2: new FormControl(''),
-    City: new FormControl(''),
-    Zip: new FormControl('')*/
   });
 
   zip: number;
@@ -230,34 +252,32 @@ export class AssetSetupComponent implements OnInit {
   }
 
   editAssetNodeForm = new FormGroup({
-      CompanyName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-      CompanyCode: new FormControl('', [Validators.required, Validators.minLength(1)]),
-      OrganazationId: new FormControl(),
-      EquipmentId: new FormControl(),
-      ParentOrganazationId: new FormControl(),
-      CountryId: new FormControl(''),
-      Address: new FormControl(''),
-      Address2: new FormControl(''),
-      City: new FormControl(''),
-      Zip: new FormControl('')
-});
+    CompanyName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    CompanyCode: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    OrganazationId: new FormControl(),
+    EquipmentId: new FormControl(),
+    ParentOrganazationId: new FormControl(),
+    CountryId: new FormControl(''),
+    Address: new FormControl(''),
+    Address2: new FormControl(''),
+    City: new FormControl(''),
+    Zip: new FormControl('')
+  });
 
-    Name: string;
-    Code: string;
-    CountryId: number;
-    Address: string;
-    Address2: string;
-    City: string;
-    Zip: number;
-    AssetNodeTypeId: number;
-    EquipmentId: number;
-    ParentOrganazationId: number;
-    AssetNodeId: number;
+  Name: string;
+  Code: string;
+  CountryId: number;
+  Address: string;
+  Address2: string;
+  City: string;
+  Zip: number;
+  AssetNodeTypeId: number;
+  EquipmentId: number;
+  ParentOrganazationId: number;
+  AssetNodeId: number;
 
-  editNode(node){
+  editNode(node) {
     console.log(node);
-
-    debugger;
 
     this.Name = node.name;
     this.Code = node.code;
@@ -287,16 +307,92 @@ export class AssetSetupComponent implements OnInit {
 
 
     this.editAssetNodeModal.show();
-    
+
   }
 
-  editAssetNode(){
-    debugger;
-    if(this.AssetNodeTypeId == 1){
+  productionFlow(node) {
 
-      if(this.editAssetNodeForm.value.ParentOrganazationId){
+    if (window.confirm('Are sure you want to add PRODUCTION FLOW to ' + node.name + ' [' + node.code + ']?')) {
+      this.service.productionFlow(node.assetNodeId)
+        .subscribe((resp: any) => {
+          console.log(resp);
+          location.reload();
+        }, (error: any) => {
+          console.log(error);
+          this.toastrService.error(error.error);
+        })
+    }
+    else {
+      console.log(node);
+      this.toastrService.error('Not Adding PRODUCTION FLOW...' + node.name + ' [' + node.code + ']');
+    }
 
-        debugger;
+
+  }
+
+  notProductionFlow(node) {
+
+    if (window.confirm('Are sure you want to remove PRODUCTION FLOW from ' + node.name + ' [' + node.code + ']?')) {
+      this.service.removeProductionFlow(node.assetNodeId)
+        .subscribe((resp: any) => {
+          console.log(resp);
+          location.reload();
+        }, (error: any) => {
+          console.log(error);
+          this.toastrService.error(error.error);
+        })
+    }
+    else {
+      console.log(node);
+      this.toastrService.error('Not removing PRODUCTION FLOW... from ' + node.name + ' [' + node.code + ']');
+    }
+
+
+  }
+
+  assetSettingsWarning() {
+    this.toastrService.warning("Production Flow is for productive units only!");
+  }
+
+  viewNode(node) {
+    console.log(node);
+
+    this.Name = node.name;
+    this.Code = node.code;
+    this.CountryId = node.countryId;
+    this.Address = node.address;
+    this.Address2 = node.address2;
+    this.City = node.city;
+    this.Zip = node.zip;
+    this.EquipmentId = node.equipmentId;
+    this.AssetNodeTypeId = node.assetNodeTypeId;
+    this.ParentOrganazationId = node.parentId;
+    this.AssetNodeId = node.assetNodeId
+
+    this.editAssetNodeForm.patchValue({
+      CompanyName: node.name,
+      CompanyCode: node.code,
+      CountryId: this.CountryId,
+      Address: this.Address,
+      Address2: this.Address2,
+      City: this.City,
+      Zip: this.Zip,
+      OrganazationId: node.parentId,
+      EquipmentId: node.parentId,
+      AssetNodeTypeId: node.assetNodeTypeId,
+      ParentOrganazationId: node.parentId
+    });
+
+
+    this.viewAssetNodeModal.show();
+
+  }
+
+  editAssetNode() {
+
+    if (this.AssetNodeTypeId == 1) {
+
+      if (this.editAssetNodeForm.value.ParentOrganazationId) {
 
         const model = {
           AssetNodeId: this.AssetNodeId,
@@ -311,9 +407,9 @@ export class AssetSetupComponent implements OnInit {
           AssetNodeTypeId: 1, //1 For organization, 2 For Productive Unit, 3 For Equipment
           Reference: JSON.parse(localStorage.getItem('currentUser')).userId
         };
-    
+
         console.log(model);
-    
+
         if (model.ParentAssetNodeId == null) {
           model.ParentAssetNodeId = 0;
         }
@@ -321,28 +417,30 @@ export class AssetSetupComponent implements OnInit {
         if (model.CountryId == "") {
           model.CountryId = 0;
         }
-    
         this.service.editOrganization(model)
           .subscribe((resp: any) => {
             this.data = resp;
             console.log(resp);
             location.reload();
           }, (error: any) => {
+            this.toastrService.error(error.error);
             console.log(error);
           })
 
       }
-      else{
+      else {
         alert('Make sure you have selected parent/organization!')
       }
-     
-    }else if(this.AssetNodeTypeId == 2){
-      if(this.editAssetNodeForm.value.OrganizationId){
+
+    } else if (this.AssetNodeTypeId == 2) {
+
+      if (this.editAssetNodeForm.value.OrganazationId) {
+
         const model = {
           AssetNodeId: this.AssetNodeId,
           Name: this.editAssetNodeForm.value.CompanyName,
           Code: this.editAssetNodeForm.value.CompanyCode,
-          ParentAssetNodeId: this.editAssetNodeForm.value.OrganizationId,
+          ParentAssetNodeId: this.editAssetNodeForm.value.OrganazationId,
           CountryId: this.editAssetNodeForm.value.CountryId,
           Address: this.editAssetNodeForm.value.Address,
           Address2: this.editAssetNodeForm.value.Address2,
@@ -351,9 +449,9 @@ export class AssetSetupComponent implements OnInit {
           AssetNodeTypeId: 2, //1 For organization, 2 For Productive Unit, 3 For Equipment
           Reference: JSON.parse(localStorage.getItem('currentUser')).userId
         };
-    
+
         console.log(model);
-    
+
         if (model.ParentAssetNodeId == null) {
           model.ParentAssetNodeId = 0;
         }
@@ -361,23 +459,23 @@ export class AssetSetupComponent implements OnInit {
         if (model.CountryId == "") {
           model.CountryId = 0;
         }
-    
         this.service.editOrganization(model)
           .subscribe((resp: any) => {
             this.data = resp;
             console.log(resp);
             location.reload();
           }, (error: any) => {
+            this.toastrService.error(error.error);
             console.log(error);
           })
       }
-      else{
+      else {
         alert('Make sure you have selected parent productive unit/organization!')
       }
-      
-    }else if(this.AssetNodeTypeId == 3){
-      if(this.editAssetNodeForm.value.EquipmentId){
-        debugger;
+
+    } else if (this.AssetNodeTypeId == 3) {
+      if (this.editAssetNodeForm.value.EquipmentId) {
+
         const model = {
           AssetNodeId: this.AssetNodeId,
           Name: this.editAssetNodeForm.value.CompanyName,
@@ -391,9 +489,9 @@ export class AssetSetupComponent implements OnInit {
           AssetNodeTypeId: 3, //1 For organization, 2 For Productive Unit, 3 For Equipment
           Reference: JSON.parse(localStorage.getItem('currentUser')).userId
         };
-    
+
         console.log(model);
-    
+
         if (model.ParentAssetNodeId == null) {
           model.ParentAssetNodeId = 0;
         }
@@ -401,47 +499,61 @@ export class AssetSetupComponent implements OnInit {
         if (model.CountryId == "") {
           model.CountryId = 0;
         }
-    
         this.service.editOrganization(model)
           .subscribe((resp: any) => {
             this.data = resp;
             console.log(resp);
             location.reload();
           }, (error: any) => {
+            this.toastrService.error(error.error);
             console.log(error);
           })
       }
-      else{
+      else {
         alert('Make sure you have selected parent equipment/productive unit!')
       }
     }
-    
+
   }
 
-  deleteNode(node:any){
+  deleteNode(node: any) {
 
     const model = {
       AssetNodeId: node.assetNodeId,
       Reference: JSON.parse(localStorage.getItem('currentUser')).userId
     }
 
-    if(window.confirm('Are sure you want to delete this node?')){
+    if (window.confirm('Are sure you want to delete this node?')) {
       this.service.deleteAssetNodeById(model)
-      .subscribe((resp: any) =>{
-        console.log(resp);
-        location.reload();
-      }, (error: any) =>{
-        console.log(error);
-        this.toastrService.error(error.error);
-      })
-   }
-   else{
-    console.log(node);
-    this.toastrService.error('Not Deleting...');
-   }
+        .subscribe((resp: any) => {
+          console.log(resp);
+          location.reload();
+        }, (error: any) => {
+          console.log(error);
+          this.toastrService.error(error.error);
+        })
+    }
+    else {
+      console.log(node);
+      this.toastrService.error('Not Deleting...');
+    }
+  }
 
-   
-}
+  onNodesChanged(e: any) {
+    console.log('%c Returned json with marked checkboxes ', 'background: #222; color: #99ccff');
+    console.table(e);
+    console.log('%c ************************************ ', 'background: #222; color: #bada05');
+  }
+
+  prodFlowConfig(node){
+
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+          "node": JSON.stringify(node)
+      }
+    };
+    this.router.navigate(['binmak/prod-config'], navigationExtras)
+  }
 
 
   saveOrganization() {
@@ -473,7 +585,6 @@ export class AssetSetupComponent implements OnInit {
     if (model.ParentAssetNodeId == null) {
       model.ParentAssetNodeId = 0;
     }
-    
 
     if (model.CountryId == "") {
       model.CountryId = 0;
@@ -486,6 +597,7 @@ export class AssetSetupComponent implements OnInit {
         location.reload();
       }, (error: any) => {
         console.log(error);
+        this.toastrService.error(error.error);
       })
 
 
@@ -554,11 +666,6 @@ export class AssetSetupComponent implements OnInit {
       model.CountryId = 0;
     }
 
-    console.log(model);
-
-
-
-
     this.service.saveOrganazation(model)
       .subscribe((resp: any) => {
         this.data = resp;
@@ -566,6 +673,7 @@ export class AssetSetupComponent implements OnInit {
         location.reload();
       }, (error: any) => {
         console.log(error);
+        this.toastrService.error('Make sure all required field are correct!');
       });
 
     console.log(model);
@@ -582,7 +690,6 @@ export class AssetSetupComponent implements OnInit {
       this.zip = this.formEquiment.value.Zip;
     }
 
-    debugger;
 
     const model = {
       Name: this.formEquiment.value.EquipmentName,
@@ -611,7 +718,6 @@ export class AssetSetupComponent implements OnInit {
       model.CountryId = 0;
     }
 
-    debugger;
 
     this.service.saveOrganazation(model)
       .subscribe((resp: any) => {
@@ -620,6 +726,7 @@ export class AssetSetupComponent implements OnInit {
         location.reload();
       }, (error: any) => {
         console.log(error);
+        this.toastrService.error(error.error);
       });
 
     console.log(model);
@@ -639,16 +746,8 @@ export class AssetSetupComponent implements OnInit {
     this.sameAddressEquipment = !this.sameAddressEquipment;
   }
 
-  manageAccess(node){
+  manageAccess(node) {
     this.router.navigate(['binmak/manage-access']);
-    /*let navigationExtras: NavigationExtras = {
-      queryParams: {
-          "node": JSON.stringify(node)
-      }
-    };
-
-    this.router.navigate(['binmak/manage-access'], navigationExtras);*/
-
   }
 
 
@@ -675,7 +774,7 @@ export class AssetSetupComponent implements OnInit {
     this.nodeCheckerObject = e;
   }
 
-  assignUsers(node){
+  assignUsers(node) {
     console.log(node);
   }
 

@@ -25,6 +25,16 @@ export class ChartsComponent implements OnInit {
   chartForm: FormGroup;
   assetId: number;
   loading: boolean;
+  index: number;
+
+  masterCharts: Array<MasterChart>;
+  masterChart: MasterChart;
+  controlLimit: ControlLimit;
+  controlLimits: Array<ControlLimit>;
+  ChartNames: Array<ChartNameObject> = [];
+
+  lCharts: Array<any> = [];
+  
 
   public optionsWhiskerBox1: any = {
   }
@@ -55,6 +65,9 @@ public optionsHistogram5: any = {};
   data3: Array<any> = [];
   data4: Array<any> = [];
   data5: Array<any> = [];
+  codeName: string;
+  asset: any;
+  chartNames: Array<string> = [];
 
   constructor(private service: MainServiceService,
     private route: ActivatedRoute, private router: Router, 
@@ -69,6 +82,16 @@ public optionsHistogram5: any = {};
       console.log(this.assetId);
     });
 
+    this.service.getChartAssetByAssetId(this.assetId)
+    .subscribe((resp:any)=>{
+      this.asset = resp;
+      this.codeName = resp.code + " "+ resp.name;
+      console.log(resp);
+    }, (error: any) =>{
+      console.log(error);
+    })
+
+
     this.chartForm = new FormGroup({
 
       StartDate: new FormControl('', Validators.required),
@@ -76,10 +99,10 @@ public optionsHistogram5: any = {};
     })
   }
 
-
+dates: Array<string>;
 
   LoadChart(){
-    //Set Parameters
+
     this.loading = true;
 
     const model ={
@@ -92,8 +115,121 @@ public optionsHistogram5: any = {};
     this.service.DrawChart(model)
     .subscribe((resp:any)=>{
 
-      console.log(resp);
-      let measurements = resp.LineEndsDrilled.map(a => a.mesuarement);
+      this.masterCharts = resp;
+   
+
+      for (let value of this.masterCharts) {
+
+        this.chartNames = ['TotalHoistedTons', 'EndsDrilled', 'ROMTonsCrushed']
+
+        this.loading = false;
+
+        let chart = {
+          chart: {
+              type: 'spline'
+          },
+          title: {
+              text: value.kpaName
+          },
+          subtitle: {
+              text: 'Dates'+ value.startDate+'-'+value.endDate
+          },
+          xAxis: {
+              categories: value.controlLimit.dates
+          },
+      
+          tooltip: {
+              crosshairs: true,
+              shared: true
+          },
+          plotOptions: {
+              spline: {
+                  marker: {
+                      radius: 4,
+                      lineColor: '#666666',
+                      lineWidth: 1
+                  }
+              }
+          },
+          series: [{
+      
+              data: value.controlLimit.measurements
+      
+          }]
+      }
+
+
+        this.lCharts.push({name: value.kpaName, objectChart: chart});
+    }
+
+    debugger;
+
+    console.log(this.lCharts);
+
+
+    for (let c of this.lCharts) {
+      
+      const name = c.name.replaceAll(' ', '');
+      Highcharts.chart('TotalHoistedTons', c.objectChart);
+
+    }
+
+
+
+      /*this.lineChart = {
+        chart: {
+          type: "spline"
+       },
+       title: {
+          text: "Daily Ends Drilled Control Chart"
+       },
+       subtitle: {
+          text: "Test"
+       },
+       xAxis:{
+          categories:date
+       },
+       yAxis: {          
+          title:{
+             text:"Daily Ends Drilled"
+          } 
+       },
+       plotOptions: {
+          series: {
+             dataLabels: {
+                enabled: false
+             }
+          }
+       },
+       credits: {
+         enabled: false
+       },
+       source: {
+         enabled: false
+       },
+       series: [{
+          name: 'UCL',
+          data: ucl,
+          dashStyle: 'dash',
+          color: 'red',
+          marker: false
+       },
+       {
+          name: 'Daily Ends Drilled',
+          data: measurements,
+          color: 'navy',
+       },
+       {
+          name: 'LCL',
+          data: lcl,
+          dashStyle: 'dash',
+          color: 'red',
+          marker: {enabled: false}
+       }]
+
+      }/*
+
+      /*let measurements = resp.LineEndsDrilled.map(a => a.mesuarement);
       let lcl = resp.LineEndsDrilled.map(a => a.lcl);
       let ucl = resp.LineEndsDrilled.map(a => a.ucl);
       let date = resp.LineEndsDrilled.map(a => a.date);
@@ -1215,7 +1351,7 @@ public optionsHistogram5: any = {};
       Highcharts.chart('histogramChart2', this.optionsHistogram2);
       Highcharts.chart('histogramChart3', this.optionsHistogram3);
       Highcharts.chart('histogramChart4', this.optionsHistogram4);
-      Highcharts.chart('histogramChart5', this.optionsHistogram5);
+      Highcharts.chart('histogramChart5', this.optionsHistogram5);*/
       this.loading = false;
     }, (error:any)=>{
       console.log(error);
@@ -1225,7 +1361,7 @@ public optionsHistogram5: any = {};
     }else{
       this.loading = false;
       alert('Make sure your dates makes sense!');
-    }
+    } 
 
 
 
@@ -1238,4 +1374,27 @@ public optionsHistogram5: any = {};
     this.router.navigate(['/binmak/my-assets']);
   }
 
+}
+
+export class ControlLimit{
+  chartName: string;
+  dates: Array<string>;
+  measurements: Array<number>;
+  ucl: number;
+  lcl: number;
+  mean: number;
+}
+
+export class MasterChart{
+  controlLimit: ControlLimit;
+  endDate: string;
+  startDate: string;
+  kpaName: string;
+  plotBox: any;
+  histogram: any;
+  kpaId: number
+}
+
+export class ChartNameObject{
+  chartName: string;
 }

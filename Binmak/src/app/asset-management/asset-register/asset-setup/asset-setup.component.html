@@ -54,73 +54,93 @@
         </div>
 
 
-        <div class="col-md-3" *ngIf="!tree">
-            <mdb-tree (checked)="onCheck($event)" [expandAll]="false" [checkboxes]="true" textField="name"
-                childrenField="children" checkboxesField="checked" [toggleOnTitleClick]="true" [nodes]="data">
+        <div class="col-md-4" *ngIf="!tree">
+            <mdb-tree (checked)="onCheck($event)" [expandAll]="true" [checkboxes]="true" textField="name"
+                childrenField="children" checkboxesField="checked" [toggleOnTitleClick]="true"
+                (nodesChanged)="onNodesChanged($event)" [nodes]="data">
             </mdb-tree>
 
-            <!--<div *ngIf="nodeAction">
-                <button type="button" class="btn btn-info btn-sm waves-light" style="float: right;" aria-label="Close"
-                    mdbWavesEffect (click)="NodeAction()"
-                    style="background-color: rgba(0, 69, 125, 1)!important; color: white;">
-                    <i class="fa fa-cogs"></i> Node Action</button>
-
-                    <div *ngIf="loadingNodeAction" style="text-align: center;">
-                        <div class="preloader-wrapper small active crazy">
-                          <div class="spinner-layer spinner-blue-only">
-                            <div class="circle-clipper left">
-                              <div class="circle"></div>
-                            </div>
-                            <div class="gap-patch">
-                              <div class="circle"></div>
-                            </div>
-                            <div class="circle-clipper right">
-                              <div class="circle"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-            </div>-->
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
                 <thead>
                     <tr>
+                        <th>Root Parent</th>
+                        <th>Parent</th>
                         <th>Name</th>
                         <th>Code</th>
                         <th>Node Type</th>
-                        <th>Parent</th>
-                        <th>Root Parent</th>
+
+
                         <th>Edit</th>
+                        <th>View</th>
                         <th>Delete</th>
-                        <th>Access</th>
+                        <th>P.F</th>
+                        <th>P.F Config</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let node of data1" style="cursor: pointer;">
+                        <td>{{node.root}}</td>
+                        <td>{{node.parent}}</td>
                         <td>{{node.name}}</td>
                         <td>{{node.code}}</td>
                         <td>{{node.assetNodeType}}</td>
-                        <td>{{node.parent}}</td>
-                        <td>{{node.root}}</td>
-                            <td>
-                                <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect (click)="editNode(node)"
-                                style="background-color: rgba(0, 69, 125, 1) !important; color: white;"> <i class="far fa-edit"></i>
-                                </button>
-                            </td>
 
-                            <td>
-                                <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect (click)="deleteNode(node)"
-                                style="background-color: red !important; color: white;"> <i class="fa fa-trash"></i>
-                                </button>
-                            </td>
 
-                            <td>
-                                <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect (click)="manageAccess(node)"
-                                style="background-color: green !important; color: white;"> <i class="fab fa-keycdn"></i>
+                        <td>
+                            <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect
+                                (click)="editNode(node)"
+                                style="background-color: rgba(0, 69, 125, 1) !important; color: white;"> <i
+                                    class="far fa-edit"></i>
+                            </button>
+                        </td>
+
+                        <td>
+                            <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect
+                                (click)="viewNode(node)"
+                                style="background-color: rgb(104, 128, 148) !important; color: white;"> <i
+                                    class="far fa-eye"></i>
+                            </button>
+                        </td>
+
+                        <td>
+                            <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect
+                                (click)="deleteNode(node)" style="background-color: red !important; color: white;"> <i
+                                    class="fa fa-trash"></i>
+                            </button>
+                        </td>
+
+                        <td>
+                            <div *ngIf="node.assetNodeTypeId == 2">
+                                <button type="button" *ngIf="node.isProductionFlow" class="btn btn-info"
+                                    aria-label="Close" mdbWavesEffect (click)="notProductionFlow(node)"
+                                    style="background-color: red !important; color: white;"> <i
+                                        class="fa fa-undo"></i>
                                 </button>
-                            </td>
+                                <button type="button" *ngIf="!node.isProductionFlow" class="btn btn-info"
+                                    aria-label="Close" mdbWavesEffect (click)="productionFlow(node)"
+                                    style="background-color:green !important; color: white;"> <i
+                                        class="fa fa-cogs"></i>
+                                </button>
+                            </div>
+
+                            <div *ngIf="node.assetNodeTypeId == 1 || node.assetNodeTypeId == 3">
+                                <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect
+                                    (click)="assetSettingsWarning()"
+                                    style="background-color: orange !important; color: white;"> <i
+                                        class="fa fa-times"></i>
+                                </button>
+                            </div>
+
+                        </td>
+
+                        <td>
+                            <button *ngIf="node.isProductionFlow" type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect
+                                (click)="prodFlowConfig(node)" style="background-color: grey !important; color: white;"> <i
+                                    class="fa fa-cog"></i>
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -158,7 +178,7 @@
                                     <div class="md-form">
                                         <mdb-select [options]="organizations" [filterEnabled]="true" [multiple]="false"
                                             [highlightFirst]="false" formControlName="ParentOrganazationId"
-                                            label="Parent Organization, If Exist" [enableSelectAll]="false">
+                                            label="Parent Organization, If Exist" [enableSelectAll]="false" (ngModelChange)="onChangeOrganization($event)">
                                         </mdb-select>
 
                                     </div>
@@ -230,7 +250,7 @@
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                     <div class="md-form">
-                                        <input mdbInput formControlName="Zip" type="number" id="Zip"
+                                        <input mdbInput formControlName="Zip" type="text" id="Zip"
                                             class="form-control">
                                         <label for="Zip" class=""><span style="color: red;">*</span> Zip</label>
                                     </div>
@@ -262,16 +282,16 @@
     </div>
 </div>
 
-<!--Edit Asset Node-->
-<div mdbModal #editAssetNodeModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+<!--View Asset Node-->
+<div mdbModal #viewAssetNodeModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
     aria-labelledby="myBasicModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
 
-                <h4 style="text-align: center;">Update Asset Node</h4>
+                <h4 style="text-align: center;">Asset Node</h4>
 
-                <button type="button" class="close pull-right" aria-label="Close" (click)="organizationModal.hide()">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="viewAssetNodeModal.hide()">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -286,7 +306,7 @@
 
                             <div class="row">
 
-                                <div *ngIf="AssetNodeTypeId==1" class="col-md-5 col-lg-5 col-sm-12 col-xs-12" >
+                                <div *ngIf="AssetNodeTypeId==1" class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
                                     <div class="md-form">
                                         <mdb-select [options]="organizations" [filterEnabled]="true" [multiple]="false"
                                             [highlightFirst]="false" formControlName="ParentOrganazationId"
@@ -296,18 +316,17 @@
                                     </div>
                                 </div>
 
-                                <div *ngIf="AssetNodeTypeId==2" class="col-md-5 col-lg-5 col-sm-12 col-xs-12" >
+                                <div *ngIf="AssetNodeTypeId==2" class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
                                     <div class="md-form">
                                         <mdb-select [options]="productiveUnits" [filterEnabled]="true"
                                             [multiple]="false" [highlightFirst]="false" formControlName="OrganazationId"
-                                            label="* Select Organization/Parent Productive Unit"
-                                            [enableSelectAll]="false">
+                                            label="* Parent Asset Node" [enableSelectAll]="false">
                                         </mdb-select>
 
                                     </div>
                                 </div>
 
-                                <div *ngIf="AssetNodeTypeId==3" class="col-md-5 col-lg-5 col-sm-12 col-xs-12" >
+                                <div *ngIf="AssetNodeTypeId==3" class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
                                     <div class="md-form">
                                         <mdb-select [options]="equipments" [filterEnabled]="true" [multiple]="false"
                                             [highlightFirst]="false" formControlName="EquipmentId"
@@ -320,7 +339,7 @@
                                 <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
                                     <div class="md-form">
                                         <input mdbInput formControlName="CompanyName" type="text" id="CompanyName"
-                                            class="form-control">
+                                            class="form-control" readonly>
                                         <label for="CompanyName" class=""><span style="color: red;">*</span>
                                             Organization Name</label>
                                     </div>
@@ -329,9 +348,149 @@
                                 <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                                     <div class="md-form">
                                         <input mdbInput formControlName="CompanyCode" type="text" id="CompanyCode"
-                                            class="form-control">
+                                            class="form-control" readonly>
                                         <label for="CompanyCode" class=""><span style="color: red;">*</span>
                                             Organization Code</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                    <div class="md-form">
+                                        <mdb-select [options]="countries" [filterEnabled]="true" [multiple]="false"
+                                            [highlightFirst]="false" formControlName="CountryId"
+                                            label="* Select Country" [enableSelectAll]="false">
+                                        </mdb-select>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                    <div class="md-form">
+                                        <input mdbInput formControlName="Address" type="text" id="Address"
+                                            class="form-control" readonly>
+                                        <label for="Address" class=""><span style="color: red;">*</span> Address, 1st
+                                            Floor South Block</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                    <div class="md-form">
+                                        <input mdbInput formControlName="Address2" type="text" id="Address2"
+                                            class="form-control" readonly>
+                                        <label for="Address2" class="">Borrowdale Office Park</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                    <div class="md-form">
+                                        <input mdbInput formControlName="City" type="text" id="City"
+                                            class="form-control" readonly>
+                                        <label for="City" class=""><span style="color: red;">*</span> City</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                    <div class="md-form">
+                                        <input mdbInput formControlName="Zip" type="text" id="Zip"
+                                            class="form-control" readonly>
+                                        <label for="Zip" class=""><span style="color: red;">*</span> Zip</label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-light" aria-label="Close"
+                    (click)="viewAssetNodeModal.hide()"
+                    style="background-color: rgba(0, 69, 125, 1) !important; color: white;" mdbWavesEffect> <i
+                        class="fa fa-times-circle" aria-hidden="true"></i> Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Edit Asset Node-->
+<div mdbModal #editAssetNodeModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 style="text-align: center;">Update Asset Node</h4>
+
+                <button type="button" class="close pull-right" aria-label="Close" (click)="editAssetNodeModal.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <h6 style="text-align: center;">Asset Node: {{Name}}</h6>
+                        <br>
+                        <form [formGroup]="editAssetNodeForm">
+
+                            <div class="row">
+
+                                <div *ngIf="AssetNodeTypeId==1" class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
+                                    <div class="md-form">
+                                        <mdb-select [options]="organizations" [filterEnabled]="true" [multiple]="false"
+                                            [highlightFirst]="false" formControlName="ParentOrganazationId"
+                                            label="Parent Asset Node, If Exist" [enableSelectAll]="false">
+                                        </mdb-select>
+
+                                    </div>
+                                </div>
+
+                                <div *ngIf="AssetNodeTypeId==2" class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
+                                    <div class="md-form">
+                                        <mdb-select [options]="productiveUnits" [filterEnabled]="true"
+                                            [multiple]="false" [highlightFirst]="false" formControlName="OrganazationId"
+                                            label="* Select Parent Asset Node" [enableSelectAll]="false">
+                                        </mdb-select>
+
+                                    </div>
+                                </div>
+
+                                <div *ngIf="AssetNodeTypeId==3" class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
+                                    <div class="md-form">
+                                        <mdb-select [options]="equipments" [filterEnabled]="true" [multiple]="false"
+                                            [highlightFirst]="false" formControlName="EquipmentId"
+                                            label="* Select Parent Asset Node" [enableSelectAll]="false">
+                                        </mdb-select>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                    <div class="md-form">
+                                        <input mdbInput formControlName="CompanyName" type="text" id="CompanyName"
+                                            class="form-control">
+                                        <label for="CompanyName" class=""><span style="color: red;">*</span>
+                                            Asset Node Name</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                                    <div class="md-form">
+                                        <input mdbInput formControlName="CompanyCode" type="text" id="CompanyCode"
+                                            class="form-control" readonly>
+                                        <label for="CompanyCode" class=""><span style="color: red;">*</span>
+                                            Asset Node Code</label>
                                     </div>
                                 </div>
 
@@ -376,7 +535,7 @@
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                     <div class="md-form">
-                                        <input mdbInput formControlName="Zip" type="number" id="Zip"
+                                        <input mdbInput formControlName="Zip" type="text" id="Zip"
                                             class="form-control">
                                         <label for="Zip" class=""><span style="color: red;">*</span> Zip</label>
                                     </div>
@@ -437,7 +596,7 @@
                                         <mdb-select [options]="productiveUnits" [filterEnabled]="true"
                                             [multiple]="false" [highlightFirst]="false" formControlName="OrganazationId"
                                             label="* Select Organization/Parent Productive Unit"
-                                            [enableSelectAll]="false">
+                                            [enableSelectAll]="false" (ngModelChange)="onChangeProductiveUnit($event)">
                                         </mdb-select>
 
                                     </div>
@@ -446,7 +605,8 @@
                                 <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
                                     <div class="md-form">
                                         <input mdbInput formControlName="ProductiveUnitName" type="text"
-                                            id="ProductiveUnitName" class="form-control" (ngModelChange)="onChangePUTogler($event)">
+                                            id="ProductiveUnitName" class="form-control"
+                                            (ngModelChange)="onChangePUTogler($event)">
                                         <label for="ProductiveUnitName" class=""><span style="color: red;">*</span>
                                             Productive Unit Name</label>
                                     </div>
@@ -510,7 +670,7 @@
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                     <div class="md-form">
-                                        <input mdbInput formControlName="Zip" type="number" id="Zip"
+                                        <input mdbInput formControlName="Zip" type="text" id="Zip"
                                             class="form-control">
                                         <label for="Zip" class=""><span style="color: red;">*</span> Zip</label>
                                     </div>
@@ -669,7 +829,7 @@
 
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
-                        <h6 style="text-align: center;">Create New Productive Unit</h6>
+                        <h6 style="text-align: center;">Create New Equipment</h6>
                         <br>
                         <form [formGroup]="formEquiment">
 
@@ -679,7 +839,7 @@
                                     <div class="md-form">
                                         <mdb-select [options]="equipments" [filterEnabled]="true" [multiple]="false"
                                             [highlightFirst]="false" formControlName="EquipmentId"
-                                            label="* Select Productive Unit/Parent Equipment" [enableSelectAll]="false">
+                                            label="* Select Productive Unit/Parent Equipment" [enableSelectAll]="false" (ngModelChange)="onChangeEquipment($event)">
                                         </mdb-select>
 
                                     </div>
@@ -752,7 +912,7 @@
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                     <div class="md-form">
-                                        <input mdbInput formControlName="Zip" type="number" id="Zip"
+                                        <input mdbInput formControlName="Zip" type="text" id="Zip"
                                             class="form-control">
                                         <label for="Zip" class=""><span style="color: red;">*</span> Zip</label>
                                     </div>

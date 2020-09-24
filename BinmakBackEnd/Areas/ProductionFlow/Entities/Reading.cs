@@ -1,5 +1,7 @@
-﻿using System;
+﻿using BinmakBackEnd.Entities;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +11,8 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Entities
     {
         public int ReadingId { get; set; }
         public int AssetId { get; set; }
+        [ForeignKey("AssetId")]
+        public AssetNode AssetNode { get; set; }
         public string Reference { get; set; }
         public DateTime DateProduction { get; set; }
         public bool IsClosed { get; set; }
