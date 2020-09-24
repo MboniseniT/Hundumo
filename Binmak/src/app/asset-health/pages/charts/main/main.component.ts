@@ -26,7 +26,7 @@ export class MainComponent implements OnInit {
   public loading = false;
   searchForm = {
     machineId:0,
-    dateFrom: new Date('2020-06-22T13:18:33.427Z'),
+    dateFrom: new Date('2020-08-22T13:18:33.427Z'),
     dateTo: new Date()
   }
   constructor(private request: AssetHealthService, private route: ActivatedRoute) {
@@ -44,8 +44,8 @@ export class MainComponent implements OnInit {
     };
 
   search(data){
-    this.searchForm.dateTo = new Date('2020-08-23T13:18:33.427Z');
-    this.searchForm.dateFrom = new Date('2020-06-22T13:18:33.427Z');
+    this.searchForm.dateTo = new Date();
+    this.searchForm.dateFrom = new Date('2020-08-22T13:18:33.427Z');
     if(data.value.dateFrom!= null || data.value.dateFrom != undefined)
     this.searchForm.dateFrom = new Date(data.value.dateFrom);
     if(data.value.dateTo!= null || data.value.dateTo != undefined)

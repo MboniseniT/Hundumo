@@ -44,14 +44,14 @@ namespace BinmakBackEnd.Areas.AssetHealth.Controllers
         {
             try
             {
-                string filePath = _hostingEnvironment.WebRootPath + "//images";
-                var bytes = Convert.FromBase64String(value.ImageUrl);
-                using (var imageFile = new FileStream(filePath, FileMode.Create))
-                {
-                    imageFile.Write(bytes, 0, bytes.Length);
-                    imageFile.Flush();    
-                    value.ImageUrl = "//images" + imageFile.Name;
-                }
+                //string filePath = _hostingEnvironment.WebRootPath + "//images";
+                //var bytes = Convert.FromBase64String(value.ImageUrl);
+                //using (var imageFile = new FileStream(filePath, FileMode.Create))
+                //{
+                //    imageFile.Write(bytes, 0, bytes.Length);
+                //    imageFile.Flush();    
+                //    value.ImageUrl = "//images" + imageFile.Name;
+                //}
                 return Ok(new Result<Machine>(true, "Saved successfully", new MachineRepository(_context).Add(value)));
             }
             catch (Exception exception)
@@ -66,14 +66,14 @@ namespace BinmakBackEnd.Areas.AssetHealth.Controllers
         {
             try
             {
-                string filePath = _hostingEnvironment.ContentRootPath + "\\images";
-                var bytes = Convert.FromBase64String(value.ImageUrl.Replace("data:image/jpeg;base64,",""));
-                using (var imageFile = new FileStream(filePath, FileMode.Create))
-                {
-                    imageFile.Write(bytes, 0, bytes.Length);
-                    imageFile .Flush();
-                    value.ImageUrl = "//images" + imageFile.Name;
-                }
+                //string filePath = _hostingEnvironment.ContentRootPath + "\\images";
+                //var bytes = Convert.FromBase64String(value.ImageUrl.Replace("data:image/jpeg;base64,",""));
+                //using (var imageFile = new FileStream(filePath, FileMode.Create))
+                //{
+                //    imageFile.Write(bytes, 0, bytes.Length);
+                //    imageFile .Flush();
+                //    value.ImageUrl = "//images" + imageFile.Name;
+                //}
                 return Ok(new Result<Machine>(true, "Updated successfully", new MachineRepository(_context).Update(id, value)));
                
             }
