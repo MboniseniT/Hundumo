@@ -30,7 +30,6 @@
     "datatables.net-dt": "^1.10.21",
     "easy-pie-chart": "^2.1.7",
     "hammerjs": "^2.0.8",
-<<<<<<< HEAD
     "highcharts": "^8.2.0",
     "highcharts-angular": "^2.8.0",
     "jquery": "^3.5.1",
@@ -38,23 +37,13 @@
     "ngx-bootstrap": "^5.6.1",
     "ngx-daterangepicker-material": "^4.0.1",
     "ngx-pagination": "^5.0.0",
-=======
-    "highcharts": "^8.1.2",
-    "jquery": "^3.5.1",
-    "ng-uikit-pro-standard": "git+https://oauth2:uHgiUQ5BxAwkFMswimr9@git.mdbootstrap.com/mdb/angular/ng-uikit-pro-standard.git",
-    "ngx-bootstrap": "^5.6.1",
->>>>>>> MT/master
     "rxjs": "~6.5.4",
     "screenfull": "^3.3.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-<<<<<<< HEAD
     "@angular-devkit/build-angular": "^0.1000.6",
-=======
-    "@angular-devkit/build-angular": "~0.900.6",
->>>>>>> MT/master
     "@angular/cli": "~9.0.6",
     "@angular/compiler-cli": "~9.0.6",
     "@angular/language-service": "~9.0.6",
@@ -66,20 +55,12 @@
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
-<<<<<<< HEAD
     "karma": "^5.1.1",
-=======
-    "karma": "~4.3.0",
->>>>>>> MT/master
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage-istanbul-reporter": "~2.1.0",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
-<<<<<<< HEAD
     "protractor": "^7.0.0",
-=======
-    "protractor": "~5.4.3",
->>>>>>> MT/master
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
     "typescript": "~3.7.5"
