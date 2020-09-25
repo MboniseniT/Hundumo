@@ -1,10 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-<<<<<<< HEAD
   "version": 1,
-=======
-  "version": 1, 
->>>>>>> MT/master
   "newProjectRoot": "projects",
   "projects": {
     "Binmak": {
@@ -144,7 +140,6 @@
           }
         }
       }
-<<<<<<< HEAD
     }
   },
   "defaultProject": "Binmak",
@@ -155,8 +150,3 @@
     }
   }
 }
-=======
-    }},
-  "defaultProject": "Binmak"
-}
->>>>>>> MT/master
