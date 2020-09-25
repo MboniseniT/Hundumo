@@ -15,13 +15,6 @@ export class TangentialVibrationWaterfallChartsComponent implements  OnChanges {
   constructor() { }
 
   ngOnChanges(): void {
-     var series = [];
-     this.data.forEach(element => {
-      series.push( {
-         type: 'spline',
-         data: element.yfft
-      })
-     });
     this.options = {      
       chart: {         
          type: 'scatter',
@@ -52,10 +45,7 @@ export class TangentialVibrationWaterfallChartsComponent implements  OnChanges {
       title : {
          text: 'Tangential Vibration Spectrum Waterfall'   
       },
-      xAxis: {
-         categories: this.data[0].modFreq,         
-       },
-      series : series
+      series : this.data.map(a=>a.yWaterfallSeries)
    };
     Highcharts.chart('tangentialWaterfallContainer', this.options);
   }

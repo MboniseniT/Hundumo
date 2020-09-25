@@ -32,7 +32,7 @@ export class RadialVibrationChartsComponent implements OnChanges {
       },
 
       xAxis: {
-        categories: this.data.machineStatistics.map(a=> new Date(a.timeStamp *1000)),
+        categories: this.data.machineStatistics.map(a=> new Date(a.timeStamp)),
         
       },
 
@@ -58,13 +58,13 @@ export class RadialVibrationChartsComponent implements OnChanges {
       {
         name: 'Alert',
         data: this.data.machineStatistics.map(a=>a.rmsAlert),
-        color:'#ff0000',
+        color:'#ffa500',
         dashStyle:'Dash'     
       },
       {
         name: 'Alarm',
         data: this.data.machineStatistics.map(a=>a.rmsAlarm), 
-        color:'#ffa500',
+        color:'#ff0000',
         dashStyle:'Dash'     
       },
     ],

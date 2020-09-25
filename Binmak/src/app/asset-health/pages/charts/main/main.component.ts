@@ -23,10 +23,11 @@ export class MainComponent implements OnInit {
   assetDetails: any;
   map = SensorDataMapper;
   preffixUrl: any;
-  public loading = false;
+  loading = false;
+  lastDate:Date;
   searchForm = {
     machineId:0,
-    dateFrom: new Date('2020-08-22T13:18:33.427Z'),
+    dateFrom: new Date((new Date().getMonth()) + '/' + (new Date().getDate()) + '/' + (new Date().getFullYear())),
     dateTo: new Date()
   }
   constructor(private request: AssetHealthService, private route: ActivatedRoute) {
@@ -45,7 +46,7 @@ export class MainComponent implements OnInit {
 
   search(data){
     this.searchForm.dateTo = new Date();
-    this.searchForm.dateFrom = new Date('2020-08-22T13:18:33.427Z');
+    this.searchForm.dateFrom = new Date((new Date().getMonth()-1) + '/' + (new Date().getDate()) + '/' + (new Date().getFullYear()));
     if(data.value.dateFrom!= null || data.value.dateFrom != undefined)
     this.searchForm.dateFrom = new Date(data.value.dateFrom);
     if(data.value.dateTo!= null || data.value.dateTo != undefined)
@@ -54,23 +55,41 @@ export class MainComponent implements OnInit {
   }
 
   getData(data){
+    this.loading = true;
     this.request.post(data, this.preffixUrl).subscribe(result => {
       this.data = result;   
       this.assetId =this.data.machineName
       this.deviceId =this.data.deviceId
       this.assetDetails =this.data.assetName
+      this.loading = false;
     },error=>{
-      console.log(error);     
+      console.log(error);
+      this.data.machineStatistics = []; 
+      this.loading = false;    
+    });
+    this.request.getAll(PreffixUrl.SensorDataLastDate).subscribe(result => {
+      this.lastDate = new Date(result)
+    },
+    error=>{
+      console.log(error);
+      
     });
     this.request.post(data, PreffixUrl.MachineSpectrum).subscribe(result => {
       this.spectrumData = result;
     },error=>{    
-      console.log(error);     
+      console.log(error); 
+      this.spectrumData = {
+        xfft:[],
+        yfft:[],
+        zfft:[],
+        modFreq:[]
+      }    
     });
     this.request.post(data, PreffixUrl.MachineWaterfall).subscribe(result => {
       this.waterfallData = result;
     },error=>{
-      console.log(error);      
+      console.log(error); 
+      this.waterfallData = [];     
     });
   }
 }

@@ -1,3 +1,19 @@
+<div style="text-align: center;" *ngIf="loading">
+    <div class="preloader-wrapper small active crazy">
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <div class="container">
     <mdb-breadcrumb>
         <mdb-breadcrumb-item class="blue-text" routerLink="/binmak">Home</mdb-breadcrumb-item>
@@ -37,6 +53,11 @@
                 </div>
             </form>
         </div>
+    </div>
+    <div class=" row">
+       <div class="col-md-12">
+        <h6>Last Measurement Date: <strong>{{lastDate}}</strong></h6>
+       </div>
     </div>
     <mdb-card>
         <div class="row">

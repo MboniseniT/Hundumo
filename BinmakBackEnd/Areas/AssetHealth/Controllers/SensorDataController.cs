@@ -4,6 +4,7 @@ using BinmakBackEnd.Areas.AssetHealth.Models.Local;
 using BinmakBackEnd.Areas.AssetHealth.Models.Respositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace BinmakBackEnd.Areas.AssetHealth.Controllers
 {
@@ -17,6 +18,9 @@ namespace BinmakBackEnd.Areas.AssetHealth.Controllers
             _context = context;
         }
 
+
+        [HttpGet("lastUpdateDate")]
+        public IActionResult GetLastDate() => Ok(new SensorDataRepository(_context).GetLastDate());
         [HttpPost("machine")]
         public IActionResult SearchStatistic([FromBody]SearchMachineRequest request)
         {

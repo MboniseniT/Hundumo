@@ -15,13 +15,7 @@ export class RadialVibrationWaterfallChartsComponent implements  OnChanges {
   constructor() { }
 
   ngOnChanges(): void {
-     var series = [];
-     this.data.forEach(element => {
-      series.push( {
-         type: 'spline',
-         data: element.zfft
-      })
-     });
+
     this.options = {      
       chart: {         
          type: 'scatter',
@@ -52,10 +46,7 @@ export class RadialVibrationWaterfallChartsComponent implements  OnChanges {
       title : {
          text: 'Radial Vibration Spectrum Waterfall'   
       },
-      xAxis: {
-         categories: this.data[0].modFreq,
-       },
-      series : series
+      series :this.data.map(a=>a.zWaterfallSeries)
    };
     Highcharts.chart('radialWaterfallContainer', this.options);
   }

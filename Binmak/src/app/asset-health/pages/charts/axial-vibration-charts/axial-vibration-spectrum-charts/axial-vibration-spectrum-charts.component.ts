@@ -30,7 +30,11 @@ export class AxialVibrationSpectrumChartsComponent implements OnChanges {
           text: 'Acceleration'
         }
       },
-
+      tooltip: {
+        formatter: function() {
+            return '<b>Frequency Domain</b> <br/> Amplitude:<b>' + this.y + '</b> m/s/s<br/> Actual: <b>' + this.x*this.series.name+ '</b> Hz <br/>Normalised: <b>' + this.x + '</b> X';
+        }
+    },
       xAxis: {
         categories: this.data.modFreq,
       },
@@ -50,7 +54,7 @@ export class AxialVibrationSpectrumChartsComponent implements OnChanges {
       },
 
       series: [{
-        name: 'Frequency',
+        name: this.data.revolutionPerMinute/60,
         data: this.data.xfft,
         color: '#00457d'
       },
