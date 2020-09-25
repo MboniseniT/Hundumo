@@ -22,9 +22,6 @@ import { EditReadingsComponent } from './kwenza/production-flow/edit-readings/ed
 import { UkwaziComponent } from './ukwazi/ukwazi.component';
 
 //Asset Management Maturity Assessor
-import { AssessmentsComponent } from './kwenza/MaturityAssessments/assessments/assessments.component';
-import { AssessmentLandingComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-landing.component';
-import { AssessmentLandingTypeComponent } from './kwenza/MaturityAssessments/assessment-landing-type/assessment-landing-type.component';
 import { SystemConfigComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/system-config.component';
 import { KpiAssessmentComponent } from './kwenza/MaturityAssessments/assessment-landing/kpi-assessment/kpi-assessment.component';
 import { BpAssessmentComponent } from './kwenza/MaturityAssessments/assessment-landing/bp-assessment/bp-assessment.component';
@@ -121,7 +118,7 @@ const routes: Routes = [
         { path: 'manage-actions', component: ManageActionsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'manage-frmwrks', component: ManageFrmwrksComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'manage-versions', component: ManageVersionsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-        { path: 'manage-variants', component: ManageVariantsComponent, pathMatch: 'full', canActivate: [AuthGuard]}
+        { path: 'manage-variants', component: ManageVariantsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'new-asset-readings/:assetNodeId', component: NewReadingsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'new-readings-editvalue', component: NewReadingsEditvalueComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'overall-production', component: OverallProductionComponent, pathMatch: 'full', canActivate: [AuthGuard]},
