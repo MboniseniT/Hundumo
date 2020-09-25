@@ -15,5 +15,6 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Entities
         public string ClientName { get; set; }
         public string Reference { get; set; }
         public DateTime DateStamp { get; set; }
+        public int AssetNodeId { get; set; }
     }
 }

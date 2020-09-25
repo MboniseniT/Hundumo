@@ -3,7 +3,7 @@
             class="fa fa-arrow-left"></i> BACK</button>
 
 
-    <h4 style="font-weight: bold; text-align: center;">ASSET READING: {{assetName}} - {{date | date: "MMMM-yyyy"}}</h4>
+    <h4 style="font-weight: bold; text-align: center;">ASSET READING: {{assetName}}<!--- {{date | date: "MMMM-yyyy"}}--></h4>
     <br><br>
 
     <div>
@@ -13,7 +13,7 @@
                     <mdb-date-picker name="SelectedDate" [placeholder]="'Select Date To Set Target'"
                         formControlName="SelectedDate" required></mdb-date-picker>
                 </div>
-                <div class="col">
+                <div class="col" *ngIf="isSuperAdmin || isAdmin">
                     <button type="button" class="btn btn-info waves-light" style="float: right; background-color: rgba(0, 69, 125, 1); color: white;" aria-label="Close"
                         mdbWavesEffect (click)="closeMonthlyReadings()"> <i class="fa fa-lock"></i> CLOSE MONTH READINGS</button>
                 </div>
@@ -21,7 +21,7 @@
                     <button type="button" class="btn btn-info waves-light" style="float: right;" aria-label="Close"
                         mdbWavesEffect (click)="monthlyMonthlyReadings()" style="background-color: rgba(0, 69, 125, 1); color: white;"> <i class="fa fa-calculator"></i> MONTHLY READINGS</button>
                 </div>
-                <div class="col">
+                <div class="col" *ngIf="isSuperAdmin || isAdmin">
                     <button type="button" class="btn btn-info waves-light" style="float: right;" aria-label="Close"
                         mdbWavesEffect (click)="setTarget()" style="background-color: rgba(0, 69, 125, 1); color: white;"> <i class="fa fa-cogs"></i> SET MONTHLY TARGETS</button>
 
@@ -399,7 +399,7 @@
                     {{s.bolters}}</td>
                 <td [ngStyle]="{'background-color': getColor(s.drifters, s.driftersTarget, s.driftersThreshold)}">
                     {{s.drifters}}</td>
-                <td *ngIf="!s.isClosed"><button type="button" class="btn btn-success px-3" (click)="editReading(s)"><i class="fa fa-pen"
+                <td *ngIf="!s.isClosed && !isGuest"><button type="button" class="btn btn-success px-3" (click)="editReading(s)"><i class="fa fa-pen"
                             aria-hidden="true" style="padding-right:5px"></i></button></td>
 
                 <td *ngIf="s.isClosed"><button type="button" class="btn btn-warning px-3" (click)="closed(s)"><i class="fa fa-lock"

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BinmakAPI.Data;
+using BinmakBackEnd.Areas.Kwenza.Entities;
+using BinmakBackEnd.Areas.Kwenza.Models;
 using BinmakBackEnd.Areas.ProductionFlow.Entities;
 using BinmakBackEnd.Areas.ProductionFlow.Models;
 using Microsoft.AspNetCore.Cors;
@@ -35,10 +38,10 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
                 {
                     AssetId = result.AssetId,
                     ActionName = result.ActionName,
-                    Tasks = _context.DailyTasks.Where(id => (id.AssetId == assetId) && (id.ActionIndex == result.ActionIndex)
+                    Tasks = _context.DailyTasks.Where(id => (id.AssetId == assetId) && (id.ActionIndex == result.ActionIndex) 
                     && (id.DateProduction == result.DateProduction)).ToList(),
                     DateStamp = result.DateProduction,
-                    Reference = _context.Users.FirstOrDefault(id => id.Id == result.Reference).FirstName + " "
+                    Reference = _context.Users.FirstOrDefault(id => id.Id == result.Reference).FirstName + " " 
                     + _context.Users.FirstOrDefault(id => id.Id == result.Reference).LastName,
                 });
 
@@ -50,7 +53,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             }
         }
 
-        static List<DateTime> getAllDates(int year, int month)
+        public static List<DateTime> getAllDates(int year, int month)
         {
             var ret = new List<DateTime>();
             for (int i = 1; i <= DateTime.DaysInMonth(year, month); i++)
@@ -83,7 +86,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             {
                 List<Reading> readings = new List<Reading>();
                 ProductionFlowAsset asset = _context.ProductionFlowAssets.FirstOrDefault(id => id.AssetId == assetProdDate.AssetId);
-                readings = _context.Readings.Where(id => (id.AssetId == assetProdDate.AssetId) && (id.DateProduction.Month == assetProdDate.ProductionDate.Month)
+                readings = _context.Readings.Where(id => (id.AssetId == assetProdDate.AssetId) && (id.DateProduction.Month == assetProdDate.ProductionDate.Month) 
                 && (id.DateProduction.Year == assetProdDate.ProductionDate.Year)).ToList();
 
                 if (asset == null)
@@ -140,7 +143,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
                 ProductionFlowAsset asset = _context.ProductionFlowAssets.FirstOrDefault(id => id.AssetId == assetId);
                 List<OverallProductionFunctionUnitObject> overallProductionFunctionUnitObjects = new List<OverallProductionFunctionUnitObject>();
 
-                List<ProductionFlowAsset> assets = _context.ProductionFlowAssets.Where(id => id.ClientAssetNameId ==
+                List<ProductionFlowAsset> assets = _context.ProductionFlowAssets.Where(id => id.ClientAssetNameId == 
                 _context.ClientAssetNames.FirstOrDefault(id => id.ClientAssetNameId == asset.ClientAssetNameId).ClientAssetNameId).ToList();
 
                 List<FunctionUnit> functionUnits = _context.FunctionUnits.Where(id => id.AssetId == assetId).ToList();
@@ -503,7 +506,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
         }
 
-        SheTargetObject GetSheTarget(List<ProductionFlowAsset> assets, DateTime dateTime)
+        public SheTargetObject GetSheTarget(List<ProductionFlowAsset> assets, DateTime dateTime)
         {
             int sheMonthlyValue = 0;
             List<int> assetsIds = new List<int>();
@@ -535,7 +538,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        SheBudgetObject GetSheBudget(List<ProductionFlowAsset> assets, DateTime dateTime)
+        public SheBudgetObject GetSheBudget(List<ProductionFlowAsset> assets, DateTime dateTime)
         {
             int sheMonthlyValue = 0;
             List<int> assetsIds = new List<int>();
@@ -567,7 +570,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        SheThresholdObject GetSheThreshold(List<ProductionFlowAsset> assets, DateTime dateTime)
+        public SheThresholdObject GetSheThreshold(List<ProductionFlowAsset> assets, DateTime dateTime)
         {
             int sheMonthlyValue = 0;
             List<int> assetsIds = new List<int>();
@@ -600,7 +603,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
 
-        SheMonthlyTargetObject GetSheMonthlyTarget(List<ProductionFlowAsset> assets, DateTime dateTime)
+        public SheMonthlyTargetObject GetSheMonthlyTarget(List<ProductionFlowAsset> assets, DateTime dateTime)
         {
             int sheMonthlyValue = 0;
             List<int> assetsIds = new List<int>();
@@ -632,7 +635,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        MonthlyTargetTotalAvailableEndsObject GetMonthlyTargetTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public MonthlyTargetTotalAvailableEndsObject GetMonthlyTargetTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
 
             var text = Regex.Replace(label, " Hoisted Tons", "");
@@ -648,7 +651,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
         //Sum of Hoisted tons per site
-        MonthlyTargetTotalAvailableEndsObject GetMonthlyTargetCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public MonthlyTargetTotalAvailableEndsObject GetMonthlyTargetCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int monthlyTarget = 0;
 
@@ -656,7 +659,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
             foreach (var item in assets)
             {
-                Reading reading = _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) && (id.DateProduction.Year == dateTime.Year)
+                Reading reading = _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) && (id.DateProduction.Year == dateTime.Year) 
                 && (id.DateProduction.Month == dateTime.Month));
 
                 if (reading == null)
@@ -677,7 +680,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        MonthlyTargetTotalAvailableEndsObject GetMonthlyTargetTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public MonthlyTargetTotalAvailableEndsObject GetMonthlyTargetTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int monthlyTarget = 0;
 
@@ -696,7 +699,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        TargetTotalAvailableEndsObject GetTargetTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public TargetTotalAvailableEndsObject GetTargetTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int monthlyTarget = 0;
 
@@ -714,7 +717,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return targetObject;
         }
 
-        TargetTotalAvailableEndsObject GetTargetCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public TargetTotalAvailableEndsObject GetTargetCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int Target = 0;
 
@@ -732,7 +735,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return TargetObject;
         }
 
-        ThresholdTotalAvailableEndsObject GetThresholdCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public ThresholdTotalAvailableEndsObject GetThresholdCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int threshold = 0;
 
@@ -750,7 +753,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return thresholdObject;
         }
 
-        ThresholdTotalAvailableEndsObject GetThresholdTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public ThresholdTotalAvailableEndsObject GetThresholdTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int threshold = 0;
 
@@ -758,7 +761,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
             foreach (var item in assets)
             {
-                Reading reading = _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) &&
+                Reading reading = _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) && 
                 (id.DateProduction.Year == dateTime.Year) && (id.DateProduction.Month == dateTime.Month));
                 threshold = threshold + reading.HoistedTonsThreshold;
             }
@@ -769,7 +772,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return thresholdObject;
         }
 
-        BudgetTotalAvailableEndsObject GetBudgetTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public BudgetTotalAvailableEndsObject GetBudgetTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int budget = 0;
 
@@ -777,7 +780,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
             foreach (var item in assets)
             {
-                Reading reading = _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) && (id.DateProduction.Year == dateTime.Year)
+                Reading reading = _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) && (id.DateProduction.Year == dateTime.Year) 
                 && (id.DateProduction.Month == dateTime.Month));
                 budget = budget + reading.HoistedTonsBudget;
             }
@@ -788,7 +791,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return targetObject;
         }
 
-        BudgetTotalAvailableEndsObject GetBudgetCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public BudgetTotalAvailableEndsObject GetBudgetCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int budget = 0;
 
@@ -806,7 +809,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return targetObject;
         }
 
-        TargetTotalAvailableEndsObject GetTargetTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public TargetTotalAvailableEndsObject GetTargetTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
 
             var text = Regex.Replace(label, " Hoisted Tons", "");
@@ -821,7 +824,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        BudgetTotalAvailableEndsObject GetBudgetTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public BudgetTotalAvailableEndsObject GetBudgetTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
 
             var text = Regex.Replace(label, " Hoisted Tons", "");
@@ -836,7 +839,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        ThresholdTotalAvailableEndsObject GetThresholdTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public ThresholdTotalAvailableEndsObject GetThresholdTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
 
             var text = Regex.Replace(label, " Hoisted Tons", "");
@@ -851,7 +854,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        MonthlyTargetTotalAvailableEndsObject GetMonthlyTarget(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public MonthlyTargetTotalAvailableEndsObject GetMonthlyTarget(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int MonthlyTarget = 0;
             //Extract asset name from label
@@ -866,7 +869,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        TargetTotalAvailableEndsObject GetTarget(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public TargetTotalAvailableEndsObject GetTarget(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int Target = 0;
             //Extract asset name from label
@@ -881,7 +884,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return TargetObject;
         }
 
-        BudgetTotalAvailableEndsObject GetBudget(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public BudgetTotalAvailableEndsObject GetBudget(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int Budget = 0;
             //Extract asset name from label
@@ -896,7 +899,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return BudgetObject;
         }
 
-        ThresholdTotalAvailableEndsObject GetThreshold(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public ThresholdTotalAvailableEndsObject GetThreshold(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             var text = Regex.Replace(label, " Total Ends Available", "");
             ProductionFlowAsset asset = _context.ProductionFlowAssets.FirstOrDefault(id => id.SiteName == text);
@@ -909,7 +912,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return ThresholdObject;
         }
 
-        List<OverallProductionFunctionUnitObject> functionUnitObjects(List<OverallProductionFunctionUnitObject> overallProductionFunctionUnitObjects, DateTime monthDate)
+        public List<OverallProductionFunctionUnitObject> functionUnitObjects(List<OverallProductionFunctionUnitObject> overallProductionFunctionUnitObjects, DateTime monthDate)
         {
             List<OverallProductionFunctionUnitObject> functionUnitObjectsTempList = new List<OverallProductionFunctionUnitObject>();
             OverallProductionFunctionUnitObject overallProductionFunctionUnitObject;
@@ -933,7 +936,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return functionUnitObjectsTempList;
         }
 
-        List<FunctionUnitObject> getFunctionUnitObject(int assetId, DateTime monthDate)
+        public List<FunctionUnitObject> getFunctionUnitObject(int assetId, DateTime monthDate)
         {
             List<FunctionUnitChildren> fuChildrenNames;
             List<FunctionUnitObject> fub = new List<FunctionUnitObject>();
@@ -996,7 +999,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return fub;
         }
 
-        List<OverallProductionFunctionUnitObject> ModifyOverallProd(List<ProductionFlowAsset> assets, DateTime dateProduction)
+        public List<OverallProductionFunctionUnitObject> ModifyOverallProd(List<ProductionFlowAsset> assets, DateTime dateProduction)
         {
             List<OverallProductionFunctionUnitObject> temp = new List<OverallProductionFunctionUnitObject>();
             List<OverallProductionFunctionUnitObject> overallProductionFunctionUnitObjects = new List<OverallProductionFunctionUnitObject>();
@@ -1066,7 +1069,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
 
-        List<ValueObject[]> ValueCalculatorMonthlyTarget(int assetId, DateTime dateTime, FunctionUnit functionUnit)
+        public List<ValueObject[]> ValueCalculatorMonthlyTarget(int assetId, DateTime dateTime, FunctionUnit functionUnit)
         {
             List<ValueObject> values = new List<ValueObject>();
             List<ValueObject[]> totalList = new List<ValueObject[]>();
@@ -1733,7 +1736,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
 
-        List<int[]> ValueCalculator(int assetId, DateTime dateTime, FunctionUnit functionUnit)
+        public List<int[]> ValueCalculator(int assetId, DateTime dateTime, FunctionUnit functionUnit)
         {
             List<int> values = new List<int>();
             List<int[]> totalList = new List<int[]>();
@@ -1840,7 +1843,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return totalList;
         }
 
-        List<FunctionUnitChildren> GetUpdatedFUC(List<FunctionUnitChildren> functionUnitChildrens, DateTime dateTime)
+        public List<FunctionUnitChildren> GetUpdatedFUC(List<FunctionUnitChildren> functionUnitChildrens, DateTime dateTime)
         {
             List<FunctionUnitChildren> tempFUC = new List<FunctionUnitChildren>();
 
@@ -2231,7 +2234,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         {
             try
             {
-                var lAssets = _context.ProductionFlowAssets.Where(id => id.Reference == reference).ToList();
+                var lAssets = _context.ProductionFlowAssets.Where(id=>id.Reference == reference).ToList();
                 //var lAssets = _context.AssetUsers.Where(id => id.UserId == reference).ToList();
 
                 if (lAssets != null)
@@ -2301,22 +2304,22 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
                 //if (_context.Templates.FirstOrDefault(id => id.TemplateId == model.TemplateId).TemplateName == "Production Flow")
                 //{
-                List<DateTime> dates = getAllDates(model.SinceDateProduction.Year, model.SinceDateProduction.Month);
-                List<Reading> readings = new List<Reading>();
+                    List<DateTime> dates = getAllDates(model.SinceDateProduction.Year, model.SinceDateProduction.Month);
+                    List<Reading> readings = new List<Reading>();
 
-                foreach (var date in dates)
-                {
-                    Reading reading = new Reading();
-                    reading.DateProduction = date;
-                    reading.AssetId = asset.AssetId;
-                    reading.Reference = asset.Reference;
+                    foreach (var date in dates)
+                    {
+                        Reading reading = new Reading();
+                        reading.DateProduction = date;
+                        reading.AssetId = asset.AssetId;
+                        reading.Reference = asset.Reference;
 
-                    readings.Add(reading);
+                        readings.Add(reading);
 
-                }
+                    }
 
-                _context.Readings.AddRange(readings);
-                _context.SaveChanges();
+                    _context.Readings.AddRange(readings);
+                    _context.SaveChanges();
 
                 //}
 
@@ -2329,7 +2332,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             }
         }
 
-        List<FunctionUnitChildren> saveAssetFunctionUnitsChildren(ProductionFlowAsset asset)
+        public List<FunctionUnitChildren> saveAssetFunctionUnitsChildren(ProductionFlowAsset asset)
         {
             List<FunctionUnitChildren> fucTemp = new List<FunctionUnitChildren>();
             List<FunctionUnitChildren> orderdFucs = new List<FunctionUnitChildren>();
@@ -2402,7 +2405,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return fucTemp2;
         }
 
-        List<FunctionUnit> saveAssetFunctionUnits(ProductionFlowAsset asset)
+        public List<FunctionUnit> saveAssetFunctionUnits(ProductionFlowAsset asset)
         {
 
             List<FunctionUnit> functionUnits = _context.FunctionUnits.Where(id => id.AssetId == 0).ToList();
@@ -2423,7 +2426,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return fucTemp;
         }
 
-        ProductionFlowAsset CreateAsset(ProductionFlowAsset model)
+        public ProductionFlowAsset CreateAsset(ProductionFlowAsset model)
         {
             ProductionFlowAsset asset = new ProductionFlowAsset();
             asset.ClientAssetNameId = model.ClientAssetNameId;
@@ -2439,7 +2442,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
 
-        ValueObject ValueObjectDate(Reading reading)
+        public ValueObject ValueObjectDate(Reading reading)
         {
             ValueObject valueObject = new ValueObject();
 
@@ -2452,7 +2455,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
             return valueObject;
         }
-        ValueObject SheAssetObject(Reading reading)
+        public ValueObject SheAssetObject(Reading reading)
         {
             ValueObject valueObject = new ValueObject();
 
@@ -2484,7 +2487,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
         //Calculate SHE
-        int SheAsset(Reading reading)
+        public int SheAsset(Reading reading)
         {
             int sheCounter = 0;
             var clientNameAssetId = _context.ProductionFlowAssets.FirstOrDefault(id => id.AssetId == reading.AssetId).ClientAssetNameId;
@@ -2515,7 +2518,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
         // Calculate Hoisted Tons for each site
-        int HoistedTonsPerSite(Reading reading)
+        public int HoistedTonsPerSite(Reading reading)
         {
             int tonsHoistedCounter = 0;
             // Check if current day is the first in the month 
@@ -2540,7 +2543,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return tonsHoistedCounter;
         }
 
-        ValueObject HoistedTonsPerSiteObject(Reading reading)
+        public ValueObject HoistedTonsPerSiteObject(Reading reading)
         {
             ValueObject valueObject = new ValueObject();
             ProductionFlowAsset asset = _context.ProductionFlowAssets.FirstOrDefault(id => id.AssetId == reading.AssetId);
@@ -2554,7 +2557,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             {
 
 
-                Reading lReading = _context.Readings.FirstOrDefault(id => (id.AssetId == reading.AssetId) && (id.DateProduction.Year == reading.DateProduction.Year)
+                Reading lReading = _context.Readings.FirstOrDefault(id => (id.AssetId == reading.AssetId) && (id.DateProduction.Year == reading.DateProduction.Year) 
                 && (id.DateProduction.Month == reading.DateProduction.Month) && (id.DateProduction.Day == reading.DateProduction.Day));
 
                 target = target + lReading.HoistedTonsTarget;
@@ -2626,12 +2629,12 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
         // Calculate Ends Available for each site
-        int EndsAvailablePerSite(Reading reading)
+        public int EndsAvailablePerSite(Reading reading)
         {
             return reading.UnlashedEnds + reading.TotalCleanedEnds + reading.SupportedEnds + reading.PreparedMarkedEnds;
         }
 
-        ValueObject EndsAvailablePerSiteObjects(Reading reading)
+        public ValueObject EndsAvailablePerSiteObjects(Reading reading)
         {
             int endsAvailable = 0;
             int target = 0;
@@ -2671,7 +2674,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
 
         //Calculate Total Hoisted Tons Accumalative
-        int TotalTonsHoisetedCommulative(Reading reading)
+        public int TotalTonsHoisetedCommulative(Reading reading)
         {
             int totalTons = 0;
 
@@ -2707,7 +2710,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return totalTons;
         }
 
-        ValueObject TotalTonsHoiseted(TotalHoistedTonsInputParam param)
+        public ValueObject TotalTonsHoiseted(TotalHoistedTonsInputParam param)
         {
             ValueObject valueObject = new ValueObject();
             int monthlyTarget = 0;
@@ -2719,9 +2722,9 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
             foreach (var item in param.Asset)
             {
-                Reading reading = _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) &&
+                Reading reading = _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) && 
                 (id.DateProduction.Year == param.Reading.DateProduction.Year) && (id.DateProduction.Month == param.Reading.DateProduction.Month));
-                totalHoistedTons = totalHoistedTons + _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) &&
+                totalHoistedTons = totalHoistedTons + _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) && 
                 (id.DateProduction == param.Reading.DateProduction)).HoistedTons;
                 monthlyTarget = monthlyTarget + reading.HoistedTonsTarget;
                 monthlyBudget = monthlyThreshold + reading.HoistedTonsThreshold;
@@ -2753,7 +2756,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
 
-        ValueObject TotalTonsHoisetedCommulativeObject(TotalHoistedCommulataiveInputParam param)
+        public ValueObject TotalTonsHoisetedCommulativeObject(TotalHoistedCommulataiveInputParam param)
         {
             ValueObject valueObject = new ValueObject();
             //Get List of readings 
@@ -2770,7 +2773,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
                 foreach (var item in param.Asset)
                 {
-                    Reading reading = _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) &&
+                    Reading reading = _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) && 
                     (id.DateProduction.Year == param.Reading.DateProduction.Year) && (id.DateProduction.Month == param.Reading.DateProduction.Month));
                     monthlyTarget = monthlyTarget + reading.HoistedTonsTarget;
                 }
@@ -2778,7 +2781,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
                 foreach (var item in param.Asset)
                 {
-                    Reading reading = _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) &&
+                    Reading reading = _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) && 
                     (id.DateProduction.Year == param.Reading.DateProduction.Year) && (id.DateProduction.Month == param.Reading.DateProduction.Month));
                     monthlyBudget = monthlyBudget + reading.HoistedTonsThreshold;
                 }
@@ -2787,7 +2790,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
                 foreach (ProductionFlowAsset item in param.Asset)
                 {
-                    totalHoistedTons = totalHoistedTons + _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) &&
+                    totalHoistedTons = totalHoistedTons + _context.Readings.FirstOrDefault(id => (id.AssetId == item.AssetId) && 
                     (id.DateProduction == param.Reading.DateProduction)).HoistedTons;
                 }
 
@@ -2855,7 +2858,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return valueObject;
         }
 
-        int TotalTonsHoiseted(Reading reading)
+        public int TotalTonsHoiseted(Reading reading)
         {
             int ClientId = _context.ProductionFlowAssets.FirstOrDefault(id => id.AssetId == reading.AssetId).ClientAssetNameId;
 
@@ -2871,7 +2874,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return totalTons;
         }
 
-        ValueObject TotalTonsHoisetedObject(Reading reading)
+        public ValueObject TotalTonsHoisetedObject(Reading reading)
         {
             ValueObject valueObject = new ValueObject();
             int totalHoistedTons = 0;
@@ -2919,7 +2922,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
             try
             {
-                ProductionFlowAssetUser assetUser = _context.ProductionFlowAssetUsers.FirstOrDefault(id =>
+                ProductionFlowAssetUser assetUser = _context.ProductionFlowAssetUsers.FirstOrDefault(id => 
                 (id.AssetId == model.AssetId && id.UserId == model.UserId));
 
                 return Ok(assetUser);
@@ -2940,7 +2943,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
             try
             {
-                List<Reading> readings = _context.Readings.Where(id => (id.AssetId == model.AssetId) && (id.DateProduction.Year == model.DateStamp.Year)
+                List<Reading> readings = _context.Readings.Where(id => (id.AssetId == model.AssetId) && (id.DateProduction.Year == model.DateStamp.Year) 
                 && (id.DateProduction.Month == model.DateStamp.Month)).ToList();
 
                 foreach (var r in readings)
@@ -2959,11 +2962,11 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             }
         }
 
-        List<Reading> PopulateReadings([FromBody] AssetProdDate assetProdDate)
+        public List<Reading> PopulateReadings([FromBody] AssetProdDate assetProdDate)
         {
             List<Reading> readings = new List<Reading>();
             ProductionFlowAsset asset = _context.ProductionFlowAssets.FirstOrDefault(id => id.AssetId == assetProdDate.AssetId);
-            readings = _context.Readings.Where(id => (id.AssetId == assetProdDate.AssetId) && (id.DateProduction.Month == assetProdDate.ProductionDate.Month)
+            readings = _context.Readings.Where(id => (id.AssetId == assetProdDate.AssetId) && (id.DateProduction.Month == assetProdDate.ProductionDate.Month) 
             && (id.DateProduction.Year == assetProdDate.ProductionDate.Year)).ToList();
             List<Reading> rds = new List<Reading>();
             if (readings.Count == 0)

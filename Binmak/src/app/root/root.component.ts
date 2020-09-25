@@ -19,6 +19,9 @@ export class RootComponent implements OnInit {
   isInstituteBazazi: boolean;
   isProductionFlow: boolean;
   isAdmin: boolean;
+  isSuperAdmin: boolean;
+  isUser: boolean;
+  isGuest: boolean;
 
   ngOnInit(): void {
     this.isKwenza = true;
@@ -28,6 +31,9 @@ export class RootComponent implements OnInit {
     this.name = JSON.parse(localStorage.getItem('currentUser')).firstName;
     this.surname = JSON.parse(localStorage.getItem('currentUser')).lastName;
     this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
+    this.isSuperAdmin = JSON.parse(localStorage.getItem('currentUser')).isSuperAdmin;
+    this.isUser = JSON.parse(localStorage.getItem('currentUser')).isUser;
+    this.isGuest = JSON.parse(localStorage.getItem('currentUser')).isGuest;
 
     /*this.service.getAssets(JSON.parse(localStorage.getItem('currentUser')).userId)
     .subscribe((resp:any) =>{

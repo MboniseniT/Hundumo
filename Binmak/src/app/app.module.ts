@@ -120,6 +120,17 @@ import { AddVariantComponent } from './kwenza/MaturityAssessments/assessment-lan
 import { EditVariantComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-variants/edit-variant/edit-variant.component';
 import { DownloadActionsComponent } from './kwenza/MaturityAssessments/assessment-landing/manage-actions/download-actions/download-actions.component';
 
+import { AssessmentsComponent } from './ukwazi/assessments/assessments.component';
+import { AssessmentLandingComponent } from './ukwazi/assessment-landing/assessment-landing.component';
+import { AssessmentLandingTypeComponent } from './ukwazi/assessment-landing-type/assessment-landing-type.component';
+import { ParentChartsComponent } from './kwenza/production-flow/parent-charts/parent-charts.component';
+import { ProdConfigurationComponent } from './kwenza/production-flow/prod-configuration/prod-configuration.component';
+import { KpaComponent } from './kwenza/production-flow/kpa/kpa.component';
+import { KpaLimitsComponent } from './kwenza/production-flow/kpa-limits/kpa-limits.component';
+import { NewReadingsComponent } from './kwenza/production-flow/new-readings/new-readings.component';
+import { NewReadingsEditvalueComponent } from './kwenza/production-flow/new-readings-editvalue/new-readings-editvalue.component';
+import { OverallNewReadingsComponent } from './kwenza/production-flow/overall-new-readings/overall-new-readings.component';
+import { KpaValueConfigComponent } from './kwenza/production-flow/kpa/kpa-value-config/kpa-value-config.component';
 //import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
@@ -225,6 +236,17 @@ import { DownloadActionsComponent } from './kwenza/MaturityAssessments/assessmen
     AddVariantComponent,
     EditVariantComponent,
     DownloadActionsComponent
+    AssessmentsComponent,
+    AssessmentLandingComponent,
+    AssessmentLandingTypeComponent,
+    ParentChartsComponent,
+    ProdConfigurationComponent,
+    KpaComponent,
+    KpaLimitsComponent,
+    NewReadingsComponent,
+    NewReadingsEditvalueComponent,
+    OverallNewReadingsComponent,
+    KpaValueConfigComponent
   ],
   imports: [
     BrowserModule,

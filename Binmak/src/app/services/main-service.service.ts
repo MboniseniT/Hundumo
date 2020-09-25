@@ -34,8 +34,48 @@ export class MainServiceService {
     return this.http.get<any[]>(this.url+"account/admins");
   }
 
+  getKpaTypes() {
+    return this.http.get<any[]>(this.urlBase+"Kwenza/ProductionFlowConfiguration/kpa");
+  }
+
+  getMathsOperators() {
+    return this.http.get<any[]>(this.urlBase+"Kwenza/ProductionFlowConfiguration/mathsOperator");
+  }
+
+  saveFormulaCreation(model){
+    return this.http.post<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/formularCreation', JSON.stringify(model), this.httpOptions);
+  }
+
+  GetClientAssetKPAs(keyProcessAreaId) {
+    return this.http.get<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/GetClientAssetKPAs?keyProcessAreaId=' + keyProcessAreaId);
+  }
+
+  getKpas(processId) {
+    return this.http.get<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/kpaByProcess?processId=' + processId);
+  }
+
+  deleteProcessById(processId) {
+    return this.http.get<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/deleteProcess?processId=' + processId);
+  }
+
+  deleteKPAById(kpaId) {
+    return this.http.get<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/deleteKPA?kpaId=' + kpaId);
+  }
+
   getUsers(reference){
     return this.http.get<any[]>(this.url+'account/users?reference=' + reference);
+  }
+
+  getRoles(){
+    return this.http.get<any[]>(this.url+'account/roles');
+  }
+
+  getBinmakModules(){
+    return this.http.get<any[]>(this.url+'account/binmakModules');
+  }
+
+  getGroups(reference){
+    return this.http.get<any[]>(this.url+'account/groups?reference=' + reference);
   }
 
 
@@ -87,14 +127,30 @@ export class MainServiceService {
   SaveAssetAssetUser(model){
     return this.http.post<any[]>(this.url+'assetSetup/addUserAssetNode', JSON.stringify(model), this.httpOptions);
   }
-
+  
 
   deleteAssetNodeById(model) {
     return this.http.post<any[]>(this.url + 'assetSetup/deleteAssetNode', JSON.stringify(model), this.httpOptions);
   }
 
+  deleteUser(model) {
+    return this.http.post<any[]>(this.url + 'account/deleteUser', JSON.stringify(model), this.httpOptions);
+  }
+
+  reinstate(model) {
+    return this.http.post<any[]>(this.url + 'account/reinstate', JSON.stringify(model), this.httpOptions);
+  }
+
   getParentOrganazations(reference){
     return this.http.get<any[]>(this.url+'assetSetup/parentOrganization?reference='+reference);
+  }
+
+  productionFlow(assetNodeId){
+    return this.http.get<any[]>(this.url+'assetSetup/addProductionFlow?assetNodeId='+assetNodeId);
+  }
+
+  removeProductionFlow(assetNodeId){
+    return this.http.get<any[]>(this.url+'assetSetup/removeProductionFlow?assetNodeId='+assetNodeId);
   }
 
   getTree(reference){
@@ -114,14 +170,62 @@ export class MainServiceService {
     return this.http.get<any[]>(this.url+'assetSetup/productiveUnit?reference='+reference);
   }
 
+  saveProdFlowAProcess(model){
+    return this.http.post<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/processes', JSON.stringify(model), this.httpOptions);
+  }
+
+  updateProdFlowAKPA(model){
+    return this.http.post<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/updateKPA', JSON.stringify(model), this.httpOptions);
+  }
+
+  updateProdFlowAProcess(model){
+    return this.http.post<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/updateProcesses', JSON.stringify(model), this.httpOptions);
+  }
+
+  saveProdFlowAKPA(model){
+    return this.http.post<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/kpa', JSON.stringify(model), this.httpOptions);
+  }
+
+  GetPFEditValue(model){
+    return this.http.post<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/pdEditValue', JSON.stringify(model), this.httpOptions);
+  }
+
+  UpdateProductionValue(model){
+    return this.http.post<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/pdAddValue', JSON.stringify(model), this.httpOptions);
+  }
+
+  saveProdFlowKPALimit(model){
+    return this.http.post<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/kpaLimit', JSON.stringify(model), this.httpOptions);
+  }
+
+  getProdFlowKPALimit(model){
+    return this.http.post<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/kpaTarget', JSON.stringify(model), this.httpOptions);
+  }
+
+  getProdFlowAProcess(model){
+    return this.http.post<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/getProcesses', JSON.stringify(model), this.httpOptions);
+  }
+
+  getProdFlow(model){
+    return this.http.post<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/pfDatastructure', JSON.stringify(model), this.httpOptions);
+  }
+
+  getOverallProdFlow(model){
+    return this.http.post<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/pfDatastructureOverall', JSON.stringify(model), this.httpOptions);
+  }
+
   getAssetOverallProduction(model){
     return this.http.post<any[]>(this.urlBase+'ProductionFlow/assets/overallProduction', JSON.stringify(model), this.httpOptions);
   }
 
-  //Readings on area
   getReadingsByAssetId(assetId){
     return this.http.get<any[]>(this.urlBase+'ProductionFlow/assets/getAssetById?assetId=' + assetId);
   }
+
+  getChartAssetByAssetId(assetId){
+    return this.http.get<any[]>(this.urlBase+'ProductionFlow/charts?assetId=' + assetId);
+  }
+
 
   getAssetById(assetId){
 
@@ -149,9 +253,13 @@ export class MainServiceService {
   }
 
   DrawChart(model){
-      return this.http.post<any[]>(this.urlBase+'ProductionFlow/charts', JSON.stringify(model), this.httpOptions);
+      return this.http.post<any[]>(this.urlBase+'Kwenza/ProductionFlowAnalytics', JSON.stringify(model), this.httpOptions);
   }
 
+  DrawParentChart(model){
+    return this.http.post<any[]>(this.urlBase+'ProductionFlow/charts/Parent', JSON.stringify(model), this.httpOptions);
+  }
+  
   getAssets(reference){
     return this.http.get<any[]>(this.url+"assets?reference="+reference);
   }
@@ -196,9 +304,13 @@ export class MainServiceService {
   OverallProductionProcess(model: any): Observable<any> {
     return this.http.post<any[]>(this.url+"account/OverallProductionProcess", JSON.stringify(model), this.httpOptions);
   }
-
+  
   RegisterUser(model: any): Observable<any> {
     return this.http.post<any[]>(this.url+"account/register", JSON.stringify(model), this.httpOptions);
+  }
+
+  UpdateUser(model: any): Observable<any> {
+    return this.http.post<any[]>(this.url+"account/updateUser", JSON.stringify(model), this.httpOptions);
   }
 
   RegisterAssetUser(model: any): Observable<any> {
@@ -218,7 +330,7 @@ export class MainServiceService {
   EditAssetMonthlyLimit(model: any): Observable<any> {
     return this.http.post<any[]>(this.urlBase+"ProductionFlow/DailyReadings/UpdateMonthlyLimit", JSON.stringify(model), this.httpOptions);
   }
-
+  
 
   RegisterAsset(model: any): Observable<any> {
     return this.http.post<any[]>(this.url+"assets", JSON.stringify(model), this.httpOptions);
@@ -226,7 +338,7 @@ export class MainServiceService {
 
 
 
- // Error handling
+ // Error handling 
  handleError(error) {
   let errorMessage = '';
 
@@ -237,7 +349,7 @@ export class MainServiceService {
     // Get server-side error
     errorMessage = `Error Code: ${error.status}\nMessage: ${error.error}`;
   }
-
+  
   window.alert(errorMessage);
   return throwError(errorMessage);
 }

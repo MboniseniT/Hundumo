@@ -26,7 +26,7 @@
           <mdb-accordion [multiple]="false" aria-multiselectable="false">
             <br>
             <br>
-            <mdb-accordion-item *ngIf="isAdmin">
+            <mdb-accordion-item *ngIf="isSuperAdmin || isAdmin">
               <mdb-accordion-item-head mdbWavesEffect>
                 <p style="color: white; font-weight: 300; font-size: 150%;"><i class="fa fa-sitemap fa-1.5x"
                     aria-hidden="true"></i> ASSET</p>
@@ -82,7 +82,7 @@
               </mdb-accordion-item-body>
             </mdb-accordion-item>
 
-            <mdb-accordion-item *ngIf="isAdmin">
+            <mdb-accordion-item *ngIf="isSuperAdmin || isAdmin">
               <mdb-accordion-item-head mdbWavesEffect>
                 <p style="color: white; font-weight: 300; font-size: 150%;"><i class="fa fa-lock fa-1.5x"
                     aria-hidden="true"></i> SECURITY</p>
@@ -91,8 +91,8 @@
                 <ul>
                   <li routerLink="/binmak/users"><a style="color: white; font-weight: 300; font-size: 75%;"
                       mdbWavesEffect>MANAGE USERS</a></li>
-                  <li routerLink="/binmak/manage-access"><a style="color: white; font-weight: 300; font-size: 75%;"
-                      mdbWavesEffect>MANAGE ACCESS</a></li>
+                  <!--<li routerLink="/binmak/manage-access"><a style="color: white; font-weight: 300; font-size: 75%;"
+                      mdbWavesEffect>MANAGE ACCESS</a></li>-->
                 </ul>
               </mdb-accordion-item-body>
             </mdb-accordion-item>
@@ -107,19 +107,26 @@
 
     <!-- Footer -->
     <footer class="page-footer font-small rgba-white-slight pt-3 fixed-bottom">
+
       <!-- Footer Links -->
       <div class="container-fluid text-center">
+
         <!-- Grid row -->
         <div class="row">
+
           <!-- Grid column -->
           <div class="col-12" style="padding: 0; cursor: pointer;">
+
             <a href="www.m-theth.co.za" style="color: white; font-weight: bold;">Support</a>
           </div>
           <!-- Grid column -->
+
         </div>
         <!-- Grid row -->
+
       </div>
       <!-- Footer Links -->
+
     </footer>
     <!-- Footer -->
   </mdb-side-nav>
@@ -139,7 +146,7 @@
       <!-- Breadcrumb-->
       <div class="breadcrumbs breadcrumbs-hidden-nav breadcrumb-dn mr-auto">
         <img alt="" style="max-height: 40px;">
-        <h4 style="font-weight: 400; color:rgba(0, 69, 125, 1);" routerLink="#">BINMAK HUNDUMO: SOFTWARE
+        <h4 style="font-weight: 400; color:rgba(0, 69, 125, 1);" id="main-menu" routerLink="#">BINMAK HUNDUMO: SOFTWARE
           SYSTEMS</h4>
       </div>
       <!--/. Breadcrumb-->

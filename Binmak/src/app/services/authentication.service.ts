@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 import { BaseUrl } from '../enums/base-url.enum';
+import { DatePipe } from '@angular/common';
 
 @Injectable()
 export class AuthenticationService {
@@ -19,7 +20,7 @@ export class AuthenticationService {
     })
   };
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
     registerBinMakUser(model){
         return this.http.post(this.url+'/systemAccount',  model )
@@ -38,6 +39,13 @@ export class AuthenticationService {
                 if (user && user.token) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
+
+                    //Set default date if it does not exist
+                    let d = localStorage.getItem('SelectedDate')
+                    if(d == '' || d == null){
+                        let c = this.datePipe.transform(new Date, 'yyyy-MM-dd');
+                        localStorage.setItem('SelectedDate', c);
+                    }
                 }
 
                 return user;

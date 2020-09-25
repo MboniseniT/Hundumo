@@ -2,6 +2,10 @@
     <button type="button" style="background-color: rgba(0, 69, 125, 1); color: white;" class="btn btn-info waves-light" aria-label="Close" mdbWavesEffect (click)="back()"> <i
         class="fa fa-arrow-left"></i> BACK</button>
 
+        <br>
+        <h5 style="font-weight: bold; text-align: center;">{{codeName}}</h5>
+        <br>
+
         <form class="text-center" style="color: #757575;" [formGroup]="chartForm">
             <div class="form-row">
                 <div class="col">
@@ -37,12 +41,24 @@
             </div>
           </div>
 
-          <div *ngIf="!loading">
+
             <figure class="highcharts-figure" >
-                <div id="lineChart1"></div>
+                <div id="TotalHoistedTons"></div>
+        
             </figure>
 
-            <br>
+          <!--<figure class="highcharts-figure" *ngFor="let c of chartNames">
+            <div *ngIf="chartNames">
+                <div id="ROM Tons Crushed"></div>
+            </div>
+        </figure>-->
+
+          <!--<div *ngIf="!loading">
+            <figure class="highcharts-figure" >
+                <div id="line1"></div>
+            </figure>-->
+
+            <!--<br>
             <figure class="highcharts-figure" >
                 <div id="whiskerBox1"></div>
             </figure>
@@ -141,6 +157,6 @@
                 <div id="lineChart8"></div>
             </figure>
             <br>
-          </div>
+          </div>-->
 
 </div>

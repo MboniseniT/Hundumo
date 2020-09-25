@@ -19,6 +19,9 @@ export class BinmakLandingComponent implements OnInit {
   isInstituteBazazi: boolean;
   isProductionFlow: boolean;
   isAdmin: boolean;
+   isSuperAdmin: boolean;
+   isGuest: boolean;
+   isUser: boolean;
 
   ngOnInit(): void {
     this.isKwenza = true;
@@ -28,20 +31,9 @@ export class BinmakLandingComponent implements OnInit {
     this.name = JSON.parse(localStorage.getItem('currentUser')).firstName;
     this.surname = JSON.parse(localStorage.getItem('currentUser')).lastName;
     this.isAdmin = JSON.parse(localStorage.getItem('currentUser')).isAdmin;
-
-    this.service.getAssets(JSON.parse(localStorage.getItem('currentUser')).userId)
-    .subscribe((resp:any) =>{
-
-      if(resp.length > 0){
-        this.isProductionFlow = true;
-      }else{
-        this.isProductionFlow = false;
-      }
-
-    }, (error: any) =>{
-      console.log();
-    });
-
+    this.isSuperAdmin = JSON.parse(localStorage.getItem('currentUser')).isSuperAdmin;
+    this.isUser = JSON.parse(localStorage.getItem('currentUser')).isUser;
+    this.isGuest = JSON.parse(localStorage.getItem('currentUser')).isGuest;
   }
 
   kwenza(){
@@ -73,6 +65,7 @@ export class BinmakLandingComponent implements OnInit {
 
   logout(){
     localStorage.clear();
+    localStorage.removeItem("currentUser");
     this.router.navigate(['/login']);
   }
 

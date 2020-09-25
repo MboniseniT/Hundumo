@@ -1,5 +1,7 @@
-﻿using System;
+﻿using BinmakBackEnd.Entities;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,7 +13,11 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Entities
         public string FunctionUnitChildrenName { get; set; }
         public int FunctionUnitId { get; set; }
         public int AssetId { get; set; }
+        [ForeignKey("AssetNodeId")]
+        public AssetNode AssetNode { get; set; }
         public int ClientAssetNameId { get; set; }
+        [ForeignKey("ClientAssetNameId")]
+        public ClientAsset ClientAsset { get; set; }
         public string FunctionChildrenBachgroundColor { get; set; }
         public string FunctionChildrenColor { get; set; }
         public string Frequency { get; set; }

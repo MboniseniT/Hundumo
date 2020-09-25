@@ -70,6 +70,18 @@ namespace BinmakBackEnd.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsGuest")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsLocked")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSuperAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsUser")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -104,6 +116,12 @@ namespace BinmakBackEnd.Migrations
                     b.Property<string>("Reference")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RootId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -114,10 +132,12 @@ namespace BinmakBackEnd.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<int>("Zip")
-                        .HasColumnType("int");
+                    b.Property<string>("Zip")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -338,71 +358,45 @@ namespace BinmakBackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("action")
+                    b.Property<int>("AssetNodeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BackgroundColor")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("assess_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("biz_impact")
-                        .HasColumnType("int");
-
-                    b.Property<int>("bpQuestion_id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("cost_of_imp")
+                    b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ease_of_imp")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsTargetSet")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("priority")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("KPADate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("responsible_person")
+                    b.Property<string>("KeyProcessAreaName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("sect_id")
+                    b.Property<int>("KeyProcessAreaTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("status")
+                    b.Property<int>("ProcessId")
                         .HasColumnType("int");
 
-                    b.Property<string>("target_date")
+                    b.Property<string>("Reference")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("time_to_imp")
-                        .HasColumnType("int");
+                    b.HasKey("KeyProcessAreaId");
 
-                    b.HasKey("ID");
+                    b.HasIndex("KeyProcessAreaTypeId");
 
-                    b.ToTable("assessmentsActionManager");
+                    b.HasIndex("ProcessId");
+
+                    b.ToTable("KeyProcessAreas");
                 });
 
-            modelBuilder.Entity("BinmakBackEnd.Areas.Assessments.Entities.BpKpiAssessmentAvgs", b =>
+            modelBuilder.Entity("BinmakBackEnd.Areas.Kwenza.Entities.KeyProcessAreaType", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("assess_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("bp_avg")
-                        .HasColumnType("int");
-
-                    b.Property<int>("kpi_avg")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("bpKpiAssessmentAvgs");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.Assessments.Entities.BpQuestions", b =>
-                {
-                    b.Property<int>("ID")
+                    b.Property<int>("KeyProcessAreaTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -440,761 +434,17 @@ namespace BinmakBackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("assess_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("bpQuestion_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sect_1")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sect_2")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sect_3")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sect_4")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sect_5")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sect_6")
-                        .HasColumnType("int");
-
-                    b.Property<string>("user_id")
+                    b.Property<string>("MathematicalOperatorSign")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("MathematicalOperatorId");
 
-                    b.ToTable("bpResults");
+                    b.ToTable("MathematicalOperators");
                 });
 
-            modelBuilder.Entity("BinmakBackEnd.Areas.Assessments.Entities.Bps", b =>
+            modelBuilder.Entity("BinmakBackEnd.Areas.Kwenza.Entities.Process", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("kpa_id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("user_id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("bps");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.Assessments.Entities.Characteristics", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("frmwrk_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("kpa_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("level_id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("user_id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("variant_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("version_id")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("characteristics");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.Assessments.Entities.Frmwrks", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("user_id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("frmwrks");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.Assessments.Entities.Kpas", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("user_id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("kpas");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.Assessments.Entities.KpiResults", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("assess_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("kpa_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("kpi_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sect_1")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sect_2")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sect_3")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sect_4")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sect_5")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sect_6")
-                        .HasColumnType("int");
-
-                    b.Property<string>("user_id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("kpiResults");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.Assessments.Entities.Kpis", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("awareness")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("competence")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("excellence")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("frmwrk_id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("guideline")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("innocence")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("kpa_id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("understanding")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("user_id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("variant_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("version_id")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("kpis");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.Assessments.Entities.Levels", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("user_id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("levels");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.Assessments.Entities.Results", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("assess_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("characteristic_id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("kpa_id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("level_id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("user_id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("value")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("results");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.Assessments.Entities.Variants", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("user_id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("variants");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.Assessments.Entities.Versions", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("user_id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("versions");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetCriticality.Entities.ActualAssessment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Budget")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CapitalExpenditure")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Community")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Compliance")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DominantFrequency")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Environment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EquipmentId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FailureFrequency")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Health")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Legal")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OperatingCost")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProductionVolume")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProjectSchedule")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Quality")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Reputation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Revenue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Risk")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RiskRanking")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Safety")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ThresholdRiskBand")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ActualAssessment");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetCriticality.Entities.AssessmentReference", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Catastrophic")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ConsequenceCategory")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Major")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Medium")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Minor")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Serious")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AssessmentReference");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetCriticality.Entities.ConsequenceCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ConsequenceCategory");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetCriticality.Entities.CriteriaRiskMatrix", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ConsequenceImpact")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LikelihoodRanking")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CriteriaRiskMatrix");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetCriticality.Entities.LikelihoodDescription", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Frequency")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Likelihood")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LikelihoodDescriptions")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SubstanceExposure")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LikelihoodDescriptions");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetCriticality.Entities.RiskAcceptanceThreshold", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("RiskAcceptanceThresholds")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ThresholdRiskBand")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RiskAcceptanceThreshold");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetCriticality.Entities.RiskAssessorLogin", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Fullname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RiskAssessorLogin");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetCriticality.Entities.RiskDeterminationMatrix", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Catastrophic")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FailureFrequency")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Major")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Medium")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Minor")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Serious")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RiskDeterminationMatrix");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.Acknowledgement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Action")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ConditionId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ConditionId1")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MachineId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("RegiDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ConditionId1");
-
-                    b.HasIndex("MachineId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Acknowledgements");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.Application", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Applications");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.AuditTrail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Action")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FinalData")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("InitialData")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AuditTrails");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.BBSSDevice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ApplicationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BinmakTechnologyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DeviceId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirmwareVersion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HardwareVersion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ReleaseDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationId");
-
-                    b.HasIndex("BinmakTechnologyId");
-
-                    b.ToTable("BBSSDevices");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.Bearing", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("BPFI")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("BPFIAlarm")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("BPFIAlert")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("BPFO")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("BPFOAlarm")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("BPFOAlert")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("BSF")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("BSFAlarm")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("BSFAlert")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("BearingId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Bearings");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.BinmakTechnology", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BinmakTechnologies");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.FrequencyPeriod", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FrequencyPeriods");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.InsulationLevel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("InsulationLevels");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.Machine", b =>
-                {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProcessId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -1202,319 +452,114 @@ namespace BinmakBackEnd.Migrations
                     b.Property<int>("AssetNodeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("BBSSDeviceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ConditionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Criticality")
+                    b.Property<string>("BackgroundColor")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DeviceId")
+                    b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DrivingEndId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("DateStamp")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("FrequencyPeriodId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsSummary")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<DateTime>("ProcessDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProcessName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("InsulationLevelId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MachineLoadId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MachineTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Reference")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NonDrivingEndId")
+                    b.Property<int>("parentAssetNodeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RevolutionPerMinute")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("RmsAlarm")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("RmsAlert")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("SizeCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TemperatureAlarm")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TemperatureAlert")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
+                    b.HasKey("ProcessId");
 
                     b.HasIndex("AssetNodeId");
 
-                    b.HasIndex("BBSSDeviceId");
-
-                    b.HasIndex("ConditionId");
-
-                    b.HasIndex("FrequencyPeriodId");
-
-                    b.HasIndex("InsulationLevelId");
-
-                    b.HasIndex("MachineLoadId");
-
-                    b.HasIndex("MachineTypeId");
-
-                    b.HasIndex("SizeCategoryId");
-
-                    b.ToTable("Machines");
+                    b.ToTable("Processes");
                 });
 
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.MachineCondition", b =>
+            modelBuilder.Entity("BinmakBackEnd.Areas.Kwenza.Entities.Production", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MachineConditions");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.MachineLoad", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MachineLoads");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.MachineNotificationSetting", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("MachineId")
+                    b.Property<int>("AssetNodeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumberOfAcknowledgementAlarms")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumberOfAcknowledgementAlerts")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumberOfAlarms")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumberOfAlerts")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MachineId");
-
-                    b.ToTable("MachineNotificationSettings");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.MachineType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MachineTypes");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.SensorCondition", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SensorConditions");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.SensorData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Alog")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("AxialRMS")
-                        .HasColumnType("float");
-
-                    b.Property<double>("BatCap")
-                        .HasColumnType("float");
-
-                    b.Property<double>("BatSOC")
-                        .HasColumnType("float");
-
-                    b.Property<double>("BatTTE")
-                        .HasColumnType("float");
-
-                    b.Property<string>("DeviceId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("FFT")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("MachineId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("OverallRMS")
-                        .HasColumnType("float");
-
-                    b.Property<double>("RadialRMS")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("RegiDate")
+                    b.Property<DateTime>("DateStamp")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("TangentialRMS")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Temperature")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TimeStamp")
-                        .HasColumnType("float");
-
-                    b.Property<bool>("Waveform")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MachineId");
-
-                    b.ToTable("SensorData");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.SizeCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Category")
+                    b.Property<int>("Day")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<int>("KeyProcessAreaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reference")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
 
-                    b.ToTable("SizeCategories");
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductionId");
+
+                    b.HasIndex("KeyProcessAreaId");
+
+                    b.ToTable("Productions");
                 });
 
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.UserSetting", b =>
+            modelBuilder.Entity("BinmakBackEnd.Areas.Kwenza.Entities.Target", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TargetId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("CallAlarm")
-                        .HasColumnType("bit");
+                    b.Property<int>("AssetNodeId")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("CallAlert")
-                        .HasColumnType("bit");
+                    b.Property<int>("Budget")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("EmailAlarm")
-                        .HasColumnType("bit");
+                    b.Property<DateTime>("DateStamp")
+                        .HasColumnType("datetime2");
 
-                    b.Property<bool>("EmailAlert")
-                        .HasColumnType("bit");
+                    b.Property<int>("KeyProcessAreaId")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("EmailBatteryLow")
-                        .HasColumnType("bit");
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("EmailDaily")
-                        .HasColumnType("bit");
+                    b.Property<string>("Reference")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("EmailMeasurement")
-                        .HasColumnType("bit");
+                    b.Property<int>("TargetValue")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("MessageAlarm")
-                        .HasColumnType("bit");
+                    b.Property<int>("Threshold")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("MessageAlert")
-                        .HasColumnType("bit");
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("MessageBatteryLow")
-                        .HasColumnType("bit");
+                    b.HasKey("TargetId");
 
-                    b.Property<bool>("MessageDaily")
-                        .HasColumnType("bit");
+                    b.HasIndex("KeyProcessAreaId");
 
-                    b.Property<bool>("MessageMeasurement")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("WAAlarm")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("WAAlert")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("WABatteryLow")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("WADaily")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("WAMeasurement")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserSettings");
+                    b.ToTable("Targets");
                 });
 
             modelBuilder.Entity("BinmakBackEnd.Areas.ProductionFlow.Entities.Action", b =>
@@ -1533,6 +578,9 @@ namespace BinmakBackEnd.Migrations
                     b.Property<int>("AssetId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AssetNodeId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DateProduction")
                         .HasColumnType("datetime2");
 
@@ -1543,6 +591,8 @@ namespace BinmakBackEnd.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ActionId");
+
+                    b.HasIndex("AssetNodeId");
 
                     b.ToTable("Actions");
                 });
@@ -1556,6 +606,9 @@ namespace BinmakBackEnd.Migrations
 
                     b.Property<string>("AssetName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AssetNodeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ClientAssetNameId")
                         .HasColumnType("int");
@@ -1641,6 +694,9 @@ namespace BinmakBackEnd.Migrations
                     b.Property<int>("AssetId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AssetNodeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ClientAssetNameId")
                         .HasColumnType("int");
 
@@ -1648,6 +704,10 @@ namespace BinmakBackEnd.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FunctionUnitId");
+
+                    b.HasIndex("AssetNodeId");
+
+                    b.HasIndex("ClientAssetNameId");
 
                     b.ToTable("FunctionUnits");
                 });
@@ -1660,6 +720,9 @@ namespace BinmakBackEnd.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AssetId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AssetNodeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Budget")
@@ -1721,6 +784,10 @@ namespace BinmakBackEnd.Migrations
 
                     b.HasKey("FunctionUnitChildrenId");
 
+                    b.HasIndex("AssetNodeId");
+
+                    b.HasIndex("ClientAssetNameId");
+
                     b.ToTable("FunctionUnitChildrens");
                 });
 
@@ -1753,6 +820,12 @@ namespace BinmakBackEnd.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ProductionFlowAssetId");
+
+                    b.HasIndex("AssetId");
+
+                    b.HasIndex("ClientAssetNameId");
+
+                    b.HasIndex("TemplateId");
 
                     b.ToTable("ProductionFlowAssets");
                 });
@@ -1794,13 +867,16 @@ namespace BinmakBackEnd.Migrations
                     b.Property<bool>("IsSupport")
                         .HasColumnType("bit");
 
+                    b.Property<int>("ProductionFlowAssetUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Reference")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProductionFlowAssetUserId");
+                    b.HasKey("Id");
 
                     b.ToTable("ProductionFlowAssetUsers");
                 });
@@ -2267,7 +1343,24 @@ namespace BinmakBackEnd.Migrations
 
                     b.HasKey("ReadingId");
 
+                    b.HasIndex("AssetId");
+
                     b.ToTable("Readings");
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Areas.ProductionFlow.Entities.Template", b =>
+                {
+                    b.Property<int>("TemplateId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("TemplateName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TemplateId");
+
+                    b.ToTable("Template");
                 });
 
             modelBuilder.Entity("BinmakBackEnd.Entities.AssetNode", b =>
@@ -2301,6 +1394,9 @@ namespace BinmakBackEnd.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Height")
                         .HasColumnType("int");
 
@@ -2325,10 +1421,15 @@ namespace BinmakBackEnd.Migrations
                     b.Property<int>("RootAssetNodeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Zip")
-                        .HasColumnType("int");
+                    b.Property<string>("Zip")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isProductionFlow")
+                        .HasColumnType("bit");
 
                     b.HasKey("AssetNodeId");
+
+                    b.HasIndex("AssetNodeTypeId");
 
                     b.ToTable("AssetNodes");
                 });
@@ -2381,184 +1482,115 @@ namespace BinmakBackEnd.Migrations
                     b.ToTable("AssetUsers");
                 });
 
-            modelBuilder.Entity("BinmakBackEnd.Entities.Equipment", b =>
+            modelBuilder.Entity("BinmakBackEnd.Entities.BinmakModule", b =>
                 {
-                    b.Property<int>("EquipmentId")
+                    b.Property<int>("BinmakModuleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
+                    b.Property<string>("BinmakModuleName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Address2")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("BinmakModuleId");
 
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateStamp")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsParentAddress")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastEditedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ParentEquipmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductiveUnitId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Reference")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RootEquipmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RootOrganizationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Zip")
-                        .HasColumnType("int");
-
-                    b.HasKey("EquipmentId");
-
-                    b.ToTable("Equipments");
+                    b.ToTable("BinmakModules");
                 });
 
-            modelBuilder.Entity("BinmakBackEnd.Entities.Organization", b =>
+            modelBuilder.Entity("BinmakBackEnd.Entities.BinmakModuleAccess", b =>
                 {
-                    b.Property<int>("OrganizationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("BinmakModuleAccessId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Address2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CountryId")
+                    b.Property<int>("BinmakModuleId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateStamp")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Height")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsParentAddress")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastEditedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ParentOrganizationId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Reference")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RootOrganizationId")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
 
-                    b.Property<int>("Zip")
-                        .HasColumnType("int");
+                    b.HasIndex("BinmakModuleId");
 
-                    b.HasKey("OrganizationId");
-
-                    b.ToTable("Organizations");
+                    b.ToTable("BinmakModuleAccesses");
                 });
 
-            modelBuilder.Entity("BinmakBackEnd.Entities.ProductiveUnit", b =>
+            modelBuilder.Entity("BinmakBackEnd.Entities.Group", b =>
                 {
-                    b.Property<int>("ProductiveUnitId")
+                    b.Property<int>("GroupId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Address2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CountryId")
+                    b.Property<int>("AssetNodeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateStamp")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Height")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsParentAddress")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastEditedBy")
+                    b.Property<string>("GroupName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ParentProductiveUnitId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Reference")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RootOrganizationId")
+                    b.Property<int>("RootId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Zip")
+                    b.HasKey("GroupId");
+
+                    b.HasIndex("AssetNodeId");
+
+                    b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Entities.ReferenceLookup", b =>
+                {
+                    b.Property<int>("ReferenceLookupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Reference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ReferenceLookupId");
+
+                    b.ToTable("ReferenceLookups");
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Entities.UserGroup", b =>
+                {
+                    b.Property<int>("UserGroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("GroupId")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductiveUnitId");
+                    b.Property<int>("RootId")
+                        .HasColumnType("int");
 
-                    b.ToTable("ProductiveUnits");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserGroupId");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserGroups");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -2692,117 +1724,189 @@ namespace BinmakBackEnd.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.Acknowledgement", b =>
+            modelBuilder.Entity("BinmakAPI.Entities.ApplicationUser", b =>
                 {
-                    b.HasOne("BinmakBackEnd.Areas.AssetHealth.Models.MachineCondition", "Condition")
+                    b.HasOne("BinmakAPI.Entities.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("ConditionId1");
-
-                    b.HasOne("BinmakBackEnd.Areas.AssetHealth.Models.Machine", "Machine")
-                        .WithMany()
-                        .HasForeignKey("MachineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BinmakAPI.Entities.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.AuditTrail", b =>
-                {
-                    b.HasOne("BinmakAPI.Entities.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.BBSSDevice", b =>
-                {
-                    b.HasOne("BinmakBackEnd.Areas.AssetHealth.Models.Application", "Application")
-                        .WithMany()
-                        .HasForeignKey("ApplicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BinmakBackEnd.Areas.AssetHealth.Models.BinmakTechnology", "BinmakTechnology")
-                        .WithMany()
-                        .HasForeignKey("BinmakTechnologyId")
+                        .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.Machine", b =>
+            modelBuilder.Entity("BinmakBackEnd.Areas.Kwenza.Entities.FormulaCreation", b =>
+                {
+                    b.HasOne("BinmakBackEnd.Areas.Kwenza.Entities.MathematicalOperator", "MathematicalOperator")
+                        .WithMany()
+                        .HasForeignKey("MathematicalOperatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Areas.Kwenza.Entities.Frequency", b =>
+                {
+                    b.HasOne("BinmakBackEnd.Areas.Kwenza.Entities.KeyProcessArea", "KeyProcessArea")
+                        .WithMany()
+                        .HasForeignKey("KeyProcessAreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Areas.Kwenza.Entities.KeyProcessArea", b =>
+                {
+                    b.HasOne("BinmakBackEnd.Areas.Kwenza.Entities.KeyProcessAreaType", "KeyProcessAreaType")
+                        .WithMany()
+                        .HasForeignKey("KeyProcessAreaTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BinmakBackEnd.Areas.Kwenza.Entities.Process", "Process")
+                        .WithMany()
+                        .HasForeignKey("ProcessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Areas.Kwenza.Entities.Process", b =>
                 {
                     b.HasOne("BinmakBackEnd.Entities.AssetNode", "AssetNode")
                         .WithMany()
                         .HasForeignKey("AssetNodeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.HasOne("BinmakBackEnd.Areas.AssetHealth.Models.BBSSDevice", "BBSSDevice")
+            modelBuilder.Entity("BinmakBackEnd.Areas.Kwenza.Entities.Production", b =>
+                {
+                    b.HasOne("BinmakBackEnd.Areas.Kwenza.Entities.KeyProcessArea", "KeyProcessArea")
                         .WithMany()
-                        .HasForeignKey("BBSSDeviceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BinmakBackEnd.Areas.AssetHealth.Models.SensorCondition", "Condition")
-                        .WithMany()
-                        .HasForeignKey("ConditionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BinmakBackEnd.Areas.AssetHealth.Models.FrequencyPeriod", "FrequencyPeriod")
-                        .WithMany()
-                        .HasForeignKey("FrequencyPeriodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BinmakBackEnd.Areas.AssetHealth.Models.InsulationLevel", "InsulationLevel")
-                        .WithMany()
-                        .HasForeignKey("InsulationLevelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BinmakBackEnd.Areas.AssetHealth.Models.MachineLoad", "MachineLoad")
-                        .WithMany()
-                        .HasForeignKey("MachineLoadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BinmakBackEnd.Areas.AssetHealth.Models.MachineType", "MachineType")
-                        .WithMany()
-                        .HasForeignKey("MachineTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BinmakBackEnd.Areas.AssetHealth.Models.SizeCategory", "SizeCategory")
-                        .WithMany()
-                        .HasForeignKey("SizeCategoryId")
+                        .HasForeignKey("KeyProcessAreaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.MachineNotificationSetting", b =>
+            modelBuilder.Entity("BinmakBackEnd.Areas.Kwenza.Entities.Target", b =>
                 {
-                    b.HasOne("BinmakBackEnd.Areas.AssetHealth.Models.Machine", "Machine")
+                    b.HasOne("BinmakBackEnd.Areas.Kwenza.Entities.KeyProcessArea", "KeyProcessArea")
                         .WithMany()
-                        .HasForeignKey("MachineId")
+                        .HasForeignKey("KeyProcessAreaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.SensorData", b =>
+            modelBuilder.Entity("BinmakBackEnd.Areas.ProductionFlow.Entities.Action", b =>
                 {
-                    b.HasOne("BinmakBackEnd.Areas.AssetHealth.Models.Machine", "Machine")
+                    b.HasOne("BinmakBackEnd.Entities.AssetNode", "AssetNode")
                         .WithMany()
-                        .HasForeignKey("MachineId")
+                        .HasForeignKey("AssetNodeId");
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Areas.ProductionFlow.Entities.FunctionUnit", b =>
+                {
+                    b.HasOne("BinmakBackEnd.Entities.AssetNode", "AssetNode")
+                        .WithMany()
+                        .HasForeignKey("AssetNodeId");
+
+                    b.HasOne("BinmakBackEnd.Areas.ProductionFlow.Entities.ClientAsset", "ClientAsset")
+                        .WithMany()
+                        .HasForeignKey("ClientAssetNameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BinmakBackEnd.Areas.AssetHealth.Models.UserSetting", b =>
+            modelBuilder.Entity("BinmakBackEnd.Areas.ProductionFlow.Entities.FunctionUnitChildren", b =>
                 {
-                    b.HasOne("BinmakAPI.Entities.ApplicationUser", "User")
+                    b.HasOne("BinmakBackEnd.Entities.AssetNode", "AssetNode")
+                        .WithMany()
+                        .HasForeignKey("AssetNodeId");
+
+                    b.HasOne("BinmakBackEnd.Areas.ProductionFlow.Entities.ClientAsset", "ClientAsset")
+                        .WithMany()
+                        .HasForeignKey("ClientAssetNameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Areas.ProductionFlow.Entities.ProductionFlowAsset", b =>
+                {
+                    b.HasOne("BinmakBackEnd.Entities.AssetNode", "AssetNode")
+                        .WithMany()
+                        .HasForeignKey("AssetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BinmakBackEnd.Areas.ProductionFlow.Entities.ClientAsset", "ClientAsset")
+                        .WithMany()
+                        .HasForeignKey("ClientAssetNameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BinmakBackEnd.Areas.ProductionFlow.Entities.Template", "Template")
+                        .WithMany()
+                        .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Areas.ProductionFlow.Entities.ProductionFlowAssetUser", b =>
+                {
+                    b.HasOne("BinmakAPI.Entities.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Areas.ProductionFlow.Entities.Reading", b =>
+                {
+                    b.HasOne("BinmakBackEnd.Entities.AssetNode", "AssetNode")
+                        .WithMany()
+                        .HasForeignKey("AssetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Entities.AssetNode", b =>
+                {
+                    b.HasOne("BinmakBackEnd.Entities.AssetNodeType", "AssetNodeType")
+                        .WithMany()
+                        .HasForeignKey("AssetNodeTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Entities.BinmakModuleAccess", b =>
+                {
+                    b.HasOne("BinmakBackEnd.Entities.BinmakModule", "BinmakModule")
+                        .WithMany()
+                        .HasForeignKey("BinmakModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BinmakAPI.Entities.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Entities.Group", b =>
+                {
+                    b.HasOne("BinmakBackEnd.Entities.AssetNode", "AssetNode")
+                        .WithMany()
+                        .HasForeignKey("AssetNodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Entities.UserGroup", b =>
+                {
+                    b.HasOne("BinmakBackEnd.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BinmakAPI.Entities.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
