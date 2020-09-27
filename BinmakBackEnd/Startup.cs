@@ -110,8 +110,8 @@ namespace BinmakBackEnd
                 app.UseDeveloperExceptionPage();
             }
 
-            seed.SeedUser();
-            seed.SeedRoles();
+            //seed.SeedUser();
+            //seed.SeedRoles();
 
             app.UseHttpsRedirection();
 
