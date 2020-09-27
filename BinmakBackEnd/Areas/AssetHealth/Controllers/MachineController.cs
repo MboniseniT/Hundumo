@@ -15,7 +15,7 @@ namespace BinmakBackEnd.Areas.AssetHealth.Controllers
     public class MachineController : GenericController<Machine, int>
     {
         private IWebHostEnvironment _hostingEnvironment;
-        public readonly BinmakDbContext _context;
+        private readonly BinmakDbContext _context;
         public MachineController(BinmakDbContext context, IWebHostEnvironment environment) : base(context)
         {
             _context = context;

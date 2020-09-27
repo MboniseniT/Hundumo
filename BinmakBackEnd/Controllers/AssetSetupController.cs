@@ -503,7 +503,7 @@ namespace BinmakBackEnd.Controllers
             }
         }
 
-        public static List<DateTime> getAllDates(int year, int month)
+        private static List<DateTime> getAllDates(int year, int month)
         {
             var ret = new List<DateTime>();
             for (int i = 1; i <= DateTime.DaysInMonth(year, month); i++)
@@ -513,7 +513,7 @@ namespace BinmakBackEnd.Controllers
             return ret;
         }
 
-        public List<FunctionUnitChildren> saveAssetFunctionUnitsChildren(ProductionFlowAsset asset)
+        private List<FunctionUnitChildren> saveAssetFunctionUnitsChildren(ProductionFlowAsset asset)
         {
             List<FunctionUnitChildren> fucTemp = new List<FunctionUnitChildren>();
             List<FunctionUnitChildren> orderdFucs = new List<FunctionUnitChildren>();
@@ -586,7 +586,7 @@ namespace BinmakBackEnd.Controllers
             return fucTemp2;
         }
 
-        public List<FunctionUnit> saveAssetFunctionUnits(ProductionFlowAsset asset)
+        private List<FunctionUnit> saveAssetFunctionUnits(ProductionFlowAsset asset)
         {
 
             List<FunctionUnit> functionUnits = _context.FunctionUnits.Where(id => id.AssetId == 0).ToList();
@@ -607,7 +607,7 @@ namespace BinmakBackEnd.Controllers
             return fucTemp;
         }
 
-        public ProductionFlowAsset CreateAsset(ProductionFlowAsset model)
+        private ProductionFlowAsset CreateAsset(ProductionFlowAsset model)
         {
             ProductionFlowAsset asset = new ProductionFlowAsset();
             asset.ClientAssetNameId = model.ClientAssetNameId;

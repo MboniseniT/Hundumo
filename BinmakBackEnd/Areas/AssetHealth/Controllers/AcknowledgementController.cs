@@ -12,7 +12,7 @@ namespace BinmakBackEnd.Areas.AssetHealth.Controllers
 
     public class AcknowledgementController : GenericController<Acknowledgement, int>
     {
-        public readonly BinmakDbContext _context;
+        private readonly BinmakDbContext _context;
         public AcknowledgementController(BinmakDbContext context) : base(context) => _context = context;
 
         [ProducesResponseType(StatusCodes.Status404NotFound)]

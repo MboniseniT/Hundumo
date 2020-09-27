@@ -12,7 +12,7 @@ namespace BinmakBackEnd.Areas.AssetHealth.Controllers
     [ApiController]
     public class SensorDataController : GenericController<SensorData, int>
     {
-        public readonly BinmakDbContext _context;
+        private readonly BinmakDbContext _context;
         public SensorDataController(BinmakDbContext context) : base(context)
         {
             _context = context;

@@ -1275,7 +1275,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             }
         }
 
-        public double Percentile(double[] sortedData, double p)
+        double Percentile(double[] sortedData, double p)
         {
             // algo derived from Aczel pg 15 bottom
             if (p >= 100.0d) return sortedData[sortedData.Length - 1];
@@ -1303,7 +1303,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return leftNumber + part * (rightNumber - leftNumber);
         } // end of internal function percentile
 
-        public double Median(double[] array)
+        double Median(double[] array)
         {
             Array.Sort(array);
 

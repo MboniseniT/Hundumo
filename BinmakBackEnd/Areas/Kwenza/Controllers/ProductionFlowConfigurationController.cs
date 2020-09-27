@@ -244,7 +244,7 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
             }
         }
 
-        public List<MasterPFKPAs> GetMasterPFKPAs(int assetNodeId, DateTime date)
+        private List<MasterPFKPAs> GetMasterPFKPAs(int assetNodeId, DateTime date)
         {
             List<MasterPFKPAs> masterPFKPAs = new List<MasterPFKPAs>();
 
@@ -374,7 +374,7 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
 
         }
 
-        public static List<DateTime> getAllDates(int year, int month)
+        private static List<DateTime> getAllDates(int year, int month)
         {
             var ret = new List<DateTime>();
             for (int i = 1; i <= DateTime.DaysInMonth(year, month); i++)
@@ -568,7 +568,7 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
             }
         }
 
-        public string GetFlag(int kpaId, DateTime productionDate)
+        private string GetFlag(int kpaId, DateTime productionDate)
         {
 
             if (productionDate > DateTime.Now)
@@ -597,7 +597,7 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
 
         }
 
-        public List<string> GetProductionDate(int year, int month)
+        private List<string> GetProductionDate(int year, int month)
         {
            List<DateTime> dateTimes =  getAllDates(year, month);
             List<string> dateTimeString = new List<string>();
@@ -610,7 +610,7 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
             return dateTimeString;
         }
 
-        public List<ProductionVM> GetOrderedProd(int KpaId, int targetId)
+        private List<ProductionVM> GetOrderedProd(int KpaId, int targetId)
         {
             var productions = _context.Productions.Where(id => (id.KeyProcessAreaId == KpaId)
                             && (id.Year == _context.Targets.FirstOrDefault(id => id.KeyProcessAreaId == KpaId).Year)

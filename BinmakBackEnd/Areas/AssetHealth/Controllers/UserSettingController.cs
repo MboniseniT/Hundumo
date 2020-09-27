@@ -8,7 +8,7 @@ namespace BinmakBackEnd.Areas.AssetHealth.Controllers
 {
     public class UserSettingController : GenericController<UserSetting, int>
     {
-        public readonly BinmakDbContext _context;
+        private readonly BinmakDbContext _context;
         public UserSettingController(BinmakDbContext context) : base(context)
         {
             _context = context;

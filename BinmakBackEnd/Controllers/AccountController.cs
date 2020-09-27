@@ -42,7 +42,7 @@ namespace BinmakAPI.Controllers
             _roleManager = roleManager;
         }
 
-        public string CreatePassword(int length)
+        string CreatePassword(int length)
         {
             const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             StringBuilder res = new StringBuilder();
@@ -393,9 +393,9 @@ namespace BinmakAPI.Controllers
 
             return Ok();
         }
-    
 
-        public Company CreateCompany(string CompanyName)
+
+        private Company CreateCompany(string CompanyName)
         {
             Company company = new Company();
             company.DateStamp = DateTime.Now;
@@ -728,14 +728,14 @@ namespace BinmakAPI.Controllers
             }
         }
 
-        public List<BinmakModule> GetBinmakModulesByUserIds()
+        private List<BinmakModule> GetBinmakModulesByUserIds()
         {
             List<BinmakModule> binmakModules = _context.BinmakModules.ToList();
 
             return binmakModules;
         }
 
-        public List<int> GetBinmakModulesByUserIds(string userId)
+        private List<int> GetBinmakModulesByUserIds(string userId)
         {
             List<BinmakModuleAccess> binmakModuleAccess = _context.BinmakModuleAccesses.Where(id => id.Reference == userId).ToList();
             List<int> binmakModules = new List<int>();
@@ -748,7 +748,7 @@ namespace BinmakAPI.Controllers
             return binmakModules;
         }
 
-        public List<BinmakModule> GetBinmakModulesByUser(string userId)
+        private List<BinmakModule> GetBinmakModulesByUser(string userId)
         {
             List<BinmakModuleAccess> binmakModuleAccess = _context.BinmakModuleAccesses.Where(id => id.Reference == userId).ToList();
             List<BinmakModule> binmakModules = new List<BinmakModule>();
@@ -761,7 +761,7 @@ namespace BinmakAPI.Controllers
             return binmakModules;
         }
 
-        public List<AssetNode> GetAssetNodesByUser(string userId)
+        private List<AssetNode> GetAssetNodesByUser(string userId)
         {
             List<UserGroup> userGroups = _context.UserGroups.Where(id => id.UserId == userId).ToList();
             List<AssetNode> assetNodes = new List<AssetNode>();
@@ -780,7 +780,7 @@ namespace BinmakAPI.Controllers
             return assetNodes;
         }
 
-        public List<AssetNode> GetAssetNodesByRoot(string userId)
+        private List<AssetNode> GetAssetNodesByRoot(string userId)
         {
             List<UserGroup> userGroups1 = _context.UserGroups.Where(id => id.UserId == userId).OrderBy(id => id.GroupId).ToList();
             List<AssetNode> assetNodes = new List<AssetNode>();
@@ -840,7 +840,7 @@ namespace BinmakAPI.Controllers
             //return assetNodes;
         }
 
-        public List<int> GetAssetNodesIdsByUser(string userId)
+        private List<int> GetAssetNodesIdsByUser(string userId)
         {
             List<UserGroup> userGroups = _context.UserGroups.Where(id => id.UserId == userId).ToList();
             List<int> assetNodes = new List<int>();
@@ -859,7 +859,7 @@ namespace BinmakAPI.Controllers
             return assetNodes;
         }
 
-        public AssetNode GetTopAssetNodesByUser(string userId)
+        private AssetNode GetTopAssetNodesByUser(string userId)
         {
             List<UserGroup> userGroups = _context.UserGroups.Where(id => id.UserId == userId).ToList();
             List<UserGroup> userGroups1 = userGroups.OrderBy(id => id.GroupId).ToList();
