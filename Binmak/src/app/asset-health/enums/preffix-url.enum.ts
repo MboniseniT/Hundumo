@@ -1,4 +1,4 @@
-import { BaseUrl } from './base-url.enum';
+import { BaseUrl } from 'src/app/enums/base-url.enum';
 
 export let PreffixUrl = {
     Acknowledgement: { variable: 'api/v1/Acknowledgement', key: BaseUrl.Main },
