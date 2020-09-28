@@ -51,9 +51,9 @@ import { ManageActionsComponent } from './kwenza/MaturityAssessments/assessment-
 import { ManageFrmwrksComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-frmwrks/manage-frmwrks.component';
 import { ManageVersionsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-versions/manage-versions.component';
 import { ManageVariantsComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/manage-variants/manage-variants.component';
-import { AssessmentsComponent } from './ukwazi/assessments/assessments.component';
-import { AssessmentLandingComponent } from './ukwazi/assessment-landing/assessment-landing.component';
-import { AssessmentLandingTypeComponent } from './ukwazi/assessment-landing-type/assessment-landing-type.component';
+//import { AssessmentsComponent } from './ukwazi/assessments/assessments.component';
+//import { AssessmentLandingComponent } from './ukwazi/assessment-landing/assessment-landing.component';
+//import { AssessmentLandingTypeComponent } from './ukwazi/assessment-landing-type/assessment-landing-type.component';
 import { ParentChartsComponent } from './kwenza/production-flow/parent-charts/parent-charts.component';
 import { ProdConfigurationComponent } from './kwenza/production-flow/prod-configuration/prod-configuration.component';
 import { KpaComponent } from './kwenza/production-flow/kpa/kpa.component';
@@ -62,6 +62,9 @@ import { NewReadingsComponent } from './kwenza/production-flow/new-readings/new-
 import { NewReadingsEditvalueComponent } from './kwenza/production-flow/new-readings-editvalue/new-readings-editvalue.component';
 import { OverallNewReadingsComponent } from './kwenza/production-flow/overall-new-readings/overall-new-readings.component';
 import { KpaValueConfigComponent } from './kwenza/production-flow/kpa/kpa-value-config/kpa-value-config.component';
+import { AssessmentsComponent } from './kwenza/MaturityAssessments/assessments/assessments.component';
+import { AssessmentLandingComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-landing.component';
+import { AssessmentLandingTypeComponent } from './kwenza/MaturityAssessments/assessment-landing-type/assessment-landing-type.component';
 
 
 const routes: Routes = [
@@ -126,10 +129,10 @@ const routes: Routes = [
         { path: 'parent-charts/:assetId', component: ParentChartsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'limits', component: EditLimitsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'edit-readings', component: EditReadingsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-        { path: 'ukwazi', component: UkwaziComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-        { path: 'ukwazi-assessments', component: AssessmentsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-        { path: 'assessment-landing', component: AssessmentLandingComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-        { path: 'assessment-types', component: AssessmentLandingTypeComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        //{ path: 'ukwazi', component: UkwaziComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        //{ path: 'ukwazi-assessments', component: AssessmentsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        //{ path: 'assessment-landing', component: AssessmentLandingComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        //{ path: 'assessment-types', component: AssessmentLandingTypeComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'prod-config', component: ProdConfigurationComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'kpa', component: KpaComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'kpa-limit', component: KpaLimitsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
