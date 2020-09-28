@@ -1,0 +1,99 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+      <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect (click)="back()"
+      style="background-color: #032c57 !important; color: white;"> <i class="fa fa-arrow-left"></i>
+      BACK</button>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+      <form [formGroup]="formAssessmentUser">
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="md-form">
+                  <mdb-select [options]="users" [filterEnabled]="true" [multiple]="false"
+                      [highlightFirst]="false" formControlName="user_id"
+                      label="* Select User To Link To Assessment" [enableSelectAll]="false">
+                  </mdb-select>
+              </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="md-form">
+              <mdb-select [options]="assessments" [filterEnabled]="true" [multiple]="false"
+                  [highlightFirst]="false" formControlName="assess_id"
+                  label="* Select Assessment" [enableSelectAll]="false">
+              </mdb-select>
+          </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+          <button [disabled]="!formAssessmentUser.valid" type="button" class="btn btn-info btn-block mb-1" aria-label="Close" mdbWavesEffect (click)="onAdd()"
+          style="background-color: #032c57 !important; color: white;"><i class="fas fa-link"></i>
+          LINK</button>
+    </div>
+  </div>
+  <h5 style="text-align: center;">Manage Users</h5>
+<div class="row">
+<div class="col-md-6 mx-auto">
+  <div class="md-form">
+        <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()"
+           id="search-input"
+           mdbInput>
+    <label for="search-input">Search</label>
+  </div>
+</div>
+<div class="table-responsive">
+  <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
+    <thead class="sticky-top">
+    <tr>
+      <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements"
+          [sortBy]="headElements[i]"
+          scope="col">{{head | titlecase}}
+        <mdb-icon fas icon="sort"></mdb-icon>
+      </th>
+    </tr>
+    </thead>
+    <tbody #row>
+    <tr mdbTableCol
+        *ngFor="let el of elements; let i = index">
+      <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
+          scope="row">{{el.assessUserId}}
+      </th>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
+          >{{el.assessmentId}}
+      </td>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
+        >{{el.assessmentName}}
+    </td>
+    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
+      >{{el.userNames}}
+  </td>
+  <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
+    >{{el.userEmail}}
+  </td>
+  <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex"
+    >{{el.reference}}
+  </td>
+      <!-- <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i <  mdbTablePagination.lastItemIndex">
+        {{el.userId}}
+      </td> -->
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+        <!-- style="width: 200px;" -->
+        <button mdbBtn color="danger" size="sm" mdbWavesEffect (click)="onDelete(el)"><i class="far fa-trash-alt"></i></button>
+      </td>
+    </tr>
+    </tbody>
+    <tfoot class="grey lighten-5 w-100">
+
+    <tr>
+      <td colspan="4">
+        <mdb-table-pagination [tableEl]="tableEl" paginationAlign=""
+                              [searchDataSource]="elements"></mdb-table-pagination>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+</div>
+</div>
+</div>

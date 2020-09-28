@@ -1,0 +1,291 @@
+<div style="text-align: center;" *ngIf="loading">
+    <div class="preloader-wrapper small active crazy">
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="container">
+    <mdb-breadcrumb>
+        <mdb-breadcrumb-item class="blue-text" routerLink="/binmak">Home</mdb-breadcrumb-item>
+        <mdb-breadcrumb-item class="blue-text" routerLink="/binmak/bokamoso">Bokamoso</mdb-breadcrumb-item>
+        <mdb-breadcrumb-item class="blue-text" routerLink="/binmak/diagnosis-charts">Machine Diagnosis
+        </mdb-breadcrumb-item>
+        <mdb-breadcrumb-item class="active">Charts</mdb-breadcrumb-item>
+    </mdb-breadcrumb>
+    <div class="row">
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+            <h6>Asset ID - <strong>{{assetId}}</strong></h6>
+            <h6>Device ID - <strong>{{deviceId}}</strong></h6>
+            <h6>Asset Details - <strong>{{assetDetails}}</strong></h6>
+        </div>
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+            <form #dataSearch="ngForm" #form="ngForm">
+                <div class="row">
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <!-- <input type="text"  name="dateFrom" ngxDaterangepickerMd [(ngModel)]="dateFrom" class="form-control"/> -->
+                            <mdb-date-picker name="dateFrom" [options]="myDatePickerOptions"
+                                [placeholder]="'Selected start date'" [(ngModel)]="dateFrom"></mdb-date-picker>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <mdb-date-picker name="dateTo" [options]="myDatePickerOptions"
+                                [placeholder]="'Selected end date'" [(ngModel)]="dateTo"></mdb-date-picker>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="md-form mt-0">
+                            <button type="submit" (click)="search(dataSearch)" mdbBtn
+                                style="background-color: rgba(0, 69, 125, 1)!important; color: white;">
+                                <i class="fas fa-search ml-2"></i> Search</button> </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class=" row">
+       <div class="col-md-12">
+        <h6>Last Measurement Date: <strong>{{lastDate}}</strong></h6>
+       </div>
+    </div>
+    <mdb-card>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="tab-content vertical">
+                    <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
+                        <app-overall-vibration-charts [data]='data'></app-overall-vibration-charts>
+                    </div>
+                    <div class="tab-pane fade" id="panel2" role="tabpanel">
+                        <ul class="nav nav-tabs md-tabs nav-justified" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#panelH5" role="tab">
+                                    <i class="fas fa-square pr-2"></i>RMS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panelH6" role="tab">
+                                    <i class="fas fa-balance-scale pr-2"></i>Spectrum</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panelH7" role="tab">
+                                    <i class="fas fa-water pr-2"></i>Waterfall</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane fade in show active" id="panelH5" role="tabpanel">
+                            <app-radial-vibration-charts [data]='data'></app-radial-vibration-charts>
+                        </div>
+                        <div class="tab-pane fade" id="panelH6" role="tabpanel">
+                            <app-radial-vibration-spectrum-charts [data]='spectrumData'></app-radial-vibration-spectrum-charts>
+                        </div>
+                        <div class="tab-pane fade" id="panelH7" role="tabpanel">
+                            <app-radial-vibration-waterfall-charts [data]='waterfallData'></app-radial-vibration-waterfall-charts>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="panel3" role="tabpanel">
+                        <ul class="nav nav-tabs md-tabs nav-justified" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#panelH8" role="tab">
+                                    <i class="fas fa-square pr-2"></i>RMS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panelH9" role="tab">
+                                    <i class="fas fa-balance-scale pr-2"></i>Spectrum</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panelH10" role="tab">
+                                    <i class="fas fa-water pr-2"></i>Waterfall</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane fade in show active" id="panelH8" role="tabpanel">
+                            <app-tangential-vibration-charts [data]='data'></app-tangential-vibration-charts>
+                        </div>
+                        <div class="tab-pane fade" id="panelH9" role="tabpanel">
+                            <app-tangential-vibration-spectrum-charts [data]='spectrumData'></app-tangential-vibration-spectrum-charts>
+                        </div>
+                        <div class="tab-pane fade" id="panelH10" role="tabpanel">
+                            <app-tangential-vibration-waterfall-charts [data]='waterfallData'></app-tangential-vibration-waterfall-charts>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="panel4" role="tabpanel">
+                        <ul class="nav nav-tabs md-tabs nav-justified" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#panelH11" role="tab">
+                                    <i class="fas fa-square pr-2"></i>RMS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panelH12" role="tab">
+                                    <i class="fas fa-balance-scale pr-2"></i>Spectrum</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panelH13" role="tab">
+                                    <i class="fas fa-water pr-2"></i>Waterfall</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                        <div class="tab-pane fade in show active" id="panelH11" role="tabpanel">
+                            <app-axial-vibration-charts [data]='data'></app-axial-vibration-charts>
+                        </div>
+                        <div class="tab-pane fade" id="panelH12" role="tabpanel">
+                           <app-axial-vibration-spectrum-charts [data]='spectrumData'></app-axial-vibration-spectrum-charts>
+                        </div>
+                        <div class="tab-pane fade" id="panelH13" role="tabpanel">
+                            <app-axial-vibration-waterfall-charts [data]='waterfallData'></app-axial-vibration-waterfall-charts>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="panel5" role="tabpanel">
+                        Not implemented yet
+                    </div>
+                    <div class="tab-pane fade" id="panel6" role="tabpanel">
+                        <app-skin-temperature-charts [data]='data'></app-skin-temperature-charts>
+                    </div>
+                    <div class="tab-pane fade" id="panel7" role="tabpanel">
+                        <app-demo></app-demo>
+                    </div>
+                    <div class="tab-pane fade" id="panel8" role="tabpanel">
+                        bearing condition not yet implemented
+                    </div>
+                    <div class="tab-pane fade" id="panel9" role="tabpanel">
+                        Simple Misalignment not yet implemented
+                    </div>
+                    <div class="tab-pane fade" id="panel10" role="tabpanel">
+                        Misalignment not yet implemented
+                    </div>
+                    <div class="tab-pane fade" id="panel11" role="tabpanel">
+                        bearing not yet implemented
+                    </div>
+                    <div class="tab-pane fade" id="panel12" role="tabpanel">
+                        loosenes not yet implemented
+                    </div>
+                    <div class="tab-pane fade" id="panel13" role="tabpanel">
+                        unbalance not yet implemented
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <mdb-accordion [multiple]="false">
+                    <mdb-accordion-item [collapsed]="false">
+                        <mdb-accordion-item-head>Vibration Parameters</mdb-accordion-item-head>
+                        <mdb-accordion-item-body>
+                            <ul class="nav md-pills pills-primary flex-column" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab">
+                                        <i class="fas fa-list ml-2"></i> Overall Vibration
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#panel2" role="tab">
+                                        <i class="fas fa-object-group ml-2"></i>
+                                        Radial Vibration
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#panel3" role="tab">
+                                        <i class="fas fa-weight ml-2"></i>
+                                        Tangential Vibration
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#panel4" role="tab">
+                                        <i class="fas fa-wave-square ml-2"></i>
+                                        Axial Vibration
+                                    </a>
+                                </li>
+                            </ul>
+                        </mdb-accordion-item-body>
+                    </mdb-accordion-item>
+
+                    <mdb-accordion-item>
+                        <mdb-accordion-item-head>Operating Parameters</mdb-accordion-item-head>
+                        <mdb-accordion-item-body>
+                            <ul class="nav md-pills pills-primary flex-column" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#panel5" role="tab">
+                                        <i class="fas fa-list ml-2"></i> Speed
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#panel6" role="tab">
+                                        <i class="fas fa-object-group ml-2"></i>
+                                        Skin Temperature
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#panel7" role="tab">
+                                        <i class="fas fa-weight ml-2"></i>
+                                        Motor Supply Frequency
+                                    </a>
+                                </li>
+                            </ul>
+                        </mdb-accordion-item-body>
+                    </mdb-accordion-item>
+
+
+                    <mdb-accordion-item>
+                        <mdb-accordion-item-head>Health Parameters</mdb-accordion-item-head>
+                        <mdb-accordion-item-body>
+                            <ul class="nav md-pills pills-primary flex-column" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#panel8" role="tab">
+                                        <i class="fas fa-list ml-2"></i> Bearing Condition
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#panel9" role="tab">
+                                        <i class="fas fa-object-group ml-2"></i>
+                                        Simple Misalignment
+                                    </a>
+                                </li>
+                            </ul>
+                        </mdb-accordion-item-body>
+                    </mdb-accordion-item>
+
+                    <mdb-accordion-item>
+                        <mdb-accordion-item-head>Vibration Analysis Guide</mdb-accordion-item-head>
+                        <mdb-accordion-item-body>
+                            <ul class="nav md-pills pills-primary flex-column" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#panel10" role="tab">
+                                        <i class="fas fa-list ml-2"></i> Misalignment
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#panel11" role="tab">
+                                        <i class="fas fa-object-group ml-2"></i>
+                                        Bearings
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#panel12" role="tab">
+                                        <i class="fas fa-weight ml-2"></i>
+                                        Looseness
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#panel13" role="tab">
+                                        <i class="fas fa-weight ml-2"></i>
+                                        Unbalance++
+                                    </a>
+                                </li>
+                            </ul>
+                        </mdb-accordion-item-body>
+                    </mdb-accordion-item>
+                </mdb-accordion>
+            </div>
+        </div>
+    </mdb-card>
+</div>

@@ -1,0 +1,20 @@
+<div class="modal-content">
+  <div class="modal-header" style="background-color: #032c57 !important;">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span style="color: white !important;" aria-hidden="true">×</span>
+    </button>
+    <h4 style="color: white !important;" class="modal-title w-100" id="myModalLabel">Arlet!</h4>
+  </div>
+  <div class="modal-body">
+    <p>{{message}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" mdbBtn color="light" class="waves-light" aria-label="Close"
+            (click)="modalRef.hide()" mdbWavesEffect>No
+    </button>
+    <button style="background-color: #032c57 !important;" type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+             (click)="editRow()">Yes
+    </button>
+  </div>
+</div>
+

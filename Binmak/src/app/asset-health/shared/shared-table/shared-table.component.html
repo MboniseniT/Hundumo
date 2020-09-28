@@ -1,0 +1,46 @@
+<table mdbTable datatable mdbTableScroll scrollX="true" maxWidth="800" hover="true" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <ng-container *ngFor="let k = index; let heading of headings">
+          <th *ngIf="heading.visible" scope="col">
+            {{heading.value}}
+          </th>
+        </ng-container>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i = index; let data of input">
+        <td>{{ i+1 }}</td>
+        <ng-container *ngFor="let heading of headings ;let j = index;">
+          <td *ngIf="heading.visible || heading.type ==='textarea'">
+            <div *ngIf="heading.type ==='image'"> <img [src]="data[heading.key]" style="width: 100%" />
+            </div>
+            <div *ngIf="heading.type ==='text' || heading.type ==='textarea' || heading.type ==='number'">
+              {{data[heading.key]}}
+            </div>
+            <div *ngIf="heading.type ==='date' || heading.type ==='time'">
+              {{data[heading.key] | date: 'yyyy-MM-dd HH:mm:ss'}}
+            </div>
+            <div *ngIf="heading.type ==='select' && !heading.nested">
+              <div *ngFor="let option of heading.source">
+                <div *ngIf="option[heading.sourceId]===data[heading.key]">
+                  {{option[heading.sourceName]}}
+                </div>
+              </div>
+            </div>
+            <div *ngIf="heading.type ==='checkbox'">
+              <mdb-icon *ngIf="data[heading.key]" fas icon="check" class="mr-2 green-text" aria-hidden="true"></mdb-icon>
+              <mdb-icon *ngIf="!data[heading.key]" fas icon="times" class="mr-2 red-text" aria-hidden="true"></mdb-icon>
+              </div>
+          </td>
+        </ng-container>
+        <td>
+          <button mdbBtn style="background-color: #00457d ; color: #fff;" (click)="editRow(data, i)" size="sm" mdbWavesEffect type="button" class="m-0">
+            <mdb-icon fas icon="edit" class="mr-2" aria-hidden="true"></mdb-icon>
+          </button> 
+        </td>
+      </tr>
+    </tbody>
+  </table>

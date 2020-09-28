@@ -1,0 +1,88 @@
+<div class="view intro-2"
+    style="background-image: linear-gradient(100deg, rgba(0, 69, 125, 1), rgba(24, 59, 87, 0.822)  ); padding-top: 25px">
+    <div class="full-bg-img">
+        <div class="container white-text wow fadeInUp">
+            <br>
+            <br>
+            <h5 style="font-weight:250; color: white; font-weight: bold;" class="tk-museo-sans">Welcome To AMMA: System Config,
+                {{name}}</h5>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <p style="color: white; font-weight: 300;">Click a panel below to proceed</p>
+                </div>
+            </div>
+
+            <br>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <br>
+    <br>
+    <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect (click)="back()"
+        style="background-color: rgb(41, 40, 40) !important; color: white;"> <i class="fa fa-arrow-left"></i>
+        BACK</button>
+
+    <h5 style="text-align: center;">AMMA: System Config</h5>
+
+    <div style="padding:20px">
+        <br>
+<br>
+        <div class="row" style="justify-content: center;">
+            <!-- <div class="col-lg-2 col-md-2">
+            </div> -->
+            <div [hidden]="!BinmakOrAdminProtect()" class="col-lg-2 col-md-2 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/exec-assessment-config">
+              <div style="text-align: center;">
+                  <i class="fas fa-cogs fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
+                  <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Executive Assessments Config
+                  </h6>
+              </div>
+          </div>
+
+          <div [hidden]="!BinmakOrAdminProtect()" class="col-lg-2 col-md-2 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/assessment-config">
+            <div style="text-align: center;">
+                <i class="fas fa-cogs fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
+                <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Consensus Assessments Config
+                </h6>
+            </div>
+        </div>
+
+          <div [hidden]="!isAdmin" class="col-lg-2 col-md-2 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/manage-exec-assessments">
+            <div style="text-align: center;">
+                <i class="fas fa-graduation-cap fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><i class="fas fa-cogs" style="color: rgba(0, 69, 125, 1);"></i><br><br>
+                <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Manage Assessments</h6>
+            </div>
+        </div>
+
+          <div [hidden]="!isBinmak" class="col-lg-2 col-md-2 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/manage-frmwrks">
+            <div style="text-align: center;">
+                <i class="fab fa-blogger fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
+                <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Manage Frameworks</h6>
+            </div>
+        </div>
+
+        <div [hidden]="!isBinmak" class="col-lg-2 col-md-2 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/manage-versions">
+            <div style="text-align: center;">
+                <i class="fab fa-buysellads fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
+                <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Manage Versions
+                </h6>
+            </div>
+        </div>
+
+        <div [hidden]="!isBinmak" class="col-lg-2 col-md-2 col-sm-12 col-xs-12" id="main-menu" routerLink="/binmak/manage-variants">
+            <div style="text-align: center;">
+                <i class="fab fa-chromecast fa-2x fa-fw" style="color: rgba(0, 69, 125, 1);"></i><br><br>
+                <h6 style="font-weight: 400; color: rgba(0, 69, 125, 1);">Manage Variants</h6>
+            </div>
+        </div>
+
+            <!-- <div class="col-lg-2 col-md-2">
+            </div> -->
+
+        </div>
+    </div>
+
+</div>
+

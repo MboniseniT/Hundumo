@@ -1,0 +1,21 @@
+export interface UserSetting {
+    id:Number;
+    userId:String;
+    messageMeasurement:Boolean;
+    messageAlert:Boolean;
+    messageAlarm:Boolean;
+    messageBatteryLow:Boolean;
+    messageDaily:Boolean;
+    waMeasurement:Boolean;
+    waAlert:Boolean;
+    waAlarm:Boolean;
+    waBatteryLow:Boolean;
+    waDaily:Boolean;
+    emailMeasurement:Boolean;
+    emailAlert:Boolean;
+    emailAlarm:Boolean;
+    emailBatteryLow:Boolean;
+    emailDaily:Boolean;
+    callAlert:Boolean;
+    callAlarm:Boolean;
+}

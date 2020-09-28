@@ -1,0 +1,26 @@
+export class ActionTable{
+  actionID:number;
+  actionAssessID:number;
+  actionAssessDate:string;
+  actionAssessNode:string;
+  actionSectionName:string;
+  actionKpaID:number;
+  actionKpaName:string;
+  actionBpQuestion:string;
+  actionBpName:string;
+  actionAction:string;
+  actionBizImpact:string;
+  actionBizImpactID:number;
+  actionEaseOfImp:string;
+  actionEaseOfImpID:number;
+  actionCostOfImp:string;
+  actionTimeToImp:string;
+  actionTimeToImpID:number;
+  actionPriority:string;
+  actionPriorityID:number;
+  actionResponsiblePerson:string;
+  actionResponsiblePersonID:number;
+  actionTargetDate:string;
+  actionStatus:string;
+  actionStatusID:number;
+}

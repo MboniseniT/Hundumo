@@ -1,0 +1,75 @@
+<div class="modal-content">
+  <div class="modal-header" style="background-color: #032c57 !important;">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span style="color: white;" aria-hidden="true">×</span>
+    </button>
+    <h4 style="color: white;" class="modal-title w-100" id="myModalLabel">Add Sections to {{editableRow.assess_name}}</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-6">
+          <div class="md-form">
+            <mdb-select [options]="assetNodes" [filterEnabled]="true" [multiple]="false"
+            [highlightFirst]="false" formControlName="sect_1"
+            label="* Section 1" [enableSelectAll]="false">
+            </mdb-select>
+            <mdb-error *ngIf="sect_1.invalid && (sect_1.dirty || sect_1.touched)">You need to at least provide a name for section 1</mdb-error>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="md-form">
+            <mdb-select [options]="assetNodes" [filterEnabled]="true" [multiple]="false"
+            [highlightFirst]="false" formControlName="sect_2"
+            label="Section 2" [enableSelectAll]="false">
+            </mdb-select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="md-form">
+            <mdb-select [options]="assetNodes" [filterEnabled]="true" [multiple]="false"
+            [highlightFirst]="false" formControlName="sect_3"
+            label="Section 3" [enableSelectAll]="false">
+            </mdb-select>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="md-form">
+            <mdb-select [options]="assetNodes" [filterEnabled]="true" [multiple]="false"
+            [highlightFirst]="false" formControlName="sect_4"
+            label="Section 4" [enableSelectAll]="false">
+            </mdb-select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="md-form">
+            <mdb-select [options]="assetNodes" [filterEnabled]="true" [multiple]="false"
+            [highlightFirst]="false" formControlName="sect_5"
+            label="Section 5" [enableSelectAll]="false">
+            </mdb-select>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="md-form">
+            <mdb-select [options]="assetNodes" [filterEnabled]="true" [multiple]="false"
+            [highlightFirst]="false" formControlName="sect_6"
+            label="Section 6" [enableSelectAll]="false">
+            </mdb-select>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" mdbBtn color="light" class="waves-light" aria-label="Close"
+            (click)="modalRef.hide()" mdbWavesEffect>Close
+    </button>
+    <button [disabled]="!form.valid" type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+             (click)="editRow()" style="background-color: #032c57 !important;">Save
+    </button>
+  </div>
+</div>
