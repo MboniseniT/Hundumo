@@ -26,18 +26,12 @@ namespace BinmakBackEnd.Areas.AssetHealth.Models.Respositories
 
         public double GetLastDate()=> _context.SensorData.OrderByDescending(a=>a.Id).FirstOrDefault().TimeStamp;
         
-        public MachineDetail SearchMachineStatistic(SearchMachineRequest request)
+        public IEnumerable<MachineStatistics> SearchMachineStatistic(SearchMachineRequest request)
         {
             var data = Search(request);
             if (!data.Any()) return null;
-            MachineDetail machineDetail = new MachineDetail
-            {
-                AssetName = data.First().Machine.AssetNode.Name,
-                DeviceId = data.First().DeviceId,
-                MachineName = data.First().Machine.Name,
-                FrequencyPeriod = data.First().Machine.FrequencyPeriod.Name,
-            };
-            machineDetail.MachineStatistics= data.Select(a=> new MachineStatistics { 
+           
+            return data.Select(a=> new MachineStatistics { 
                        AxialRMS = a.AxialRMS,
                        OverallRMS = a.OverallRMS,
                        RadialRMS = a.RadialRMS,
@@ -49,7 +43,6 @@ namespace BinmakBackEnd.Areas.AssetHealth.Models.Respositories
                        TemperatureAlarm = a.Machine.TemperatureAlarm,
                        TemperatureAlert = a.Machine.TemperatureAlert
                 });
-            return machineDetail;
         }
 
         public MachineSpectrum SearchMachineSpectrum(SearchMachineRequest request)
@@ -106,28 +99,28 @@ namespace BinmakBackEnd.Areas.AssetHealth.Models.Respositories
             waterfallSeriesDimensionses.Add(waterfallSeriesDimensions);
             SensorData sensorData;
             string periodFrequency = data.First().Machine.FrequencyPeriod.Name;
-            for (int i = 1; i < 6; i++)
+            for (int i = 1; i < 6; ++i)
             {
                 switch (periodFrequency)
                 {
                     case "Hourly":
-                        sensorData= GetValues(data, request.DateTo, ((int)PeriodFrequency.Hourly * i), request.MachineId);
-                        if (sensorData == null) return waterfallSeriesDimensionses;
+                        sensorData= GetValues(request.DateTo, ((int)PeriodFrequency.Hourly * i), request.MachineId);
+                        if (sensorData == null) continue;
                         waterfallSeriesDimensionses.Add(LoadData(sensorData));
                         break;
                     case "Daily":
-                        sensorData = GetValues(data, request.DateTo, ((int)PeriodFrequency.Daily * i), request.MachineId);
-                        if (sensorData == null) return waterfallSeriesDimensionses;
+                        sensorData = GetValues(request.DateTo, ((int)PeriodFrequency.Daily * i), request.MachineId);
+                        if (sensorData == null) continue;
                         waterfallSeriesDimensionses.Add(LoadData(sensorData));
                         break;
                     case "Weekly":
-                        sensorData = GetValues(data, request.DateTo, ((int)PeriodFrequency.Weekly * i), request.MachineId);
-                        if (sensorData == null) return waterfallSeriesDimensionses;
+                        sensorData = GetValues(request.DateTo, ((int)PeriodFrequency.Weekly * i), request.MachineId);
+                        if (sensorData == null) continue;
                         waterfallSeriesDimensionses.Add(LoadData(sensorData));
                         break;
                     case "Monthly":
-                        sensorData = GetValues(data, request.DateTo, ((int)PeriodFrequency.Monthly * i), request.MachineId);
-                        if (sensorData == null) return waterfallSeriesDimensionses;
+                        sensorData = GetValues(request.DateTo, ((int)PeriodFrequency.Monthly * i), request.MachineId);
+                        if (sensorData == null) continue;
                         waterfallSeriesDimensionses.Add(LoadData(sensorData));
                         break;
                 }
@@ -167,7 +160,7 @@ namespace BinmakBackEnd.Areas.AssetHealth.Models.Respositories
            return waterfallSeriesDimensions;
         }
 
-        public SensorData GetValues(IEnumerable<SensorData> sensorDatas,DateTime dateTime,int hours, int machineId)
+        public SensorData GetValues(DateTime dateTime,int hours, int machineId)
         {
             try
             {

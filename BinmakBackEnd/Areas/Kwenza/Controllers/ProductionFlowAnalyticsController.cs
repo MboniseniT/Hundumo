@@ -82,7 +82,7 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
             }
         }
 
-        public List<MasterChart> GenerateChart(List<AnalyticsConstructor> analyticsConstructors)
+        private List<MasterChart> GenerateChart(List<AnalyticsConstructor> analyticsConstructors)
         {
             List<MasterChart> masterCharts = new List<MasterChart>();
             List<Production> productions = new List<Production>();
@@ -139,7 +139,7 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
             return masterCharts;
         }
 
-        public double Percentile(double[] sortedData, double p)
+        private double Percentile(double[] sortedData, double p)
         {
             // algo derived from Aczel pg 15 bottom
             if (p >= 100.0d) return sortedData[sortedData.Length - 1];
@@ -167,7 +167,7 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
             return leftNumber + part * (rightNumber - leftNumber);
         } // end of internal function percentile
 
-        public double Median(double[] array)
+        private double Median(double[] array)
         {
             Array.Sort(array);
 

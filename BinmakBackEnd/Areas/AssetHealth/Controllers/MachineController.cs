@@ -15,11 +15,19 @@ namespace BinmakBackEnd.Areas.AssetHealth.Controllers
     public class MachineController : GenericController<Machine, int>
     {
         private IWebHostEnvironment _hostingEnvironment;
-        public readonly BinmakDbContext _context;
+        private readonly BinmakDbContext _context;
         public MachineController(BinmakDbContext context, IWebHostEnvironment environment) : base(context)
         {
             _context = context;
             _hostingEnvironment = environment;
+        }
+
+        [HttpGet("detail/{id}")]
+        public IActionResult GetbyMachineDetail([FromRoute]int id)
+        {
+            var data = new MachineRepository(_context).FindMachineDetails(id);
+            if (data == null) return StatusCode(StatusCodes.Status404NotFound, "Not Found");
+            return Ok(data);
         }
 
         [HttpGet("device/{id}")]

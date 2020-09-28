@@ -1,4 +1,4 @@
-import { BaseUrl } from './base-url.enum';
+import { BaseUrl } from 'src/app/enums/base-url.enum';
 
 export let PreffixUrl = {
     Acknowledgement: { variable: 'api/v1/Acknowledgement', key: BaseUrl.Main },
@@ -21,6 +21,7 @@ export let PreffixUrl = {
     MachineCondition: { variable:'api/v1/MachineCondition', key: BaseUrl.Main },
     User: { variable:'api/Account/admins', key: BaseUrl.Main },
     Bearing: { variable:'api/v1/Bearing', key: BaseUrl.Main },
+    MachineDetail: { variable:'api/v1/machine/detail',key:BaseUrl.Main },
     SensorDataLastDate: { variable:'api/v1/SensorData/lastUpdateDate', key: BaseUrl.Main },
     MachineSpectrum: { variable:'api/v1/SensorData/machine/spectrum', key: BaseUrl.Main },
     MachineWaterfall: { variable:'api/v1/SensorData/machine/waterfall', key: BaseUrl.Main },

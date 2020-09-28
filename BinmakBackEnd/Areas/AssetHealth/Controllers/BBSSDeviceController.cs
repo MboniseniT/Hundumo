@@ -10,7 +10,7 @@ namespace BinmakBackEnd.Areas.AssetHealth.Controllers
     [ApiController]
     public class BBSSDeviceController : GenericController<BBSSDevice, int>
     {
-        public readonly BinmakDbContext _context;
+        private readonly BinmakDbContext _context;
         public BBSSDeviceController(BinmakDbContext context) : base(context)
         {
             _context = context;
