@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BinmakBackEnd.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -8,9 +9,8 @@ namespace BinmakBackEnd.Areas.Assessments.Entities
 {
     public class Assessment
     {
-        [System.ComponentModel.DataAnnotations.Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
+
         public string assess_name { get; set; }
         public string assess_date { get; set; }
         public int assetNodeId { get; set; }

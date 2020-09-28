@@ -19,7 +19,7 @@ import { OverallProductionComponent } from './kwenza/production-flow/overall-pro
 import { ChartsComponent } from './kwenza/production-flow/charts/charts.component';
 import { EditLimitsComponent } from './kwenza/production-flow/edit-limits/edit-limits.component';
 import { EditReadingsComponent } from './kwenza/production-flow/edit-readings/edit-readings.component';
-import { UkwaziComponent } from './ukwazi/ukwazi.component';
+//import { UkwaziComponent } from './ukwazi/ukwazi.component';
 
 //Asset Management Maturity Assessor
 import { SystemConfigComponent } from './kwenza/MaturityAssessments/assessment-landing-type/system-config/system-config.component';
@@ -65,6 +65,7 @@ import { KpaValueConfigComponent } from './kwenza/production-flow/kpa/kpa-value-
 import { AssessmentsComponent } from './kwenza/MaturityAssessments/assessments/assessments.component';
 import { AssessmentLandingComponent } from './kwenza/MaturityAssessments/assessment-landing/assessment-landing.component';
 import { AssessmentLandingTypeComponent } from './kwenza/MaturityAssessments/assessment-landing-type/assessment-landing-type.component';
+import { UkwaziComponent } from './ukwazi/ukwazi.component';
 
 
 const routes: Routes = [
@@ -100,7 +101,6 @@ const routes: Routes = [
         //Asset Management Maturity Assessor
         { path: 'ukwazi-assessments', component: AssessmentsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'assessment-landing', component: AssessmentLandingComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-        { path: 'assessment-types', component: AssessmentLandingTypeComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'assessment-system-config', component: SystemConfigComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'kpi-assessment/:id', component: KpiAssessmentComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'bp-assessment/:kpaPage/:bpPage/:qstnPage', component: BpAssessmentComponent, pathMatch: 'full', canActivate: [AuthGuard]},
@@ -129,10 +129,16 @@ const routes: Routes = [
         { path: 'parent-charts/:assetId', component: ParentChartsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'limits', component: EditLimitsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'edit-readings', component: EditReadingsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
-        //{ path: 'ukwazi', component: UkwaziComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+
+
+        { path: 'ukwazi', component: UkwaziComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+
         //{ path: 'ukwazi-assessments', component: AssessmentsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         //{ path: 'assessment-landing', component: AssessmentLandingComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         //{ path: 'assessment-types', component: AssessmentLandingTypeComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        { path: 'assessment-types', component: AssessmentLandingTypeComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+        
+
         { path: 'prod-config', component: ProdConfigurationComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'kpa', component: KpaComponent, pathMatch: 'full', canActivate: [AuthGuard]},
         { path: 'kpa-limit', component: KpaLimitsComponent, pathMatch: 'full', canActivate: [AuthGuard]},

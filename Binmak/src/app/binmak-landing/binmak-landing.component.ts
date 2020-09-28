@@ -51,7 +51,6 @@ export class BinmakLandingComponent implements OnInit {
   }
 
   letsiba(){
-    //this.isKwenza = false;
     this.isLitsebi = !this.isLitsebi;
   }
 

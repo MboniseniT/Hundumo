@@ -26,7 +26,6 @@ namespace BinmakAPI.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<AssetUser> AssetUsers { get; set; }
 
-
         public DbSet<ReferenceLookup> ReferenceLookups { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }

@@ -53,7 +53,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             }
         }
 
-        static List<DateTime> getAllDates(int year, int month)
+        public static List<DateTime> getAllDates(int year, int month)
         {
             var ret = new List<DateTime>();
             for (int i = 1; i <= DateTime.DaysInMonth(year, month); i++)
@@ -506,7 +506,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
         }
 
-        SheTargetObject GetSheTarget(List<ProductionFlowAsset> assets, DateTime dateTime)
+        public SheTargetObject GetSheTarget(List<ProductionFlowAsset> assets, DateTime dateTime)
         {
             int sheMonthlyValue = 0;
             List<int> assetsIds = new List<int>();
@@ -538,7 +538,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        SheBudgetObject GetSheBudget(List<ProductionFlowAsset> assets, DateTime dateTime)
+        public SheBudgetObject GetSheBudget(List<ProductionFlowAsset> assets, DateTime dateTime)
         {
             int sheMonthlyValue = 0;
             List<int> assetsIds = new List<int>();
@@ -570,7 +570,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        SheThresholdObject GetSheThreshold(List<ProductionFlowAsset> assets, DateTime dateTime)
+        public SheThresholdObject GetSheThreshold(List<ProductionFlowAsset> assets, DateTime dateTime)
         {
             int sheMonthlyValue = 0;
             List<int> assetsIds = new List<int>();
@@ -603,7 +603,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
 
-        SheMonthlyTargetObject GetSheMonthlyTarget(List<ProductionFlowAsset> assets, DateTime dateTime)
+        public SheMonthlyTargetObject GetSheMonthlyTarget(List<ProductionFlowAsset> assets, DateTime dateTime)
         {
             int sheMonthlyValue = 0;
             List<int> assetsIds = new List<int>();
@@ -635,7 +635,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        MonthlyTargetTotalAvailableEndsObject GetMonthlyTargetTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public MonthlyTargetTotalAvailableEndsObject GetMonthlyTargetTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
 
             var text = Regex.Replace(label, " Hoisted Tons", "");
@@ -651,7 +651,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
         //Sum of Hoisted tons per site
-        MonthlyTargetTotalAvailableEndsObject GetMonthlyTargetCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public MonthlyTargetTotalAvailableEndsObject GetMonthlyTargetCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int monthlyTarget = 0;
 
@@ -680,7 +680,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        private MonthlyTargetTotalAvailableEndsObject GetMonthlyTargetTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public MonthlyTargetTotalAvailableEndsObject GetMonthlyTargetTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int monthlyTarget = 0;
 
@@ -699,7 +699,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        private TargetTotalAvailableEndsObject GetTargetTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public TargetTotalAvailableEndsObject GetTargetTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int monthlyTarget = 0;
 
@@ -717,7 +717,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return targetObject;
         }
 
-        private TargetTotalAvailableEndsObject GetTargetCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public TargetTotalAvailableEndsObject GetTargetCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int Target = 0;
 
@@ -735,7 +735,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return TargetObject;
         }
 
-        private ThresholdTotalAvailableEndsObject GetThresholdCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public ThresholdTotalAvailableEndsObject GetThresholdCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int threshold = 0;
 
@@ -753,7 +753,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return thresholdObject;
         }
 
-        private ThresholdTotalAvailableEndsObject GetThresholdTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public ThresholdTotalAvailableEndsObject GetThresholdTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int threshold = 0;
 
@@ -772,7 +772,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return thresholdObject;
         }
 
-        private BudgetTotalAvailableEndsObject GetBudgetTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public BudgetTotalAvailableEndsObject GetBudgetTT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int budget = 0;
 
@@ -791,7 +791,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return targetObject;
         }
 
-        private BudgetTotalAvailableEndsObject GetBudgetCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public BudgetTotalAvailableEndsObject GetBudgetCT(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int budget = 0;
 
@@ -809,7 +809,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return targetObject;
         }
 
-        private TargetTotalAvailableEndsObject GetTargetTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public TargetTotalAvailableEndsObject GetTargetTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
 
             var text = Regex.Replace(label, " Hoisted Tons", "");
@@ -824,7 +824,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        private BudgetTotalAvailableEndsObject GetBudgetTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public BudgetTotalAvailableEndsObject GetBudgetTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
 
             var text = Regex.Replace(label, " Hoisted Tons", "");
@@ -839,7 +839,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        private ThresholdTotalAvailableEndsObject GetThresholdTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public ThresholdTotalAvailableEndsObject GetThresholdTH(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
 
             var text = Regex.Replace(label, " Hoisted Tons", "");
@@ -854,7 +854,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        private MonthlyTargetTotalAvailableEndsObject GetMonthlyTarget(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public MonthlyTargetTotalAvailableEndsObject GetMonthlyTarget(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int MonthlyTarget = 0;
             //Extract asset name from label
@@ -869,7 +869,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return monthlyTargetObject;
         }
 
-        private TargetTotalAvailableEndsObject GetTarget(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public TargetTotalAvailableEndsObject GetTarget(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int Target = 0;
             //Extract asset name from label
@@ -884,7 +884,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return TargetObject;
         }
 
-        private BudgetTotalAvailableEndsObject GetBudget(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public BudgetTotalAvailableEndsObject GetBudget(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             int Budget = 0;
             //Extract asset name from label
@@ -899,7 +899,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return BudgetObject;
         }
 
-        private ThresholdTotalAvailableEndsObject GetThreshold(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
+        public ThresholdTotalAvailableEndsObject GetThreshold(List<ProductionFlowAsset> assets, DateTime dateTime, string label)
         {
             var text = Regex.Replace(label, " Total Ends Available", "");
             ProductionFlowAsset asset = _context.ProductionFlowAssets.FirstOrDefault(id => id.SiteName == text);
@@ -912,7 +912,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return ThresholdObject;
         }
 
-        private List<OverallProductionFunctionUnitObject> functionUnitObjects(List<OverallProductionFunctionUnitObject> overallProductionFunctionUnitObjects, DateTime monthDate)
+        public List<OverallProductionFunctionUnitObject> functionUnitObjects(List<OverallProductionFunctionUnitObject> overallProductionFunctionUnitObjects, DateTime monthDate)
         {
             List<OverallProductionFunctionUnitObject> functionUnitObjectsTempList = new List<OverallProductionFunctionUnitObject>();
             OverallProductionFunctionUnitObject overallProductionFunctionUnitObject;
@@ -936,7 +936,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return functionUnitObjectsTempList;
         }
 
-        private List<FunctionUnitObject> getFunctionUnitObject(int assetId, DateTime monthDate)
+        public List<FunctionUnitObject> getFunctionUnitObject(int assetId, DateTime monthDate)
         {
             List<FunctionUnitChildren> fuChildrenNames;
             List<FunctionUnitObject> fub = new List<FunctionUnitObject>();
@@ -999,7 +999,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return fub;
         }
 
-        private List<OverallProductionFunctionUnitObject> ModifyOverallProd(List<ProductionFlowAsset> assets, DateTime dateProduction)
+        public List<OverallProductionFunctionUnitObject> ModifyOverallProd(List<ProductionFlowAsset> assets, DateTime dateProduction)
         {
             List<OverallProductionFunctionUnitObject> temp = new List<OverallProductionFunctionUnitObject>();
             List<OverallProductionFunctionUnitObject> overallProductionFunctionUnitObjects = new List<OverallProductionFunctionUnitObject>();
@@ -1069,7 +1069,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
 
-        private List<ValueObject[]> ValueCalculatorMonthlyTarget(int assetId, DateTime dateTime, FunctionUnit functionUnit)
+        public List<ValueObject[]> ValueCalculatorMonthlyTarget(int assetId, DateTime dateTime, FunctionUnit functionUnit)
         {
             List<ValueObject> values = new List<ValueObject>();
             List<ValueObject[]> totalList = new List<ValueObject[]>();
@@ -1736,7 +1736,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
 
-        private List<int[]> ValueCalculator(int assetId, DateTime dateTime, FunctionUnit functionUnit)
+        public List<int[]> ValueCalculator(int assetId, DateTime dateTime, FunctionUnit functionUnit)
         {
             List<int> values = new List<int>();
             List<int[]> totalList = new List<int[]>();
@@ -1843,7 +1843,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return totalList;
         }
 
-        private List<FunctionUnitChildren> GetUpdatedFUC(List<FunctionUnitChildren> functionUnitChildrens, DateTime dateTime)
+        public List<FunctionUnitChildren> GetUpdatedFUC(List<FunctionUnitChildren> functionUnitChildrens, DateTime dateTime)
         {
             List<FunctionUnitChildren> tempFUC = new List<FunctionUnitChildren>();
 
@@ -2332,7 +2332,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             }
         }
 
-        private List<FunctionUnitChildren> saveAssetFunctionUnitsChildren(ProductionFlowAsset asset)
+        public List<FunctionUnitChildren> saveAssetFunctionUnitsChildren(ProductionFlowAsset asset)
         {
             List<FunctionUnitChildren> fucTemp = new List<FunctionUnitChildren>();
             List<FunctionUnitChildren> orderdFucs = new List<FunctionUnitChildren>();
@@ -2405,7 +2405,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return fucTemp2;
         }
 
-        private List<FunctionUnit> saveAssetFunctionUnits(ProductionFlowAsset asset)
+        public List<FunctionUnit> saveAssetFunctionUnits(ProductionFlowAsset asset)
         {
 
             List<FunctionUnit> functionUnits = _context.FunctionUnits.Where(id => id.AssetId == 0).ToList();
@@ -2426,7 +2426,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return fucTemp;
         }
 
-        private ProductionFlowAsset CreateAsset(ProductionFlowAsset model)
+        public ProductionFlowAsset CreateAsset(ProductionFlowAsset model)
         {
             ProductionFlowAsset asset = new ProductionFlowAsset();
             asset.ClientAssetNameId = model.ClientAssetNameId;
@@ -2442,7 +2442,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
 
-        private ValueObject ValueObjectDate(Reading reading)
+        public ValueObject ValueObjectDate(Reading reading)
         {
             ValueObject valueObject = new ValueObject();
 
@@ -2455,7 +2455,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
             return valueObject;
         }
-        private ValueObject SheAssetObject(Reading reading)
+        public ValueObject SheAssetObject(Reading reading)
         {
             ValueObject valueObject = new ValueObject();
 
@@ -2487,7 +2487,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
         //Calculate SHE
-        private int SheAsset(Reading reading)
+        public int SheAsset(Reading reading)
         {
             int sheCounter = 0;
             var clientNameAssetId = _context.ProductionFlowAssets.FirstOrDefault(id => id.AssetId == reading.AssetId).ClientAssetNameId;
@@ -2518,7 +2518,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
         // Calculate Hoisted Tons for each site
-        private int HoistedTonsPerSite(Reading reading)
+        public int HoistedTonsPerSite(Reading reading)
         {
             int tonsHoistedCounter = 0;
             // Check if current day is the first in the month 
@@ -2543,7 +2543,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return tonsHoistedCounter;
         }
 
-        private ValueObject HoistedTonsPerSiteObject(Reading reading)
+        public ValueObject HoistedTonsPerSiteObject(Reading reading)
         {
             ValueObject valueObject = new ValueObject();
             ProductionFlowAsset asset = _context.ProductionFlowAssets.FirstOrDefault(id => id.AssetId == reading.AssetId);
@@ -2629,12 +2629,12 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
         // Calculate Ends Available for each site
-        private int EndsAvailablePerSite(Reading reading)
+        public int EndsAvailablePerSite(Reading reading)
         {
             return reading.UnlashedEnds + reading.TotalCleanedEnds + reading.SupportedEnds + reading.PreparedMarkedEnds;
         }
 
-        private ValueObject EndsAvailablePerSiteObjects(Reading reading)
+        public ValueObject EndsAvailablePerSiteObjects(Reading reading)
         {
             int endsAvailable = 0;
             int target = 0;
@@ -2674,7 +2674,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
 
 
         //Calculate Total Hoisted Tons Accumalative
-        private int TotalTonsHoisetedCommulative(Reading reading)
+        public int TotalTonsHoisetedCommulative(Reading reading)
         {
             int totalTons = 0;
 
@@ -2710,7 +2710,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return totalTons;
         }
 
-        private ValueObject TotalTonsHoiseted(TotalHoistedTonsInputParam param)
+        public ValueObject TotalTonsHoiseted(TotalHoistedTonsInputParam param)
         {
             ValueObject valueObject = new ValueObject();
             int monthlyTarget = 0;
@@ -2756,7 +2756,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
         }
 
 
-        private ValueObject TotalTonsHoisetedCommulativeObject(TotalHoistedCommulataiveInputParam param)
+        public ValueObject TotalTonsHoisetedCommulativeObject(TotalHoistedCommulataiveInputParam param)
         {
             ValueObject valueObject = new ValueObject();
             //Get List of readings 
@@ -2858,7 +2858,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return valueObject;
         }
 
-        private int TotalTonsHoiseted(Reading reading)
+        public int TotalTonsHoiseted(Reading reading)
         {
             int ClientId = _context.ProductionFlowAssets.FirstOrDefault(id => id.AssetId == reading.AssetId).ClientAssetNameId;
 
@@ -2874,7 +2874,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             return totalTons;
         }
 
-        private ValueObject TotalTonsHoisetedObject(Reading reading)
+        public ValueObject TotalTonsHoisetedObject(Reading reading)
         {
             ValueObject valueObject = new ValueObject();
             int totalHoistedTons = 0;
@@ -2962,7 +2962,7 @@ namespace BinmakBackEnd.Areas.ProductionFlow.Controllers
             }
         }
 
-        private List<Reading> PopulateReadings([FromBody] AssetProdDate assetProdDate)
+        public List<Reading> PopulateReadings([FromBody] AssetProdDate assetProdDate)
         {
             List<Reading> readings = new List<Reading>();
             ProductionFlowAsset asset = _context.ProductionFlowAssets.FirstOrDefault(id => id.AssetId == assetProdDate.AssetId);

@@ -70,7 +70,7 @@ namespace BinmakBackEnd
 
             //var connection = @"Server=DPSA32213;Initial Catalog=HundumoDatabase;Trusted_Connection=True;MultipleActiveResultSets=true";
             //var connection = @"Server=tcp:binmakdev.dedicated.co.za;Initial Catalog=HundumoDatabase;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
-            var connection = @"Server=tcp:binmakdev.dedicated.co.za;Initial Catalog=HundumoBinmakDB;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
+            var connection = @"Server=tcp:binmakdev.dedicated.co.za;Initial Catalog=HundumoDevDb;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
             //var connection = @"Server=tcp:binmakdev.dedicated.co.za;Initial Catalog=BinmakDb;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
             //var connection = @"Server=tcp:binmak.com;Initial Catalog=BinmakDb;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
             services.AddDbContext<BinmakDbContext>
@@ -103,7 +103,7 @@ namespace BinmakBackEnd
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env/*, Seed seed*/)
         {
             if (env.IsDevelopment())
             {
