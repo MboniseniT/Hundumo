@@ -17,8 +17,7 @@ export class DiagnosisChartsComponent implements OnInit {
 
   ngOnInit(): void {
     this.request.getAll(PreffixUrl.Machine).subscribe(result => {
-      this.request.getAll(PreffixUrl.SensorCondtion).subscribe(sensorConditionResult => {
-       
+      this.request.getAll(PreffixUrl.SensorCondtion).subscribe(sensorConditionResult => {       
        var dataList = [];
        sensorConditionResult.items.forEach(element => {
         var data = [];

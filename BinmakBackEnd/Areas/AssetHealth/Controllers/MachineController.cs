@@ -22,6 +22,14 @@ namespace BinmakBackEnd.Areas.AssetHealth.Controllers
             _hostingEnvironment = environment;
         }
 
+        [HttpGet("detail/{id}")]
+        public IActionResult GetbyMachineDetail([FromRoute]int id)
+        {
+            var data = new MachineRepository(_context).FindMachineDetails(id);
+            if (data == null) return StatusCode(StatusCodes.Status404NotFound, "Not Found");
+            return Ok(data);
+        }
+
         [HttpGet("device/{id}")]
         public IActionResult GetbyDeviceId([FromRoute]string id)
         {

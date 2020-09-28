@@ -30,7 +30,9 @@ export class AxialVibrationChartsComponent implements OnChanges {
       },
 
       xAxis: {
-        categories: this.data.machineStatistics.map(a=> new Date(a.timeStamp)),        
+        gridLineWidth: 1,
+        type: 'datetime',
+        categories: this.data.map(a=> new Date(a.timeStamp)),        
       },
 
       legend: {
@@ -49,18 +51,18 @@ export class AxialVibrationChartsComponent implements OnChanges {
 
       series: [{
         name: 'Axial vibration',
-        data: this.data.machineStatistics.map(a=>a.axialRMS),
+        data: this.data.map(a=>a.axialRMS),
         color:'#00457d'
       }, 
       {
         name: 'Alert',
-        data: this.data.machineStatistics.map(a=>a.rmsAlert),
+        data: this.data.map(a=>a.rmsAlert),
         color:'#ffa500',
         dashStyle:'Dash'     
       },
       {
         name: 'Alarm',
-        data: this.data.machineStatistics.map(a=>a.rmsAlarm), 
+        data: this.data.map(a=>a.rmsAlarm), 
         color:'#ff0000',
         dashStyle:'Dash'     
       },

@@ -58,15 +58,22 @@ export class MainComponent implements OnInit {
     this.loading = true;
     this.request.post(data, this.preffixUrl).subscribe(result => {
       this.data = result;   
-      this.assetId =this.data.machineName
-      this.deviceId =this.data.deviceId
-      this.assetDetails =this.data.assetName
       this.loading = false;
     },error=>{
+      this.loading = false;   
       console.log(error);
-      this.data.machineStatistics = []; 
-      this.loading = false;    
+      this.data = [];   
     });
+    this.request.get(data.machineId,PreffixUrl.MachineDetail).subscribe(result => {   
+      this.assetId =result.machineName
+      this.deviceId =result.deviceId
+      this.assetDetails =result.assetName
+    },
+    error=>{
+      console.log(error);
+      
+    });
+
     this.request.getAll(PreffixUrl.SensorDataLastDate).subscribe(result => {
       this.lastDate = new Date(result)
     },

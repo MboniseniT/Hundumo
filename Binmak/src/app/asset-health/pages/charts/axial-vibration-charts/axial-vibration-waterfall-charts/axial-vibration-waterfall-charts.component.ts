@@ -17,37 +17,68 @@ export class AxialVibrationWaterfallChartsComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(): void {
-    this.options = {      
-      chart: {         
-         type: 'scatter',
-         marginBottom: 100,
-         marginRight: 50,
-         options3d: {
-            enabled: true,
-            alpha: 10,
-            beta: 30,
-            depth: 250,
-            viewDistance: 5,
-            frame:{
-               bottom :{
-                  size: 1,
-                  color: 'rgba(0, 0, 0, 0.02)'
-               },
-               back :{
-                  size: 1,
-                  color: 'rgba(0, 0, 0, 0.04)'
-               },
-               side :{
-                  size: 1,
-                  color: 'rgba(0, 0, 0, 0.06)'
-               }
-            }
-         }
-      },         
-      title : {
-         text: 'Axial Vibration Spectrum Waterfall'   
+   this.options = {
+      chart: {
+          renderTo: 'container',
+          margin: 100,
+          type: 'scatter3d',
+          animation: false,
+          options3d: {
+              enabled: true,
+              alpha: 10,
+              beta: 30,
+              depth: 250,
+              viewDistance: 5,
+              fitToPlot: false,
+              frame: {
+                  bottom: {
+                      size: 1,
+                      color: 'rgba(0,0,0,0.02)'
+                  },
+                  back: {
+                      size: 1,
+                      color: 'rgba(0,0,0,0.04)'
+                  },
+                  side: {
+                      size: 1,
+                      color: 'rgba(0,0,0,0.06)'
+                  }
+              }
+          }
       },
-      series : this.data.map(a=>a.xWaterfallSeries)
+      title : {
+               text: 'Axial Vibration Spectrum Waterfall'   
+            },
+      plotOptions: {
+          scatter3d: {
+              width: 10,
+              height: 10,
+              depth: 50,
+              marker: {
+                  enabled: false,
+              }
+          }
+      },
+      yAxis: {
+          title: null,
+          startOnTick: false,
+          endOnTick: false,
+          minPadding: 0,
+          maxPadding: 0
+      },
+      xAxis: {
+         showFirstLabel: false
+          },
+      zAxis: {
+         gridLineWidth: 1,
+         type: 'datetime'
+    
+      },
+      legend: {
+          enabled: true
+      },
+      series:this.data.map(a=>a.xWaterfallSeries)
+     
    };
     Highcharts.chart('axialWaterfallContainer', this.options);
   }
