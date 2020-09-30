@@ -41,11 +41,15 @@
             </div>
           </div>
 
+          <div *ngIf="isChart">
+            <div *ngFor="let c of lCharts; index as i">
 
-            <figure class="highcharts-figure" >
-                <div id="TotalHoistedTons"></div>
-        
-            </figure>
+                <div [attr.id]="'Chart'+i"></div>
+   
+            </div>
+          </div>
+
+
 
           <!--<figure class="highcharts-figure" *ngFor="let c of chartNames">
             <div *ngIf="chartNames">

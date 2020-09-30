@@ -196,11 +196,16 @@ namespace BinmakBackEnd.Controllers
                 return BadRequest("Something bad happened. Object is null");
             }
 
-            AssetNode assetNodeExistChecker = _context.AssetNodes.FirstOrDefault(id => (id.Code == assetNode.Code) && (id.RootAssetNodeId == assetNode.RootAssetNodeId));
-
-            if (assetNodeExistChecker != null)
+            if (assetNode.ParentAssetNodeId != 0)
             {
-                return BadRequest("There is already an asset node with existing CODE within the root asset node, choose a different code.");
+                AssetNode rootId = _context.AssetNodes.FirstOrDefault(id => id.AssetNodeId == assetNode.ParentAssetNodeId);
+
+                AssetNode asset = _context.AssetNodes.FirstOrDefault(id => (id.Code == assetNode.Code) && (id.RootAssetNodeId == rootId.RootAssetNodeId));
+
+                if (asset != null)
+                {
+                    return BadRequest("There is already an asset with this CODE: "+assetNode.Code+" within the root tree asset: "+ rootId.Name+ ". Choose a different code.");
+                }
             }
 
             try

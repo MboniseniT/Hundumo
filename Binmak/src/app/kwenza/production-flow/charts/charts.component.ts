@@ -26,6 +26,8 @@ export class ChartsComponent implements OnInit {
   assetId: number;
   loading: boolean;
   index: number;
+  chartName: string = '';
+  isChart: boolean;
 
   masterCharts: Array<MasterChart>;
   masterChart: MasterChart;
@@ -76,6 +78,7 @@ public optionsHistogram5: any = {};
   ngOnInit(): void {
 
    this.loading = false;
+   this.isChart = false;
 
     this.route.params.subscribe(params => {
       this.assetId = +params['assetId'];       
@@ -100,10 +103,12 @@ public optionsHistogram5: any = {};
   }
 
 dates: Array<string>;
+public optLine: any = { };
 
   LoadChart(){
 
     this.loading = true;
+
 
     const model ={
       StartDate: this.chartForm.value.StartDate,
@@ -117,14 +122,14 @@ dates: Array<string>;
 
       this.masterCharts = resp;
    
-
+      let i = 0;
       for (let value of this.masterCharts) {
 
-        this.chartNames = ['TotalHoistedTons', 'EndsDrilled', 'ROMTonsCrushed']
+        this.chartName = 'chart'+i;
 
         this.loading = false;
 
-        let chart = {
+        this.optLine = {
           chart: {
               type: 'spline'
           },
@@ -158,24 +163,15 @@ dates: Array<string>;
           }]
       }
 
-
-        this.lCharts.push({name: value.kpaName, objectChart: chart});
+      Highcharts.chart(this.chartName, this.optLine);
     }
+    
+    /*for (let c of this.lCharts) {
+      i = i + 1;
+      Highcharts.chart(this.chartName, c.objectChart);
+    }*/
 
-    debugger;
-
-    console.log(this.lCharts);
-
-
-    for (let c of this.lCharts) {
-      
-      const name = c.name.replaceAll(' ', '');
-      Highcharts.chart('TotalHoistedTons', c.objectChart);
-
-    }
-
-
-
+    this.isChart = true;
       /*this.lineChart = {
         chart: {
           type: "spline"

@@ -29,9 +29,9 @@
               <th>Code</th>
               <th>Node Type</th>
               <th>View</th>
-              <th>P. F. Charts</th>
-              <th>P. F. Readings</th>
-              <th>P. F. Parent Charts</th>
+              <th>Production Flow Charts</th>
+              <th>Production Flow Stats</th>
+              <!--<th>P. F. Parent Charts</th>-->
           </tr>
       </thead>
       <tbody>
@@ -88,7 +88,7 @@
 
             </td>
 
-            <td>
+            <!--<td>
               <div *ngIf="node.assetNodeTypeId == 2">
                   <button type="button" *ngIf="node.isProductionFlow" class="btn btn-info" aria-label="Close" mdbWavesEffect (click)="accessParentCharts(node)"
                   style="background-color: rgba(0, 69, 125, 1) !important; color: white;"
@@ -106,7 +106,7 @@
               </button>
           </div>
 
-          </td>
+          </td>-->
           </tr>
       </tbody>
   </table>
