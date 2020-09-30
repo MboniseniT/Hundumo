@@ -119,8 +119,8 @@ namespace BinmakBackEnd.Migrations
                     b.Property<string>("Reference")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RootId")
                         .HasColumnType("int");
@@ -1562,21 +1562,16 @@ namespace BinmakBackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("FormularOwnerKPAId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Index")
-                        .HasColumnType("int");
+                    b.Property<string>("FormulaString")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("KeyProcessAreaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MathematicalOperatorId")
-                        .HasColumnType("int");
+                    b.Property<string>("MasterFormularArray")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FormulaCreationId");
-
-                    b.HasIndex("MathematicalOperatorId");
 
                     b.ToTable("FormulaCreations");
                 });
@@ -1616,6 +1611,9 @@ namespace BinmakBackEnd.Migrations
 
                     b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsSummary")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsTargetSet")
                         .HasColumnType("bit");
@@ -2732,11 +2730,10 @@ namespace BinmakBackEnd.Migrations
 
             modelBuilder.Entity("BinmakBackEnd.Entities.BinmakModuleAccess", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("BinmakModuleAccessId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("BinmakModuleId")
                         .HasColumnType("int");
@@ -2745,11 +2742,13 @@ namespace BinmakBackEnd.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Reference")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("BinmakModuleAccessId");
 
                     b.HasIndex("BinmakModuleId");
+
+                    b.HasIndex("Reference");
 
                     b.ToTable("BinmakModuleAccesses");
                 });
@@ -2844,6 +2843,27 @@ namespace BinmakBackEnd.Migrations
                     b.HasIndex("AssetNodeId");
 
                     b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("BinmakBackEnd.Entities.LearningManagementSystemLink", b =>
+                {
+                    b.Property<int>("LearningManagementSystemLinkId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClientName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KeyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LearningManagementSystemLinkId");
+
+                    b.ToTable("LearningManagementSystemLinks");
                 });
 
             modelBuilder.Entity("BinmakBackEnd.Entities.Organization", b =>
@@ -3261,15 +3281,6 @@ namespace BinmakBackEnd.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("BinmakBackEnd.Areas.Kwenza.Entities.FormulaCreation", b =>
-                {
-                    b.HasOne("BinmakBackEnd.Areas.Kwenza.Entities.MathematicalOperator", "MathematicalOperator")
-                        .WithMany()
-                        .HasForeignKey("MathematicalOperatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("BinmakBackEnd.Areas.Kwenza.Entities.Frequency", b =>
                 {
                     b.HasOne("BinmakBackEnd.Areas.Kwenza.Entities.KeyProcessArea", "KeyProcessArea")
@@ -3412,9 +3423,7 @@ namespace BinmakBackEnd.Migrations
 
                     b.HasOne("BinmakAPI.Entities.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Reference");
                 });
 
             modelBuilder.Entity("BinmakBackEnd.Entities.Group", b =>

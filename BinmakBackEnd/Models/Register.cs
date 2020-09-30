@@ -15,9 +15,8 @@ namespace BinmakAPI.Models
         public string Position { get; set; }
         public string Reference { get; set; }
         public string CellNumber { get; set; }
-        public int RoleId { get; set; }
+        public string Role { get; set; }
         public int GroupIds { get; set; }
-        //public List<int> AllowedSystemsIds { get; set; }
         public List<int> AssignedBinmakModulesIds { get; set; }
     }
 }

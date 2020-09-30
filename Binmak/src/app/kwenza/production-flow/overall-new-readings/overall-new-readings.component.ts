@@ -20,6 +20,7 @@ export class OverallNewReadingsComponent implements OnInit {
   assetName: string;
 
   overallModel: any;
+  loading: boolean;
 
 
   constructor(private datePipe: DatePipe, private route: ActivatedRoute, 
@@ -28,6 +29,7 @@ export class OverallNewReadingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.savedProductionDate =  this.datePipe.transform(localStorage.getItem('SelectedProductionDate'), 'yyyy-MM-dd');
     this.dateForm.patchValue({
       SelectedDate: localStorage.getItem('SelectedProductionDate')
@@ -63,7 +65,9 @@ export class OverallNewReadingsComponent implements OnInit {
         console.log(resp[0].productionFlowInputDatastructureMods.productionDates);
         this.assetName = resp[0].assetName;
       }
+      this.loading = false;
     }, (error: any) =>{
+      this.loading = false;
       this.toastrService.error(error.error);
     })
   

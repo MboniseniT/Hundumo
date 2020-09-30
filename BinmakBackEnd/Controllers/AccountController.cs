@@ -9,7 +9,6 @@ using BinmakAPI.Data;
 using BinmakAPI.Entities;
 using System.Text;
 using System.Net;
-using System.Net.Mail;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
@@ -17,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using BinmakAPI.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using BinmakBackEnd.Entities;
+using EASendMail;
 
 namespace BinmakAPI.Controllers
 {
@@ -75,27 +75,8 @@ namespace BinmakAPI.Controllers
 
                 if (result.Succeeded)
                 {
-                    
-                        var smtp = new SmtpClient
-                        {
-                            Host = "smtp.gmail.com",
-                            Port = 587,
-                            EnableSsl = true,
-                            DeliveryMethod = SmtpDeliveryMethod.Network,
-                            Credentials = new NetworkCredential("binmak-systems@m-theth.co.za", "Binmak@2020"),
-                            Timeout = 20000
-                        };
-
-                        using (var message = new MailMessage("binmak-systems@m-theth.co.za", forgotPassword.Email)
-                        {
-                            IsBodyHtml = true,
-                            Subject = "Password Change",
-                            Body = "<html><body>Hi " + user.FirstName + ", <br/><br/>Your Password change in Binmak System has been successfully changed, Here are your updated credentials: <br/> Username: " + user.Email + " <br/>Password: " + password + "  <br/><br/><p>Binmak</p></body></html></body></html>"
-                        })
-                        {
-                            smtp.Send(message);
-                        }
-
+                   
+                    //Todo: Send email with link
                     return Ok();
                 }
                 else
@@ -115,7 +96,7 @@ namespace BinmakAPI.Controllers
         [HttpGet("roles")]
         public IActionResult GetRoles()
         {
-            var roles = _roleManager.Roles.ToList();
+            var roles = _roleManager.Roles.Where(id=>id.Name != "BINMAK").ToList();
 
             return Ok(roles);
         }
@@ -126,6 +107,29 @@ namespace BinmakAPI.Controllers
             var bnmakSystems = _context.BinmakModules.ToList();
 
             return Ok(bnmakSystems);
+        }
+
+        [HttpGet("lms")]
+        public IActionResult GetLMSLinks(string reference)
+        {
+            LearningManagementSystemLink lms;
+
+            var user = _context.Users.FirstOrDefault(id => id.Id == reference);
+            if (user == null)
+            {
+                return BadRequest("Something bad happened. Make sure you are logged in.");
+            }
+            string email = user.Email;
+
+            String[] part1 = email.Split(new[] { '@' });
+            String fullDomain = part1[1];
+
+            String[] actualDomain = fullDomain.Split(new[] { '.' });
+            String domainName = actualDomain[0];
+
+            lms = _context.LearningManagementSystemLinks.FirstOrDefault(id => id.KeyName.Contains(domainName));
+
+            return Ok(lms);
         }
 
         [HttpGet("groupsByRoot")]
@@ -163,6 +167,29 @@ namespace BinmakAPI.Controllers
                     if (user == null)
                     {
 
+                        int rootId = applicationUser.GroupIds;
+                        bool isTopRoot;
+
+                        AssetNode assetNode = _context.AssetNodes.FirstOrDefault(id => id.AssetNodeId == rootId);
+                        if (assetNode.ParentAssetNodeId == 0)
+                        {
+                            isTopRoot = true;
+                        }
+                        else
+                        {
+                            isTopRoot = false;
+                        }
+
+                        if (isTopRoot)
+                        {
+                            applicationUser.Reference = assetNode.Reference;
+                        }
+                        else
+                        {
+                            applicationUser.Reference = _context.AssetNodes.FirstOrDefault(id => id.RootAssetNodeId == assetNode.RootAssetNodeId).Reference;
+                        }
+
+
                         user = new ApplicationUser
                         {
                             FirstName = applicationUser.FirstName,
@@ -171,18 +198,20 @@ namespace BinmakAPI.Controllers
                             UserName = applicationUser.Email,
                             DateStamp = DateTime.Now,
                             Reference = applicationUser.Reference,
+                            CountryId = 203,
+                            Role = applicationUser.Role
                         };
 
                         var password = CreatePassword(6);
 
                         var userResult = await _userManager.CreateAsync(user, password);
 
-                         if (applicationUser.RoleId == 2)
+                         if (applicationUser.Role == "ADMINISTRATOR")
                         {
                             await _userManager.AddToRoleAsync(user, "ADMINISTRATOR");
                             user.IsAdmin = true;
                         }
-                        else if (applicationUser.RoleId == 3)
+                        else if (applicationUser.Role == "USER")
                         {
                             await _userManager.AddToRoleAsync(user, "USER");
                             user.IsUser = true;
@@ -245,25 +274,27 @@ namespace BinmakAPI.Controllers
                         else
                         {
 
-                            var smtp = new SmtpClient
-                            {
-                                Host = "smtp.gmail.com",
-                                Port = 587,
-                                EnableSsl = true,
-                                DeliveryMethod = SmtpDeliveryMethod.Network,
-                                Credentials = new NetworkCredential("binmak-systems@m-theth.co.za", "Binmak@2020"),
-                                Timeout = 20000
-                            };
+                            SmtpMail oMail = new SmtpMail("TryIt");
+                            //System: Office 365 email address
+                            oMail.From = "registration@binmak.com";
+                            //Email To
+                            oMail.To = applicationUser.Email;
+                            // Set email subject
+                            oMail.Subject = "Binmak Software Account";
+                            // Set email body
+                            oMail.HtmlBody = "<html><body>Hi " + applicationUser.FirstName + ", <br/>Your account to Binmak Software has created sucessfully: <br/><br/>Link: http://binmakdev.dedicated.co.za <br/>Username: " + applicationUser.Email + "<br/>Password: " + password + "<br/><p>Binmak</p></body></html></body></html>";
+                            // Your Office 365 SMTP server address,
+                            SmtpServer oServer = new SmtpServer("smtp.office365.com");
+                            oServer.User = "registration@binmak.com";
+                            oServer.Password = "Binmak@001";
 
-                            using (var message = new MailMessage("binmak-systems@m-theth.co.za", applicationUser.Email)
-                            {
-                                IsBodyHtml = true,
-                                Subject = "Binmak Account Details",
-                                Body = "<html><body>Hi " + applicationUser.FirstName + ", <br/>Please use the credentials below in order to log in to Binmak System: <br/><br/>Link: http://binmakdev.dedicated.co.za <br/>Username: " + applicationUser.Email + " <br/>Password: " + password + "  <br/><br/><p>Binmak</p></body></html></body></html>"
-                            })
-                            {
-                                smtp.Send(message);
-                            }
+                            // Set 587 port
+                            oServer.Port = 587;
+                            // detect SSL/TLS connection automatically
+                            oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
+
+                            SmtpClient oSmtp = new SmtpClient();
+                            oSmtp.SendMail(oServer, oMail);
 
                         }
                     }
@@ -311,7 +342,7 @@ namespace BinmakAPI.Controllers
                         Zip = applicationUser.Zip,
                         IsSuperAdmin = true,
                         IsAccountOwner = true,
-                        RoleId = 1
+                        Role = "ADMINISTRATOR"
                     };
 
 
@@ -325,17 +356,12 @@ namespace BinmakAPI.Controllers
                     else
                     {
 
-                        if (user.RoleId == 1)
-                        {
-                        await _userManager.AddToRoleAsync(user, "ADMINISTRATOR");
-                        user.IsAdmin = true;
-                    }
-                        else if (user.RoleId == 2)
+                        if (user.Role == "ADMINISTRATOR")
                         {
                             await _userManager.AddToRoleAsync(user, "ADMINISTRATOR");
                             user.IsAdmin = true;
                         }
-                    else if (user.RoleId == 3)
+                    else if (user.Role == "USER")
                     {
                         await _userManager.AddToRoleAsync(user, "USER");
                         user.IsUser = true;
@@ -351,31 +377,34 @@ namespace BinmakAPI.Controllers
                         BinmakModuleAccess binmakModule = new BinmakModuleAccess();
                         binmakModule.BinmakModuleId = bm.BinmakModuleId;
                         binmakModule.Reference = user.Id;
+                        binmakModule.DateStamp = DateTime.Now;
 
                         _context.BinmakModuleAccesses.Add(binmakModule);
                     }
 
                     _context.SaveChanges();
 
-                    var smtp = new SmtpClient
-                        {
-                            Host = "smtp.gmail.com",
-                            Port = 587,
-                            EnableSsl = true,
-                            DeliveryMethod = SmtpDeliveryMethod.Network,
-                            Credentials = new NetworkCredential("binmak-systems@m-theth.co.za", "Binmak@2020"),
-                            Timeout = 20000
-                        };
+                    SmtpMail oMail = new SmtpMail("TryIt");
+                    //System: Office 365 email address
+                    oMail.From = "registration@binmak.com";
+                    //Email To
+                    oMail.To = applicationUser.Email;
+                    // Set email subject
+                    oMail.Subject = "Binmak Software System Account";
+                    // Set email body
+                    oMail.HtmlBody = "<html><body>Hi " + applicationUser.FirstName + ", <br/>Your account to Binmak Software System has created sucessfully: <br/><br/>Link: http://binmakdev.dedicated.co.za <br/>Domain: " + applicationUser.CompanyName + "<br/>Username: " + applicationUser.Email + "<br/><p>Binmak</p></body></html></body></html>";
+                    // Your Office 365 SMTP server address,
+                    SmtpServer oServer = new SmtpServer("smtp.office365.com");
+                    oServer.User = "registration@binmak.com";
+                    oServer.Password = "Binmak@001";
 
-                        using (var message = new MailMessage("binmak-systems@m-theth.co.za", applicationUser.Email)
-                        {
-                            IsBodyHtml = true,
-                            Subject = "Binmak Software System Account Details",
-                            Body = "<html><body>Hi " + applicationUser.FirstName + ", <br/>Please use the credentials below in order to log in to Binmak Software System: <br/><br/>Link: http://binmakdev.dedicated.co.za <br/>Domain: " + applicationUser.CompanyName + "<br/>Username: " + applicationUser.Email + " <br/>Password: " + applicationUser.Password+ "  <br/><br/><p>Binmak</p></body></html></body></html>"
-                        })
-                        {
-                            smtp.Send(message);
-                        }
+                    // Set 587 port
+                    oServer.Port = 587;
+                    // detect SSL/TLS connection automatically
+                    oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
+
+                    SmtpClient oSmtp = new SmtpClient();
+                    oSmtp.SendMail(oServer, oMail);
 
                     }
                 }
@@ -472,7 +501,7 @@ namespace BinmakAPI.Controllers
                             isUser = user.IsUser,
                             isGuest = user.IsGuest,
                             isAdmin = user.IsAdmin,
-                            role = user.RoleId,
+                            role = user.Role,
                             binmakModules = GetBinmakModulesByUser(user.Id),
                             assignedAssetNodes = GetAssetNodesByUser(user.Id),
                             topAssetNode = GetTopAssetNodesByUser(user.Id),
@@ -618,10 +647,9 @@ namespace BinmakAPI.Controllers
                     TopAssetNode = GetTopAssetNodesByUser(result.Id),
                     GroupAssetNodes = GetAssetNodesByRoot(result.Id),
                     IsDeleted = result.IsDeleted,
-                    RoleId = result.RoleId,
+                    Role = result.Role,
                     BinmakModules = GetBinmakModulesByUserIds(),
                     RootId = result.RootId
-                    //Role =  _context.Roles.FirstOrDefault(id=>id.Id == result.RoleId)
                 });
 
             return Ok(assetUsers);
@@ -644,14 +672,51 @@ namespace BinmakAPI.Controllers
             {
                 ApplicationUser applicationUser = _context.Users.FirstOrDefault(id => id.Id == updateUser.Id);
 
-                if (updateUser.RoleId == 1)
+                int rootId = updateUser.RootId;
+                bool isTopRoot;
+
+                AssetNode assetNode = _context.AssetNodes.FirstOrDefault(id => id.AssetNodeId == rootId);
+                if (assetNode.ParentAssetNodeId == 0)
                 {
-                    return BadRequest("Error. Super administrator can not be added, atleat for now.");
+                    isTopRoot = true;
+                }
+                else
+                {
+                    isTopRoot = false;
                 }
 
-                applicationUser.RoleId = updateUser.RoleId;
+                if (isTopRoot)
+                {
+                    applicationUser.Reference = assetNode.Reference;
+                }
+                else
+                {
+                    applicationUser.Reference = _context.AssetNodes.FirstOrDefault(id => id.RootAssetNodeId == assetNode.RootAssetNodeId).Reference;
+                }
+
+                applicationUser.Role = updateUser.Role;
                 applicationUser.FirstName = updateUser.FirstName;
                 applicationUser.LastName = updateUser.LastName;
+
+                if (updateUser.Role == "ADMINISTRATOR")
+                {
+                    applicationUser.IsAdmin = true;
+                    applicationUser.IsUser = false;
+                    applicationUser.IsGuest = false;
+
+                }
+                else if (updateUser.Role == "USER")
+                {
+                    applicationUser.IsUser = true;
+                    applicationUser.IsAdmin = false;
+                    applicationUser.IsGuest = false;
+                }
+                else
+                {
+                    applicationUser.IsGuest = true;
+                    applicationUser.IsAdmin = false;
+                    applicationUser.IsUser = false;
+                }
 
                 //Updating modules
                 List<BinmakModuleAccess> binmakModuleAccesses = _context.BinmakModuleAccesses.Where(id => id.Reference == updateUser.Id).ToList();
@@ -784,24 +849,6 @@ namespace BinmakAPI.Controllers
         {
             List<UserGroup> userGroups1 = _context.UserGroups.Where(id => id.UserId == userId).OrderBy(id => id.GroupId).ToList();
             List<AssetNode> assetNodes = new List<AssetNode>();
-            //List<int> groupIds = new List<int>();
-            //List<Group> groups = new List<Group>();
-
-            //foreach (UserGroup item in userGroups)
-            //{
-            //    groupIds.Add(item.GroupId);
-            //}
-
-            //foreach (int groupId in groupIds)
-            //{
-            //    groups.Add(_context.Groups.FirstOrDefault(id => id.GroupId == groupId));
-            //}
-
-            //foreach (Group group in groups)
-            //{
-            //    assetNodes.Add(_context.AssetNodes.FirstOrDefault(id => id.AssetNodeId == group.AssetNodeId));
-            //}
-
 
             foreach (var bma in userGroups1)
             {
@@ -837,7 +884,6 @@ namespace BinmakAPI.Controllers
 
             return orderedAN;
 
-            //return assetNodes;
         }
 
         public List<int> GetAssetNodesIdsByUser(string userId)
@@ -891,11 +937,8 @@ namespace BinmakAPI.Controllers
             {
                 var templates = new Dictionary<string, object>();
 
-                //var template = _context.Templates.ToList();
-
                 templates.Add("template", new List<object>());
 
-                //return Ok(templates);
                 return Ok();
             }
             catch (Exception Ex)
@@ -903,150 +946,6 @@ namespace BinmakAPI.Controllers
                 return BadRequest("Something bad happaned! " + Ex.Message);
             }
         }
-
-        //[HttpPost("OverallProductionProcess")]
-        //public IActionResult Post([FromBody] OverallProductionProcess model)
-        //{
-        //    try
-        //    {
-        //        AssetUser assetUser = _context.AssetUsers.FirstOrDefault(id=>id.AssetUserId == model.AssetUserId);
-        //        assetUser.IsOverallProductionProcess = model.IsOverallProductionProcess;
-        //        _context.AssetUsers.Update(assetUser);
-        //        _context.SaveChanges();
-
-        //        return Ok();
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        return BadRequest("Something bad happened. "+Ex.Message);
-        //    }
-        //}
-
-        //[HttpPost("OverallProductionBuffer")]
-        //public IActionResult Post([FromBody] OverallProductionBuffer model)
-        //{
-        //    try
-        //    {
-        //        AssetUser assetUser = _context.AssetUsers.FirstOrDefault(id => id.AssetUserId == model.AssetUserId);
-        //        assetUser.IsOverallProductionBuffer = model.IsOverallProductionBuffer;
-        //        _context.AssetUsers.Update(assetUser);
-        //        _context.SaveChanges();
-
-        //        return Ok();
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        return BadRequest("Something bad happened. " + Ex.Message);
-        //    }
-        //}
-
-        //[HttpPost("DrillBlast")]
-        //public IActionResult Post([FromBody] DrillBlast model)
-        //{
-        //    try
-        //    {
-        //        AssetUser assetUser = _context.AssetUsers.FirstOrDefault(id => id.AssetUserId == model.AssetUserId);
-        //        assetUser.IsDrillAndBlast = model.IsDrillAndBlast;
-        //        _context.AssetUsers.Update(assetUser);
-        //        _context.SaveChanges();
-
-        //        return Ok();
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        return BadRequest("Something bad happened. " + Ex.Message);
-        //    }
-        //}
-
-        //[HttpPost("LoadHaul")]
-        //public IActionResult Post([FromBody] LoadHaul model)
-        //{
-        //    try
-        //    {
-        //        AssetUser assetUser = _context.AssetUsers.FirstOrDefault(id => id.AssetUserId == model.AssetUserId);
-        //        assetUser.IsLoadAndHaul = model.IsLoadAndHaul;
-        //        _context.AssetUsers.Update(assetUser);
-        //        _context.SaveChanges();
-
-        //        return Ok();
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        return BadRequest("Something bad happened. " + Ex.Message);
-        //    }
-        //}
-
-        //[HttpPost("Support")]
-        //public IActionResult Post([FromBody] Support model)
-        //{
-        //    try
-        //    {
-        //        AssetUser assetUser = _context.AssetUsers.FirstOrDefault(id => id.AssetUserId == model.AssetUserId);
-        //        assetUser.IsSupport = model.IsSupport;
-        //        _context.AssetUsers.Update(assetUser);
-        //        _context.SaveChanges();
-
-        //        return Ok();
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        return BadRequest("Something bad happened. " + Ex.Message);
-        //    }
-        //}
-
-        //[HttpPost("She")]
-        //public IActionResult Post([FromBody] She model)
-        //{
-        //    try
-        //    {
-        //        AssetUser assetUser = _context.AssetUsers.FirstOrDefault(id => id.AssetUserId == model.AssetUserId);
-        //        assetUser.IsShe = model.IsShe;
-        //        _context.AssetUsers.Update(assetUser);
-        //        _context.SaveChanges();
-
-        //        return Ok();
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        return BadRequest("Something bad happened. " + Ex.Message);
-        //    }
-        //}
-
-        //[HttpPost("FacePrep")]
-        //public IActionResult Post([FromBody] FacePrep model)
-        //{
-        //    try
-        //    {
-        //        AssetUser assetUser = _context.AssetUsers.FirstOrDefault(id => id.AssetUserId == model.AssetUserId);
-        //        assetUser.IsFacePreparation = model.IsFacePrep;
-        //        _context.AssetUsers.Update(assetUser);
-        //        _context.SaveChanges();
-
-        //        return Ok();
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        return BadRequest("Something bad happened. " + Ex.Message);
-        //    }
-        //}
-
-        //[HttpPost("EquipStatus")]
-        //public IActionResult Post([FromBody] EquipStatus model)
-        //{
-        //    try
-        //    {
-        //        AssetUser assetUser = _context.AssetUsers.FirstOrDefault(id => id.AssetUserId == model.AssetUserId);
-        //        assetUser.IsEquipmentStatus = model.IsEquipStatus;
-        //        _context.AssetUsers.Update(assetUser);
-        //        _context.SaveChanges();
-
-        //        return Ok();
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        return BadRequest("Something bad happened. " + Ex.Message);
-        //    }
-        //}
 
     }
 }

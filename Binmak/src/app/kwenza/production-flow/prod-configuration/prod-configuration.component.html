@@ -104,6 +104,8 @@
                     <th>Process Name</th>
                     <th>Process Color</th>
                     <th>Process Background Color</th>
+                    <th>Is KPA Set?</th>
+                    <th>KPA Count</th>
                     <th>Edit</th>
                     <th>Delete</th>
                     <th>Manage KPAs</th>
@@ -114,6 +116,9 @@
                     <td>{{p.processName}}</td>
                     <td>{{p.color}}</td>
                     <td>{{p.backgroundColor}}</td>
+                    <td *ngIf="p.isKPASet" style="background-color: green;">Yes</td>
+                    <td *ngIf="!p.isKPASet" style="background-color: red;">No</td>
+                    <td style="font-weight: bold; color:rgba(0, 69, 125, 1) ;">{{p.kpaCount}}</td>
                     <td>
                         <button type="button" class="btn btn-info" aria-label="Close" mdbWavesEffect
                             (click)="editProcess(p)"

@@ -30,13 +30,13 @@ overflow-x: hidden !important;">
                       <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                         <div class="md-form">
                           <input mdbInput formControlName="FirstName" type="text" id="FirstName" class="form-control">
-                          <label for="FirstName" class="">First Name</label>
+                          <label for="FirstName" class=""><span style="color: red;">*</span> First Name</label>
                         </div>
                       </div>
                       <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                         <div class="md-form">
                           <input mdbInput formControlName="LastName" type="text" id="LastName" class="form-control">
-                          <label for="LastName" class="">Last Name</label>
+                          <label for="LastName" class=""><span style="color: red;">*</span> Last Name</label>
                         </div>
                       </div>
                     </div>
@@ -48,7 +48,7 @@ overflow-x: hidden !important;">
                           <label for="Country" class="">Country</label>-->
 
                           <mdb-select [options]="countries" [filterEnabled]="true" [multiple]="false" [highlightFirst]="false"
-                          formControlName="Country" label="Select Country" [enableSelectAll]="false">
+                          formControlName="Country" label="* Select Country" [enableSelectAll]="false">
                         </mdb-select>
 
                         </div>
@@ -56,7 +56,7 @@ overflow-x: hidden !important;">
                       <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                         <div class="md-form">
                           <input mdbInput formControlName="CompanyName" type="text" id="CompanyName" class="form-control">
-                          <label for="CompanyName" class="">Company Name</label>
+                          <label for="CompanyName" class=""><span style="color: red;">*</span> Company Name</label>
                         </div>
                       </div>
                     </div>
@@ -65,7 +65,7 @@ overflow-x: hidden !important;">
                       <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                         <div class="md-form">
                           <input mdbInput formControlName="Address" type="text" id="Address" class="form-control">
-                          <label for="Address" class="">Address, 1st Floor South Block</label>
+                          <label for="Address" class=""><span style="color: red;">*</span> Address, 1st Floor South Block</label>
                         </div>
                       </div>
                     </div>
@@ -74,7 +74,7 @@ overflow-x: hidden !important;">
                       <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                         <div class="md-form">
                           <input mdbInput formControlName="Address2" type="text" id="Address2" class="form-control">
-                          <label for="Address2" class="">Borrowdale Office Park</label>
+                          <label for="Address2" class="">Address 2</label>
                         </div>
                       </div>
                     </div>
@@ -83,13 +83,13 @@ overflow-x: hidden !important;">
                       <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                         <div class="md-form">
                           <input mdbInput formControlName="City" type="text" id="City" class="form-control">
-                          <label for="City" class="">City</label>
+                          <label for="City" class=""><span style="color: red;">*</span> City</label>
                         </div>
                       </div>
                       <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                         <div class="md-form">
                           <input mdbInput formControlName="Zip" type="text" id="Zip" class="form-control">
-                          <label for="Zip" class="">Zip</label>
+                          <label for="Zip" class=""><span style="color: red;">*</span> Zip</label>
                         </div>
                       </div>
                     </div>
@@ -98,19 +98,19 @@ overflow-x: hidden !important;">
 
                     <div class="md-form">
                       <input mdbInput formControlName="Email" type="email" id="email" class="form-control">
-                      <label for="email" class="">Email</label>
+                      <label for="email" class=""><span style="color: red;">*</span> Email</label>
                     </div>
 
 
 
                     <div class="md-form">
                       <input mdbInput formControlName="Password" type="password" id="password" class="form-control">
-                      <label for="password" class="">Password</label>
+                      <label for="password" class=""><span style="color: red;">*</span> Password</label>
                     </div>
 
                     <div class="md-form">
                       <input mdbInput formControlName="ConfirmPassword" type="password" id="confirmPassword" class="form-control">
-                      <label for="password" class="">Confirm Password</label>
+                      <label for="password" class=""><span style="color: red;">*</span> Confirm Password</label>
                     </div>
 
                     <button (click)="register()" *ngIf="!loading" [disabled]="!form.valid"

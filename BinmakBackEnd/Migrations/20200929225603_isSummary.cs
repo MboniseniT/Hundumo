@@ -1,23 +1,22 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BinmakBackEnd.Migrations
 {
-    public partial class kpa : Migration
+    public partial class isSummary : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<DateTime>(
-                name: "KPADate",
+            migrationBuilder.AddColumn<bool>(
+                name: "IsSummary",
                 table: "KeyProcessAreas",
                 nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                defaultValue: false);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "KPADate",
+                name: "IsSummary",
                 table: "KeyProcessAreas");
         }
     }

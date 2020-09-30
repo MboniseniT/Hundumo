@@ -207,7 +207,7 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
             {
                 DateTime date = DateTime.Parse(model.ProductionDate);
 
-                List<KeyProcessArea> keyProcessAreas = _context.KeyProcessAreas.Where(id => (id.AssetNodeId == model.AssetNodeId)
+                List<KeyProcessArea> keyProcessAreas = _context.KeyProcessAreas.Where(id => (id.AssetNodeId == model.AssetNodeId) && (id.IsSummary == false)
                 /*&& (id.KPADate.Year == date.Year) && (id.KPADate.Month == date.Month) && (id.KPADate.Day == date.Day)*/).ToList();
 
                 List<Production> productions = new List<Production>();
@@ -248,7 +248,7 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
         {
             List<MasterPFKPAs> masterPFKPAs = new List<MasterPFKPAs>();
 
-            List<KeyProcessArea> keyProcessAreas = _context.KeyProcessAreas.Where(id => (id.AssetNodeId == assetNodeId)
+            List<KeyProcessArea> keyProcessAreas = _context.KeyProcessAreas.Where(id => (id.AssetNodeId == assetNodeId) && (id.IsSummary == false)
             /*&& (id.KPADate.Year == date.Year) && (id.KPADate.Month == date.Month) && (id.KPADate.Day == date.Day)*/).ToList();
 
             List<Production> productions = new List<Production>();
@@ -268,8 +268,10 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
                 masterPFKPAs1.amount = _context.Productions.FirstOrDefault(id => (id.KeyProcessAreaId == item.KeyProcessAreaId)
                  && (id.Year == date.Year) && (id.Month == date.Month) && (id.Day == date.Day)).Value;
                 masterPFKPAs1.label = _context.KeyProcessAreas.FirstOrDefault(id => id.KeyProcessAreaId == 
-                item.KeyProcessAreaId).KeyProcessAreaName + " (" + _context.KeyProcessAreaTypes.FirstOrDefault(id => id.KeyProcessAreaTypeId 
-                == _context.KeyProcessAreas.FirstOrDefault(id => id.KeyProcessAreaId == item.KeyProcessAreaId).KeyProcessAreaTypeId).KeyProcessAreaTypeName + ")";
+                item.KeyProcessAreaId).KeyProcessAreaName+" |"+_context.Processes.FirstOrDefault(id=>id.ProcessId == 
+                _context.KeyProcessAreas.FirstOrDefault(id => id.KeyProcessAreaId == item.KeyProcessAreaId).ProcessId).ProcessName + " [" + _context.KeyProcessAreaTypes.FirstOrDefault(id => id.KeyProcessAreaTypeId 
+                == _context.KeyProcessAreas.FirstOrDefault(id => id.KeyProcessAreaId == item.KeyProcessAreaId).KeyProcessAreaTypeId).KeyProcessAreaTypeName 
+                + "]";
                 masterPFKPAs1.value = item.KeyProcessAreaId;
 
                 masterPFKPAs.Add(masterPFKPAs1);
@@ -292,7 +294,23 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
                 (id.ProcessDate.Year == monthProcessProduction.ProductionDate.Year) &&
                 (id.ProcessDate.Month == monthProcessProduction.ProductionDate.Month)).ToList();
 
-                return Ok(processes);
+                var prcs = processes.Select(result => new
+                {
+                    AssetNode = result.AssetNode,
+                    AssetNodeId = result.AssetNodeId,
+                    ParentAssetNode = result.parentAssetNodeId,
+                    Color = result.Color,
+                    BackgroundColor = result.BackgroundColor,
+                    ProcessName = _context.Processes.FirstOrDefault(id => id.ProcessId == result.ProcessId).ProcessName,
+                    ProcessId = result.ProcessId,
+                    ProcessDate = result.ProcessDate,
+                    IsSummary = result.IsSummary,
+                    Reference = result.Reference,
+                    IsKPASet = _context.KeyProcessAreas.Where(id=>id.ProcessId == result.ProcessId).ToList().Count > 0 ? true : false,
+                    KPACount = _context.KeyProcessAreas.Where(id => id.ProcessId == result.ProcessId).ToList().Count
+                });
+
+                return Ok(prcs);
             }
             catch (Exception Ex)
             {
@@ -329,6 +347,7 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
                 keyProcessArea.KeyProcessAreaTypeId = model.KeyProcessAreaTypeId;
                 keyProcessArea.AssetNodeId = model.AssetNodeId;
                 keyProcessArea.ProcessId = model.ProcessId;
+                keyProcessArea.IsSummary = process.IsSummary;
                 keyProcessArea.Color = model.Color;
                 keyProcessArea.BackgroundColor = model.BackgroundColor;
                 keyProcessArea.KPADate = model.ProcessDate;
@@ -499,7 +518,7 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
 
                 List<ProductionFlowInputDatastructure> productionFlowInputDatastructures = new List<ProductionFlowInputDatastructure>();
 
-                foreach (var p in processes)
+                foreach (var p in processes.Where(id=>id.IsSummary == false).ToList())
                 {
                     ProductionFlowInputDatastructure productionFlowInputDatastructure = new ProductionFlowInputDatastructure();
                     productionFlowInputDatastructure.Process = p;
@@ -828,6 +847,38 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
             return Ok(mathematicalOperators);
         }
 
+        [HttpGet("GetKPAFormula")]
+        public IActionResult GetKPAFormula(int keyProcessAreaId)
+        {
+            if (keyProcessAreaId == 0)
+            {
+                return BadRequest("Make sure KPA is selected.");
+            }
+
+            try
+            {
+                FormulaCreation formula = _context.FormulaCreations.FirstOrDefault(id => id.KeyProcessAreaId == keyProcessAreaId);
+                FormularReturn formularReturn = new FormularReturn();
+                formularReturn.KeyProcessAreaId = keyProcessAreaId;
+                formularReturn.KeyProcessAreaName = _context.KeyProcessAreas.FirstOrDefault(id => id.KeyProcessAreaId == keyProcessAreaId).KeyProcessAreaName;
+
+                if (formula == null)
+                {
+                    formularReturn.FormulaString = "";
+                }
+                else
+                {
+                    formularReturn.FormulaString = formula.FormulaString;
+                }
+
+                return Ok(formularReturn);
+            }
+            catch (Exception Ex)
+            {
+                return BadRequest("Something bad happened! " + Ex.Message);
+            }
+        }
+
 
         [HttpPost("formularCreation")]
         public IActionResult CreateKPAFormula([FromBody] FormulaCreationVM formulaCreation)
@@ -839,37 +890,21 @@ namespace BinmakBackEnd.Areas.Kwenza.Controllers
 
             try
             {
-                //Check formular existance and delete before adding
-                List<FormulaCreation> formulaCreations1 = _context.FormulaCreations.Where(id => id.FormularOwnerKPAId == formulaCreation.keyProcessAreaId).ToList();
+                FormulaCreation fc = _context.FormulaCreations.FirstOrDefault(id => id.KeyProcessAreaId == formulaCreation.keyProcessAreaId);
 
-                if (formulaCreations1.Count != 0)
+                if (fc != null)
                 {
-                    _context.FormulaCreations.RemoveRange(formulaCreations1);
+                    _context.FormulaCreations.Remove(fc);
                     _context.SaveChanges();
                 }
 
-                List<FormulaCreation> formulaCreations = new List<FormulaCreation>();
+                FormulaCreation formula = new FormulaCreation();
+                formula.KeyProcessAreaId = formulaCreation.keyProcessAreaId;
+                formula.FormulaString = formulaCreation.FormulaString;
+                formula.MasterFormularArray = formulaCreation.MasterFormularArray;
 
-                for (int i = 0; i < formulaCreation.KPAIds.Count; i++)
-                {
-                    FormulaCreation formula = new FormulaCreation();
-                    formula.KeyProcessAreaId = formulaCreation.KPAIds[i];
-                    formula.FormularOwnerKPAId = formulaCreation.keyProcessAreaId;
-                }
-
-                for (int i = 0; i < formulaCreation.OpsIds.Count; i++)
-                {
-                    FormulaCreation formula = new FormulaCreation();
-                    formula.MathematicalOperatorId = formulaCreation.OpsIds[i];
-                    formula.FormularOwnerKPAId = formulaCreation.keyProcessAreaId;
-                    formulaCreations.Add(formula);
-                }
-
-                //var t = formulaCreations;
-
-                //_context.FormulaCreations.AddRange(formulaCreations);
-                //_context.SaveChanges();
-                
+                _context.FormulaCreations.Add(formula);
+                _context.SaveChanges();
 
                 return Ok();
             }

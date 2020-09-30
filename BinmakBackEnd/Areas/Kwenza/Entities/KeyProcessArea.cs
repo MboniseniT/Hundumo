@@ -20,6 +20,7 @@ namespace BinmakBackEnd.Areas.Kwenza.Entities
         public string Color { get; set; }
         public string Reference { get; set; }
         public bool IsTargetSet { get; set; }
+        public bool IsSummary { get; set; }
         public DateTime KPADate { get; set; }
         public string BackgroundColor { get; set; }
         public int KeyProcessAreaTypeId { get; set; }

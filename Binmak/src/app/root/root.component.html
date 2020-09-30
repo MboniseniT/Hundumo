@@ -45,7 +45,7 @@
     
           </div>
   
-        <div class="col-md-3" routerLink="/binmak/ukwazi">
+        <div class="col-md-3" (click)="ukwazi()">
   
           <mdb-card class="mb-3" borderColor="border-info" style="max-width: 20rem; cursor: pointer;"> 
             <mdb-card-body style="padding-bottom: 5px !important;">
@@ -111,7 +111,7 @@
       <div class="row" *ngIf="isGuest || isUser">
 
   
-        <div class="col-md-4" routerLink="/binmak/ukwazi">
+        <div class="col-md-4" (click)="ukwazi()">
   
           <mdb-card class="mb-4" borderColor="border-info" style="max-width: 20rem; cursor: pointer;"> 
             <mdb-card-body style="padding-bottom: 5px !important;">

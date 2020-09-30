@@ -9,8 +9,7 @@ namespace BinmakBackEnd.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int RoleId { get; set; }
-        //Top Asset Node
+        public string Role { get; set; }
         public int AssignedAssetsNode { get; set; }
         public List<int> BinmakModuleId { get; set; }
         public string Reference { get; set; }

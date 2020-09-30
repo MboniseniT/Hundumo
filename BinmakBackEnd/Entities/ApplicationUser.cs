@@ -22,7 +22,7 @@ namespace BinmakAPI.Entities
         public bool IsAdmin { get; set; }
         public bool IsUser { get; set; }
         public bool IsGuest { get; set; }
-        public int RoleId { get; set; }
+        public string Role { get; set; }
         public string Address { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }

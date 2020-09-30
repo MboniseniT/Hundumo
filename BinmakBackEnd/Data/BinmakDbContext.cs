@@ -16,6 +16,7 @@ namespace BinmakAPI.Data
         {
 
         }
+        public DbSet<LearningManagementSystemLink> LearningManagementSystemLinks { get; set; }
         public DbSet<AssetNode> AssetNodes { get; set; }
         public DbSet<AssetNodeType> AssetNodeTypes { get; set; }
         public DbSet<Organization> Organizations { get; set; }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MainServiceService } from '../services/main-service.service';
 import { Router } from '@angular/router';
+import { ToastService } from 'ng-uikit-pro-standard';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class RootComponent implements OnInit {
 
-  constructor(private router: Router, private service: MainServiceService) { }
+  constructor(private router: Router, private service: MainServiceService, private toastrService: ToastService) { }
 
   name:string;
   surname: string;
@@ -35,19 +36,6 @@ export class RootComponent implements OnInit {
     this.isUser = JSON.parse(localStorage.getItem('currentUser')).isUser;
     this.isGuest = JSON.parse(localStorage.getItem('currentUser')).isGuest;
 
-    /*this.service.getAssets(JSON.parse(localStorage.getItem('currentUser')).userId)
-    .subscribe((resp:any) =>{
-
-      if(resp.length > 0){
-        this.isProductionFlow = true;
-      }else{
-        this.isProductionFlow = false;
-      }
-
-    }, (error: any) =>{
-      console.log();
-    });*/
-
   }
 
   kwenza(){
@@ -64,8 +52,23 @@ export class RootComponent implements OnInit {
     
   }
 
+  ukwazi(){
+    this.service.getLMSLink(JSON.parse(localStorage.getItem('currentUser')).userId)
+    .subscribe((resp: any) =>{
+      console.log(resp);
+      if(resp == null){
+        this.toastrService.warning("No LMS associated with this user! Talk to your administrator.");
+      }
+      else{
+        window.open(resp.link, "_blank"); 
+      }
+    }, (error:any)=>{
+      console.log(error);
+      this.toastrService.error(error.error);
+    })
+  }
+
   letsiba(){
-    //this.isKwenza = false;
     this.isLitsebi = !this.isLitsebi;
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastService } from 'ng-uikit-pro-standard';
 import { MainServiceService } from 'src/app/services/main-service.service';
 
 @Component({
@@ -20,7 +21,11 @@ export class KpaValueConfigComponent implements OnInit {
   formular: Array<any> = [];
   index: number;
 
-  constructor(private route: ActivatedRoute, private service: MainServiceService, 
+  kpaFormula: any;
+  kpaName: string;
+  previousFormula: string;
+
+  constructor(private route: ActivatedRoute, private service: MainServiceService, private toastrService: ToastService,
     private router: Router) { 
   }
 
@@ -44,6 +49,17 @@ export class KpaValueConfigComponent implements OnInit {
       console.log(error.error);
     });
 
+    this.service.GetKPAFormula(this.keyProcessAreaId)
+    .subscribe((resp: any) =>{
+      console.log(resp);
+      this.kpaFormula = resp;
+      this.kpaName = resp.keyProcessAreaName;
+      this.previousFormula = resp.formulaString
+
+    }, (error: any) =>{
+      console.log(error.error);
+    });
+
     this.service.getMathsOperators()
     .subscribe((resp: any) =>{
       console.log(resp);
@@ -58,7 +74,7 @@ export class KpaValueConfigComponent implements OnInit {
 
   kpaSummaryConfigForm = new FormGroup({
     kpa: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    operator: new FormControl('', [Validators.required, Validators.minLength(1)])
+    operator: new FormControl('')
   });
 
   k: any;
@@ -69,12 +85,14 @@ export class KpaValueConfigComponent implements OnInit {
   masterFormulaKPA: Array<any> = [];
   masterFormulaO: Array<any> = [];
   masterIndex: Array<any> = [];
+  masterFormularAll: Array<any> = [];
 
   SaveKpa(){
     this.index = this.index + 1;
     this.k =  this.kpas.filter(id=>id.value == this.kpaSummaryConfigForm.value.kpa);
     this.kpa = this.k[0].label;
     this.masterFormulaKPA.push(this.k[0].value);
+    this.masterFormularAll.push(this.k[0].value);
     this.masterIndex.push(this.index);
     this.formularChainString = this.formularChainString +' '+this.kpa;
   }
@@ -85,7 +103,7 @@ export class KpaValueConfigComponent implements OnInit {
     this.operator = this.o[0].label;
 
     this.masterFormulaO.push(this.o[0].value);
-
+    this.masterFormularAll.push(this.k[0].value)
     this.masterIndex.push(this.index);
     this.formularChainString = this.formularChainString +' '+this.operator;
   }
@@ -98,20 +116,19 @@ export class KpaValueConfigComponent implements OnInit {
   Save(){
 
     const model ={
-      KPAIds: this.masterFormulaKPA,
-      OpsIds: this.masterFormulaO,
       keyProcessAreaId: this.keyProcessAreaId,
-      Indeces: this.masterIndex
+      FormulaString: this.formularChainString,
+      MasterFormularArray: this.masterFormularAll.join()
     }
 
     this.service.saveFormulaCreation(model)
     .subscribe((resp: any) =>{
       console.log(resp);
-      this.operators = resp.map((t: any) => {
-        return { label: t.mathematicalOperatorSign, value: t.mathematicalOperatorId }
-      })
+
+      location.reload();
     }, (error: any) =>{
       console.log(error.error);
+      this.toastrService.error(error.error);
     });
 
 

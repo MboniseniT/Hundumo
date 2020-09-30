@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
     CompanyName: new FormControl('', [Validators.required, Validators.minLength(2)]),
     Country: new FormControl(0, [Validators.required, Validators.minLength(2)]),
     Address: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    Address2: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    Address2: new FormControl(''),
     City: new FormControl('', [Validators.required, Validators.minLength(2)]),
     Zip: new FormControl('', [Validators.required, Validators.minLength(2)])
   });

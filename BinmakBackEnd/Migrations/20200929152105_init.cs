@@ -3,28 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BinmakBackEnd.Migrations
 {
-    public partial class mergetablesv1 : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Actions",
-                columns: table => new
-                {
-                    ActionId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ActionName = table.Column<string>(nullable: true),
-                    AssetId = table.Column<int>(nullable: false),
-                    ActionIndex = table.Column<int>(nullable: false),
-                    Reference = table.Column<string>(nullable: true),
-                    DateStamp = table.Column<DateTime>(nullable: false),
-                    DateProduction = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Actions", x => x.ActionId);
-                });
-
             migrationBuilder.CreateTable(
                 name: "ActualAssessment",
                 columns: table => new
@@ -82,45 +64,6 @@ namespace BinmakBackEnd.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(maxLength: 50, nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    IsAdmin = table.Column<bool>(nullable: false),
-                    IsBinmak = table.Column<bool>(nullable: false),
-                    Address = table.Column<string>(nullable: true),
-                    Address2 = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    CompanyId = table.Column<int>(nullable: false),
-                    CountryId = table.Column<int>(nullable: false),
-                    Zip = table.Column<int>(nullable: false),
-                    Position = table.Column<string>(nullable: true),
-                    DateStamp = table.Column<DateTime>(nullable: false),
-                    Reference = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -240,35 +183,6 @@ namespace BinmakBackEnd.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AssetNodes",
-                columns: table => new
-                {
-                    AssetNodeId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ParentAssetNodeId = table.Column<int>(nullable: false),
-                    RootAssetNodeId = table.Column<int>(nullable: false),
-                    AssetNodeTypeId = table.Column<int>(nullable: false),
-                    Height = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Code = table.Column<string>(nullable: true),
-                    DateStamp = table.Column<DateTime>(nullable: false),
-                    Reference = table.Column<string>(nullable: true),
-                    LastEditedDate = table.Column<DateTime>(nullable: false),
-                    LastEditedBy = table.Column<string>(nullable: true),
-                    IsParentAddress = table.Column<bool>(nullable: false),
-                    Address = table.Column<string>(nullable: true),
-                    Address2 = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    CountryId = table.Column<int>(nullable: false),
-                    Zip = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AssetNodes", x => x.AssetNodeId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AssetNodeTypes",
                 columns: table => new
                 {
@@ -321,6 +235,19 @@ namespace BinmakBackEnd.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bearings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BinmakModules",
+                columns: table => new
+                {
+                    BinmakModuleId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BinmakModuleName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BinmakModules", x => x.BinmakModuleId);
                 });
 
             migrationBuilder.CreateTable(
@@ -436,11 +363,25 @@ namespace BinmakBackEnd.Migrations
                     AssetName = table.Column<string>(nullable: true),
                     ClientName = table.Column<string>(nullable: true),
                     Reference = table.Column<string>(nullable: true),
-                    DateStamp = table.Column<DateTime>(nullable: false)
+                    DateStamp = table.Column<DateTime>(nullable: false),
+                    AssetNodeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ClientAssetNames", x => x.ClientAssetId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ColorPalletes",
+                columns: table => new
+                {
+                    ColorPalleteId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ColorPalleteName = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ColorPalletes", x => x.ColorPalleteId);
                 });
 
             migrationBuilder.CreateTable(
@@ -584,53 +525,6 @@ namespace BinmakBackEnd.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FunctionUnitChildrens",
-                columns: table => new
-                {
-                    FunctionUnitChildrenId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FunctionUnitChildrenName = table.Column<string>(nullable: true),
-                    FunctionUnitId = table.Column<int>(nullable: false),
-                    AssetId = table.Column<int>(nullable: false),
-                    ClientAssetNameId = table.Column<int>(nullable: false),
-                    FunctionChildrenBachgroundColor = table.Column<string>(nullable: true),
-                    FunctionChildrenColor = table.Column<string>(nullable: true),
-                    Frequency = table.Column<string>(nullable: true),
-                    MeasurementUnit = table.Column<string>(nullable: true),
-                    MonthlyTarget = table.Column<string>(nullable: true),
-                    MonthlyTargetColor = table.Column<string>(nullable: true),
-                    MonthlyTargetIsBackground = table.Column<bool>(nullable: false),
-                    Target = table.Column<string>(nullable: true),
-                    TargetColor = table.Column<string>(nullable: true),
-                    TargetIsBackground = table.Column<bool>(nullable: false),
-                    Budget = table.Column<string>(nullable: true),
-                    BudgetColor = table.Column<string>(nullable: true),
-                    BudgetIsBackground = table.Column<bool>(nullable: false),
-                    Threshold = table.Column<string>(nullable: true),
-                    ThresholdColor = table.Column<string>(nullable: true),
-                    ThresholdIsBackground = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FunctionUnitChildrens", x => x.FunctionUnitChildrenId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FunctionUnits",
-                columns: table => new
-                {
-                    FunctionUnitId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FunctionUnitName = table.Column<string>(nullable: true),
-                    AssetId = table.Column<int>(nullable: false),
-                    ClientAssetNameId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FunctionUnits", x => x.FunctionUnitId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "InsulationLevels",
                 columns: table => new
                 {
@@ -642,6 +536,20 @@ namespace BinmakBackEnd.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InsulationLevels", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "KeyProcessAreaTypes",
+                columns: table => new
+                {
+                    KeyProcessAreaTypeId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    KeyProcessAreaTypeName = table.Column<string>(nullable: true),
+                    AssetNodeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_KeyProcessAreaTypes", x => x.KeyProcessAreaTypeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -778,6 +686,19 @@ namespace BinmakBackEnd.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MathematicalOperators",
+                columns: table => new
+                {
+                    MathematicalOperatorId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MathematicalOperatorSign = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MathematicalOperators", x => x.MathematicalOperatorId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Organizations",
                 columns: table => new
                 {
@@ -802,49 +723,6 @@ namespace BinmakBackEnd.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Organizations", x => x.OrganizationId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductionFlowAssets",
-                columns: table => new
-                {
-                    ProductionFlowAssetId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AssetId = table.Column<int>(nullable: false),
-                    ClientAssetNameId = table.Column<int>(nullable: false),
-                    SiteName = table.Column<string>(nullable: true),
-                    TemplateId = table.Column<int>(nullable: false),
-                    Reference = table.Column<string>(nullable: true),
-                    DateStamp = table.Column<DateTime>(nullable: false),
-                    SinceDateProduction = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductionFlowAssets", x => x.ProductionFlowAssetId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductionFlowAssetUsers",
-                columns: table => new
-                {
-                    ProductionFlowAssetUserId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AssetId = table.Column<int>(nullable: false),
-                    Reference = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true),
-                    DateStamp = table.Column<DateTime>(nullable: false),
-                    IsOverallProductionProcess = table.Column<bool>(nullable: false),
-                    IsOverallProductionBuffer = table.Column<bool>(nullable: false),
-                    IsDrillAndBlast = table.Column<bool>(nullable: false),
-                    IsSupport = table.Column<bool>(nullable: false),
-                    IsShe = table.Column<bool>(nullable: false),
-                    IsLoadAndHaul = table.Column<bool>(nullable: false),
-                    IsFacePreparation = table.Column<bool>(nullable: false),
-                    IsEquipmentStatus = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductionFlowAssetUsers", x => x.ProductionFlowAssetUserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -873,6 +751,516 @@ namespace BinmakBackEnd.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductiveUnits", x => x.ProductiveUnitId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReferenceLookups",
+                columns: table => new
+                {
+                    ReferenceLookupId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(nullable: true),
+                    Reference = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReferenceLookups", x => x.ReferenceLookupId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "results",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    characteristic_id = table.Column<int>(nullable: false),
+                    assess_id = table.Column<int>(nullable: false),
+                    user_id = table.Column<string>(nullable: true),
+                    kpa_id = table.Column<int>(nullable: true),
+                    level_id = table.Column<int>(nullable: true),
+                    value = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_results", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RiskAcceptanceThreshold",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ThresholdRiskBand = table.Column<string>(nullable: true),
+                    RiskAcceptanceThresholds = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RiskAcceptanceThreshold", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RiskAssessorLogin",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    Fullname = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RiskAssessorLogin", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RiskDeterminationMatrix",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FailureFrequency = table.Column<string>(nullable: true),
+                    Minor = table.Column<string>(nullable: true),
+                    Medium = table.Column<string>(nullable: true),
+                    Serious = table.Column<string>(nullable: true),
+                    Major = table.Column<string>(nullable: true),
+                    Catastrophic = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RiskDeterminationMatrix", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SensorConditions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SensorConditions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SizeCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Category = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SizeCategories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Template",
+                columns: table => new
+                {
+                    TemplateId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TemplateName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Template", x => x.TemplateId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Templates",
+                columns: table => new
+                {
+                    TemplateId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TemplateName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Templates", x => x.TemplateId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "variants",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(nullable: true),
+                    description = table.Column<string>(nullable: true),
+                    user_id = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_variants", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "versions",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(nullable: true),
+                    description = table.Column<string>(nullable: true),
+                    user_id = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_versions", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssetNodes",
+                columns: table => new
+                {
+                    AssetNodeId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ParentAssetNodeId = table.Column<int>(nullable: false),
+                    RootAssetNodeId = table.Column<int>(nullable: false),
+                    AssetNodeTypeId = table.Column<int>(nullable: false),
+                    Height = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: true),
+                    DateStamp = table.Column<DateTime>(nullable: false),
+                    Reference = table.Column<string>(nullable: true),
+                    GroupId = table.Column<int>(nullable: false),
+                    LastEditedDate = table.Column<DateTime>(nullable: false),
+                    LastEditedBy = table.Column<string>(nullable: true),
+                    IsParentAddress = table.Column<bool>(nullable: false),
+                    Address = table.Column<string>(nullable: true),
+                    Address2 = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    CountryId = table.Column<int>(nullable: false),
+                    Zip = table.Column<string>(nullable: true),
+                    isProductionFlow = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssetNodes", x => x.AssetNodeId);
+                    table.ForeignKey(
+                        name: "FK_AssetNodes_AssetNodeTypes_AssetNodeTypeId",
+                        column: x => x.AssetNodeTypeId,
+                        principalTable: "AssetNodeTypes",
+                        principalColumn: "AssetNodeTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BBSSDevices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    DeviceId = table.Column<string>(nullable: true),
+                    BinmakTechnologyId = table.Column<int>(nullable: false),
+                    ApplicationId = table.Column<int>(nullable: false),
+                    FirmwareVersion = table.Column<string>(nullable: true),
+                    HardwareVersion = table.Column<string>(nullable: true),
+                    ReleaseDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BBSSDevices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BBSSDevices_Applications_ApplicationId",
+                        column: x => x.ApplicationId,
+                        principalTable: "Applications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BBSSDevices_BinmakTechnologies_BinmakTechnologyId",
+                        column: x => x.BinmakTechnologyId,
+                        principalTable: "BinmakTechnologies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IsBinmak = table.Column<bool>(nullable: false),
+                    IsSuperAdmin = table.Column<bool>(nullable: false),
+                    IsAdmin = table.Column<bool>(nullable: false),
+                    IsUser = table.Column<bool>(nullable: false),
+                    IsGuest = table.Column<bool>(nullable: false),
+                    Role = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    Address2 = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    CompanyId = table.Column<int>(nullable: false),
+                    CountryId = table.Column<int>(nullable: false),
+                    Zip = table.Column<string>(nullable: true),
+                    Position = table.Column<string>(nullable: true),
+                    IsLocked = table.Column<bool>(nullable: false),
+                    IsAccountOwner = table.Column<bool>(nullable: false),
+                    DateStamp = table.Column<DateTime>(nullable: false),
+                    Reference = table.Column<string>(nullable: true),
+                    RootId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "CountryId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FormulaCreations",
+                columns: table => new
+                {
+                    FormulaCreationId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    KeyProcessAreaId = table.Column<int>(nullable: false),
+                    FormularOwnerKPAId = table.Column<int>(nullable: false),
+                    Index = table.Column<int>(nullable: false),
+                    MathematicalOperatorId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FormulaCreations", x => x.FormulaCreationId);
+                    table.ForeignKey(
+                        name: "FK_FormulaCreations_MathematicalOperators_MathematicalOperatorId",
+                        column: x => x.MathematicalOperatorId,
+                        principalTable: "MathematicalOperators",
+                        principalColumn: "MathematicalOperatorId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Actions",
+                columns: table => new
+                {
+                    ActionId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ActionName = table.Column<string>(nullable: true),
+                    AssetId = table.Column<int>(nullable: false),
+                    AssetNodeId = table.Column<int>(nullable: true),
+                    ActionIndex = table.Column<int>(nullable: false),
+                    Reference = table.Column<string>(nullable: true),
+                    DateStamp = table.Column<DateTime>(nullable: false),
+                    DateProduction = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Actions", x => x.ActionId);
+                    table.ForeignKey(
+                        name: "FK_Actions_AssetNodes_AssetNodeId",
+                        column: x => x.AssetNodeId,
+                        principalTable: "AssetNodes",
+                        principalColumn: "AssetNodeId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FunctionUnitChildrens",
+                columns: table => new
+                {
+                    FunctionUnitChildrenId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FunctionUnitChildrenName = table.Column<string>(nullable: true),
+                    FunctionUnitId = table.Column<int>(nullable: false),
+                    AssetId = table.Column<int>(nullable: false),
+                    AssetNodeId = table.Column<int>(nullable: true),
+                    ClientAssetNameId = table.Column<int>(nullable: false),
+                    FunctionChildrenBachgroundColor = table.Column<string>(nullable: true),
+                    FunctionChildrenColor = table.Column<string>(nullable: true),
+                    Frequency = table.Column<string>(nullable: true),
+                    MeasurementUnit = table.Column<string>(nullable: true),
+                    MonthlyTarget = table.Column<string>(nullable: true),
+                    MonthlyTargetColor = table.Column<string>(nullable: true),
+                    MonthlyTargetIsBackground = table.Column<bool>(nullable: false),
+                    Target = table.Column<string>(nullable: true),
+                    TargetColor = table.Column<string>(nullable: true),
+                    TargetIsBackground = table.Column<bool>(nullable: false),
+                    Budget = table.Column<string>(nullable: true),
+                    BudgetColor = table.Column<string>(nullable: true),
+                    BudgetIsBackground = table.Column<bool>(nullable: false),
+                    Threshold = table.Column<string>(nullable: true),
+                    ThresholdColor = table.Column<string>(nullable: true),
+                    ThresholdIsBackground = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FunctionUnitChildrens", x => x.FunctionUnitChildrenId);
+                    table.ForeignKey(
+                        name: "FK_FunctionUnitChildrens_AssetNodes_AssetNodeId",
+                        column: x => x.AssetNodeId,
+                        principalTable: "AssetNodes",
+                        principalColumn: "AssetNodeId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FunctionUnitChildrens_ClientAssetNames_ClientAssetNameId",
+                        column: x => x.ClientAssetNameId,
+                        principalTable: "ClientAssetNames",
+                        principalColumn: "ClientAssetId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FunctionUnits",
+                columns: table => new
+                {
+                    FunctionUnitId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FunctionUnitName = table.Column<string>(nullable: true),
+                    AssetId = table.Column<int>(nullable: false),
+                    AssetNodeId = table.Column<int>(nullable: true),
+                    ClientAssetNameId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FunctionUnits", x => x.FunctionUnitId);
+                    table.ForeignKey(
+                        name: "FK_FunctionUnits_AssetNodes_AssetNodeId",
+                        column: x => x.AssetNodeId,
+                        principalTable: "AssetNodes",
+                        principalColumn: "AssetNodeId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FunctionUnits_ClientAssetNames_ClientAssetNameId",
+                        column: x => x.ClientAssetNameId,
+                        principalTable: "ClientAssetNames",
+                        principalColumn: "ClientAssetId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Groups",
+                columns: table => new
+                {
+                    GroupId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GroupName = table.Column<string>(nullable: true),
+                    AssetNodeId = table.Column<int>(nullable: false),
+                    Reference = table.Column<string>(nullable: true),
+                    DateStamp = table.Column<DateTime>(nullable: false),
+                    RootId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Groups", x => x.GroupId);
+                    table.ForeignKey(
+                        name: "FK_Groups_AssetNodes_AssetNodeId",
+                        column: x => x.AssetNodeId,
+                        principalTable: "AssetNodes",
+                        principalColumn: "AssetNodeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Processes",
+                columns: table => new
+                {
+                    ProcessId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AssetNodeId = table.Column<int>(nullable: false),
+                    ProcessName = table.Column<string>(nullable: true),
+                    DateStamp = table.Column<DateTime>(nullable: false),
+                    Reference = table.Column<string>(nullable: true),
+                    Color = table.Column<string>(nullable: true),
+                    BackgroundColor = table.Column<string>(nullable: true),
+                    ProcessDate = table.Column<DateTime>(nullable: false),
+                    IsSummary = table.Column<bool>(nullable: false),
+                    parentAssetNodeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Processes", x => x.ProcessId);
+                    table.ForeignKey(
+                        name: "FK_Processes_AssetNodes_AssetNodeId",
+                        column: x => x.AssetNodeId,
+                        principalTable: "AssetNodes",
+                        principalColumn: "AssetNodeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductionFlowAssets",
+                columns: table => new
+                {
+                    ProductionFlowAssetId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AssetId = table.Column<int>(nullable: false),
+                    ClientAssetNameId = table.Column<int>(nullable: false),
+                    SiteName = table.Column<string>(nullable: true),
+                    TemplateId = table.Column<int>(nullable: false),
+                    Reference = table.Column<string>(nullable: true),
+                    DateStamp = table.Column<DateTime>(nullable: false),
+                    SinceDateProduction = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductionFlowAssets", x => x.ProductionFlowAssetId);
+                    table.ForeignKey(
+                        name: "FK_ProductionFlowAssets_AssetNodes_AssetId",
+                        column: x => x.AssetId,
+                        principalTable: "AssetNodes",
+                        principalColumn: "AssetNodeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductionFlowAssets_ClientAssetNames_ClientAssetNameId",
+                        column: x => x.ClientAssetNameId,
+                        principalTable: "ClientAssetNames",
+                        principalColumn: "ClientAssetId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductionFlowAssets_Template_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "Template",
+                        principalColumn: "TemplateId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1036,160 +1424,89 @@ namespace BinmakBackEnd.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Readings", x => x.ReadingId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "results",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    characteristic_id = table.Column<int>(nullable: false),
-                    assess_id = table.Column<int>(nullable: false),
-                    user_id = table.Column<string>(nullable: true),
-                    kpa_id = table.Column<int>(nullable: true),
-                    level_id = table.Column<int>(nullable: true),
-                    value = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_results", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RiskAcceptanceThreshold",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ThresholdRiskBand = table.Column<string>(nullable: true),
-                    RiskAcceptanceThresholds = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RiskAcceptanceThreshold", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RiskAssessorLogin",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    Fullname = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RiskAssessorLogin", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RiskDeterminationMatrix",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FailureFrequency = table.Column<string>(nullable: true),
-                    Minor = table.Column<string>(nullable: true),
-                    Medium = table.Column<string>(nullable: true),
-                    Serious = table.Column<string>(nullable: true),
-                    Major = table.Column<string>(nullable: true),
-                    Catastrophic = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RiskDeterminationMatrix", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SensorConditions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SensorConditions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SizeCategories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Category = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SizeCategories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Templates",
-                columns: table => new
-                {
-                    TemplateId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TemplateName = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Templates", x => x.TemplateId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "variants",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(nullable: true),
-                    description = table.Column<string>(nullable: true),
-                    user_id = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_variants", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "versions",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(nullable: true),
-                    description = table.Column<string>(nullable: true),
-                    user_id = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_versions", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
+                        name: "FK_Readings_AssetNodes_AssetId",
+                        column: x => x.AssetId,
+                        principalTable: "AssetNodes",
+                        principalColumn: "AssetNodeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Machines",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImageUrl = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    DeviceId = table.Column<string>(nullable: true),
+                    BBSSDeviceId = table.Column<int>(nullable: false),
+                    AssetNodeId = table.Column<int>(nullable: false),
+                    SizeCategoryId = table.Column<int>(nullable: false),
+                    RmsAlert = table.Column<decimal>(nullable: false),
+                    RmsAlarm = table.Column<decimal>(nullable: false),
+                    TemperatureAlarm = table.Column<decimal>(nullable: false),
+                    TemperatureAlert = table.Column<decimal>(nullable: false),
+                    MachineTypeId = table.Column<int>(nullable: false),
+                    RevolutionPerMinute = table.Column<int>(nullable: false),
+                    InsulationLevelId = table.Column<int>(nullable: false),
+                    FrequencyPeriodId = table.Column<int>(nullable: false),
+                    MachineLoadId = table.Column<int>(nullable: false),
+                    NonDrivingEndId = table.Column<int>(nullable: false),
+                    DrivingEndId = table.Column<int>(nullable: false),
+                    Criticality = table.Column<string>(nullable: true),
+                    ConditionId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Machines", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Machines_AssetNodes_AssetNodeId",
+                        column: x => x.AssetNodeId,
+                        principalTable: "AssetNodes",
+                        principalColumn: "AssetNodeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Machines_BBSSDevices_BBSSDeviceId",
+                        column: x => x.BBSSDeviceId,
+                        principalTable: "BBSSDevices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Machines_SensorConditions_ConditionId",
+                        column: x => x.ConditionId,
+                        principalTable: "SensorConditions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Machines_FrequencyPeriods_FrequencyPeriodId",
+                        column: x => x.FrequencyPeriodId,
+                        principalTable: "FrequencyPeriods",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Machines_InsulationLevels_InsulationLevelId",
+                        column: x => x.InsulationLevelId,
+                        principalTable: "InsulationLevels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Machines_MachineLoads_MachineLoadId",
+                        column: x => x.MachineLoadId,
+                        principalTable: "MachineLoads",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Machines_MachineTypes_MachineTypeId",
+                        column: x => x.MachineTypeId,
+                        principalTable: "MachineTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Machines_SizeCategories_SizeCategoryId",
+                        column: x => x.SizeCategoryId,
+                        principalTable: "SizeCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1302,6 +1619,63 @@ namespace BinmakBackEnd.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BinmakModuleAccesses",
+                columns: table => new
+                {
+                    BinmakModuleAccessId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BinmakModuleId = table.Column<int>(nullable: false),
+                    DateStamp = table.Column<DateTime>(nullable: false),
+                    Reference = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BinmakModuleAccesses", x => x.BinmakModuleAccessId);
+                    table.ForeignKey(
+                        name: "FK_BinmakModuleAccesses_BinmakModules_BinmakModuleId",
+                        column: x => x.BinmakModuleId,
+                        principalTable: "BinmakModules",
+                        principalColumn: "BinmakModuleId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BinmakModuleAccesses_AspNetUsers_Reference",
+                        column: x => x.Reference,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductionFlowAssetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    ProductionFlowAssetUserId = table.Column<int>(nullable: false),
+                    AssetId = table.Column<int>(nullable: false),
+                    Reference = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
+                    DateStamp = table.Column<DateTime>(nullable: false),
+                    IsOverallProductionProcess = table.Column<bool>(nullable: false),
+                    IsOverallProductionBuffer = table.Column<bool>(nullable: false),
+                    IsDrillAndBlast = table.Column<bool>(nullable: false),
+                    IsSupport = table.Column<bool>(nullable: false),
+                    IsShe = table.Column<bool>(nullable: false),
+                    IsLoadAndHaul = table.Column<bool>(nullable: false),
+                    IsFacePreparation = table.Column<bool>(nullable: false),
+                    IsEquipmentStatus = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductionFlowAssetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductionFlowAssetUsers_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserSettings",
                 columns: table => new
                 {
@@ -1338,112 +1712,62 @@ namespace BinmakBackEnd.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BBSSDevices",
+                name: "UserGroups",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    UserGroupId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    DeviceId = table.Column<string>(nullable: true),
-                    BinmakTechnologyId = table.Column<int>(nullable: false),
-                    ApplicationId = table.Column<int>(nullable: false),
-                    FirmwareVersion = table.Column<string>(nullable: true),
-                    HardwareVersion = table.Column<string>(nullable: true),
-                    ReleaseDate = table.Column<DateTime>(nullable: false)
+                    GroupId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    RootId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BBSSDevices", x => x.Id);
+                    table.PrimaryKey("PK_UserGroups", x => x.UserGroupId);
                     table.ForeignKey(
-                        name: "FK_BBSSDevices_Applications_ApplicationId",
-                        column: x => x.ApplicationId,
-                        principalTable: "Applications",
-                        principalColumn: "Id",
+                        name: "FK_UserGroups_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "GroupId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BBSSDevices_BinmakTechnologies_BinmakTechnologyId",
-                        column: x => x.BinmakTechnologyId,
-                        principalTable: "BinmakTechnologies",
+                        name: "FK_UserGroups_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Machines",
+                name: "KeyProcessAreas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    KeyProcessAreaId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ImageUrl = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    DeviceId = table.Column<string>(nullable: true),
-                    BBSSDeviceId = table.Column<int>(nullable: false),
                     AssetNodeId = table.Column<int>(nullable: false),
-                    SizeCategoryId = table.Column<int>(nullable: false),
-                    RmsAlert = table.Column<decimal>(nullable: false),
-                    RmsAlarm = table.Column<decimal>(nullable: false),
-                    TemperatureAlarm = table.Column<decimal>(nullable: false),
-                    TemperatureAlert = table.Column<decimal>(nullable: false),
-                    MachineTypeId = table.Column<int>(nullable: false),
-                    RevolutionPerMinute = table.Column<int>(nullable: false),
-                    InsulationLevelId = table.Column<int>(nullable: false),
-                    FrequencyPeriodId = table.Column<int>(nullable: false),
-                    MachineLoadId = table.Column<int>(nullable: false),
-                    NonDrivingEndId = table.Column<int>(nullable: false),
-                    DrivingEndId = table.Column<int>(nullable: false),
-                    Criticality = table.Column<string>(nullable: true),
-                    ConditionId = table.Column<int>(nullable: false)
+                    ProcessId = table.Column<int>(nullable: false),
+                    KeyProcessAreaName = table.Column<string>(nullable: true),
+                    Color = table.Column<string>(nullable: true),
+                    Reference = table.Column<string>(nullable: true),
+                    IsTargetSet = table.Column<bool>(nullable: false),
+                    KPADate = table.Column<DateTime>(nullable: false),
+                    BackgroundColor = table.Column<string>(nullable: true),
+                    KeyProcessAreaTypeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Machines", x => x.Id);
+                    table.PrimaryKey("PK_KeyProcessAreas", x => x.KeyProcessAreaId);
                     table.ForeignKey(
-                        name: "FK_Machines_AssetNodes_AssetNodeId",
-                        column: x => x.AssetNodeId,
-                        principalTable: "AssetNodes",
-                        principalColumn: "AssetNodeId",
+                        name: "FK_KeyProcessAreas_KeyProcessAreaTypes_KeyProcessAreaTypeId",
+                        column: x => x.KeyProcessAreaTypeId,
+                        principalTable: "KeyProcessAreaTypes",
+                        principalColumn: "KeyProcessAreaTypeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Machines_BBSSDevices_BBSSDeviceId",
-                        column: x => x.BBSSDeviceId,
-                        principalTable: "BBSSDevices",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Machines_SensorConditions_ConditionId",
-                        column: x => x.ConditionId,
-                        principalTable: "SensorConditions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Machines_FrequencyPeriods_FrequencyPeriodId",
-                        column: x => x.FrequencyPeriodId,
-                        principalTable: "FrequencyPeriods",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Machines_InsulationLevels_InsulationLevelId",
-                        column: x => x.InsulationLevelId,
-                        principalTable: "InsulationLevels",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Machines_MachineLoads_MachineLoadId",
-                        column: x => x.MachineLoadId,
-                        principalTable: "MachineLoads",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Machines_MachineTypes_MachineTypeId",
-                        column: x => x.MachineTypeId,
-                        principalTable: "MachineTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Machines_SizeCategories_SizeCategoryId",
-                        column: x => x.SizeCategoryId,
-                        principalTable: "SizeCategories",
-                        principalColumn: "Id",
+                        name: "FK_KeyProcessAreas_Processes_ProcessId",
+                        column: x => x.ProcessId,
+                        principalTable: "Processes",
+                        principalColumn: "ProcessId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -1539,6 +1863,79 @@ namespace BinmakBackEnd.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Frequencies",
+                columns: table => new
+                {
+                    FrequencyId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FrequencyName = table.Column<string>(nullable: true),
+                    KeyProcessAreaId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Frequencies", x => x.FrequencyId);
+                    table.ForeignKey(
+                        name: "FK_Frequencies_KeyProcessAreas_KeyProcessAreaId",
+                        column: x => x.KeyProcessAreaId,
+                        principalTable: "KeyProcessAreas",
+                        principalColumn: "KeyProcessAreaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Productions",
+                columns: table => new
+                {
+                    ProductionId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Year = table.Column<int>(nullable: false),
+                    Month = table.Column<int>(nullable: false),
+                    Day = table.Column<int>(nullable: false),
+                    Reference = table.Column<string>(nullable: true),
+                    DateStamp = table.Column<DateTime>(nullable: false),
+                    KeyProcessAreaId = table.Column<int>(nullable: false),
+                    AssetNodeId = table.Column<int>(nullable: false),
+                    Value = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Productions", x => x.ProductionId);
+                    table.ForeignKey(
+                        name: "FK_Productions_KeyProcessAreas_KeyProcessAreaId",
+                        column: x => x.KeyProcessAreaId,
+                        principalTable: "KeyProcessAreas",
+                        principalColumn: "KeyProcessAreaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Targets",
+                columns: table => new
+                {
+                    TargetId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    KeyProcessAreaId = table.Column<int>(nullable: false),
+                    AssetNodeId = table.Column<int>(nullable: false),
+                    TargetValue = table.Column<int>(nullable: false),
+                    Budget = table.Column<int>(nullable: false),
+                    Threshold = table.Column<int>(nullable: false),
+                    Year = table.Column<int>(nullable: false),
+                    Month = table.Column<int>(nullable: false),
+                    DateStamp = table.Column<DateTime>(nullable: false),
+                    Reference = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Targets", x => x.TargetId);
+                    table.ForeignKey(
+                        name: "FK_Targets_KeyProcessAreas_KeyProcessAreaId",
+                        column: x => x.KeyProcessAreaId,
+                        principalTable: "KeyProcessAreas",
+                        principalColumn: "KeyProcessAreaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Acknowledgements_ConditionId1",
                 table: "Acknowledgements",
@@ -1553,6 +1950,11 @@ namespace BinmakBackEnd.Migrations
                 name: "IX_Acknowledgements_UserId",
                 table: "Acknowledgements",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Actions_AssetNodeId",
+                table: "Actions",
+                column: "AssetNodeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -1582,6 +1984,11 @@ namespace BinmakBackEnd.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_CountryId",
+                table: "AspNetUsers",
+                column: "CountryId");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -1592,6 +1999,11 @@ namespace BinmakBackEnd.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssetNodes_AssetNodeTypeId",
+                table: "AssetNodes",
+                column: "AssetNodeTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AuditTrails_UserId",
@@ -1607,6 +2019,61 @@ namespace BinmakBackEnd.Migrations
                 name: "IX_BBSSDevices_BinmakTechnologyId",
                 table: "BBSSDevices",
                 column: "BinmakTechnologyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BinmakModuleAccesses_BinmakModuleId",
+                table: "BinmakModuleAccesses",
+                column: "BinmakModuleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BinmakModuleAccesses_Reference",
+                table: "BinmakModuleAccesses",
+                column: "Reference");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FormulaCreations_MathematicalOperatorId",
+                table: "FormulaCreations",
+                column: "MathematicalOperatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Frequencies_KeyProcessAreaId",
+                table: "Frequencies",
+                column: "KeyProcessAreaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FunctionUnitChildrens_AssetNodeId",
+                table: "FunctionUnitChildrens",
+                column: "AssetNodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FunctionUnitChildrens_ClientAssetNameId",
+                table: "FunctionUnitChildrens",
+                column: "ClientAssetNameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FunctionUnits_AssetNodeId",
+                table: "FunctionUnits",
+                column: "AssetNodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FunctionUnits_ClientAssetNameId",
+                table: "FunctionUnits",
+                column: "ClientAssetNameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Groups_AssetNodeId",
+                table: "Groups",
+                column: "AssetNodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_KeyProcessAreas_KeyProcessAreaTypeId",
+                table: "KeyProcessAreas",
+                column: "KeyProcessAreaTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_KeyProcessAreas_ProcessId",
+                table: "KeyProcessAreas",
+                column: "ProcessId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MachineNotificationSettings_MachineId",
@@ -1654,9 +2121,54 @@ namespace BinmakBackEnd.Migrations
                 column: "SizeCategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Processes_AssetNodeId",
+                table: "Processes",
+                column: "AssetNodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductionFlowAssets_AssetId",
+                table: "ProductionFlowAssets",
+                column: "AssetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductionFlowAssets_ClientAssetNameId",
+                table: "ProductionFlowAssets",
+                column: "ClientAssetNameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductionFlowAssets_TemplateId",
+                table: "ProductionFlowAssets",
+                column: "TemplateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Productions_KeyProcessAreaId",
+                table: "Productions",
+                column: "KeyProcessAreaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Readings_AssetId",
+                table: "Readings",
+                column: "AssetId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SensorData_MachineId",
                 table: "SensorData",
                 column: "MachineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Targets_KeyProcessAreaId",
+                table: "Targets",
+                column: "KeyProcessAreaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserGroups_GroupId",
+                table: "UserGroups",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserGroups_UserId",
+                table: "UserGroups",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserSettings_UserId",
@@ -1706,9 +2218,6 @@ namespace BinmakBackEnd.Migrations
                 name: "assessmentUsers");
 
             migrationBuilder.DropTable(
-                name: "AssetNodeTypes");
-
-            migrationBuilder.DropTable(
                 name: "AssetUsers");
 
             migrationBuilder.DropTable(
@@ -1716,6 +2225,9 @@ namespace BinmakBackEnd.Migrations
 
             migrationBuilder.DropTable(
                 name: "Bearings");
+
+            migrationBuilder.DropTable(
+                name: "BinmakModuleAccesses");
 
             migrationBuilder.DropTable(
                 name: "bpKpiAssessmentAvgs");
@@ -1733,16 +2245,13 @@ namespace BinmakBackEnd.Migrations
                 name: "characteristics");
 
             migrationBuilder.DropTable(
-                name: "ClientAssetNames");
+                name: "ColorPalletes");
 
             migrationBuilder.DropTable(
                 name: "Companies");
 
             migrationBuilder.DropTable(
                 name: "ConsequenceCategory");
-
-            migrationBuilder.DropTable(
-                name: "Countries");
 
             migrationBuilder.DropTable(
                 name: "CriteriaRiskMatrix");
@@ -1752,6 +2261,12 @@ namespace BinmakBackEnd.Migrations
 
             migrationBuilder.DropTable(
                 name: "Equipments");
+
+            migrationBuilder.DropTable(
+                name: "FormulaCreations");
+
+            migrationBuilder.DropTable(
+                name: "Frequencies");
 
             migrationBuilder.DropTable(
                 name: "frmwrks");
@@ -1790,10 +2305,16 @@ namespace BinmakBackEnd.Migrations
                 name: "ProductionFlowAssetUsers");
 
             migrationBuilder.DropTable(
+                name: "Productions");
+
+            migrationBuilder.DropTable(
                 name: "ProductiveUnits");
 
             migrationBuilder.DropTable(
                 name: "Readings");
+
+            migrationBuilder.DropTable(
+                name: "ReferenceLookups");
 
             migrationBuilder.DropTable(
                 name: "results");
@@ -1811,7 +2332,13 @@ namespace BinmakBackEnd.Migrations
                 name: "SensorData");
 
             migrationBuilder.DropTable(
+                name: "Targets");
+
+            migrationBuilder.DropTable(
                 name: "Templates");
+
+            migrationBuilder.DropTable(
+                name: "UserGroups");
 
             migrationBuilder.DropTable(
                 name: "UserSettings");
@@ -1829,13 +2356,28 @@ namespace BinmakBackEnd.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "BinmakModules");
+
+            migrationBuilder.DropTable(
+                name: "MathematicalOperators");
+
+            migrationBuilder.DropTable(
+                name: "ClientAssetNames");
+
+            migrationBuilder.DropTable(
+                name: "Template");
+
+            migrationBuilder.DropTable(
                 name: "Machines");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "KeyProcessAreas");
 
             migrationBuilder.DropTable(
-                name: "AssetNodes");
+                name: "Groups");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "BBSSDevices");
@@ -1859,10 +2401,25 @@ namespace BinmakBackEnd.Migrations
                 name: "SizeCategories");
 
             migrationBuilder.DropTable(
+                name: "KeyProcessAreaTypes");
+
+            migrationBuilder.DropTable(
+                name: "Processes");
+
+            migrationBuilder.DropTable(
+                name: "Countries");
+
+            migrationBuilder.DropTable(
                 name: "Applications");
 
             migrationBuilder.DropTable(
                 name: "BinmakTechnologies");
+
+            migrationBuilder.DropTable(
+                name: "AssetNodes");
+
+            migrationBuilder.DropTable(
+                name: "AssetNodeTypes");
         }
     }
 }

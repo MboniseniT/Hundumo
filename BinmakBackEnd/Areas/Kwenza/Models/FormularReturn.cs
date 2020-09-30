@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace BinmakBackEnd.Areas.Kwenza.Models
 {
-    public class FormulaCreationVM
+    public class FormularReturn
     {
-        public int keyProcessAreaId { get; set; }
+        public int KeyProcessAreaId { get; set; }
+        public string KeyProcessAreaName { get; set; }
         public string FormulaString { get; set; }
-        public string MasterFormularArray { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 <div class="container">
-    <h5 style="text-align: center; font-weight: bold;">Formular Configuration</h5>
+    <h5 style="text-align: center; font-weight: bold;">Formular Configuration For: {{kpaName}}</h5>
+    <h6 style="text-align: center; font-weight: bold; color: green;">Previous Formula: {{previousFormula}}</h6>
     <br><br>
     <div>
         <p style="text-align: center; color: red;">{{formularChainString}}</p>
@@ -32,7 +33,7 @@
         <button type="button" class="btn btn-info waves-light" style="background-color: rgba(0, 69, 125, 1) !important; color: white;"
             mdbWavesEffect (click)="Save()" [disabled]="!kpaSummaryConfigForm.valid">
             <i class="fa fa-cogs" aria-hidden="true"></i>
-            Extend Formula / Save</button>
+            Make Formula/Select Field / Save</button>
 
             <button type="button" class="btn btn-info waves-light" style="background-color: rgba(0, 69, 125, 1) !important; color: white;"
             mdbWavesEffect (click)="Refresh()">

@@ -10,10 +10,7 @@ namespace BinmakBackEnd.Areas.Kwenza.Entities
     {
         public int FormulaCreationId { get; set; }
         public int KeyProcessAreaId { get; set; }
-        public int FormularOwnerKPAId { get; set; }
-        public int Index { get; set; }
-        public int MathematicalOperatorId { get; set; }
-        [ForeignKey("MathematicalOperatorId")]
-        public virtual MathematicalOperator MathematicalOperator { get; set; }
+        public string FormulaString { get; set; }
+        public string MasterFormularArray { get; set; }
     }
 }

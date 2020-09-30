@@ -103,8 +103,6 @@ namespace BinmakBackEnd.Controllers
             foreach (var item in lAssetNodes)
             {
                 assetNodes.AddRange(_context.AssetNodes.Where(id => id.AssetNodeId == item.AssetNodeId).ToList());
-                //Add First Node as well
-                //assetNodes.AddRange(_context.AssetNodes.Where(id => id.AssetNodeId == item.AssetNodeId).ToList());
             }
 
             List<AssetNode> lAssNodes = assetNodes.Where(id => id.AssetNodeTypeId != 3).ToList();
@@ -112,17 +110,8 @@ namespace BinmakBackEnd.Controllers
             return Ok(lAssNodes);
         }
 
-        //[HttpGet("productiveUnitByOrganazation")]
-        //public IActionResult GetProductiveUnitByOrganization(int organizationId)
-        //{
-
-        //    List<ProductiveUnit> organizations = _context.ProductiveUnits.Where(id => id.OrganizationId == organizationId).ToList();
-
-        //    return Ok(organizations);
-        //}
-
         [HttpGet("EquipmentByProductiveUnit")]
-        public IActionResult GetEquipmentByProductiveUnit(/*int productiveUnitId*/ string reference)
+        public IActionResult GetEquipmentByProductiveUnit(string reference)
         {
             List<UserGroup> userGroups = _context.UserGroups.Where(id => id.UserId == reference).ToList();
             List<int> userGroupIds = new List<int>();
@@ -152,8 +141,6 @@ namespace BinmakBackEnd.Controllers
             foreach (var item in lAssetNodes)
             {
                 assetNodes.AddRange(_context.AssetNodes.Where(id => id.AssetNodeId == item.AssetNodeId).ToList());
-                //Add First Node as well
-                //assetNodes.AddRange(_context.AssetNodes.Where(id => id.AssetNodeId == item.AssetNodeId).ToList());
             }
 
             List<AssetNode> lAssNodes = assetNodes.Where(id => id.AssetNodeTypeId != 1).ToList();
@@ -162,7 +149,7 @@ namespace BinmakBackEnd.Controllers
         }
 
         [HttpGet("GetAssetUsers")]
-        public IActionResult GetAssetUsers(/*int productiveUnitId*/ string reference)
+        public IActionResult GetAssetUsers(string reference)
         {
             List<AssetNode> assetNodes = _context.AssetNodes.Where(id => (id.Reference == reference) && (id.AssetNodeTypeId != 3)).ToList();
 
@@ -187,7 +174,7 @@ namespace BinmakBackEnd.Controllers
                 model.Address = assetNode.Address;
                 model.Address2 = assetNode.Address2;
                 model.City = assetNode.City;
-                model.Code = assetNode.Code;
+                model.Code = assetNode.Code.ToUpper();
                 model.CountryId = assetNode.CountryId;
 
                 _context.AssetNodes.Update(model);
@@ -249,6 +236,11 @@ namespace BinmakBackEnd.Controllers
                     model.City = parentAssetNode.City;
                     model.Zip = parentAssetNode.Zip;
                     model.CountryId = parentAssetNode.CountryId;
+
+                    if (parentAssetNode.Address == "" || parentAssetNode.City == "" || parentAssetNode.Zip == "" || parentAssetNode.CountryId == 0)
+                    {
+                        return BadRequest("Error, Make sure Address, City, Zip, and Country is not null");
+                    }
                 }
                 else
                 {
@@ -266,6 +258,11 @@ namespace BinmakBackEnd.Controllers
                     model.City = assetNode.City;
                     model.Zip = assetNode.Zip;
                     model.CountryId = assetNode.CountryId;
+
+                    if (assetNode.Address == "" || assetNode.City == "" || assetNode.Zip == "" || assetNode.CountryId == 0)
+                    {
+                        return BadRequest("Error, Make sure Address, City, Zip, and Country is not null");
+                    }
                 }
 
                 _context.AssetNodes.Add(model);
@@ -334,61 +331,8 @@ namespace BinmakBackEnd.Controllers
                     model.Height = _context.AssetNodes.FirstOrDefault(id => id.AssetNodeId == model.ParentAssetNodeId).Height + 1;
                 }
 
-
-                //If productive unit, it must access production flow, and subsequent parent id should the id of the clientAsset name
-
-                /*if (model.AssetNodeTypeId == 2) //Productive Unit
-                {
-                    ClientAsset clientAssetName = new ClientAsset();
-                    clientAssetName.AssetName = _context.AssetNodes.FirstOrDefault(id => id.AssetNodeId == model.ParentAssetNodeId).Name;
-                    clientAssetName.DateStamp = DateTime.Now;
-                    clientAssetName.Reference = model.Reference;
-                    clientAssetName.ClientName = _context.AssetNodes.FirstOrDefault(id => id.AssetNodeId == model.RootAssetNodeId).Name;
-                    clientAssetName.ClientAssetNameId = model.ParentAssetNodeId;
-
-                    _context.ClientAssetNames.Add(clientAssetName);
-                    _context.SaveChanges();
-
-                    //Add Asset, from a production's flow perspective
-                    BinmakBackEnd.Areas.ProductionFlow.Entities.ProductionFlowAsset productionFlowAsset = new Areas.ProductionFlow.Entities.ProductionFlowAsset();
-                    productionFlowAsset.AssetId = model.AssetNodeId;
-                    productionFlowAsset.ClientAssetNameId = model.ParentAssetNodeId;
-                    productionFlowAsset.SiteName = model.Name;
-                    productionFlowAsset.Reference = model.Reference;
-                    productionFlowAsset.TemplateId = 1;
-                    productionFlowAsset.SinceDateProduction = DateTime.Now;
-                    productionFlowAsset.DateStamp = DateTime.Now;
-                    _context.ProductionFlowAssets.Add(productionFlowAsset);
-                    _context.SaveChanges();
-
-                    List<FunctionUnit> functionUnits = saveAssetFunctionUnits(productionFlowAsset);
-                    List<FunctionUnitChildren> functionUnitsChildren = saveAssetFunctionUnitsChildren(productionFlowAsset);
-
-                    List<DateTime> dates = getAllDates(productionFlowAsset.SinceDateProduction.Year, productionFlowAsset.SinceDateProduction.Month);
-                    List<Reading> readings = new List<Reading>();
-
-                    foreach (var date in dates)
-                    {
-                        Reading reading = new Reading();
-                        reading.DateProduction = date;
-                        reading.AssetId = productionFlowAsset.AssetId;
-                        reading.Reference = productionFlowAsset.Reference;
-
-                        readings.Add(reading);
-
-                    }
-
-                    _context.Readings.AddRange(readings);
-                    _context.SaveChanges();
-
-                }*/
-
-                //Add Group
-
-
                 _context.SaveChanges();
-                /*if (model.RootAssetNodeId == 0)
-                {*/
+
                     Group group = new Group();
                     group.Reference = assetNode.Reference;
                     group.GroupName = assetNode.Name.ToUpper() + " [" + assetNode.Code+"]".ToUpper();
@@ -442,7 +386,7 @@ namespace BinmakBackEnd.Controllers
                             _context.SaveChanges();
                         }
                     }
-                        else
+                     else
                         {
                             UserGroup userGroup = new UserGroup();
                             userGroup.GroupId = group.GroupId;
@@ -465,35 +409,7 @@ namespace BinmakBackEnd.Controllers
                             _context.SaveChanges();
                     }
 
-
-
-
-                /*}
-                else
-                {
-                    var parent = _context.AssetNodes.FirstOrDefault(id=>id.AssetNodeId == model.ParentAssetNodeId);
-                    List<UserGroup> assetUsers = _context.UserGroups.Where(id => id.GroupId == parent.GroupId).ToList();
-
-                    foreach (var au in assetUsers)
-                    {
-                        UserGroup userGroup1 = new UserGroup();
-                        userGroup1.GroupId = au.GroupId;
-                        userGroup1.UserId = au.UserId;
-
-                        var exist = _context.UserGroups.FirstOrDefault(id=>(id.GroupId == au.GroupId) && (id.UserId == au.UserId));
-                        if (exist == null)
-                        {
-                            _context.UserGroups.Add(userGroup1);
-                        }
-
-                    }
-                }*/
-
                 _context.SaveChanges();
-
-
-
-
 
                 return Ok();
             }
@@ -624,255 +540,6 @@ namespace BinmakBackEnd.Controllers
             return asset;
         }
 
-
-        //[HttpPost("organization")]
-        //public IActionResult PostOrganization([FromBody] Organization organization)
-        //{
-        //    if (organization == null)
-        //    {
-        //        return BadRequest("Something bad happened. Object is null");
-        //    }
-
-        //    try
-        //    {
-        //        Organization model = new Organization();
-        //        model.ParentOrganizationId = organization.ParentOrganizationId;
-        //        model.Name = organization.Name;
-        //        model.DateStamp = DateTime.Now;
-        //        model.Reference = organization.Reference;
-
-        //        if (model.ParentOrganizationId == 0)
-        //        {
-        //            model.RootOrganizationId = 0;
-        //        }
-
-        //        if (organization.IsParentAddress)
-        //        {
-        //            if (model.ParentOrganizationId != 0)
-        //            {
-        //                model.ParentOrganizationId = organization.ParentOrganizationId;
-        //            }
-        //            else
-        //            {
-        //                model.ParentOrganizationId = 0;
-        //            }
-
-        //            Organization parentOrganization = _context.Organizations.FirstOrDefault(id => id.OrganizationId == organization.ParentOrganizationId);
-        //            model.Address = parentOrganization.Address;
-        //            model.Address2 = parentOrganization.Address2;
-        //            model.City = parentOrganization.City;
-        //            model.Zip = parentOrganization.Zip;
-        //            model.CountryId = parentOrganization.CountryId;
-        //            model.Code = organization.Code;
-        //        }
-        //        else
-        //        {
-        //            if (model.ParentOrganizationId != 0)
-        //            {
-        //                model.ParentOrganizationId = organization.ParentOrganizationId;
-        //            }
-        //            else
-        //            {
-        //                model.ParentOrganizationId = 0;
-        //            }
-
-        //            model.Address = organization.Address;
-        //            model.Address2 = organization.Address2;
-        //            model.City = organization.City;
-        //            model.Zip = organization.Zip;
-        //            model.CountryId = organization.CountryId;
-        //            model.Code = organization.Code;
-        //        }
-
-        //        _context.Organizations.Add(model);
-        //        _context.SaveChanges();
-
-
-
-
-        //        var isRoot = true;
-        //        Organization root = new Organization();
-
-        //        if (model.ParentOrganizationId == 0)
-        //        {
-        //            model.RootOrganizationId = 0;
-        //        }
-        //        else
-        //        {
-        //            root = _context.Organizations.FirstOrDefault(id => (id.ParentOrganizationId == organization.ParentOrganizationId) && (id.Reference == organization.Reference));
-
-        //            while (isRoot)
-        //            {
-        //                if (root.ParentOrganizationId == 0)
-        //                    isRoot = false;
-        //                else
-        //                    root = _context.Organizations.FirstOrDefault(id => id.OrganizationId == root.ParentOrganizationId);
-        //            }
-        //            model.RootOrganizationId = root.OrganizationId;
-        //        }
-
-
-
-        //        if (model.ParentOrganizationId == 0)
-        //        {
-        //            model.Height = model.Height + 1;
-        //        }
-        //        else
-        //        {
-        //            model.Height = _context.Organizations.FirstOrDefault(id => id.OrganizationId == model.ParentOrganizationId).Height + 1;
-        //        }
-
-        //        _context.SaveChanges();
-
-        //        return Ok();
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        return BadRequest("Something bad happened! " + Ex.Message);
-        //    }
-        //}
-
-
-        //[HttpPost("productiveUnit")]
-        //public IActionResult PostProductiveUnit([FromBody] ProductiveUnit organization)
-        //{
-        //    if (organization == null)
-        //    {
-        //        return BadRequest("Something bad happened. Object is null");
-        //    }
-
-        //    try
-        //    {
-        //        ProductiveUnit model = new ProductiveUnit();
-        //        model.OrganizationId = organization.OrganizationId;
-        //        model.Name = organization.Name;
-        //        model.DateStamp = DateTime.Now;
-        //        model.Reference = organization.Reference;
-        //        model.RootOrganizationId = _context.Organizations.FirstOrDefault(id => id.OrganizationId == organization.OrganizationId).RootOrganizationId;
-
-        //        if (organization.ParentProductiveUnitId != 0)
-        //        {
-        //            model.ParentProductiveUnitId = organization.ParentProductiveUnitId;
-        //            model.Height = _context.ProductiveUnits.Where(o => o.ProductiveUnitId == organization.ParentProductiveUnitId && o.Reference.Equals(organization.Reference)).Max(h => h.Height) + 1;
-        //        }
-        //        else
-        //        {
-        //            model.ParentProductiveUnitId = 0;
-        //            model.Height = _context.Organizations.Where(o => o.OrganizationId == organization.OrganizationId && o.Reference.Equals(organization.Reference)).Max(h => h.Height) + 1;
-        //        }
-
-        //        if (organization.IsParentAddress)
-        //        {
-        //            ProductiveUnit parentOrganization = _context.ProductiveUnits.FirstOrDefault(id => id.ProductiveUnitId == organization.ParentProductiveUnitId);
-        //            model.Address = parentOrganization.Address;
-        //            model.Address2 = parentOrganization.Address2;
-        //            model.City = parentOrganization.City;
-        //            model.Zip = parentOrganization.Zip;
-        //            model.CountryId = parentOrganization.CountryId;
-        //            model.Code = organization.Code;
-        //            model.OrganizationId = organization.OrganizationId;
-                    
-        //        }
-        //        else
-        //        {
-                    
-        //            model.OrganizationId = organization.OrganizationId;
-        //            model.Address = organization.Address;
-        //            model.Address2 = organization.Address2;
-        //            model.City = organization.City;
-        //            model.Zip = organization.Zip;
-        //            model.CountryId = organization.CountryId;
-        //            model.Code = organization.Code;
-        //        }
-
-        //        _context.ProductiveUnits.Add(model);
-        //        _context.SaveChanges();
-
-        //        return Ok();
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        return BadRequest("Something bad happened! " + Ex.Message);
-        //    }
-        //}
-
-
-        //[HttpPost("equipment")]
-        //public IActionResult PostEquipment([FromBody] Equipment equipment)
-        //{
-        //    if (equipment == null)
-        //    {
-        //        return BadRequest("Something bad happened. Object is null");
-        //    }
-
-        //    try
-        //    {
-        //        Equipment model = new Equipment();
-        //        model.ProductiveUnitId = equipment.ProductiveUnitId;
-        //        model.Name = equipment.Name;
-        //        model.DateStamp = DateTime.Now;
-        //        model.Reference = equipment.Reference;
-        //        model.RootOrganizationId = _context.ProductiveUnits.FirstOrDefault(id => id.ProductiveUnitId == equipment.ProductiveUnitId).RootOrganizationId;
-
-        //        if (equipment.ParentEquipmentId != 0)
-        //        {
-        //            model.ParentEquipmentId = equipment.ParentEquipmentId;
-        //            model.Height = _context.Equipments.Where(o => o.EquipmentId == equipment.ParentEquipmentId && o.Reference.Equals(equipment.Reference)).Max(h => h.Height) + 1;
-
-        //        }
-        //        else
-        //        {
-        //            model.ParentEquipmentId = 0;
-        //            model.Height = _context.ProductiveUnits.Where(o => o.ProductiveUnitId == equipment.ProductiveUnitId && o.Reference.Equals(equipment.Reference)).Max(h => h.Height) + 1;
-        //        }
-
-        //        if (equipment.IsParentAddress)
-        //        {
-
-        //            if (equipment.ParentEquipmentId == 0)
-        //            {
-        //                ProductiveUnit productiveUnit = _context.ProductiveUnits.FirstOrDefault(id => id.ProductiveUnitId == equipment.ProductiveUnitId);
-        //                model.Address = productiveUnit.Address;
-        //                model.Address2 = productiveUnit.Address2;
-        //                model.City = productiveUnit.City;
-        //                model.Zip = productiveUnit.Zip;
-        //                model.CountryId = productiveUnit.CountryId;
-        //            }
-        //            else
-        //            {
-        //                Equipment equip = _context.Equipments.FirstOrDefault(id => id.EquipmentId == equipment.ParentEquipmentId);
-        //                model.Address = equip.Address;
-        //                model.Address2 = equip.Address2;
-        //                model.City = equip.City;
-        //                model.Zip = equip.Zip;
-        //                model.CountryId = equip.CountryId;
-        //            }
-
-        //            model.Code = equipment.Code;
-        //            model.ProductiveUnitId = equipment.ProductiveUnitId;
-        //        }
-        //        else
-        //        {
-        //            model.ProductiveUnitId = equipment.ProductiveUnitId;
-        //            model.Address = equipment.Address;
-        //            model.Address2 = equipment.Address2;
-        //            model.City = equipment.City;
-        //            model.Zip = equipment.Zip;
-        //            model.CountryId = equipment.CountryId;
-        //            model.Code = equipment.Code;
-        //        }
-
-        //        _context.Equipments.Add(model);
-        //        _context.SaveChanges();
-
-        //        return Ok();
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        return BadRequest("Something bad happened! " + Ex.Message);
-        //    }
-        //}
-
         [HttpGet("tree")]
         public IActionResult GetTree(string reference)
         {
@@ -995,13 +662,7 @@ namespace BinmakBackEnd.Controllers
                 foreach (var item in lAssetNodes)
                 {
                     assetNodes.AddRange(_context.AssetNodes.Where(id => id.AssetNodeId == item.AssetNodeId).ToList());
-                    //Add First Node as well
-                    //assetNodes.AddRange(_context.AssetNodes.Where(id => id.AssetNodeId == item.AssetNodeId).ToList());
                 }
-
-
-
-                //List <AssetNode> assetNodes = _context.AssetNodes.Where(id => (id.Reference == reference) && (id.ParentAssetNodeId != 0)).ToList();
 
                 var assetNodesSrted = assetNodes.OrderBy(id => id.RootAssetNodeId).ToList();
 
@@ -1011,7 +672,7 @@ namespace BinmakBackEnd.Controllers
                     AssetNodeType = _context.AssetNodeTypes.FirstOrDefault(id=>id.AssetNodeTypeId == result.AssetNodeTypeId).AssetNodeTypeName,
                     CountryId = result.CountryId,
                     Name = result.Name,
-                    Code = result.Code,
+                    Code = result.Code.ToUpper(),
                     ParentId = result.ParentAssetNodeId == 0 ? result.AssetNodeId : result.ParentAssetNodeId,
                     Parent = result.ParentAssetNodeId == 0 ? _context.AssetNodes.FirstOrDefault(id => id.AssetNodeId == result.AssetNodeId).Name :_context.AssetNodes.FirstOrDefault(id=> id.AssetNodeId == result.ParentAssetNodeId ).Name,
                     Root = result.RootAssetNodeId == 0 ? _context.AssetNodes.FirstOrDefault(id => id.AssetNodeId == result.AssetNodeId).Name : _context.AssetNodes.FirstOrDefault(id => id.AssetNodeId == result.RootAssetNodeId).Name,

@@ -39,17 +39,10 @@ namespace BinmakBackEnd.Helpers
                     });
                     _context.SaveChanges();
                 }
-
-                //var roleStore = new RoleStore<IdentityRole>(_context);
-
-                //if (!_context.Roles.Any(r => r.Name == role))
-                //{
-                //    roleStore.CreateAsync(new IdentityRole(role));
-                //}
             }
         }
 
-        public async void SeedUser()
+        public async void SeedUsers()
         {
             var user = _context.Users.Where(u => u.Email == "admin@m-theth.co.za").Any();
 
@@ -66,7 +59,7 @@ namespace BinmakBackEnd.Helpers
                         LastName = "Admin",
                         DateStamp = DateTime.Now,
                         IsSuperAdmin = true,
-                        RoleId = 1,
+                        Role = "BINMAK",
                         CountryId = 203,
                         IsBinmak = true
                     },
@@ -78,21 +71,9 @@ namespace BinmakBackEnd.Helpers
                         LastName = "Thethwayo",
                         DateStamp = DateTime.Now,
                         IsAdmin = true,
-                        RoleId = 2,
+                        Role = "ADMINISTRATOR",
                         CountryId = 203
-                    },
-                    new ApplicationUser
-                    {
-                        Email = "Mboniseh@gmail.com",
-                        UserName = "Mboniseh@gmail.com",
-                        FirstName = "Mboniseni",
-                        LastName = "Thethwayo",
-                        DateStamp = DateTime.Now,
-                        IsUser = true,
-                        RoleId = 3,
-                        CountryId = 203
-
-                    },
+                    }
                 };
 
 
@@ -103,6 +84,88 @@ namespace BinmakBackEnd.Helpers
 
                 _context.SaveChanges();
             }
+        }
+
+        public async void SeedAssetNodeTypes()
+        {
+            string[] assetNodeTypes = new string[] { "Organization", "Productive Unit", "Equipment" };
+
+            foreach (string asnt in assetNodeTypes)
+            {
+                var assetNodeTypeChecker = _context.AssetNodeTypes.Where(u => u.AssetNodeTypeName == asnt).Any();
+
+                if (assetNodeTypeChecker == false)
+                {
+                    _context.AssetNodeTypes.Add(new AssetNodeType()
+                    {
+                        AssetNodeTypeName = asnt,
+                        AssetNodeTypeDescription = asnt
+                    });
+                    _context.SaveChanges();
+                }
+            }
+        }
+
+        public async void SeedKPATypes()
+        {
+            string[] kpaTypes = new string[] { "Buffer", "Process" };
+
+            foreach (string kpa in kpaTypes)
+            {
+                var kpaTypeChecker = _context.KeyProcessAreaTypes.Where(u => u.KeyProcessAreaTypeName == kpa).Any();
+
+                if (kpaTypeChecker == false)
+                {
+                    _context.KeyProcessAreaTypes.Add(new Areas.Kwenza.Entities.KeyProcessAreaType()
+                    {
+                        KeyProcessAreaTypeName = kpa,
+                    });
+                    _context.SaveChanges();
+                }
+            }
+        }
+
+        public async void SeedBinmakModules()
+        {
+            string[] binmakModules = new string[] { "Production Flow", "Assessments", "Load and Haul", "Asset Health", "Asset Criticality" };
+
+            foreach (string bm in binmakModules)
+            {
+                var binmakModuleChecker = _context.BinmakModules.Where(u => u.BinmakModuleName == bm).Any();
+
+                if (binmakModuleChecker == false)
+                {
+                    _context.BinmakModules.Add(new BinmakModule()
+                    {
+                        BinmakModuleName = bm,
+                    });
+                    _context.SaveChanges();
+                }
+            }
+        }
+
+        public async void SeedMathematicalOperators()
+        {
+            string[] mathematicalOperators = new string[] { "+", "-", "*", "/" };
+
+            foreach (string m in mathematicalOperators)
+            {
+                var mathematicalOperatorChecker = _context.MathematicalOperators.Where(u => u.MathematicalOperatorSign == m).Any();
+
+                if (mathematicalOperatorChecker == false)
+                {
+                    _context.MathematicalOperators.Add(new Areas.Kwenza.Entities.MathematicalOperator()
+                    {
+                        MathematicalOperatorSign = m
+                    });
+                    _context.SaveChanges();
+                }
+            }
+        }
+
+        public async void Countries()
+        {
+            //TODO
         }
 
         public async void AssignRoles(ApplicationUser applicationUser, string role)

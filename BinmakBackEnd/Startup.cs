@@ -21,6 +21,7 @@ using DinkToPdf.Contracts;
 using DinkToPdf;
 using BinmakBackEnd.Assessblies;
 using System.IO;
+using BinmakBackEnd.Helpers;
 
 namespace BinmakBackEnd
 {
@@ -68,15 +69,9 @@ namespace BinmakBackEnd
 
                 });
 
-            //var connection = @"Server=DPSA32213;Initial Catalog=HundumoDatabase;Trusted_Connection=True;MultipleActiveResultSets=true";
-            //var connection = @"Server=tcp:binmakdev.dedicated.co.za;Initial Catalog=HundumoDatabase;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
-            var connection = @"Server=tcp:binmakdev.dedicated.co.za;Initial Catalog=HundumoDevDb;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
-            //var connection = @"Server=tcp:binmakdev.dedicated.co.za;Initial Catalog=BinmakDb;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
-            //var connection = @"Server=tcp:binmak.com;Initial Catalog=BinmakDb;User ID=sa;Password=Binmak@2020; MultipleActiveResultSets=true;";
             services.AddDbContext<BinmakDbContext>
-             (options => options.UseSqlServer(Configuration.GetConnectionString("HundumoDbContext")));
-             //(options => options.UseSqlServer(connection));
-
+            (options => options.UseSqlServer(Configuration.GetConnectionString("HundumoDbContext")));
+            services.AddTransient<Seed>();
             services.AddDirectoryBrowser();
 
             services.AddCors(cfg => {
@@ -92,7 +87,7 @@ namespace BinmakBackEnd
 
             services.AddCors();
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-            //services.AddControllers();
+
             var processSuffix = "32bit";
             if (Environment.Is64BitProcess && IntPtr.Size == 8)
             {
@@ -103,15 +98,19 @@ namespace BinmakBackEnd
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env/*, Seed seed*/)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seed seed)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            //seed.SeedUser();
-            //seed.SeedRoles();
+            seed.SeedUsers();
+            seed.SeedRoles();
+            seed.SeedAssetNodeTypes();
+            seed.SeedMathematicalOperators();
+            seed.SeedBinmakModules();
+            seed.SeedKPATypes();
 
             app.UseHttpsRedirection();
 

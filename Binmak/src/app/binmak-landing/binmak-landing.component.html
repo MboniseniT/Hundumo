@@ -40,18 +40,15 @@
             </mdb-accordion-item>
 
             <mdb-accordion-item>
-              <mdb-accordion-item-head mdbWavesEffect routerLink="/binmak/ukwazi">
+              <mdb-accordion-item-head mdbWavesEffect>
                 <p style="color: white; font-weight: 300; font-size: 150%;"><i class="fa fa-user-graduate fa-1.5x"
                     aria-hidden="true"></i> UKWAZI</p>
               </mdb-accordion-item-head>
               <mdb-accordion-item-body>
                 <ul>
-                  <li routerLink="/binmak/learning-management"><a
+                  <li (click)="ukwazi()"><a
                       style="color: white; font-weight: 300; font-size: 75%;" mdbWavesEffect>LEARNING MANAGEMENT</a>
                   </li>
-                  <!--<li routerLink="/binmak/ukwazi-assessments"><a style="color: white; font-weight: 300; font-size: 75%;"
-                      mdbWavesEffect>ASSESSMENTS</a>
-                  </li>-->
                 </ul>
               </mdb-accordion-item-body>
             </mdb-accordion-item>

@@ -22,6 +22,7 @@ export class NewReadingsComponent implements OnInit {
   assetName: string;
 
   overallModel: any;
+  loading: boolean;
 
 
   constructor(private datePipe: DatePipe, private route: ActivatedRoute, 
@@ -30,6 +31,8 @@ export class NewReadingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  
+
     this.savedProductionDate =  this.datePipe.transform(localStorage.getItem('SelectedProductionDate'), 'yyyy-MM-dd');
     this.dateForm.patchValue({
       SelectedDate: localStorage.getItem('SelectedProductionDate')
@@ -54,6 +57,7 @@ export class NewReadingsComponent implements OnInit {
 
     this.overallModel = model;
 
+    this.loading = true;
     this.service.getProdFlow(model)
     .subscribe((resp: any) =>{
       console.log(resp);
@@ -64,7 +68,9 @@ export class NewReadingsComponent implements OnInit {
         this.prodFlowDates = resp[0].productionDates;
         this.assetName = resp[0].assetName;
       }
+      this.loading = false;
     }, (error: any) =>{
+      this.loading = false;
       this.toastrService.error(error.error);
     })
   
@@ -78,20 +84,6 @@ export class NewReadingsComponent implements OnInit {
   overallProduction(){
 
     this.router.navigate(['binmak/overall-new-readings/'+this.assetNodeId]);
-
-    /*this.service.getOverallProdFlow(this.overallModel)
-    .subscribe((resp: any) =>{
-      console.log(resp);
-      this.prodFlowDatastructure = resp;
-      if(resp.length == 0){
-        this.toastrService.warning('There are no records for this Asset. Ask administrator to configure it for you');
-      }else{
-        this.prodFlowDates = resp[0].productionDates;
-        this.assetName = resp[0].assetName;
-      }
-    }, (error: any) =>{
-      this.toastrService.error(error.error);
-    })*/
 
   }
 

@@ -46,6 +46,10 @@ export class MainServiceService {
     return this.http.post<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/formularCreation', JSON.stringify(model), this.httpOptions);
   }
 
+  GetKPAFormula(keyProcessAreaId) {
+    return this.http.get<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/GetKPAFormula?keyProcessAreaId=' + keyProcessAreaId);
+  }
+
   GetClientAssetKPAs(keyProcessAreaId) {
     return this.http.get<any[]>(this.urlBase+'Kwenza/ProductionFlowConfiguration/GetClientAssetKPAs?keyProcessAreaId=' + keyProcessAreaId);
   }
@@ -76,6 +80,10 @@ export class MainServiceService {
 
   getGroups(reference){
     return this.http.get<any[]>(this.url+'account/groups?reference=' + reference);
+  }
+
+  getLMSLink(reference){
+    return this.http.get<any[]>(this.url+'account/lms?reference=' + reference);
   }
 
 

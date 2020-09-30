@@ -66,22 +66,13 @@ export class UsersComponent implements OnInit {
       BinmakModuleId: new FormControl('', Validators.required),
     });
 
-    /*this.editUserForm = new FormGroup({
-      FirstName: new FormControl('', Validators.required),
-      LastName: new FormControl('', Validators.required),
-      EmployeeEmail: new FormControl('',Validators.compose([Validators.email, Validators.required])),
-      RoleId: new FormControl('', Validators.required),
-      GroupId: new FormControl('', Validators.required),
-      BinmakModuleId: new FormControl('', Validators.required),
-    });*/
-
     this.service.getRoles()
     .subscribe((resp: any) =>{
       this.roles = resp.map((t: any) => {
-        return { label: t.name, value: +t.id }
+        return { label: t.name, value: t.name }
       });
       
-      console.log(this.roles);
+      console.log('roles: '+this.roles);
     }, (error:any)=>{
       console.log(error);
       this.toastrService.error(error.error);
@@ -172,6 +163,8 @@ export class UsersComponent implements OnInit {
 
   edit(user){
 
+    debugger;
+
     this.firstName = user.name;
     this.lastMame = user.lastName;
     this.Id = user.id;
@@ -188,13 +181,15 @@ export class UsersComponent implements OnInit {
       return { label: t.binmakModuleName, value: t.binmakModuleId }
     });
 
+    debugger;
+
     this.editUserForm.setValue({
       FirstName: user.name,
       LastName: user.lastName,
       EmployeeEmail: user.email,
-      RoleId: user.roleId,
+      RoleId: user.role,
       GroupId: user.topAssetNode.assetNodeId,
-      BinmakModuleId: user.assignedBinmakModulesIds
+      BinmakModuleId: user.assignedBinmakModulesIds,
     });
 
     this.editUserModal.show();
@@ -215,14 +210,15 @@ export class UsersComponent implements OnInit {
     const user = {
       FirstName: this.editUserForm.value.FirstName,
       LastName: this.editUserForm.value.LastName,
-      RoleId: this.editUserForm.value.RoleId,
+      Role: this.editUserForm.value.RoleId,
       AssignedAssetsNode: testId,
       BinmakModuleId: this.editUserForm.value.BinmakModuleId,
       Reference: JSON.parse(localStorage.getItem('currentUser')).userId,
       Id: this.Id,
-      RootId: this.RootId
+      RootId: this.editUserForm.value.GroupId,
     }
 
+    debugger;
 
     this.service.UpdateUser(user)
     .subscribe((resp: any) => {
@@ -251,7 +247,7 @@ export class UsersComponent implements OnInit {
       FirstName: this.userForm.value.FirstName,
       LastName: this.userForm.value.LastName,
       Email: this.userForm.value.EmployeeEmail,
-      RoleId: this.userForm.value.RoleId,
+      Role: this.userForm.value.RoleId,
       GroupIds: this.userForm.value.GroupId,
       AssignedBinmakModulesIds: this.userForm.value.BinmakModuleId,
       Reference: JSON.parse(localStorage.getItem('currentUser')).userId
